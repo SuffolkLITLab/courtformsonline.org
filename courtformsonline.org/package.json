@@ -1,0 +1,35 @@
+{
+  "name": "courtformsonline.org",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^4.5.15",
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@popperjs/core": "^2.11.7",
+    "@types/node": "20.1.2",
+    "@types/react": "18.2.6",
+    "@types/react-bootstrap": "^0.32.32",
+    "@types/react-dom": "18.2.4",
+    "bootstrap": "^5.2.3",
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.1",
+    "next": "13.4.1",
+    "react": "18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0",
+    "reactstrap": "^9.1.9",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.6"
+  }
+}
