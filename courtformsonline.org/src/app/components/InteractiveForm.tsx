@@ -7,7 +7,7 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({ title, description, l
   url.pathname = link;
 
   return (
-    <div>
+    <div className="interactive-form">
       <h2>{title}</h2>
       <p>{description}</p>
       <a href={url.toString()}>Start Form</a>

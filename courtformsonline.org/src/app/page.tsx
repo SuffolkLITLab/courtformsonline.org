@@ -43,7 +43,7 @@ export default function TopicsPage() {
       <HeroSection />
     <section id="topics">
       
-    <div className="container mt-5">
+    <div className="container">
     <h2>Browse court forms by category</h2>
       <div className="row">
         {legalTopics.map((topic: Topic) => (

@@ -7,7 +7,7 @@ const HeroSection = () => {
     <section className="hero-section mt-5">
       <div className="container">
         <div className="row">
-          <div className="col-lg-6">
+          <div className="col-lg-6" id="hero-left">
             <h1>Find and file DIY legal forms in Massachusetts</h1>
             <p>
               Court Forms Online provides official Massachusetts court forms that can be 
@@ -16,7 +16,7 @@ const HeroSection = () => {
               get through the legal process.
             </p>
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-6" id="hero-right">
             <h2>Describe your legal problem</h2>
             <input 
               type="text" 

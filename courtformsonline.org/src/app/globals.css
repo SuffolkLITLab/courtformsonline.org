@@ -155,3 +155,12 @@ h1, h2, h3, h4, h5, .logo-text {
   font-family: "Inter Bold", Arial, Helvetica, sans-serif;
   font-weight: 600;
 }
+
+#topics {
+  background-color: #EEEEEE;
+  padding: 2em;
+}
+
+#hero-left {
+  background-color: #e6ecfc;
+}
