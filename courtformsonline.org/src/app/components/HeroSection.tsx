@@ -4,22 +4,21 @@ import Button from 'react-bootstrap/Button';
 
 const HeroSection = () => {
   return (
-    <section className="hero-section mt-5">
+    <section id="hero-section">
       <div className="container">
         <div className="row">
+          
           <div className="col-lg-6" id="hero-left">
             <h1>Find and file DIY legal forms in Massachusetts</h1>
             <p>
-              Court Forms Online provides official Massachusetts court forms that can be 
-              completed step-by-step on a smart phone or desktop. We provide you 
-              with a streamlined experience to ensure you have all you need to 
-              get through the legal process.
+              Use our free step-by-step interactive forms to get help with your
+              legal problem. Use your own words to find the right 
+              form or browse forms by category.
             </p>
           </div>
           <div className="col-lg-6" id="hero-right">
             <h2>Describe your legal problem</h2>
-            <input 
-              type="text" 
+            <textarea  
               className="form-control form-control-lg" 
               placeholder="Describe your legal problem here"
               aria-label="Describe your legal problem here"

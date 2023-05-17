@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHandPointer, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faMagnifyingGlass, faList } from '@fortawesome/free-solid-svg-icons';
 
 export default function HowItWorksSection() {
   return (
@@ -9,8 +9,8 @@ export default function HowItWorksSection() {
         <div className="row">
           <div className="col-md-4">
             <div className="d-flex align-items-start">
-              <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center" style={{ width: '80px', height: '80px' }}>
-                <FontAwesomeIcon icon={faHandPointer} size="2x" className="text-white" />
+              <div className="rounded-circle d-flex align-items-center justify-content-center" style={{ minWidth: '80px', minHeight: '80px', padding: '15px', backgroundColor: "#002e60" }}>
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="2x" className="text-white" />
               </div>
               <div className="ms-3">
                 <h3>Step 1</h3>
@@ -22,26 +22,26 @@ export default function HowItWorksSection() {
           </div>
           <div className="col-md-4">
             <div className="d-flex align-items-start">
-              <div className="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style={{ width: '80px', height: '80px' }}>
-                <FontAwesomeIcon icon={faEnvelope} size="2x" className="text-white" />
+              <div className="rounded-circle d-flex align-items-center justify-content-center" style={{ minWidth: '80px', minHeight: '80px', padding: '15px', backgroundColor: "#3e7d9a" }}>
+                <FontAwesomeIcon icon={faList} size="2x" className="text-white" />
               </div>
               <div className="ms-3">
                 <h3>Step 2</h3>
                 <p>
-                  Fill out and submit your form online. It will be delivered to the court.
+                  Fill out your form online. We walk you through it step by step.
                 </p>
               </div>
             </div>
           </div>
           <div className="col-md-4">
             <div className="d-flex align-items-start">
-              <div className="rounded-circle bg-info d-flex align-items-center justify-content-center"  style={{ width: '80px', height: '80px' }}>
-                <FontAwesomeIcon icon={faPhone} size="2x" className="text-white" />
+              <div className="rounded-circle d-flex align-items-center justify-content-center"  style={{ minWidth: '80px', minHeight: '80px', padding: '15px', backgroundColor: "#c69931" }}>
+                <FontAwesomeIcon icon={faEnvelope} size="2x" className="text-white" />
               </div>
               <div className="ms-3">
                 <h3>Step 3</h3>
                 <p>
-                  The court will contact you about next steps. Sign in to view your forms.
+                  Deliver your form to the court. You may need to print and mail some forms.
                 </p>
               </div>
             </div>

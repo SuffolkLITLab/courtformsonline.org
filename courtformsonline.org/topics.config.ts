@@ -1,156 +1,193 @@
 export interface Topic {
-  code: string;
+  codes: Array<string>;
   name: string;
   long_name: string;
   icon: string;
+  always_visible: boolean;
+  priority: number;
 }
 
 const legalTopics: Topic[] = [
   {
-    code: "BE-00-00-00-00",
-    name: "Benefits",
-    long_name: "Public Benefits",
-    icon: "hand-holding-dollar",
-  },
-  {
-    code: "BU-00-00-00-00",
-    name: "Business",
-    long_name: "Small Business and IP",
-    icon: "user-tie",
-  },
-  {
-    code: "MO-00-00-00-00",
-    name: "Consumer",
-    long_name: "Money, Debt and Consumer Issues",
-    icon: "money-bill-wave",
-  },
-  {
-    code: "CO-00-00-00-00",
-    name: "Courts",
-    long_name: "Courts and Lawyers",
-    icon: "gavel",
-  },
-  {
-    code: "CR-00-00-00-00",
-    name: "Criminal",
-    long_name: "Criminal",
-    icon: "handcuffs",
-  },
-  {
-    code: "DI-00-00-00-00",
-    name: "Disaster",
-    long_name: "Disaster Relief",
-    icon: "house-fire",
-  },
-  {
-    code: "ED-00-00-00-00",
-    name: "Education",
-    long_name: "Education",
-    icon: "user-graduate",
-  },
-  {
-    code: "EN-00-00-00-00",
-    name: "Environment",
-    long_name: "Environmental Justice",
-    icon: "seedling",
-  },
-  {
-    code: "ES-00-00-00-00",
-    name: "Wills",
-    long_name: "Estates, Wills and Guardianships",
-    icon: "file-signature",
-  },
-  {
-    code: "FA-00-00-00-00",
-    name: "Family",
-    long_name: "Family Law",
-    icon: "people-roof",
-  },
-  {
-    code: "GO-00-00-00-00",
-    name: "Government",
-    long_name: "Government Services",
-    icon: "building-columns",
-  },
-  {
-    code: "HE-00-00-00-00",
-    name: "Health",
-    long_name: "Health",
-    icon: "user-doctor",
-  },
-  {
-    code: "HO-00-00-00-00",
+    codes: ["HO-00-00-00-00"],
     name: "Housing",
     long_name: "Housing",
     icon: "house",
+    always_visible: true,
+    priority: 100,
   },
   {
-    code: "IM-00-00-00-00",
+    codes: ["FA-00-00-00-00"],
+    name: "Family",
+    long_name: "Family and Safety",
+    icon: "people-roof",
+    always_visible: true,
+    priority: 90,
+  },
+  {
+    codes: ["MO-00-00-00-00"],
+    name: "Consumer",
+    long_name: "Money, Debt and Consumer Issues",
+    icon: "money-bill-wave",
+    always_visible: true,
+    priority: 80,
+  },
+  {
+    codes: ["BE-00-00-00-00"],
+    name: "Benefits",
+    long_name: "Public Benefits",
+    icon: "hand-holding-dollar",
+    always_visible: true,
+    priority: 70,
+  },
+  {
+    codes: ["BU-00-00-00-00"],
+    name: "Business",
+    long_name: "Small Business and IP",
+    icon: "user-tie",
+    always_visible: false,
+    priority: 1,
+  },
+  {
+    codes: ["CO-00-00-00-00"],
+    name: "Courts",
+    long_name: "Court and Hearings",
+    icon: "gavel",
+    always_visible: true,
+    priority: 1,
+  },
+  {
+    codes: ["CR-00-00-00-00"],
+    name: "Criminal",
+    long_name: "Criminal",
+    icon: "handcuffs",
+    always_visible: false,
+    priority: 1,
+  },
+  {
+    codes: ["DI-00-00-00-00"],
+    name: "Disaster",
+    long_name: "Disaster Relief",
+    icon: "house-fire",
+    always_visible: false,
+    priority: 1,
+  },
+  {
+    codes: ["ED-00-00-00-00"],
+    name: "Education",
+    long_name: "School and Education",
+    icon: "user-graduate",
+    always_visible: false,
+    priority: 50,
+  },
+  {
+    codes: ["EN-00-00-00-00"],
+    name: "Environment",
+    long_name: "Environmental Justice",
+    icon: "seedling",
+    always_visible: false,
+    priority: 1,
+  },
+  {
+    codes: ["ES-00-00-00-00"],
+    name: "Wills",
+    long_name: "Estates, Wills and Guardianships",
+    icon: "file-signature",
+    always_visible: false,
+    priority: 50,
+  },
+  {
+    codes: ["GO-00-00-00-00"],
+    name: "Government",
+    long_name: "Government Services",
+    icon: "building-columns",
+    always_visible: false,
+    priority: 1,
+  },
+  {
+    codes: ["HE-00-00-00-00"],
+    name: "Health",
+    long_name: "Health",
+    icon: "user-doctor",
+    always_visible: true,
+    priority: 50,
+  },
+  {
+    codes: ["IM-00-00-00-00"],
     name: "Immigration",
     long_name: "Immigration",
     icon: "passport",
+    always_visible: false,
+    priority: 50,
   },
   {
-    code: "JU-00-00-00-00",
+    codes: ["JU-00-00-00-00"],
     name: "Juvenile",
     long_name: "Juvenile",
     icon: "children",
+    always_visible: false,
+    priority: 50,
   },
   {
-    code: "NA-00-00-00-00",
+    codes: ["NA-00-00-00-00"],
     name: "Native",
     long_name: "Native American and Tribal Law",
     icon: "earth-americas",
+    always_visible: false,
+    priority: 1,
   },
   {
-    code: "TO-00-00-00-00",
+    codes: ["TO-00-00-00-00"],
     name: "Torts",
     icon: "person-falling-burst",
     long_name: "Torts and Personal Injury",
+    always_visible: false,
+    priority: 1,
   },
   {
-    code: "TR-00-00-00-00",
+    codes: ["TR-00-00-00-00"],
     name: "Traffic",
     long_name: "Traffic and Cars",
     icon: "car-burst",
+    always_visible: false,
+    priority: 60,
   },
   {
-    code: "VE-00-00-00-00",
+    codes: ["VE-00-00-00-00"],
     name: "Veterans",
     long_name: "Veterans and Military",
     icon: "flag-usa",
+    always_visible: false,
+    priority: 60,
   },
   {
-    code: "WO-00-00-00-00",
+    codes: ["WO-00-00-00-00"],
     name: "Employment",
     long_name: "Employment",
     icon: "briefcase",
+    always_visible: true,
+    priority: 60,
   },
   {
-    code: "CO-07-02-00-00",
+    codes: ["CO-07-02-00-00"],
     name: "Appeals",
     long_name: "Appeals",
     icon: "table-list",
+    always_visible: true,
+    priority: 10,
   },
-  {
-    code: "FA-07-00-00-00",
-    name: "DV",
-    long_name: "Protection from Abuse and Domestic Violence",
-    icon: "heart-crack",
-  }
 ];
 
 function findParentTopic(tag: string) {
   // Remove trailing sections of "-00" from the tag
-  const cleanedTag = tag.replace(/(-00)+$/, '');
+  const cleanedTag = tag.replace(/(-00)+$/, "");
 
   // Find the first topic that starts with the same characters as the cleaned tag
-  const parentTopic = legalTopics.find((topic) => 
-    cleanedTag.startsWith(topic.code.replace(/(-00)+$/, ''))
+  const parentTopic = legalTopics.find((topic) =>
+    cleanedTag.startsWith(topic.codes[0].replace(/(-00)+$/, ""))
   );
 
   return parentTopic; // This will be undefined if no matching topic is found
 }
-
 
 module.exports = { legalTopics, findParentTopic };

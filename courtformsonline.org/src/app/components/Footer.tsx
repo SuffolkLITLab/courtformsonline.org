@@ -8,7 +8,9 @@ export default function Footer() {
             <div className="col">
                 <p className="text-muted">About the Project</p>
                 <p>
-                We are a collection of volunteers operating out of Suffolk Law's Legal Innovation and Technology Lab in cooperation with the Massachusetts Access to Justice Commission's COVID-19 task force. We are thankful to those organizations and businesses who have donated the time of their members/employees. We are also thankful to those volunteers who have given generously of their own time.{' '}
+                Court Forms Online is operated by Suffolk University Law School's Legal Innovation and Technology Lab.
+                It began as a volunteer project in cooperation with the Massachusetts Access to Justice Commission's COVID-19 task force and volunteers
+                from around the world. {" "}
                 <Link href="/about">
                     Learn more...
                 </Link>

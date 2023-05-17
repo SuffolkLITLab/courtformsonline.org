@@ -108,6 +108,39 @@ a {
 
 /*********************** Suffolk-added styles **********************/
 
+#hero-section {
+  background-color: #c3ecf3;
+  padding-top: 5em;
+  padding-bottom: 2em;
+}
+
+#topics {
+  background-color: #3e7d9a;
+  padding: 1em;
+  padding-top: 5em;
+  padding-bottom: 2em;
+}
+
+#topics .card-header, #topics .card-body {
+  background-color: #c3ecf3;
+}
+
+#topics .card-header {
+  border-bottom: none;
+}
+
+.form-tag {
+  padding: 5px 5px;  
+  border-radius: 5px;  
+  background-color: #3e7d9a;  
+  color: white;
+  display: inline-block;
+  margin-right: 10px; 
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+
 .topic-card {
   transition: all 0.2s ease-in-out;
 }
@@ -122,8 +155,8 @@ a {
 }
 
 .topic-card .icon-container {
-  color: #007bff;
-  padding: .5em;
+  background-color: #3e7d9a;
+  padding: .2em;
 }
 
 .topic-card .card-title {
@@ -144,7 +177,7 @@ a {
 }
 
 @font-face {
-  font-family: 'Inter Bold';
+  font-family: 'Inter';
   src: url('/fonts/Inter-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
@@ -152,15 +185,12 @@ a {
 
 
 h1, h2, h3, h4, h5, .logo-text {
-  font-family: "Inter Bold", Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-weight: 600;
 }
 
-#topics {
-  background-color: #EEEEEE;
-  padding: 2em;
+body {
+  font-family: "Inter";
 }
 
-#hero-left {
-  background-color: #e6ecfc;
-}
+
