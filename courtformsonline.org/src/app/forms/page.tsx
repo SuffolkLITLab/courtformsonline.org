@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { GetStaticProps } from 'next';
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
 import serverList from '../../../formSources.config.js';

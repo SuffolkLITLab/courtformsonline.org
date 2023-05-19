@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-const { legalTopics, findParentTopic } = require('../../../topics.config.ts');
+const { legalTopics, Topic, findParentTopic } = require('../../../topics.config.ts');
 
 
 interface PageProps {
@@ -13,7 +13,7 @@ const Page: NextPage<PageProps> = ({ params }) => {
 };
 
 export async function generateStaticParams() {
-  return legalTopics.map(topic => {topic: topic.name});
+  return legalTopics.map((topic: typeof Topic)  => {topic: topic.name});
 }
 
 export const dynamicParams = false; // true | false,

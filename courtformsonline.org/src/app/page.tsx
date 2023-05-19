@@ -2,15 +2,9 @@ import Link from "next/link";
 import React from "react";
 import HeroSection from "./components/HeroSection";
 import HowItWorksSection from "./components/HowItWorksSection";
+import { Topic } from "../../topics.config";
 
 const { legalTopics, findParentTopic } = require("../../topics.config.ts");
-
-interface Topic {
-  code: string;
-  name: string;
-  long_name: string;
-  icon: string;
-}
 
 interface IconProps {
   iconName: string;
@@ -81,10 +75,10 @@ export default function TopicsPage() {
           <h2>Browse court forms by category</h2>
           <div className="row row-cols-1 row-cols-md-3 g-5">
             {legalTopics
-              .sort((a, b) => (a.priority < b.priority ? 1 : -1))
-              .filter((topic) => topic.always_visible)
+              .sort((a: Topic, b: Topic) => (a.priority < b.priority ? 1 : -1))
+              .filter((topic: Topic) => topic.always_visible)
               .map((topic: Topic) => (
-                <TopicCard key={topic.code} topic={topic} />
+                <TopicCard key={topic.codes[0]} topic={topic} />
               ))}
           </div>
           <Link href="#">Show all categories</Link>
