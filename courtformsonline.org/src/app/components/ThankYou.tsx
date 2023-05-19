@@ -117,7 +117,7 @@ export default function ThankYou() {
         <div className="row row-cols-1 row-cols-md-6 g-4 mt-4">
           {organizations.map((org) => {
             return (
-              <div className="col">
+              <div className="col" key={org.name}>
                 <Link href={org.url}>
                 <Image
                   src={"/partners/" + org.icon}

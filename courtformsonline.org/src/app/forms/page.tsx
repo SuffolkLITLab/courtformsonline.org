@@ -51,7 +51,7 @@ export default async function Page() {
     <div className="container">
     <div>
       {forms.map((form) => (
-        <InteractiveForm {...form} />
+        <InteractiveForm {...form} key={form.id}/>
       ))}
     </div>
     </div>
