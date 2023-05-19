@@ -62,7 +62,7 @@ const TopicCard = ({ topic }: { topic: Topic }) => (
         <div className="card-body">
           {getRandomItems(fakeFormNames, 2, 5)
           .map((form:string) => (
-            <span className="form-tag">{form}</span>
+            <span key={form} className="form-tag">{form}</span>
           ))
           }
         </div>
