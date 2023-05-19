@@ -3,9 +3,9 @@ import { faEnvelope, faMagnifyingGlass, faList } from '@fortawesome/free-solid-s
 
 export default function HowItWorksSection() {
   return (
-    <section className="py-5">
+    <section id="how-it-works-section" className="py-5">
       <div className="container">
-        <h2 className="text-center mb-4">How It Works</h2>
+        <h2 className="mb-4">How It Works</h2>
         <div className="row">
           <div className="col-md-4">
             <div className="d-flex align-items-start">
@@ -15,7 +15,7 @@ export default function HowItWorksSection() {
               <div className="ms-3">
                 <h3>Step 1</h3>
                 <p>
-                  Choose a category above and select the form you need to fill out.
+                  Describe your problem or choose a category to find the form you need.
                 </p>
               </div>
             </div>

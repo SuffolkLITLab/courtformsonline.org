@@ -110,8 +110,25 @@ a {
 
 #hero-section {
   background-color: #c3ecf3;
-  padding-top: 5em;
-  padding-bottom: 2em;
+  padding-top: 10em;
+  padding-bottom: 10em;
+}
+
+#hero-section h1 {
+  font-size: 3em;
+  margin-bottom: 1em;
+}
+
+#hero-section textarea {
+  min-height: 8em;
+}
+
+#how-it-works-section {
+  padding: 5em 0 5em 0;
+}
+
+footer {
+  background-color: #c3ecf3;
 }
 
 #topics {
@@ -121,8 +138,12 @@ a {
   padding-bottom: 2em;
 }
 
-#topics .card-header, #topics .card-body {
-  background-color: #c3ecf3;
+#topics .card-header {
+  background-color: #1f3861;
+}
+
+#topics .card-body {
+  background-color: #fff;
 }
 
 #topics .card-header {
@@ -130,19 +151,25 @@ a {
 }
 
 .form-tag {
-  padding: 5px 5px;  
+  transition: all 0.1s ease-in-out;
+  padding: 10px 10px;  
   border-radius: 5px;  
   background-color: #3e7d9a;  
   color: white;
   display: inline-block;
   margin-right: 10px; 
   font-size: 14px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.form-tag:hover {
+  transform: scale(1.05);
 }
 
 
 .topic-card {
   transition: all 0.2s ease-in-out;
+  color: white;
 }
 
 .topic-card:hover {
@@ -151,11 +178,11 @@ a {
 }
 
 .topic-card .fa-icon {
-  color: whitesmoke; 
+  color: #c69931; 
 }
 
 .topic-card .icon-container {
-  background-color: #3e7d9a;
+  background-color: inherit;
   padding: .2em;
 }
 
@@ -166,6 +193,10 @@ a {
 .courtformsonline-navbar {
   background-color: #002E60;
   height: 70px;
+}
+
+.courtformsonline-navbar .nav-link {
+  color: white;
 }
 
 .logo-image {
@@ -187,6 +218,10 @@ a {
 h1, h2, h3, h4, h5, .logo-text {
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-weight: 600;
+}
+
+h1, h2, h3, h4, h5 {
+  margin-top: 2em;
 }
 
 body {

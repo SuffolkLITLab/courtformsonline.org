@@ -17,7 +17,7 @@ interface IconProps {
   className: string;
 }
 
-const FontAwesomeIcon: React.FC<IconProps> = ({ iconName, className }) => {
+const FontAwesomeIcon: React.FC<IconProps> = ({ iconName, className = "" }) => {
   return <i className={`fas fa-${iconName} ${className}`}></i>;
 };
 
@@ -52,10 +52,10 @@ const TopicCard = ({ topic }: { topic: Topic }) => (
       href={`/${topic.name.toLowerCase()}`}
       className="text-decoration-none text-dark"
     >
-      <div className="card m-1 topic-card">
+      <div className="card m-1 topic-card h-100">
         <div className="card-header d-flex align-items-center">
           <div style={{minWidth: '30px', minHeight: '30px'}} className="icon-container  d-inline-flex justify-content-center align-items-center rounded">
-            <FontAwesomeIcon iconName={topic.icon} className="text-white" />
+            <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
           </div>
           <h5 className="card-title ms-3">{topic.long_name}</h5>
         </div>
@@ -75,10 +75,11 @@ export default function TopicsPage() {
   return (
     <div>
       <HeroSection />
+      <HowItWorksSection />
       <section id="topics">
         <div className="container">
           <h2>Browse court forms by category</h2>
-          <div className="row">
+          <div className="row row-cols-1 row-cols-md-3 g-5">
             {legalTopics
               .sort((a, b) => (a.priority < b.priority ? 1 : -1))
               .filter((topic) => topic.always_visible)
@@ -89,8 +90,21 @@ export default function TopicsPage() {
           <Link href="#">Show all categories</Link>
         </div>
       </section>
-
-      <HowItWorksSection />
+      <div className="container">
+      <div className="row mt-4">
+            <div className="col">
+              <h2>About</h2>
+                <p>
+                Court Forms Online is operated by Suffolk University Law School's Legal Innovation and Technology Lab.
+                It began as a volunteer project in cooperation with the Massachusetts Access to Justice Commission's COVID-19 task force and volunteers
+                from around the world. {" "}
+                <Link href="/about">
+                    Learn more...
+                </Link>
+                </p>
+            </div>
+        </div>
+        </div>
     </div>
   );
 }
