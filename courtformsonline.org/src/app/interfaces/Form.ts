@@ -1,7 +1,9 @@
 export interface Form {
     id: string;
     title: string;
-    description: string;
+    metadata: {
+      description: string;
+    };
     link: string;
     serverUrl: string;
   }

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLanguage } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function NavigationBar() {
   return (
@@ -30,7 +33,7 @@ export default function NavigationBar() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Language
+                <i className="fas fa-language fa-lg"></i> Language
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
@@ -40,10 +43,15 @@ export default function NavigationBar() {
                 </li>
                 <li>
                   <Link href="#" className="dropdown-item">
-                    Spanish
+                    Español
                   </Link>
                 </li>
               </ul>
+            </li>
+            <li className="nav-item">
+              <Link href="/forms" className="nav-link">
+                Forms
+              </Link>
             </li>
             <li className="nav-item">
               <Link href="/news" className="nav-link">
@@ -52,7 +60,7 @@ export default function NavigationBar() {
             </li>
             <li className="nav-item">
               <Link href="/about" className="nav-link">
-                About Us
+                About us
               </Link>
             </li>
           </ul>

@@ -48,7 +48,7 @@ const TopicCard = ({ topic }: { topic: Topic }) => (
     >
       <div className="card m-1 topic-card h-100">
         <div className="card-header d-flex align-items-center">
-          <div style={{minWidth: '30px', minHeight: '30px'}} className="icon-container  d-inline-flex justify-content-center align-items-center rounded">
+          <div style={{minWidth: '40px', minHeight: '40px'}} className="icon-container  d-inline-flex justify-content-center align-items-center rounded">
             <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
           </div>
           <h5 className="card-title ms-3">{topic.long_name}</h5>
@@ -59,6 +59,7 @@ const TopicCard = ({ topic }: { topic: Topic }) => (
             <span key={form} className="form-tag">{form}</span>
           ))
           }
+          <span className="form-tag">+2</span>
         </div>
       </div>
     </Link>
