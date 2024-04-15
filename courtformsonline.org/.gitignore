@@ -33,3 +33,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/cache
+!.yarn/plugins
+!.yarn/versions
+
+# Ignore specific Yarn state files
+.yarn/*.yml
+.yarn/*.gz

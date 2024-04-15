@@ -1,0 +1,11 @@
+# dependencies & GHA
+.github
+.yarn
+node_modules
+yarn.lock
+.yarnrc.yml
+
+# static outputs
+public
+.next
+out

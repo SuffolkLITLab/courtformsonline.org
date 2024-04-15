@@ -7,7 +7,7 @@ export interface Topic {
   priority: number;
 }
 
-const legalTopics: Topic[] = [
+export const legalTopics: Topic[] = [
   {
     codes: ["HO-00-00-00-00"],
     name: "Housing",
@@ -178,7 +178,7 @@ const legalTopics: Topic[] = [
   },
 ];
 
-function findParentTopic(tag: string) {
+export function findParentTopic(tag: string) {
   // Remove trailing sections of "-00" from the tag
   const cleanedTag = tag.replace(/(-00)+$/, "");
 
@@ -189,5 +189,3 @@ function findParentTopic(tag: string) {
 
   return parentTopic; // This will be undefined if no matching topic is found
 }
-
-module.exports = { legalTopics, findParentTopic };
