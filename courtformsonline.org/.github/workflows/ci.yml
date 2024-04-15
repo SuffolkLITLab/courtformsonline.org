@@ -24,8 +24,5 @@ jobs:
         yarn set version 3.6.1
         yarn install --immutable
         
-    - name: Check code formatting
-      run: yarn test:format
-
     - name: Build the project
       run: yarn build

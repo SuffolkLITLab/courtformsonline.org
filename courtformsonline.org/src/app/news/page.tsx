@@ -1,9 +1,3 @@
 export default function NewsPage() {
-    return (
-        <div className="container">
-            Hello, News
-        </div>
-        
-    )
+  return <div className="container">Hello, News</div>;
 }
-
