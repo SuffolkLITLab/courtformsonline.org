@@ -1,14 +1,17 @@
-import Link from "next/link";
+import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
-
 
 export default function NavigationBar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark courtformsonline-navbar">
       <div className="container">
-        <Link href="/"  className="navbar-brand d-flex align-items-center" >
-            <img src="/lit_logo_light.png" alt="Logo" className="logo-image me-2" />
+        <Link href="/" className="navbar-brand d-flex align-items-center">
+          <img
+            src="/lit_logo_light.png"
+            alt="Logo"
+            className="logo-image me-2"
+          />
           <span className="logo-text">Court Forms Online</span>
         </Link>
         <button

@@ -1,42 +1,42 @@
-import Link from "next/link";
-import React from "react";
-import HeroSection from "./components/HeroSection";
-import HowItWorksSection from "./components/HowItWorksSection";
-import { Topic } from "../../topics.config";
+import Link from 'next/link';
+import React from 'react';
+import HeroSection from './components/HeroSection';
+import HowItWorksSection from './components/HowItWorksSection';
+import { Topic } from '../../topics.config';
 
-const { legalTopics, findParentTopic } = require("../../topics.config.ts");
+const { legalTopics, findParentTopic } = require('../../topics.config.ts');
 
 interface IconProps {
   iconName: string;
   className: string;
 }
 
-const FontAwesomeIcon: React.FC<IconProps> = ({ iconName, className = "" }) => {
+const FontAwesomeIcon: React.FC<IconProps> = ({ iconName, className = '' }) => {
   return <i className={`fas fa-${iconName} ${className}`}></i>;
 };
 
 const fakeFormNames = [
-  "Fee waiver",
-  "209A Domestic Violence Restraining Order",
-  "Enlarge Time to File (Appeals Court)",
-  "Appeal or Stay Your Eviction",
-  "Eviction Moratorium",
-  "Civil Docketing Statement",
-  "Massachusetts Defense for Eviction (MADE)",
-  "Dismiss your CRA case",
-  "Interpreter Notice",
-  "Petition to Change Name of Adult",
-]
+  'Fee waiver',
+  '209A Domestic Violence Restraining Order',
+  'Enlarge Time to File (Appeals Court)',
+  'Appeal or Stay Your Eviction',
+  'Eviction Moratorium',
+  'Civil Docketing Statement',
+  'Massachusetts Defense for Eviction (MADE)',
+  'Dismiss your CRA case',
+  'Interpreter Notice',
+  'Petition to Change Name of Adult',
+];
 
 const getRandomItems = (arr: Array<string>, min: number, max: number) => {
   const newArr = [...arr]; // Copy array to avoid mutating the original one.
   let count = Math.floor(min + Math.random() * (max - min + 1));
   let result: Array<string> = [];
   while (count--) {
-      result.push(newArr.splice(Math.floor(Math.random() * newArr.length), 1)[0]);
+    result.push(newArr.splice(Math.floor(Math.random() * newArr.length), 1)[0]);
   }
   return result;
-}
+};
 
 // const formPill
 
@@ -48,17 +48,20 @@ const TopicCard = ({ topic }: { topic: Topic }) => (
     >
       <div className="card m-1 topic-card h-100">
         <div className="card-header d-flex align-items-center">
-          <div style={{minWidth: '40px', minHeight: '40px'}} className="icon-container  d-inline-flex justify-content-center align-items-center rounded">
+          <div
+            style={{ minWidth: '40px', minHeight: '40px' }}
+            className="icon-container  d-inline-flex justify-content-center align-items-center rounded"
+          >
             <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
           </div>
           <h5 className="card-title ms-3">{topic.long_name}</h5>
         </div>
         <div className="card-body">
-          {getRandomItems(fakeFormNames, 2, 5)
-          .map((form:string) => (
-            <span key={form} className="form-tag">{form}</span>
-          ))
-          }
+          {getRandomItems(fakeFormNames, 2, 5).map((form: string) => (
+            <span key={form} className="form-tag">
+              {form}
+            </span>
+          ))}
           <span className="form-tag">+2</span>
         </div>
       </div>
@@ -86,20 +89,19 @@ export default function TopicsPage() {
         </div>
       </section>
       <div className="container">
-      <div className="row mt-4">
-            <div className="col">
-              <h2>About</h2>
-                <p>
-                Court Forms Online is operated by Suffolk University Law School's Legal Innovation and Technology Lab.
-                It began as a volunteer project in cooperation with the Massachusetts Access to Justice Commission's COVID-19 task force and volunteers
-                from around the world. {" "}
-                <Link href="/about">
-                    Learn more...
-                </Link>
-                </p>
-            </div>
+        <div className="row mt-4">
+          <div className="col">
+            <h2>About</h2>
+            <p>
+              Court Forms Online is operated by Suffolk University Law School's
+              Legal Innovation and Technology Lab. It began as a volunteer
+              project in cooperation with the Massachusetts Access to Justice
+              Commission's COVID-19 task force and volunteers from around the
+              world. <Link href="/about">Learn more...</Link>
+            </p>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
   );
 }
