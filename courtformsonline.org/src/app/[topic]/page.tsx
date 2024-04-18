@@ -1,9 +1,5 @@
-import { NextPage } from 'next';
-const {
-  legalTopics,
-  Topic,
-  findParentTopic,
-} = require('../../../topics.config.ts');
+import { GetStaticPathsResult } from 'next';
+import { legalTopics, Topic } from '../../../topics.config';
 
 interface PageProps {
   params: {
@@ -11,16 +7,15 @@ interface PageProps {
   };
 }
 
-const Page: NextPage<PageProps> = ({ params }) => {
-  return <div>Topic: {params.topic} </div>;
+const Page = ({ params }: PageProps) => {
+  const { topic } = params;
+  return <div>Topic: {topic}</div>;
 };
 
-export async function generateStaticParams() {
-  return legalTopics.map((topic: typeof Topic) => {
-    topic: topic.name;
-  });
-}
-
-export const dynamicParams = false; // true | false,
-
 export default Page;
+
+export async function generateStaticParams() {
+  return legalTopics.map((topic) => ({
+    topic: topic.name.toLowerCase(),
+  }));
+}
