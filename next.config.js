@@ -9,6 +9,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async rewrites() {
+    return [
+      {
+        // This will match anything after /api/ and proxy it to your backend server
+        source: '/api/:path*', // Matches all API requests
+        destination: 'https://apps.suffolklitlab.org/:path*', // Proxy to Backend, maintaining the path and query
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

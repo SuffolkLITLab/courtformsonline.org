@@ -1,5 +1,5 @@
 import { GetStaticPathsResult } from 'next';
-import { legalTopics, Topic } from '../../../topics.config';
+import { legalTopics, Topic } from '../../config/topics.config';
 
 interface PageProps {
   params: {
