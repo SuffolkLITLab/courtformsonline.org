@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "serve out",
     "lint": "next lint",
     "format": "prettier --write .",
     "test:format": "prettier --check 'src/**/*.js'"
@@ -29,6 +29,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^5.0.1",
     "reactstrap": "^9.1.9",
+    "serve": "^14.2.3",
     "swr": "^2.2.5"
   },
   "devDependencies": {

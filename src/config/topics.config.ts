@@ -13,7 +13,7 @@ export const legalTopics: Topic[] = [
     name: 'Housing',
     long_name: 'Housing',
     icon: 'house',
-    always_visible: true,
+    always_visible: false,
     priority: 100,
   },
   {
@@ -21,7 +21,7 @@ export const legalTopics: Topic[] = [
     name: 'Family',
     long_name: 'Family and Safety',
     icon: 'people-roof',
-    always_visible: true,
+    always_visible: false,
     priority: 90,
   },
   {
@@ -29,7 +29,7 @@ export const legalTopics: Topic[] = [
     name: 'Consumer',
     long_name: 'Money, Debt and Consumer Issues',
     icon: 'money-bill-wave',
-    always_visible: true,
+    always_visible: false,
     priority: 80,
   },
   {
@@ -37,7 +37,7 @@ export const legalTopics: Topic[] = [
     name: 'Benefits',
     long_name: 'Public Benefits',
     icon: 'hand-holding-dollar',
-    always_visible: true,
+    always_visible: false,
     priority: 70,
   },
   {
@@ -53,7 +53,7 @@ export const legalTopics: Topic[] = [
     name: 'Courts',
     long_name: 'Court and Hearings',
     icon: 'gavel',
-    always_visible: true,
+    always_visible: false,
     priority: 1,
   },
   {
@@ -109,7 +109,7 @@ export const legalTopics: Topic[] = [
     name: 'Health',
     long_name: 'Health',
     icon: 'user-doctor',
-    always_visible: true,
+    always_visible: false,
     priority: 50,
   },
   {
@@ -165,7 +165,7 @@ export const legalTopics: Topic[] = [
     name: 'Employment',
     long_name: 'Employment',
     icon: 'briefcase',
-    always_visible: true,
+    always_visible: false,
     priority: 60,
   },
   {
@@ -173,7 +173,7 @@ export const legalTopics: Topic[] = [
     name: 'Appeals',
     long_name: 'Appeals',
     icon: 'table-list',
-    always_visible: true,
+    always_visible: false,
     priority: 10,
   },
   {

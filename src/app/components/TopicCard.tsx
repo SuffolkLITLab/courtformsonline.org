@@ -6,14 +6,25 @@ interface TopicCardProps {
     long_name: string;
     icon: string;
   };
-  interviews: any;
+  interviews: any[];
 }
 
-const FontAwesomeIcon: React.FC<IconProps> = ({ iconName, className = '' }) => {
-  return <i className={`fas fa-${iconName} ${className}`}></i>;
+interface IconProps {
+  iconName: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const FontAwesomeIcon = ({ iconName, className = '' }: IconProps) => {
+  return <i className={`fas fa-${iconName} ${className}`} style={{ minWidth: '40px', minHeight: '40px' }}></i>;
 };
 
-const TopicCard = ({ topic, interviews }) => {
+const TopicCard = ({ topic, interviews }: TopicCardProps) => {
+
+  // Display the first 3 interviews, and show a final tag with how many remaining interviews are not shown
+  const displayInterviews = interviews.slice(0, 3);
+  const extraCount = interviews.length > 3 ? interviews.length - 3 : 0;
+
   return (
     <div className="col-lg-4">
       <Link
@@ -30,15 +41,12 @@ const TopicCard = ({ topic, interviews }) => {
             <h5 className="card-title ms-3">{topic.long_name}</h5>
           </div>
           <div className="card-body">
-            {interviews.length > 0 ? (
-              interviews.map((interview, index) => (
-                <span key={index} className="form-tag">
-                  {interview.metadata.title}
-                </span>
-              ))
-            ) : (
-              <p>No interviews available.</p>
-            )}
+            {displayInterviews.map((interview, index) => (
+              <span key={index} className="form-tag">
+                {interview.metadata.title}
+              </span>
+            ))}
+            {extraCount > 0 && <span className="form-tag">+{extraCount}</span>}
           </div>
         </div>
       </Link>
