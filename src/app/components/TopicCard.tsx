@@ -16,11 +16,10 @@ interface IconProps {
 }
 
 const FontAwesomeIcon = ({ iconName, className = '' }: IconProps) => {
-  return <i className={`fas fa-${iconName} ${className}`} style={{ minWidth: '40px', minHeight: '40px' }}></i>;
+  return <i className={`fas fa-${iconName} ${className}`}></i>;
 };
 
 const TopicCard = ({ topic, interviews }: TopicCardProps) => {
-
   // Display the first 3 interviews, and show a final tag with how many remaining interviews are not shown
   const displayInterviews = interviews.slice(0, 3);
   const extraCount = interviews.length > 3 ? interviews.length - 3 : 0;
@@ -33,11 +32,12 @@ const TopicCard = ({ topic, interviews }: TopicCardProps) => {
       >
         <div className="card m-1 topic-card h-100">
           <div className="card-header d-flex align-items-center">
-            <FontAwesomeIcon
-              iconName={topic.icon}
-              className="fa-icon"
+            <div
               style={{ minWidth: '40px', minHeight: '40px' }}
-            />
+              className="icon-container d-inline-flex justify-content-center align-items-center rounded"
+            >
+              <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
+            </div>
             <h5 className="card-title ms-3">{topic.long_name}</h5>
           </div>
           <div className="card-body">
