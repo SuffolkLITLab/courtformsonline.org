@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import TopicsPage from '../src/app/page';
-import RootLayout from '../src/app/layout'
+import RootLayout from '../src/app/layout';
 
 describe('Layout component', () => {
   beforeEach(() => {

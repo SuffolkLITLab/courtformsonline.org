@@ -1,5 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "ignorePatterns": ["__mocks__/*"],
   "rules": {
     "react/no-unescaped-entities": 0
   }
