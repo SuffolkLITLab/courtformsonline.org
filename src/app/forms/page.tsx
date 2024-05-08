@@ -1,6 +1,6 @@
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
-import serverList from '../../../formSources.config.js';
+import { formSources } from '../../config/formSources.config';
 
 interface LegalFormsPageProps {
   forms: Form[];
@@ -9,33 +9,34 @@ interface LegalFormsPageProps {
 async function getData() {
   let allData: Form[] = [];
 
-  for (const [serverName, serverUrl] of Object.entries(
-    serverList['docassemble servers']
-  )) {
-    const url = new URL(serverUrl);
+  // Iterating over an array of server objects
+  for (const server of formSources.docassembleServers) {
+    const url = new URL(server.url); // Access the URL directly from the server object
     url.pathname = '/list';
     url.search = 'json=1';
 
-    const res = await fetch(url);
+    const res = await fetch(url.toString());
 
-    // Recommendation: handle errors
+    // Handle errors
     if (!res.ok) {
-      console.error(`Failed to fetch data from ${serverUrl}`);
+      console.error(`Failed to fetch data from ${server.url}`);
       continue; // Skip this server and continue with the next one
     }
 
     const data = await res.json();
 
     if (!data.hasOwnProperty('interviews')) {
-      console.error(`Data from ${serverUrl} does not contain "interviews" key`);
+      console.error(
+        `Data from ${server.url} does not contain "interviews" key`
+      );
       continue; // Skip this server and continue with the next one
     }
 
-    // If you want to include the server name and server URL in the data:
+    // Include the server name and server URL in the data
     const interviews = data['interviews'].map((interview: Form) => ({
       ...interview,
-      serverName,
-      serverUrl,
+      serverName: server.name,
+      serverUrl: server.url,
     }));
 
     allData = allData.concat(interviews);
