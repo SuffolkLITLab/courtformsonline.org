@@ -4,7 +4,10 @@ import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavigationBar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark courtformsonline-navbar">
+    <nav
+      role="navigation"
+      className="navbar navbar-expand-lg navbar-dark courtformsonline-navbar"
+    >
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
           <img

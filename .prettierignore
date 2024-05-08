@@ -9,3 +9,6 @@ yarn.lock
 public
 .next
 out
+
+# Ignore all JavaScript files in the __mocks__ directory
+__mocks__/*.js

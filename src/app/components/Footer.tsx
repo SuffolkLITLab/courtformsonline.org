@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="text-center py-4">
+    <footer role="contentinfo" className="text-center py-4">
       <div className="container">
         <div className="row">
           <div className="col">
