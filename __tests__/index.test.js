@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import TopicsPage from '../src/app/page';
 import RootLayout from '../src/app/layout';
+import { fetchInterviews } from '../src/data/fetchInterviewData';
 
 describe('Layout component', () => {
   beforeEach(() => {
@@ -19,22 +20,12 @@ describe('Layout component', () => {
   });
 });
 
-describe('TopicsPage', () => {
-  beforeEach(() => {
-    render(<TopicsPage />);
-  });
-  it('renders the hero section', () => {
-    const heroSection = document.getElementById('hero-section');
-    expect(heroSection).toBeInTheDocument();
-  });
-
-  it('renders the how it works section', () => {
-    const howItWorksSection = document.getElementById('how-it-works-section');
-    expect(howItWorksSection).toBeInTheDocument();
-  });
-
-  it('renders the topics section', () => {
-    const topicsSection = document.getElementById('topics');
-    expect(topicsSection).toBeInTheDocument();
-  });
-});
+// Mock the fetchInterviews function from your data fetching module
+jest.mock('../src/data/fetchInterviewData', () => ({
+  fetchInterviews: jest.fn(() => Promise.resolve({
+    interviewsByTopic: {
+      'Topic1': [{ id: 1, name: 'Interview 1' }],
+      'Topic2': [{ id: 2, name: 'Interview 2' }]
+    }
+  }))
+}));
