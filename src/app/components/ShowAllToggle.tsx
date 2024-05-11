@@ -6,10 +6,12 @@ const ShowAllToggle = () => {
   const [showAll, setShowAll] = useState(false);
 
   const handleToggle = () => {
-    const topics = document.querySelectorAll('.topic-card-parent');
+    const topics = document.querySelectorAll(
+      '.topic-card-parent'
+    ) as NodeListOf<HTMLElement>;
     setShowAll(!showAll);
     topics.forEach((topic, index) => {
-      if (index > 8) {
+      if (index > 9) {
         if (topic.style.display === 'none' || !topic.style.display) {
           topic.style.display = 'block';
         } else {

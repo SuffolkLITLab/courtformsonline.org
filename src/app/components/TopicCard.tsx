@@ -7,8 +7,11 @@ interface TopicCardProps {
     name: string;
     long_name: string;
     icon: string;
+    codes: any[];
   };
   interviews: any[];
+  index: number;
+  serverUrl: string;
 }
 
 interface IconProps {
