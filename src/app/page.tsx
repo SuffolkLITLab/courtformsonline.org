@@ -34,7 +34,7 @@ export default async function TopicsPage() {
         <div className="container">
           <h2>Browse court forms by category</h2>
           <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
-            {filteredTopics.slice(0, 9).map((topic, index) => (
+            {filteredTopics.map((topic, index) => (
               <TopicCard
                 key={topic.codes[0]}
                 topic={topic}
