@@ -11,7 +11,7 @@ const ShowAllToggle = () => {
     ) as NodeListOf<HTMLElement>;
     setShowAll(!showAll);
     topics.forEach((topic, index) => {
-      if (index > 9) {
+      if (index > 8) {
         if (topic.style.display === 'none' || !topic.style.display) {
           topic.style.display = 'block';
         } else {
