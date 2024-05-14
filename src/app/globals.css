@@ -89,11 +89,11 @@ footer {
 
 .topic-card .fa-icon {
   font-size: 1.3em;
-  color: #e9c539;
+  color: #fdb714;
 }
 
 .topic-card .icon-container {
-  background-color: #2e4d82;
+  background-color: #162a47;
   padding: 0.2em;
 }
 
@@ -113,7 +113,7 @@ footer {
 
 .show-more {
   cursor: pointer;
-  color: #2e4d82;
+  color: #162a47;
   font-size: 0.8em;
   display: flex;
   align-items: center;
@@ -135,6 +135,12 @@ footer {
   margin-left: 5px;
 }
 
+#nav-header-text {
+  color: #002e60;
+  align-self: end;
+  margin-bottom: -5px;
+}
+
 .show-container {
   display: flex;
   flex-direction: row;
@@ -142,7 +148,13 @@ footer {
 }
 
 .courtformsonline-navbar {
-  background-color: #002e60;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    #fbfafe 30%,
+    rgba(0, 28, 96, 1) 30%,
+    rgba(0, 46, 96, 1) 30%
+  );
   height: 70px;
 }
 
@@ -190,4 +202,16 @@ h5 {
 
 body {
   font-family: 'Inter';
+}
+
+@media (max-width: 990px) {
+  .courtformsonline-navbar {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+      90deg,
+      #fbfafe 75%,
+      rgba(0, 28, 96, 1) 75%,
+      rgba(0, 46, 96, 1) 75%
+    );
+  }
 }
