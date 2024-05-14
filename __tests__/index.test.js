@@ -22,10 +22,12 @@ describe('Layout component', () => {
 
 // Mock the fetchInterviews function from your data fetching module
 jest.mock('../src/data/fetchInterviewData', () => ({
-  fetchInterviews: jest.fn(() => Promise.resolve({
-    interviewsByTopic: {
-      'Topic1': [{ id: 1, name: 'Interview 1' }],
-      'Topic2': [{ id: 2, name: 'Interview 2' }]
-    }
-  }))
+  fetchInterviews: jest.fn(() =>
+    Promise.resolve({
+      interviewsByTopic: {
+        Topic1: [{ id: 1, name: 'Interview 1' }],
+        Topic2: [{ id: 2, name: 'Interview 2' }],
+      },
+    })
+  ),
 }));

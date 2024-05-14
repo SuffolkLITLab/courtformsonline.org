@@ -21,11 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`body-container ${inter.className}`}>
-      <NavigationBar />
-      {children}
-      <Footer />
+    <html lang="en">
+      <body className={inter.className}>
+        <div className="body-container">
+          <NavigationBar />
+
+          {children}
+        </div>
+        <Footer />
+      </body>
       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" />
-    </div>
+    </html>
   );
 }

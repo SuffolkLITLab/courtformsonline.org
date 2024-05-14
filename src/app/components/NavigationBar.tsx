@@ -10,12 +10,10 @@ export default function NavigationBar() {
     >
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
-          <img
-            src="/lit_logo_light.png"
-            alt="Logo"
-            className="logo-image me-2"
-          />
-          <span className="logo-text">Court Forms Online</span>
+          <img src="/logo-short.png" alt="Logo" className="logo-image me-2" />
+          <span id="nav-header-text" className="logo-text">
+            Court Forms Online
+          </span>
         </Link>
         <button
           className="navbar-toggler"
