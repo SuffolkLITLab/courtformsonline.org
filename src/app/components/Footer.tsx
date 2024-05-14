@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,10 +8,12 @@ export default function Footer() {
         <div className="row">
           <div className="col">
             <a href="https://suffolk.edu">
-              <img
+              <Image
                 src="/suffolk_law.png"
                 alt="Suffolk University Law School"
                 className="img-fluid mb-2 suffolk-logo"
+                width={497}
+                height={70}
               />
             </a>
           </div>
