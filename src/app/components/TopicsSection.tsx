@@ -29,13 +29,14 @@ const TopicsSection = async ({ jurisdiction }) => {
       <div className="container">
         <h2>Browse court forms by category</h2>
         <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
-          {filteredTopics.map((topic) => (
+          {filteredTopics.map((topic, index) => (
             <TopicCard
               key={topic.codes[0]}
               topic={topic}
               interviews={interviewsByTopic[topic.name] || []}
               jurisdiction={jurisdiction}
               serverUrl={serverUrl}
+              index={index}
             />
           ))}
         </div>
