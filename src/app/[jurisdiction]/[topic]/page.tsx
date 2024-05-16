@@ -4,6 +4,7 @@ import { legalTopics, Topic } from '../../../config/topics.config';
 interface PageProps {
   params: {
     topic: string;
+    jurisdiction: string;
   };
 }
 

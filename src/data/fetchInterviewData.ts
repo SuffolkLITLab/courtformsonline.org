@@ -2,8 +2,12 @@ import { formSources } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
 import { findClosestTopic } from './helpers';
 
-export const fetchInterviews = async () => {
-  const serverUrl = formSources.docassembleServers[0].url;
+export const fetchInterviews = async (jurisdiction) => {
+  const server =
+    formSources.docassembleServers.find(
+      (server) => server.path === jurisdiction
+    ) || formSources.docassembleServers[0];
+  const serverUrl = server.url;
   const url = new URL(`${serverUrl}/list`);
   url.search = 'json=1';
 
@@ -22,14 +26,14 @@ export const fetchInterviews = async () => {
       data.interviews.forEach((interview) => {
         const uniqueTopics = new Set();
 
-        // match topics to config by metadata.LIST_Topic, and tags values
+        // Match topics to config by metadata.LIST_topics and tags values
         (interview.metadata.LIST_topics || [])
           .concat(interview.tags || [])
           .forEach((code) => {
             const topic = findClosestTopic(code, legalTopics);
             if (topic && !uniqueTopics.has(topic.name)) {
               uniqueTopics.add(topic.name);
-              // check if the title already exists in the topic to avoid duplicated titles
+              // Avoid duplicated titles within the same topic
               if (!titlesInTopics[topic.name].has(interview.title)) {
                 interviewsByTopic[topic.name].push(interview);
                 titlesInTopics[topic.name].add(interview.title);
@@ -37,7 +41,7 @@ export const fetchInterviews = async () => {
             }
           });
 
-        // add to other if no matching topic in config
+        // Add to 'Other' if no matching topic found
         if (uniqueTopics.size === 0) {
           interviewsByTopic['Other'] = interviewsByTopic['Other'] || [];
           if (!titlesInTopics['Other'].has(interview.title)) {

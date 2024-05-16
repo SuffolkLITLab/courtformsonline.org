@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
+import { prefix } from '../../../prefix';
 
 export default function NavigationBar() {
   return (
@@ -10,7 +11,11 @@ export default function NavigationBar() {
     >
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
-          <img src="/logo-short.png" alt="Logo" className="logo-image me-2" />
+          <img
+            src={`${prefix}/logo-short.png`}
+            alt="Logo"
+            className="logo-image me-2"
+          />
           <span id="nav-header-text" className="logo-text">
             Court Forms Online
           </span>
