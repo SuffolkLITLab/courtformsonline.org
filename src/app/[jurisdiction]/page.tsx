@@ -13,9 +13,3 @@ const Page = ({ params }: PageProps) => {
 };
 
 export default Page;
-
-export async function generateStaticParams() {
-  return formSources.docassembleServers.map((jurisdiction) => ({
-    jurisdiction: jurisdiction.path.toLowerCase(),
-  }));
-}
