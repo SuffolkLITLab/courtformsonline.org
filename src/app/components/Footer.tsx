@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image'
-import { prefix } from '../../../prefix'
+import Image from 'next/image';
+import { prefix } from '../../../prefix';
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="row">
           <div className="col">
             <a href="https://suffolk.edu">
-            <Image
+              <Image
                 src={`${prefix}/suffolk_law.png`}
                 alt="Suffolk University Law School"
                 className="img-fluid mb-2 suffolk-logo"
