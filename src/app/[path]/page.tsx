@@ -1,21 +1,23 @@
 import HowItWorksSection from '../components/HowItWorksSection';
 import TopicsSection from '../components/TopicsSection';
 import HeroSection from '../components/HeroSection';
+import { fetchInterviews } from '../../data/fetchInterviewData';
 
 interface PageProps {
   params: {
-    jurisdiction: string;
+    path: string;
   };
 }
 
-const Page = ({ params }: PageProps) => {
-  const { jurisdiction } = params;
+ const Page = async ({ params }: PageProps) => {
+  const { path } = params;
+  const { interviewsByTopic, isError } = await fetchInterviews(path);
 
   return (
     <div>
       <HeroSection />
       <HowItWorksSection />
-      <TopicsSection jurisdiction={jurisdiction} />
+      <TopicsSection path={path} interviews={interviewsByTopic} />
     </div>
   );
 };

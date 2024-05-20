@@ -12,7 +12,7 @@ interface TopicCardProps {
   interviews: any[];
   index: number;
   serverUrl: string;
-  jurisdiction: string;
+  path: string;
 }
 
 interface IconProps {
@@ -34,11 +34,10 @@ const TopicCard = ({
   interviews,
   index,
   serverUrl,
-  jurisdiction,
+  path,
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const visibilityClass = index > 8 ? 'hidden' : '';
-
   const displayInterviews = isExpanded
     ? interviews.slice(0, Math.min(10, interviews.length))
     : interviews.slice(0, 3);
@@ -61,7 +60,7 @@ const TopicCard = ({
       key={topic.codes[0]}
     >
       <Link
-        href={`/${jurisdiction}/${topic.name.toLowerCase()}`}
+        href={`/${path}/${topic.name.toLowerCase()}`}
         className="text-decoration-none text-dark"
       >
         <div className="card topic-card m-1 h-100">
@@ -87,7 +86,7 @@ const TopicCard = ({
                       className="form-tag text-decoration-none"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleNavigation(serverUrl + interview.link);
+                        handleNavigation(interview.serverUrl + interview.link);
                       }}
                     >
                       {interview.metadata.title}

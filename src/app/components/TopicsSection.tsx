@@ -1,11 +1,9 @@
 import { legalTopics } from '../../config/topics.config';
 import { formSources } from '../../config/formSources.config';
-import { fetchInterviews } from '../../data/fetchInterviewData';
 import TopicCard from './TopicCard';
 import ShowAllToggle from './ShowAllToggle';
 
-const TopicsSection = async ({ jurisdiction }) => {
-  const { interviewsByTopic, isError } = await fetchInterviews(jurisdiction);
+const TopicsSection = async ({ path, interviews, isError }) => {
 
   if (isError) {
     return <div>Error fetching data.</div>;
@@ -13,7 +11,7 @@ const TopicsSection = async ({ jurisdiction }) => {
 
   const server =
     formSources.docassembleServers.find(
-      (server) => server.path === jurisdiction
+      (server) => server.path === path
     ) || formSources.docassembleServers[0];
   const serverUrl = server.url;
 
@@ -21,7 +19,7 @@ const TopicsSection = async ({ jurisdiction }) => {
     .sort((a, b) => b.priority - a.priority)
     .filter(
       (topic) =>
-        topic.always_visible || interviewsByTopic[topic.name].length > 0
+        topic.always_visible || interviews[topic.name].length > 0
     );
 
   return (
@@ -33,8 +31,8 @@ const TopicsSection = async ({ jurisdiction }) => {
             <TopicCard
               key={topic.codes[0]}
               topic={topic}
-              interviews={interviewsByTopic[topic.name] || []}
-              jurisdiction={jurisdiction}
+              interviews={interviews[topic.name] || []}
+              path={path}
               serverUrl={serverUrl}
               index={index}
             />
