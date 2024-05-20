@@ -9,7 +9,7 @@ interface PageProps {
   };
 }
 
- const Page = async ({ params }: PageProps) => {
+const Page = async ({ params }: PageProps) => {
   const { path } = params;
   const { interviewsByTopic, isError } = await fetchInterviews(path);
 
@@ -17,7 +17,11 @@ interface PageProps {
     <div>
       <HeroSection />
       <HowItWorksSection />
-      <TopicsSection path={path} interviews={interviewsByTopic} />
+      <TopicsSection
+        path={path}
+        interviews={interviewsByTopic}
+        isError={isError}
+      />
     </div>
   );
 };

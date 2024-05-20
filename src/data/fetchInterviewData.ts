@@ -4,8 +4,12 @@ import { findClosestTopic } from './helpers';
 
 export const fetchInterviews = async (path) => {
   const config = pathToServerConfig[path];
-  const serverNames = config ? config.servers : [formSources.docassembleServers[0].name];
-  const servers = formSources.docassembleServers.filter(server => serverNames.includes(server.name));
+  const serverNames = config
+    ? config.servers
+    : [formSources.docassembleServers[0].name];
+  const servers = formSources.docassembleServers.filter((server) =>
+    serverNames.includes(server.name)
+  );
 
   let allInterviews = [];
   for (const server of servers) {
@@ -16,14 +20,18 @@ export const fetchInterviews = async (path) => {
       const response = await fetch(url.toString());
       const data = await response.json();
       if (data && data.interviews) {
-        const taggedInterviews = data.interviews.map(interview => ({
+        const taggedInterviews = data.interviews.map((interview) => ({
           ...interview,
-          serverUrl: server.url
+          serverUrl: server.url,
         }));
         allInterviews = allInterviews.concat(taggedInterviews);
       }
     } catch (error) {
-      console.error('Failed to fetch interviews from server:', server.name, error);
+      console.error(
+        'Failed to fetch interviews from server:',
+        server.name,
+        error
+      );
     }
   }
 
@@ -51,7 +59,10 @@ export const fetchInterviews = async (path) => {
         }
       });
 
-    if (uniqueTopics.size === 0 && !titlesInTopics['Other'].has(interview.title)) {
+    if (
+      uniqueTopics.size === 0 &&
+      !titlesInTopics['Other'].has(interview.title)
+    ) {
       interviewsByTopic['Other'] = interviewsByTopic['Other'] || [];
       interviewsByTopic['Other'].push(interview);
       titlesInTopics['Other'].add(interview.title);

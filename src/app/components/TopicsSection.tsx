@@ -4,22 +4,19 @@ import TopicCard from './TopicCard';
 import ShowAllToggle from './ShowAllToggle';
 
 const TopicsSection = async ({ path, interviews, isError }) => {
-
   if (isError) {
     return <div>Error fetching data.</div>;
   }
 
   const server =
-    formSources.docassembleServers.find(
-      (server) => server.path === path
-    ) || formSources.docassembleServers[0];
+    formSources.docassembleServers.find((server) => server.path === path) ||
+    formSources.docassembleServers[0];
   const serverUrl = server.url;
 
   const filteredTopics = legalTopics
     .sort((a, b) => b.priority - a.priority)
     .filter(
-      (topic) =>
-        topic.always_visible || interviews[topic.name].length > 0
+      (topic) => topic.always_visible || interviews[topic.name].length > 0
     );
 
   return (

@@ -10,7 +10,11 @@ export default async function Page() {
     <div>
       <HeroSection />
       <HowItWorksSection />
-      <TopicsSection path={'ma'} interviews={interviewsByTopic} isError={isError} />
+      <TopicsSection
+        path={'ma'}
+        interviews={interviewsByTopic}
+        isError={isError}
+      />
     </div>
   );
 }
