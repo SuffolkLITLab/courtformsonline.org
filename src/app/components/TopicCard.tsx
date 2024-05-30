@@ -12,6 +12,7 @@ interface TopicCardProps {
   interviews: any[];
   index: number;
   serverUrl: string;
+  path: string;
 }
 
 interface IconProps {
@@ -28,10 +29,15 @@ const FontAwesomeIcon = ({
   return <i className={`fas fa-${iconName} ${className}`} style={style}></i>;
 };
 
-const TopicCard = ({ topic, interviews, index, serverUrl }: TopicCardProps) => {
+const TopicCard = ({
+  topic,
+  interviews,
+  index,
+  serverUrl,
+  path,
+}: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const visibilityClass = index > 8 ? 'hidden' : '';
-
   const displayInterviews = isExpanded
     ? interviews.slice(0, Math.min(10, interviews.length))
     : interviews.slice(0, 3);
@@ -54,13 +60,10 @@ const TopicCard = ({ topic, interviews, index, serverUrl }: TopicCardProps) => {
       key={topic.codes[0]}
     >
       <Link
-        href={`/${topic.name.toLowerCase()}`}
+        href={`/${path}/${topic.name.toLowerCase()}`}
         className="text-decoration-none text-dark"
       >
-        <div
-          className="card topic-card m-1 h-100"
-          onClick={(e) => e.preventDefault()}
-        >
+        <div className="card topic-card m-1 h-100">
           <div className="card-header d-flex align-items-center">
             <div
               style={{ minWidth: '40px', minHeight: '40px' }}
@@ -75,18 +78,23 @@ const TopicCard = ({ topic, interviews, index, serverUrl }: TopicCardProps) => {
               className="tag-container"
               style={{ maxHeight: isExpanded ? '800px' : '200px' }}
             >
-              {displayInterviews.map((interview, index) => (
-                <span
-                  key={index}
-                  className="form-tag text-decoration-none"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavigation(serverUrl + interview.link);
-                  }}
-                >
-                  {interview.metadata.title}
-                </span>
-              ))}
+              {displayInterviews.map((interview, index) => {
+                if (interview.metadata && interview.metadata.title) {
+                  return (
+                    <span
+                      key={index}
+                      className="form-tag text-decoration-none"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavigation(interview.serverUrl + interview.link);
+                      }}
+                    >
+                      {interview.metadata.title}
+                    </span>
+                  );
+                }
+                return null;
+              })}
             </div>
             {interviews.length > 3 && (
               <div className="show-container">

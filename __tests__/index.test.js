@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import TopicsPage from '../src/app/page';
+import Page from '../src/app/page';
 import RootLayout from '../src/app/layout';
 import { fetchInterviews } from '../src/data/fetchInterviewData';
 

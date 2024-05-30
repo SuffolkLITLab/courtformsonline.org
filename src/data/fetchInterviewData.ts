@@ -1,56 +1,73 @@
-import { formSources } from '../config/formSources.config';
+import { formSources, pathToServerConfig } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
 import { findClosestTopic } from './helpers';
 
-export const fetchInterviews = async () => {
-  const serverUrl = formSources.docassembleServers[0].url;
-  const url = new URL(`${serverUrl}/list`);
-  url.search = 'json=1';
+export const fetchInterviews = async (path) => {
+  const config = pathToServerConfig[path];
+  const serverNames = config
+    ? config.servers
+    : [formSources.docassembleServers[0].name];
+  const servers = formSources.docassembleServers.filter((server) =>
+    serverNames.includes(server.name)
+  );
 
-  try {
-    const response = await fetch(url.toString());
-    const data = await response.json();
-    const interviewsByTopic = {};
-    const titlesInTopics = {};
+  let allInterviews = [];
+  for (const server of servers) {
+    const url = new URL(`${server.url}/list`);
+    url.search = 'json=1';
 
-    legalTopics.forEach((topic) => {
-      interviewsByTopic[topic.name] = [];
-      titlesInTopics[topic.name] = new Set();
-    });
+    try {
+      const response = await fetch(url.toString());
+      const data = await response.json();
+      if (data && data.interviews) {
+        const taggedInterviews = data.interviews.map((interview) => ({
+          ...interview,
+          serverUrl: server.url,
+        }));
+        allInterviews = allInterviews.concat(taggedInterviews);
+      }
+    } catch (error) {
+      console.error(
+        'Failed to fetch interviews from server:',
+        server.name,
+        error
+      );
+    }
+  }
 
-    if (data && data.interviews) {
-      data.interviews.forEach((interview) => {
-        const uniqueTopics = new Set();
+  const interviewsByTopic = {};
+  const titlesInTopics = {};
+  legalTopics.forEach((topic) => {
+    interviewsByTopic[topic.name] = [];
+    titlesInTopics[topic.name] = new Set();
+  });
 
-        // match topics to config by metadata.LIST_Topic, and tags values
-        (interview.metadata.LIST_topics || [])
-          .concat(interview.tags || [])
-          .forEach((code) => {
-            const topic = findClosestTopic(code, legalTopics);
-            if (topic && !uniqueTopics.has(topic.name)) {
-              uniqueTopics.add(topic.name);
-              // check if the title already exists in the topic to avoid duplicated titles
-              if (!titlesInTopics[topic.name].has(interview.title)) {
-                interviewsByTopic[topic.name].push(interview);
-                titlesInTopics[topic.name].add(interview.title);
-              }
-            }
-          });
+  allInterviews.forEach((interview) => {
+    const uniqueTopics = new Set();
 
-        // add to other if no matching topic in config
-        if (uniqueTopics.size === 0) {
-          interviewsByTopic['Other'] = interviewsByTopic['Other'] || [];
-          if (!titlesInTopics['Other'].has(interview.title)) {
-            interviewsByTopic['Other'].push(interview);
-            titlesInTopics['Other'].add(interview.title);
+    // Match topics by metadata.LIST_topics and tags
+    (interview.metadata.LIST_topics || [])
+      .concat(interview.tags || [])
+      .forEach((code) => {
+        const topic = findClosestTopic(code, legalTopics);
+        if (topic && !uniqueTopics.has(topic.name)) {
+          uniqueTopics.add(topic.name);
+          if (!titlesInTopics[topic.name].has(interview.title)) {
+            interviewsByTopic[topic.name].push(interview);
+            titlesInTopics[topic.name].add(interview.title);
           }
         }
       });
-    }
 
-    return { interviewsByTopic, isError: false };
-  } catch (error) {
-    console.error('Failed to fetch interviews:', error);
-    return { interviewsByTopic: {}, isError: true };
-  }
+    if (
+      uniqueTopics.size === 0 &&
+      !titlesInTopics['Other'].has(interview.title)
+    ) {
+      interviewsByTopic['Other'] = interviewsByTopic['Other'] || [];
+      interviewsByTopic['Other'].push(interview);
+      titlesInTopics['Other'].add(interview.title);
+    }
+  });
+
+  return { interviewsByTopic, isError: false };
 };

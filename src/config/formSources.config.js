@@ -1,3 +1,14 @@
+export const pathToServerConfig = {
+  ma: {
+    path: 'ma',
+    servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
+  },
+  gb: {
+    path: 'gb',
+    servers: ['Greater Boston Legal Services'],
+  },
+};
+
 export const formSources = {
   docassembleServers: [
     {
