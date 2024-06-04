@@ -50,11 +50,16 @@ export default async function Page() {
 
   return (
     <div className="container">
-      <div>
-        {forms.map((form) => (
-          <InteractiveForm {...form} key={form.id} />
-        ))}
-      </div>
+      <h1 className="form-heading">All Forms</h1>
+      {forms.map((form, index) => (
+        <InteractiveForm
+          key={index}
+          title={form.title}
+          metadata={form.metadata}
+          link={form.link}
+          serverUrl={form.serverUrl}
+        />
+      ))}
     </div>
   );
 }

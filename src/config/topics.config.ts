@@ -10,7 +10,7 @@ export interface Topic {
 export const legalTopics: Topic[] = [
   {
     codes: ['HO-00-00-00-00'],
-    name: 'Housing',
+    name: 'housing',
     long_name: 'Housing',
     icon: 'house',
     always_visible: false,
@@ -18,7 +18,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['FA-00-00-00-00'],
-    name: 'Family',
+    name: 'family',
     long_name: 'Family and Safety',
     icon: 'people-roof',
     always_visible: false,
@@ -26,7 +26,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['MO-00-00-00-00'],
-    name: 'Consumer',
+    name: 'consumer',
     long_name: 'Money, Debt and Consumer Issues',
     icon: 'money-bill-wave',
     always_visible: false,
@@ -34,7 +34,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['BE-00-00-00-00'],
-    name: 'Benefits',
+    name: 'benefits',
     long_name: 'Public Benefits',
     icon: 'hand-holding-dollar',
     always_visible: false,
@@ -42,7 +42,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['BU-00-00-00-00'],
-    name: 'Business',
+    name: 'business',
     long_name: 'Small Business and IP',
     icon: 'user-tie',
     always_visible: false,
@@ -50,7 +50,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['CO-00-00-00-00'],
-    name: 'Courts',
+    name: 'courts',
     long_name: 'Court and Hearings',
     icon: 'gavel',
     always_visible: false,
@@ -58,7 +58,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['CR-00-00-00-00'],
-    name: 'Criminal',
+    name: 'criminal',
     long_name: 'Criminal',
     icon: 'handcuffs',
     always_visible: false,
@@ -66,7 +66,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['DI-00-00-00-00'],
-    name: 'Disaster',
+    name: 'disaster',
     long_name: 'Disaster Relief',
     icon: 'house-fire',
     always_visible: false,
@@ -74,7 +74,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['ED-00-00-00-00'],
-    name: 'Education',
+    name: 'education',
     long_name: 'School and Education',
     icon: 'user-graduate',
     always_visible: false,
@@ -82,7 +82,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['EN-00-00-00-00'],
-    name: 'Environment',
+    name: 'environment',
     long_name: 'Environmental Justice',
     icon: 'seedling',
     always_visible: false,
@@ -90,7 +90,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['ES-00-00-00-00'],
-    name: 'Wills',
+    name: 'wills',
     long_name: 'Estates, Wills and Guardianships',
     icon: 'file-signature',
     always_visible: false,
@@ -98,7 +98,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['GO-00-00-00-00'],
-    name: 'Government',
+    name: 'government',
     long_name: 'Government Services',
     icon: 'building-columns',
     always_visible: false,
@@ -106,7 +106,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['HE-00-00-00-00'],
-    name: 'Health',
+    name: 'health',
     long_name: 'Health',
     icon: 'user-doctor',
     always_visible: false,
@@ -114,7 +114,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['IM-00-00-00-00'],
-    name: 'Immigration',
+    name: 'immigration',
     long_name: 'Immigration',
     icon: 'passport',
     always_visible: false,
@@ -122,7 +122,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['JU-00-00-00-00'],
-    name: 'Juvenile',
+    name: 'juvenile',
     long_name: 'Juvenile',
     icon: 'children',
     always_visible: false,
@@ -130,7 +130,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['NA-00-00-00-00'],
-    name: 'Native',
+    name: 'native',
     long_name: 'Native American and Tribal Law',
     icon: 'earth-americas',
     always_visible: false,
@@ -138,7 +138,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['TO-00-00-00-00'],
-    name: 'Torts',
+    name: 'torts',
     icon: 'person-falling-burst',
     long_name: 'Torts and Personal Injury',
     always_visible: false,
@@ -146,7 +146,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['TR-00-00-00-00'],
-    name: 'Traffic',
+    name: 'traffic',
     long_name: 'Traffic and Cars',
     icon: 'car-burst',
     always_visible: false,
@@ -154,7 +154,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['VE-00-00-00-00'],
-    name: 'Veterans',
+    name: 'veterans',
     long_name: 'Veterans and Military',
     icon: 'flag-usa',
     always_visible: false,
@@ -162,7 +162,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['WO-00-00-00-00'],
-    name: 'Employment',
+    name: 'employment',
     long_name: 'Employment',
     icon: 'briefcase',
     always_visible: false,
@@ -170,7 +170,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['CO-07-02-00-00'],
-    name: 'Appeals',
+    name: 'appeals',
     long_name: 'Appeals',
     icon: 'table-list',
     always_visible: false,
@@ -178,7 +178,7 @@ export const legalTopics: Topic[] = [
   },
   {
     codes: ['OT-00-00-00-00'],
-    name: 'Other',
+    name: 'other',
     long_name: 'Other Topics',
     icon: 'folder-open',
     always_visible: false,
