@@ -182,6 +182,12 @@ footer {
   font-style: normal;
 }
 
+.form-start-button {
+  margin: 2rem;
+  background-color: #002e60;
+  border-color: #002e60;
+}
+
 h1,
 h2,
 h3,
