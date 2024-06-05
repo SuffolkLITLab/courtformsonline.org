@@ -1,6 +1,13 @@
-import { Form } from '../interfaces/Form';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import Button from 'react-bootstrap/Button';
 
-interface InteractiveFormProps extends Form {}
+interface InteractiveFormProps {
+  title: string;
+  metadata: any;
+  link: string;
+  serverUrl: string;
+}
 
 const InteractiveForm: React.FC<InteractiveFormProps> = ({
   title,
@@ -8,14 +15,32 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
   link,
   serverUrl,
 }) => {
-  const url = new URL(serverUrl);
-  url.pathname = link;
+  const fullUrl = `${serverUrl}${link}`;
 
   return (
-    <div className="interactive-form" key={link}>
-      <h2>{title}</h2>
-      <p>{metadata.description}</p>
-      <a href={url.toString()}>Start Form</a>
+    <div>
+      <div className="form-content">
+        <div className="form-text-section">
+          <h2 className="form-subheading">{title}</h2>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {metadata.before_you_start}
+          </ReactMarkdown>
+          <br />
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {metadata.description}
+          </ReactMarkdown>
+          <br />
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {metadata.can_I_use_this_form}
+          </ReactMarkdown>
+        </div>
+        <div className="form-button-section">
+          <Button className="form-start-button" href={fullUrl}>
+            Start Form
+          </Button>
+        </div>
+      </div>
+      <hr />
     </div>
   );
 };

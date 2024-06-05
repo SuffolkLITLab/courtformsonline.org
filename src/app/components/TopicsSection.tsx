@@ -16,7 +16,8 @@ const TopicsSection = async ({ path, interviews, isError }) => {
   const filteredTopics = legalTopics
     .sort((a, b) => b.priority - a.priority)
     .filter(
-      (topic) => topic.always_visible || interviews[topic.name].length > 0
+      (topic) =>
+        topic.always_visible || interviews[topic.name.toLowerCase()].length > 0
     );
 
   return (
@@ -28,7 +29,7 @@ const TopicsSection = async ({ path, interviews, isError }) => {
             <TopicCard
               key={topic.codes[0]}
               topic={topic}
-              interviews={interviews[topic.name] || []}
+              interviews={interviews[topic.name.toLowerCase()] || []}
               path={path}
               serverUrl={serverUrl}
               index={index}

@@ -11,11 +11,7 @@ export default function NavigationBar() {
     >
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
-          <img
-            src={`${prefix}/logo-short.png`}
-            alt="Logo"
-            className="logo-image me-2"
-          />
+          <img src="logo-short.png" alt="Logo" className="logo-image me-2" />
           <span id="nav-header-text" className="logo-text">
             Court Forms Online
           </span>
