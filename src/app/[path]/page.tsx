@@ -15,7 +15,11 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div>
-      <HeroSection />
+      <HeroSection
+        path={path}
+        interviews={interviewsByTopic}
+        isError={isError}
+      />
       <HowItWorksSection />
       <TopicsSection
         path={path}

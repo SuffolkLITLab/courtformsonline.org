@@ -96,7 +96,11 @@ const HeroSection = ({ path, interviews, isError }) => {
         </div>
       </div>
       {results && (
-        <SpotResultsContainer data={results} interviews={interviews} />
+        <SpotResultsContainer
+          data={results}
+          interviews={interviews}
+          path={path}
+        />
       )}
     </section>
   );

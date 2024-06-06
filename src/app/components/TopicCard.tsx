@@ -13,6 +13,7 @@ interface TopicCardProps {
   index: number;
   serverUrl: string;
   path: string;
+  isSpot?: boolean;
 }
 
 interface IconProps {
