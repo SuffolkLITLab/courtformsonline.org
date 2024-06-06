@@ -38,8 +38,8 @@ export const fetchInterviews = async (path) => {
   const interviewsByTopic = {};
   const titlesInTopics = {};
   legalTopics.forEach((topic) => {
-    interviewsByTopic[topic.name] = [];
-    titlesInTopics[topic.name] = new Set();
+    interviewsByTopic[topic.name.toLowerCase()] = [];
+    titlesInTopics[topic.name.toLowerCase()] = new Set();
   });
 
   allInterviews.forEach((interview) => {
@@ -50,22 +50,22 @@ export const fetchInterviews = async (path) => {
       .concat(interview.tags || [])
       .forEach((code) => {
         const topic = findClosestTopic(code, legalTopics);
-        if (topic && !uniqueTopics.has(topic.name)) {
-          uniqueTopics.add(topic.name);
-          if (!titlesInTopics[topic.name].has(interview.title)) {
-            interviewsByTopic[topic.name].push(interview);
-            titlesInTopics[topic.name].add(interview.title);
+        if (topic && !uniqueTopics.has(topic.name.toLowerCase())) {
+          uniqueTopics.add(topic.name.toLowerCase());
+          if (!titlesInTopics[topic.name.toLowerCase()].has(interview.title)) {
+            interviewsByTopic[topic.name.toLowerCase()].push(interview);
+            titlesInTopics[topic.name.toLowerCase()].add(interview.title);
           }
         }
       });
 
     if (
       uniqueTopics.size === 0 &&
-      !titlesInTopics['Other'].has(interview.title)
+      !titlesInTopics['other'].has(interview.title)
     ) {
-      interviewsByTopic['Other'] = interviewsByTopic['Other'] || [];
-      interviewsByTopic['Other'].push(interview);
-      titlesInTopics['Other'].add(interview.title);
+      interviewsByTopic['other'] = interviewsByTopic['other'] || [];
+      interviewsByTopic['other'].push(interview);
+      titlesInTopics['other'].add(interview.title);
     }
   });
 
