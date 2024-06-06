@@ -15,8 +15,8 @@
 }
 
 .hero-button {
-  background: #002e60;
-  border: none;
+  background: #002e60 !important;
+  border: none !important;
 }
 
 #how-it-works-section {
@@ -134,8 +134,8 @@ footer {
 
 .show-all-toggle {
   cursor: pointer;
-  border: none;
-  background: #002e60;
+  border: none !important;
+  background: #002e60 !important;
   margin-top: 10px;
 }
 
@@ -210,6 +210,25 @@ h5,
 
 body {
   font-family: 'Inter';
+}
+
+@media (max-width: 768px) {
+  .how-it-works-icon {
+    margin-bottom: 15px;
+  }
+
+  .how-it-works-step {
+    text-align: center;
+    flex-direction: column !important;
+  }
+
+  .how-it-works-title {
+    margin-top: 0.5rem;
+  }
+
+  .how-it-works-heading {
+    text-align: center;
+  }
 }
 
 @media (max-width: 990px) {
