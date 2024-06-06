@@ -20,7 +20,10 @@ const SpotResultsContainer = ({ data, interviews, path }) => {
       ...label,
       topic: legalTopics.find((t) => t.codes.includes(label.id)),
     }))
-    .filter(({ topic }) => topic) // Ensure the topic exists
+    .filter(
+      ({ topic }) =>
+        topic && interviews[topic.name] && interviews[topic.name].length > 0
+    ) // Ensure the topic exists and has available interviews
     .sort((a, b) => b.pred - a.pred) // Sort by confidence score
     .map(({ topic }) => topic); // Extract sorted topics
 

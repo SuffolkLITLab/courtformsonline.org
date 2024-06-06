@@ -6,12 +6,14 @@ import { fetchSpotData } from '../../data/fetchSpotData';
 
 const HeroSection = ({ path, interviews, isError }) => {
   const [text, setText] = useState('');
-  const [saveData, setSaveData] = useState(false);
+  const [saveData, setSaveData] = useState(true);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+  const [validationError, setValidationError] = useState('');
 
   const handleInputChange = (event) => {
     setText(event.target.value);
+    if (validationError) setValidationError('');
   };
 
   const handleCheckboxChange = () => {
@@ -19,6 +21,13 @@ const HeroSection = ({ path, interviews, isError }) => {
   };
 
   const handleFindHelpClick = async () => {
+    if (text.length < 6) {
+      setValidationError(
+        'Please enter at least 6 characters to perform a search.'
+      );
+      return;
+    }
+
     try {
       const data = { text: text, save_data: saveData ? 1 : 0 };
       const fetchedResults = await fetchSpotData(data);
@@ -26,7 +35,6 @@ const HeroSection = ({ path, interviews, isError }) => {
       setError('');
       // Manage display of topic cards when spot search is used. dom manipulation is used to keep Page components server components
       const topicCards = document.querySelectorAll('.topic-card-parent');
-      console.log(topicCards);
       topicCards.forEach((card) => {
         card.classList.add('hidden');
       });
@@ -74,11 +82,13 @@ const HeroSection = ({ path, interviews, isError }) => {
                   Use my reply to help others
                 </label>
               </div>
-
               <Button onClick={handleFindHelpClick} className="hero-button">
                 Find help
               </Button>
             </div>
+            {validationError && (
+              <p className="text-danger">{validationError}</p>
+            )}
             {error && (
               <p className="text-danger">Error. Please try again later.</p>
             )}

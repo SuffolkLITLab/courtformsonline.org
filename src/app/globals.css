@@ -167,6 +167,8 @@ footer {
 }
 
 .courtformsonline-navbar .nav-link {
+  padding: 1rem;
+  background-color: #002e60;
   color: white;
   margin-right: 2em;
 }
