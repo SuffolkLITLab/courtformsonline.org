@@ -9,8 +9,8 @@ export default function Footer() {
         <div className="row">
           <div className="col">
             <a href="https://suffolk.edu">
-              <Image
-                src={`${prefix}/suffolk_law.png`}
+              <img
+                src="suffolk_law.png"
                 alt="Suffolk University Law School"
                 className="img-fluid mb-2 suffolk-logo"
                 width={497}

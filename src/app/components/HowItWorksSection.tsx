@@ -9,12 +9,12 @@ export default function HowItWorksSection() {
   return (
     <section id="how-it-works-section" className="py-5">
       <div className="container">
-        <h2 className="mb-4">How it works</h2>
+        <h2 className="mb-4 how-it-works-heading">How it works</h2>
         <div className="row">
           <div className="col-md-4">
-            <div className="d-flex align-items-start">
+            <div className="d-flex align-items-center justify-content-center how-it-works-step">
               <div
-                className="rounded-circle d-flex align-items-center justify-content-center"
+                className="rounded-circle d-flex align-items-center justify-content-center how-it-works-icon"
                 style={{
                   minWidth: '80px',
                   minHeight: '80px',
@@ -29,7 +29,7 @@ export default function HowItWorksSection() {
                 />
               </div>
               <div className="ms-3">
-                <h3>Step 1</h3>
+                <h3 className="how-it-works-title">Step 1</h3>
                 <p>
                   Describe your problem or choose a category to find the form
                   you need.
@@ -38,9 +38,9 @@ export default function HowItWorksSection() {
             </div>
           </div>
           <div className="col-md-4">
-            <div className="d-flex align-items-start">
+            <div className="d-flex align-items-center justify-content-center how-it-works-step">
               <div
-                className="rounded-circle d-flex align-items-center justify-content-center"
+                className="rounded-circle d-flex align-items-center justify-content-center how-it-works-icon"
                 style={{
                   minWidth: '80px',
                   minHeight: '80px',
@@ -55,7 +55,7 @@ export default function HowItWorksSection() {
                 />
               </div>
               <div className="ms-3">
-                <h3>Step 2</h3>
+                <h3 className="how-it-works-title">Step 2</h3>
                 <p>
                   Fill out your form online. We walk you through it step by
                   step.
@@ -64,9 +64,9 @@ export default function HowItWorksSection() {
             </div>
           </div>
           <div className="col-md-4">
-            <div className="d-flex align-items-start">
+            <div className="d-flex align-items-center justify-content-center how-it-works-step">
               <div
-                className="rounded-circle d-flex align-items-center justify-content-center"
+                className="rounded-circle d-flex align-items-center justify-content-center how-it-works-icon"
                 style={{
                   minWidth: '80px',
                   minHeight: '80px',
@@ -81,7 +81,7 @@ export default function HowItWorksSection() {
                 />
               </div>
               <div className="ms-3">
-                <h3>Step 3</h3>
+                <h3 className="how-it-works-title">Step 3</h3>
                 <p>
                   Deliver your form to the court. You may need to print and mail
                   some forms.

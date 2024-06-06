@@ -13,6 +13,7 @@ interface TopicCardProps {
   index: number;
   serverUrl: string;
   path: string;
+  isSpot?: boolean;
 }
 
 interface IconProps {
@@ -35,6 +36,7 @@ const TopicCard = ({
   index,
   serverUrl,
   path,
+  isSpot = false,
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const visibilityClass = index > 8 ? 'hidden' : '';
@@ -42,7 +44,7 @@ const TopicCard = ({
     ? interviews.slice(0, Math.min(10, interviews.length))
     : interviews.slice(0, 3);
   const remainingCount = interviews.length > 10 ? interviews.length - 10 : 0;
-
+  const cardClassName = isSpot ? 'spot-topic-card-parent' : 'topic-card-parent';
   const toggleExpand = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -56,7 +58,7 @@ const TopicCard = ({
 
   return (
     <div
-      className={`col-lg-4 topic-card-parent ${visibilityClass}`}
+      className={`col-lg-4 ${cardClassName} ${visibilityClass}`}
       key={topic.codes[0]}
     >
       <Link
