@@ -28,3 +28,5 @@ jobs:
         
     - name: Build the project
       run: yarn build
+      env:
+        NEXT_PUBLIC_SPOT_API_BEARER_TOKEN: ${{ secrets.NEXT_PUBLIC_SPOT_API_BEARER_TOKEN }
