@@ -23,6 +23,7 @@ const TopicsSection = async ({ path, interviews, isError }) => {
     <section id="topics">
       <div className="container">
         <h2>Browse court forms by category</h2>
+        {filteredTopics.length > 9 && <ShowAllToggle />}
         <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
           {filteredTopics.map((topic, index) => (
             <TopicCard
@@ -35,7 +36,6 @@ const TopicsSection = async ({ path, interviews, isError }) => {
             />
           ))}
         </div>
-        {filteredTopics.length > 9 && <ShowAllToggle />}
       </div>
     </section>
   );

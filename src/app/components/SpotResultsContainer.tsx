@@ -1,33 +1,49 @@
 import React from 'react';
 import { legalTopics } from '../../config/topics.config';
+import { formSources } from '../../config/formSources.config';
+import TopicCard from './TopicCard';
 
-const SpotResultsCard = ({ data }) => {
+const SpotResultsContainer = ({ data, interviews, path }) => {
   if (!data || !data.labels) {
     return <p>No matching topics found.</p>;
   }
 
-  const sortedLabels = data.labels
-    .sort((a, b) => b.pred - a.pred)
-    .map((label) => {
-      const topic = legalTopics.find((t) => t.codes.includes(label.id));
-      return topic ? topic.long_name : null;
-    })
-    .filter(Boolean);
+  // Find the server URL based on the path
+  const server =
+    formSources.docassembleServers.find((server) => server.path === path) ||
+    formSources.docassembleServers[0];
+  const serverUrl = server.url;
+
+  // Sort and filter topics based on the SPOT labels
+  const sortedTopics = data.labels
+    .map((label) => ({
+      ...label,
+      topic: legalTopics.find((t) => t.codes.includes(label.id)),
+    }))
+    .filter(({ topic }) => topic) // Ensure the topic exists
+    .sort((a, b) => b.pred - a.pred) // Sort by confidence score
+    .map(({ topic }) => topic); // Extract sorted topics
 
   return (
-    <div>
-      <h2>It looks like you may be looking for help with...</h2>
-      {sortedLabels.length > 0 ? (
-        <ul>
-          {sortedLabels.map((name, index) => (
-            <li key={index}>{name}</li>
+    <section id="topics">
+      <div className="container">
+        <h2>It looks like you may be looking for help with...</h2>
+        <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
+          {sortedTopics.map((topic, index) => (
+            <TopicCard
+              key={topic.codes[0]}
+              topic={topic}
+              interviews={interviews[topic.name] || []}
+              path={'ma'}
+              serverUrl={serverUrl}
+              index={index}
+              isSpot={true}
+            />
           ))}
-        </ul>
-      ) : (
-        <p>No relevant topics found based on your query.</p>
-      )}
-    </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default SpotResultsCard;
+export default SpotResultsContainer;

@@ -8,7 +8,11 @@ export default async function Page() {
 
   return (
     <div>
-      <HeroSection />
+      <HeroSection
+        path={'ma'}
+        interviews={interviewsByTopic}
+        isError={isError}
+      />
       <HowItWorksSection />
       <TopicsSection
         path={'ma'}

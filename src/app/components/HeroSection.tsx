@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import SpotResultsContainer from './SpotResultsContainer';
 import { fetchSpotData } from '../../data/fetchSpotData';
 
-const HeroSection = () => {
+const HeroSection = ({ path, interviews, isError }) => {
   const [text, setText] = useState('');
   const [saveData, setSaveData] = useState(false);
   const [results, setResults] = useState(null);
@@ -24,6 +24,16 @@ const HeroSection = () => {
       const fetchedResults = await fetchSpotData(data);
       setResults(fetchedResults);
       setError('');
+      // Manage display of topic cards when spot search is used. dom manipulation is used to keep Page components server components
+      const topicCards = document.querySelectorAll('.topic-card-parent');
+      console.log(topicCards);
+      topicCards.forEach((card) => {
+        card.classList.add('hidden');
+      });
+      const showAllButton = document.querySelector('.show-all-toggle');
+      if (showAllButton) {
+        showAllButton.classList.remove('hidden');
+      }
     } catch (e) {
       setError(e.message);
       setResults(null);
@@ -69,11 +79,15 @@ const HeroSection = () => {
                 Find help
               </Button>
             </div>
-            {error && <p className="text-danger">{error}</p>}
+            {error && (
+              <p className="text-danger">Error. Please try again later.</p>
+            )}
           </div>
         </div>
       </div>
-      {results && <SpotResultsContainer data={results} />}
+      {results && (
+        <SpotResultsContainer data={results} interviews={interviews} />
+      )}
     </section>
   );
 };
