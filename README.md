@@ -18,17 +18,28 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Form Sources Config
 
-To learn more about Next.js, take a look at the following resources:
+The `formSources.config.js` file allows new paths and server sources to be added to courtformsonline. There are two main components to this config file:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- pathToServerConfig: Maps paths to servers, which facilitates adding new paths or modifying existing connections to different servers.
+- formSources: Contains the details of the servers, including URLs and names, used by the application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Form source example
 
-## Deploy on Vercel
+`{
+  key: 'newServerKey',
+  url: 'https://newserver.example.com',
+  name: 'New Server Name',
+},`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Path to server config example
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`
+yourPath: {
+  path: 'yourPath',
+  servers: ['New Server Name', 'Existing Server Name'],
+},
+`
+
+
