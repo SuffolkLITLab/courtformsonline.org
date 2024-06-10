@@ -20,10 +20,12 @@ export const fetchInterviews = async (path) => {
       const response = await fetch(url.toString());
       const data = await response.json();
       if (data && data.interviews) {
-        const taggedInterviews = data.interviews.map((interview) => ({
-          ...interview,
-          serverUrl: server.url,
-        }));
+        const taggedInterviews = data.interviews
+          .filter((interview) => !interview.metadata.unlisted) // exclude unlisted interviews
+          .map((interview) => ({
+            ...interview,
+            serverUrl: server.url,
+          }));
         allInterviews = allInterviews.concat(taggedInterviews);
       }
     } catch (error) {
