@@ -144,7 +144,7 @@ footer {
 }
 
 #nav-header-text {
-  color: #002e60;
+  color: white;
   align-self: end;
   margin-bottom: -5px;
 }
@@ -156,13 +156,7 @@ footer {
 }
 
 .courtformsonline-navbar {
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    90deg,
-    #fbfafe 30%,
-    rgba(0, 28, 96, 1) 30%,
-    rgba(0, 46, 96, 1) 30%
-  );
+  background: #002e60;
   height: 70px;
 }
 
@@ -273,14 +267,4 @@ body {
   }
 }
 
-@media (max-width: 990px) {
-  .courtformsonline-navbar {
-    background: rgb(2, 0, 36);
-    background: linear-gradient(
-      90deg,
-      #fbfafe 75%,
-      rgba(0, 28, 96, 1) 75%,
-      rgba(0, 46, 96, 1) 75%
-    );
-  }
-}
+
