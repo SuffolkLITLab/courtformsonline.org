@@ -35,11 +35,7 @@ The `formSources.config.js` file allows new paths and server sources to be added
 
 ### Path to server config example
 
-`
-yourPath: {
+`yourPath: {
   path: 'yourPath',
   servers: ['New Server Name', 'Existing Server Name'],
-},
-`
-
-
+},`
