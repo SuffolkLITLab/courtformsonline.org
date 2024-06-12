@@ -1,5 +1,6 @@
 export const fetchSpotData = async (data) => {
-  const token = process.env.NEXT_PUBLIC_SPOT_API_BEARER_TOKEN;
+  const token =
+    '516ca8844a07ccbd380cbf9b4255dc7d0449a8805b55fdd525743eea31bfb054';
   const requestBody = {
     text: data.text,
     'save-text': data.save_data,
