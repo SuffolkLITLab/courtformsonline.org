@@ -119,8 +119,8 @@ export default function ThankYou() {
             return (
               <div className="col" key={org.name}>
                 <Link href={org.url}>
-                  <Image
-                    src={'/partners/' + org.icon}
+                  <img
+                    src={'partners/' + org.icon}
                     alt={org.name}
                     height={org.height}
                     width={org.width}
