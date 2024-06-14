@@ -18,6 +18,7 @@ export const fetchSpotData = async (data) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(requestBody),
+      cache: 'no-store',
     }
   );
 
