@@ -17,7 +17,7 @@ export const fetchInterviews = async (path) => {
     url.search = 'json=1';
 
     try {
-      const response = await fetch(url.toString());
+      const response = await fetch(url.toString(), { cache: 'no-store' });
       const data = await response.json();
       if (data && data.interviews) {
         const taggedInterviews = data.interviews
