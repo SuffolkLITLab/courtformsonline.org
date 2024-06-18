@@ -192,6 +192,10 @@ footer {
   color: #002e60;
 }
 
+.form-link {
+  text-decoration: none;
+  cursor: pointer;
+}
 .form-content {
   display: flex;
   justify-content: space-between;
