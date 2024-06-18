@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
+import { toUrlFriendlyString } from '../utils/helpers';
 
 interface InteractiveFormProps {
   title: string;
@@ -18,7 +19,7 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
   serverUrl,
 }) => {
   const fullUrl = `${serverUrl}${link}`;
-  const formPageUrl = `/forms/${title.toLowerCase().replace(/ /g, '-')}`;
+  const formPageUrl = `/forms/${toUrlFriendlyString(title)}`;
 
   return (
     <div>

@@ -1,8 +1,8 @@
-import React from 'react';
 import { fetchInterviews } from '../../../data/fetchInterviewData';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
+import { toUrlFriendlyString } from '../../utils/helpers';
 
 interface PageProps {
   params: {
@@ -12,7 +12,7 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const { form } = params;
-  const { interviewsByTopic, isError } = await fetchInterviews('');
+  const { interviewsByTopic, isError } = await fetchInterviews('ma');
 
   if (isError) {
     return <div>Error loading form details</div>;
@@ -22,14 +22,12 @@ const Page = async ({ params }: PageProps) => {
   let formDetails = null;
   Object.keys(interviewsByTopic).forEach((topic) => {
     interviewsByTopic[topic].forEach((interview) => {
-      const formattedTitle = interview.title.toLowerCase().replace(/ /g, '-');
+      const formattedTitle = toUrlFriendlyString(interview.title);
       if (formattedTitle === form) {
         formDetails = interview;
       }
     });
   });
-
-  console.log(formDetails);
 
   if (!formDetails) {
     return <div>Form not found</div>;
@@ -62,12 +60,12 @@ const Page = async ({ params }: PageProps) => {
 export default Page;
 
 export async function generateStaticParams() {
-  const { interviewsByTopic } = await fetchInterviews('');
+  const { interviewsByTopic } = await fetchInterviews('ma');
 
   const params = [];
   Object.keys(interviewsByTopic).forEach((topic) => {
     interviewsByTopic[topic].forEach((interview) => {
-      const formattedTitle = interview.title.toLowerCase().replace(/ /g, '-');
+      const formattedTitle = toUrlFriendlyString(interview.title);
       params.push({ form: formattedTitle });
     });
   });
