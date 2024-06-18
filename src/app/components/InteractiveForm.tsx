@@ -1,6 +1,9 @@
+import React from 'react';
+import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
+import { toUrlFriendlyString } from '../utils/helpers';
 
 interface InteractiveFormProps {
   title: string;
@@ -16,23 +19,19 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
   serverUrl,
 }) => {
   const fullUrl = `${serverUrl}${link}`;
+  const formPageUrl = `/forms/${toUrlFriendlyString(title)}`;
 
   return (
     <div>
       <div className="form-content">
         <div className="form-text-section">
-          <h2 className="form-subheading">{title}</h2>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {metadata.before_you_start}
-          </ReactMarkdown>
-          <br />
+          <Link className="form-link" href={formPageUrl} passHref>
+            <h2 className="form-subheading">{title}</h2>
+          </Link>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {metadata.description}
           </ReactMarkdown>
           <br />
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {metadata.can_I_use_this_form}
-          </ReactMarkdown>
         </div>
         <div className="form-button-section">
           <Button className="form-start-button" href={fullUrl}>
