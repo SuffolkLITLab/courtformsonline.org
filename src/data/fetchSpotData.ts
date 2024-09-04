@@ -10,7 +10,7 @@ export const fetchSpotData = async (data) => {
     'cutoff-upper': 0.5,
   };
   const response = await fetch(
-    'https://spot.suffolklitlab.org/v0/entities-nested/',
+    'https://spot-plus-keyword-5dc1.suffolk-lit-lab.workers.dev/',
     {
       method: 'POST',
       headers: {
