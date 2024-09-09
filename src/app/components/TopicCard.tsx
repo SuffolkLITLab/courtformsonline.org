@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toUrlFriendlyString } from '../utils/helpers';
 
 interface TopicCardProps {
   topic: {
@@ -88,7 +89,9 @@ const TopicCard = ({
                       className="form-tag text-decoration-none"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleNavigation(interview.serverUrl + interview.link);
+                        handleNavigation(
+                          `/forms/${toUrlFriendlyString(interview.metadata.title)}`
+                        );
                       }}
                     >
                       {interview.metadata.title}
