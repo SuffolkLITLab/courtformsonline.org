@@ -275,3 +275,10 @@ body {
     width: 100%;
   }
 }
+
+.thank-you-partners {
+  img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+}

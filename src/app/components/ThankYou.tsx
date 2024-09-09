@@ -15,9 +15,9 @@ const organizations: Array<Organization> = [
   {
     name: 'Legal Innovation and Technology Lab',
     url: 'https://suffolklitlab.org',
-    icon: 'lit_logo.png',
-    width: 58,
-    height: 50,
+    icon: 'lit-lab-logo-small.svg',
+    width: 187,
+    height: 112.4,
   },
   {
     name: 'Massachusetts Access to Justice Commission',
@@ -52,13 +52,6 @@ const organizations: Array<Organization> = [
     url: 'https://www.northeastlegalaid.org/',
     icon: 'ne_legal_aid_logo.png',
     width: 90,
-    height: 60,
-  },
-  {
-    name: 'Massachusetts Law Reform Institute',
-    url: 'https://mlri.org/',
-    icon: 'mlri_logo.png',
-    width: 192,
     height: 60,
   },
   {
@@ -103,23 +96,30 @@ const organizations: Array<Organization> = [
     width: 103,
     height: 32,
   },
+  {
+    name: 'Massachusetts Law Reform Institute',
+    url: 'https://mlri.org/',
+    icon: 'mlri_logo.png',
+    width: 187,
+    height: 39,
+  },
 ];
 
 export default function ThankYou() {
   return (
     <section className={styles.ThankYouSection}>
       <div className="container">
-        <h2>Thank you</h2>
+        <h2>Thank You</h2>
         <p>
           The organizations listed below all helped build the first version of
           Court Forms Online. It would not exist without their help.
         </p>
-        <div className="row row-cols-1 row-cols-md-6 g-4 mt-4">
+        <div className="thank-you-partners row row-cols-1 row-cols-md-6 g-4 mt-4 align-items-center">
           {organizations.map((org) => {
             return (
               <div className="col" key={org.name}>
-                <Link href={org.url}>
-                  <img
+                <Link href={org.url} className="d-block">
+                  <Image
                     src={'partners/' + org.icon}
                     alt={org.name}
                     height={org.height}
