@@ -8,13 +8,13 @@ export default function Footer() {
       <div className="container">
         <div className="row">
           <div className="col">
-            <a href="https://suffolk.edu">
-              <img
-                src="suffolk_law.png"
-                alt="Suffolk University Law School"
-                className="img-fluid mb-2 suffolk-logo"
-                width={497}
-                height={70}
+            <a href="https://suffolklitlab.org">
+              <Image
+                src="lit-lab-logo-large.svg"
+                alt="Suffolk University Law School Legal Information & Technology Lab logo"
+                className="img-fluid mb-3 suffolk-logo"
+                width={792}
+                height={321.38}
               />
             </a>
           </div>
@@ -27,7 +27,7 @@ export default function Footer() {
             <a href="mailto:massaccess@suffolk.edu">Contact</a>
           </div>
         </div>
-        <div className="row mt-2">
+        <div className="row mt-3">
           <div className="col">
             <p>© {new Date().getFullYear()} Suffolk University Law School</p>
           </div>

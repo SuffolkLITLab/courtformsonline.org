@@ -1,5 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 
@@ -11,7 +13,13 @@ export default function NavigationBar() {
     >
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
-          <img src="logo-short.png" alt="Logo" className="logo-image me-2" />
+          <Image
+            src="lit-lab-torch-inverted.svg"
+            alt="LIT Lab logo"
+            className="logo-image me-2"
+            height={263.32}
+            width={120.52}
+          />
           <span id="nav-header-text" className="logo-text">
             Court Forms Online
           </span>
@@ -60,13 +68,21 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/news" className="nav-link">
+              <Link
+                href="https://suffolklitlab.org/category/document-assembly-line/"
+                className="nav-link"
+                target="_blank"
+              >
                 News
+                <FontAwesomeIcon
+                  icon={faArrowUpRightFromSquare}
+                  className="text-white ms-1"
+                />
               </Link>
             </li>
             <li className="nav-item">
               <Link href="/about" className="nav-link">
-                About us
+                About
               </Link>
             </li>
           </ul>

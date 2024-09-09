@@ -15,6 +15,10 @@
 # production
 /build
 
+# lock files
+package-lock.json
+yarn.lock
+
 # misc
 .DS_Store
 *.pem
