@@ -82,7 +82,7 @@ export default function NavigationBar() {
             </li>
             <li className="nav-item">
               <Link href="/about" className="nav-link">
-                About us
+                About
               </Link>
             </li>
           </ul>
