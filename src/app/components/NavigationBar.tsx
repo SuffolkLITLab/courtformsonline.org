@@ -4,23 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
+import styles from '../css/NavigationBar.module.css';
 
 export default function NavigationBar() {
   return (
     <nav
       role="navigation"
-      className="navbar navbar-expand-lg navbar-dark courtformsonline-navbar"
+      className={styles.NavigationBar + ' navbar navbar-expand-lg navbar-dark'}
     >
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
           <Image
             src="lit-lab-torch-inverted.svg"
             alt="LIT Lab logo"
-            className="logo-image me-2"
+            className={styles.NavLogo + ' logo-image me-2'}
             height={263.32}
             width={120.52}
           />
-          <span id="nav-header-text" className="logo-text">
+          <span
+            id="nav-header-text"
+            className={styles.NavHeaderText + ' logo-text'}
+          >
             Court Forms Online
           </span>
         </Link>
@@ -40,7 +44,7 @@ export default function NavigationBar() {
             {/* Removed until spanish data is available */}
             {/* <li className="nav-item dropdown">
               <a
-                className="nav-link dropdown-toggle"
+                className={styles.NavLink + ' dropdown-toggle'
                 href="#"
                 id="navbarDropdown"
                 role="button"
@@ -63,25 +67,25 @@ export default function NavigationBar() {
               </ul>
             </li> */}
             <li className="nav-item">
-              <Link href="/forms" className="nav-link">
+              <Link href="/forms" className={styles.NavLink}>
                 Forms
               </Link>
             </li>
             <li className="nav-item">
               <Link
                 href="https://suffolklitlab.org/category/document-assembly-line/"
-                className="nav-link"
+                className={styles.NavLink}
                 target="_blank"
               >
                 News
                 <FontAwesomeIcon
                   icon={faArrowUpRightFromSquare}
-                  className="text-white ms-1"
+                  className={styles.ExternalLinkIcon + ' text-white ms-1'}
                 />
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/about" className="nav-link">
+              <Link href="/about" className={styles.NavLink}>
                 About
               </Link>
             </li>

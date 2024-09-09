@@ -150,28 +150,6 @@
   align-self: end;
 }
 
-.courtformsonline-navbar {
-  background: #002e60;
-
-  .nav-link {
-    padding: 1rem;
-    background-color: #002e60;
-    color: white;
-    margin-right: 2em;
-  }
-
-  .svg-inline--fa {
-    height: .8em;
-    width: .8em;
-    vertical-align: top;
-  }
-}
-
-.logo-image {
-  max-height: 48px;
-  width: auto;
-}
-
 .show-all-categories {
   margin-top: 10em;
 }
