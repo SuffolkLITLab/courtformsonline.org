@@ -1,0 +1,19 @@
+.AffiliatesSection {
+  background: rgba(0,0,0,.1);
+
+}
+
+.AffiliatesContainer {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 576px;
+  
+  & > :not(:last-child) {
+    margin-bottom: 1em;
+  }
+}
+
+.AffiliateLogo {
+  height: auto;
+  max-width: 100%;
+}

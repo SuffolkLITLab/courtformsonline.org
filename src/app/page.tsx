@@ -1,6 +1,7 @@
+import AffiliatesSection from './components/AffiliatesSection';
+import HeroSection from './components/HeroSection';
 import HowItWorksSection from './components/HowItWorksSection';
 import TopicsSection from './components/TopicsSection';
-import HeroSection from './components/HeroSection';
 import { fetchInterviews } from '../data/fetchInterviewData';
 
 export default async function Page() {
@@ -19,6 +20,7 @@ export default async function Page() {
         interviews={interviewsByTopic}
         isError={isError}
       />
+      <AffiliatesSection />
     </div>
   );
 }
