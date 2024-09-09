@@ -8,12 +8,12 @@
 }
 
 .NavHeaderText {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 .NavLink {
+  display: block;
   padding: 1rem;
-  background-color: #002e60;
   color: white;
 
   &:not(:hover) {
