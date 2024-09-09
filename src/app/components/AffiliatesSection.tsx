@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Interface } from 'readline';
-import styles from '../scss/AffiliatesSection.module.scss';
+import styles from '../css/AffiliatesSection.module.css';
 
 interface Affiliate {
   name: string;
