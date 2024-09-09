@@ -159,13 +159,19 @@ footer {
 .courtformsonline-navbar {
   background: #002e60;
   height: 70px;
-}
 
-.courtformsonline-navbar .nav-link {
-  padding: 1rem;
-  background-color: #002e60;
-  color: white;
-  margin-right: 2em;
+  .nav-link {
+    padding: 1rem;
+    background-color: #002e60;
+    color: white;
+    margin-right: 2em;
+  }
+
+  .svg-inline--fa {
+    height: .8em;
+    width: .8em;
+    vertical-align: top;
+  }
 }
 
 .logo-image {

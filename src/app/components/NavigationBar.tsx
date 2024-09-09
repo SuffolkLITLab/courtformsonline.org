@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 
@@ -60,8 +61,16 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/news" className="nav-link">
+              <Link
+                href="https://suffolklitlab.org/category/document-assembly-line/"
+                className="nav-link"
+                target="_blank"
+              >
                 News
+                <FontAwesomeIcon
+                  icon={faArrowUpRightFromSquare}
+                  className="text-white ms-1"
+                />
               </Link>
             </li>
             <li className="nav-item">
