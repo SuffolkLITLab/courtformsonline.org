@@ -28,7 +28,11 @@ export default function AffiliatesBlock() {
       className={styles.AffiliatesSection + ' container-fluid my-5 p-4'}
     >
       <div className={styles.AffiliatesContainer}>
-        <p className="text-center">We would also like to thank the LIT Lab's <a href="https://suffolklitlab.org/#affiliates">affiliates</a>, including:</p>
+        <p className="text-center">
+          We would also like to thank the LIT Lab's{' '}
+          <a href="https://suffolklitlab.org/#affiliates">affiliates</a>,
+          including:
+        </p>
         {affiliates.map((affiliate) => {
           return (
             <Link href={affiliate.url} className="d-block" key={affiliate.name}>
