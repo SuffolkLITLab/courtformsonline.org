@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Interface } from 'readline';
-import styles from './ThankYou.module.css';
+import styles from '../css/ThankYou.module.css';
 
 interface Organization {
   name: string;
@@ -107,29 +107,32 @@ const organizations: Array<Organization> = [
 
 export default function ThankYou() {
   return (
-    <section className={styles.ThankYouSection}>
-      <div className="container">
-        <h2>Thank You</h2>
-        <p>
-          The organizations listed below all helped build the first version of
-          Court Forms Online. It would not exist without their help.
-        </p>
-        <div className="thank-you-partners row row-cols-1 row-cols-md-6 g-4 mt-4 align-items-center">
-          {organizations.map((org) => {
-            return (
-              <div className="col" key={org.name}>
-                <Link href={org.url} className="d-block">
-                  <Image
-                    src={'partners/' + org.icon}
-                    alt={org.name}
-                    height={org.height}
-                    width={org.width}
-                  />
-                </Link>
-              </div>
-            );
-          })}
-        </div>
+    <section className={styles.ThankYouSection + ' container'}>
+      <h2>Thank You</h2>
+      <p>
+        The organizations listed below all helped build the first version of
+        Court Forms Online. It would not exist without their help.
+      </p>
+      <div
+        className={
+          styles.ThankYouPartners +
+          ' row row-cols-3 row-cols-md-6 g-4 mb-5 align-items-center'
+        }
+      >
+        {organizations.map((org) => {
+          return (
+            <div className="col" key={org.name}>
+              <Link href={org.url} className="d-block">
+                <Image
+                  src={'partners/' + org.icon}
+                  alt={org.name}
+                  height={org.height}
+                  width={org.width}
+                />
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
