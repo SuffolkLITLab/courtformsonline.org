@@ -53,67 +53,60 @@ const TopicCard = ({
     setIsExpanded(!isExpanded);
   };
 
-  const handleNavigation = (url) => {
-    window.location.href = url;
-  };
-
   return (
     <div
       className={`col-lg-4 ${cardClassName} ${visibilityClass}`}
       key={topic.codes[0]}
     >
-      <Link
-        href={`/${path}/${topic.name.toLowerCase()}`}
-        className="text-decoration-none text-dark"
-      >
-        <div className="card topic-card m-1 h-100">
-          <div className="card-header d-flex align-items-center">
-            <div
-              style={{ minWidth: '40px', minHeight: '40px' }}
-              className="icon-container d-inline-flex justify-content-center align-items-center rounded"
-            >
-              <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
-            </div>
-            <h5 className="card-title ms-3">{topic.long_name}</h5>
+      <div className="card topic-card m-1 h-100">
+        <Link
+          href={`/${path}/${topic.name.toLowerCase()}`}
+          className="card-header d-flex align-items-center text-decoration-none text-dark"
+        >
+          <div
+            style={{ minWidth: '40px', minHeight: '40px' }}
+            className="icon-container d-inline-flex justify-content-center align-items-center rounded"
+          >
+            <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
           </div>
-          <div className="card-body">
-            <div
-              className="tag-container"
-              style={{ maxHeight: isExpanded ? '800px' : '200px' }}
-            >
-              {displayInterviews.map((interview, index) => {
-                if (interview.metadata && interview.metadata.title) {
-                  return (
-                    <span
-                      key={index}
-                      className="form-tag text-decoration-none"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavigation(
-                          `/forms/${toUrlFriendlyString(interview.metadata.title)}`
-                        );
-                      }}
-                    >
-                      {interview.metadata.title}
-                    </span>
-                  );
-                }
-                return null;
-              })}
-            </div>
-            {interviews.length > 3 && (
-              <div className="show-container">
-                <div className="show-more" onClick={toggleExpand}>
-                  {isExpanded ? 'Show Less' : 'Show More'}
-                  <i
-                    className={`fas fa-chevron-${isExpanded ? 'up' : 'down'}`}
-                  ></i>
-                </div>
+          <h5 className="card-title ms-3">{topic.long_name}</h5>
+        </Link>
+        <div className="card-body">
+          <div
+            className="tag-container"
+            style={{ maxHeight: isExpanded ? '800px' : '200px' }}
+          >
+            {displayInterviews.map((interview, index) => {
+              if (interview.metadata && interview.metadata.title) {
+                return (
+                  <Link
+                    key={
+                      toUrlFriendlyString(interview.metadata.title) +
+                      '-' +
+                      index
+                    }
+                    className="form-tag text-decoration-none"
+                    href={`/forms/${toUrlFriendlyString(interview.metadata.title)}`}
+                  >
+                    {interview.metadata.title}
+                  </Link>
+                );
+              }
+              return null;
+            })}
+          </div>
+          {interviews.length > 3 && (
+            <div className="show-container">
+              <div className="show-more" onClick={toggleExpand}>
+                {isExpanded ? 'Show Less' : 'Show More'}
+                <i
+                  className={`fas fa-chevron-${isExpanded ? 'up' : 'down'}`}
+                ></i>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
