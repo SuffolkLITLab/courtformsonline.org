@@ -145,8 +145,6 @@ footer {
 
 #nav-header-text {
   color: white;
-  align-self: end;
-  margin-bottom: -5px;
 }
 
 .show-container {
@@ -158,7 +156,6 @@ footer {
 
 .courtformsonline-navbar {
   background: #002e60;
-  height: 70px;
 
   .nav-link {
     padding: 1rem;
@@ -175,11 +172,13 @@ footer {
 }
 
 .logo-image {
-  max-height: 40px;
+  max-height: 48px;
+  width: auto;
 }
 
 .suffolk-logo {
-  max-height: 70px;
+  height: auto;
+  width: 100%;
 }
 
 .show-all-categories {
