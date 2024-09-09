@@ -24,10 +24,6 @@
   background-color: #3e7d9a54;
 }
 
-footer {
-  background-color: #fbfafe;
-}
-
 .card-container {
   margin-bottom: 1.5em;
   padding-top: 1.5em;
@@ -174,10 +170,6 @@ footer {
 .logo-image {
   max-height: 48px;
   width: auto;
-}
-
-.suffolk-logo {
-  max-width: 576px !important;
 }
 
 .show-all-categories {
