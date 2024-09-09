@@ -3,6 +3,7 @@
 }
 
 .NavLogo {
+  height: auto;
   max-height: 48px;
   width: auto;
 }
