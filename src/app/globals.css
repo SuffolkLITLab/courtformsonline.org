@@ -24,10 +24,6 @@
   background-color: #3e7d9a54;
 }
 
-footer {
-  background-color: #fbfafe;
-}
-
 .card-container {
   margin-bottom: 1.5em;
   padding-top: 1.5em;
@@ -154,32 +150,6 @@ footer {
   align-self: end;
 }
 
-.courtformsonline-navbar {
-  background: #002e60;
-
-  .nav-link {
-    padding: 1rem;
-    background-color: #002e60;
-    color: white;
-    margin-right: 2em;
-  }
-
-  .svg-inline--fa {
-    height: .8em;
-    width: .8em;
-    vertical-align: top;
-  }
-}
-
-.logo-image {
-  max-height: 48px;
-  width: auto;
-}
-
-.suffolk-logo {
-  max-width: 576px !important;
-}
-
 .show-all-categories {
   margin-top: 10em;
 }
@@ -200,19 +170,23 @@ footer {
   text-decoration: none;
   cursor: pointer;
 }
+
 .form-content {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .form-text-section {
   max-width: 70%;
 }
+
 .form-button-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .form-start-button {
   margin: 2rem;
   background-color: #002e60;
@@ -268,17 +242,12 @@ body {
     flex-direction: column;
     max-width: 100%;
   }
+
   .form-text-section {
     max-width: 100%;
   }
+
   .form-button-section {
     width: 100%;
-  }
-}
-
-.thank-you-partners {
-  img {
-    max-height: 100%;
-    max-width: 100%;
   }
 }

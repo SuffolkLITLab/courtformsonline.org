@@ -1,0 +1,29 @@
+.NavigationBar {
+  background: #002e60;
+}
+
+.NavLogo {
+  height: auto;
+  max-height: 48px;
+  width: auto;
+}
+
+.NavHeaderText {
+  font-size: 1.5rem;
+}
+
+.NavLink {
+  display: block;
+  padding: 1rem;
+  color: white;
+
+  &:not(:hover) {
+    text-decoration: none;
+  }
+}
+
+.ExternalLinkIcon {
+  height: .8em;
+  width: .8em;
+  vertical-align: top;
+}
