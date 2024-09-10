@@ -9,10 +9,10 @@ export default function HowItWorksSection() {
   return (
     <section id="how-it-works-section" className="py-5">
       <div className="container">
-        <h2 className="mb-4 how-it-works-heading">How it works</h2>
+        <h2 className="mb-4 how-it-works-heading">How it Works</h2>
         <div className="row">
           <div className="col-md-4">
-            <div className="d-flex align-items-center justify-content-center how-it-works-step">
+            <div className="d-flex align-items-start justify-content-center how-it-works-step">
               <div
                 className="rounded-circle d-flex align-items-center justify-content-center how-it-works-icon"
                 style={{
@@ -38,7 +38,7 @@ export default function HowItWorksSection() {
             </div>
           </div>
           <div className="col-md-4">
-            <div className="d-flex align-items-center justify-content-center how-it-works-step">
+            <div className="d-flex align-items-start justify-content-center how-it-works-step">
               <div
                 className="rounded-circle d-flex align-items-center justify-content-center how-it-works-icon"
                 style={{
@@ -64,7 +64,7 @@ export default function HowItWorksSection() {
             </div>
           </div>
           <div className="col-md-4">
-            <div className="d-flex align-items-center justify-content-center how-it-works-step">
+            <div className="d-flex align-items-start justify-content-center how-it-works-step">
               <div
                 className="rounded-circle d-flex align-items-center justify-content-center how-it-works-icon"
                 style={{

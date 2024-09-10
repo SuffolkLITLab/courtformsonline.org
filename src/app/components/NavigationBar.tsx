@@ -5,6 +5,7 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
+import nextConfig from '../../../next.config';
 
 export default function NavigationBar() {
   return (
@@ -15,7 +16,7 @@ export default function NavigationBar() {
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
           <Image
-            src="../../lit-lab-torch-inverted.svg"
+            src={nextConfig.basePath + '/lit-lab-torch-inverted.svg'}
             alt="LIT Lab logo"
             className={styles.NavLogo + ' logo-image me-2'}
             height={263.32}

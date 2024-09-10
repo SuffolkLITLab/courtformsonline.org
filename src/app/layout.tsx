@@ -23,10 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="body-container">
-          <NavigationBar />
-          {children}
-        </div>
+        <NavigationBar />
+        <div className="body-container">{children}</div>
         <Footer />
       </body>
       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" />
