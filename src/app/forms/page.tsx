@@ -1,7 +1,10 @@
 // Example: courtformsonline.org/forms
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
-import { pathToServerConfig, formSources } from '../../config/formSources.config';
+import {
+  pathToServerConfig,
+  formSources,
+} from '../../config/formSources.config';
 import { toUrlFriendlyString } from '../utils/helpers';
 
 const serverProps = pathToServerConfig;
@@ -62,7 +65,9 @@ export default async function Page(path) {
           key={index}
           title={form.title}
           metadata={form.metadata}
-          landingPageURL={form.serverPath + '/forms/' + toUrlFriendlyString(form.title)}
+          landingPageURL={
+            form.serverPath + '/forms/' + toUrlFriendlyString(form.title)
+          }
           link={form.link}
           serverUrl={form.serverUrl}
         />

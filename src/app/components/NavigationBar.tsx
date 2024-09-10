@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation'
+import { useParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
@@ -18,6 +18,10 @@ interface PageProps {
 
 export default function NavigationBar({ params }: PageProps) {
   const { path = '' } = useParams();
+  let abbrev = '';
+  if (typeof path === 'string' && path.trim().length > 0) {
+    abbrev = ' ' + path.toUpperCase();
+  }
   return (
     <nav
       role="navigation"
@@ -79,7 +83,7 @@ export default function NavigationBar({ params }: PageProps) {
             </li> */}
             <li className="nav-item">
               <Link href={path + '/forms'} className={styles.NavLink}>
-                All{path ? ' ' + path.toUpperCase() : ''} Forms
+                All{abbrev} Forms
               </Link>
             </li>
             <li className="nav-item">

@@ -86,7 +86,11 @@ const TopicCard = ({
                       index
                     }
                     className="form-tag text-decoration-none"
-                    href={path + '/forms/' + toUrlFriendlyString(interview.metadata.title)}
+                    href={
+                      path +
+                      '/forms/' +
+                      toUrlFriendlyString(interview.metadata.title)
+                    }
                   >
                     {interview.metadata.title}
                   </Link>

@@ -23,7 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavigationBar />
+        <NavigationBar
+          params={{
+            path: '',
+          }}
+        />
         <div className="body-container">{children}</div>
         <Footer />
       </body>

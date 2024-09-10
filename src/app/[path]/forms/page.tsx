@@ -1,7 +1,10 @@
 // Example: courtformsonline.org/ma/forms
 import { Form } from '../../interfaces/Form';
 import InteractiveForm from '../../components/InteractiveForm';
-import { pathToServerConfig, formSources } from '../../../config/formSources.config';
+import {
+  pathToServerConfig,
+  formSources,
+} from '../../../config/formSources.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 
 async function getData() {
@@ -62,7 +65,9 @@ export default async function Page({ params }: PageProps) {
           key={index}
           title={form.title}
           metadata={form.metadata}
-          landingPageURL={'/' + path + '/forms/' + toUrlFriendlyString(form.title)}
+          landingPageURL={
+            '/' + path + '/forms/' + toUrlFriendlyString(form.title)
+          }
           link={form.link}
           serverUrl={form.serverUrl}
         />

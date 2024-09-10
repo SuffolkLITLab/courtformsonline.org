@@ -42,7 +42,9 @@ const Page = async ({ params }: PageProps) => {
             key={index}
             title={interview.title}
             metadata={interview.metadata}
-            landingPageURL={'/' + path + '/forms/' + toUrlFriendlyString(interview.title)}
+            landingPageURL={
+              '/' + path + '/forms/' + toUrlFriendlyString(interview.title)
+            }
             link={interview.link}
             serverUrl={interview.serverUrl}
           />
