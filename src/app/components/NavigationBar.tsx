@@ -16,7 +16,7 @@ interface PageProps {
 }
 
 export default function NavigationBar({ params }: PageProps) {
-  const { path } = useParams();
+  const { path = '' } = useParams();
   let abbrev = '';
   let pathSegment = '';
   if (typeof path === 'string' && path.trim().length > 0) {
