@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { prefix } from '../../../prefix';
 import styles from '../css/Footer.module.css';
+import nextConfig from '../../../next.config';
 
 export default function Footer() {
   return (
@@ -15,7 +16,7 @@ export default function Footer() {
           <div className="col">
             <a href="https://suffolklitlab.org" className={styles.SuffolkLogo}>
               <Image
-                src="/lit-lab-logo-large.svg"
+                src={nextConfig.basePath + '/lit-lab-logo-large.svg'}
                 alt="Suffolk University Law School Legal Information & Technology Lab logo"
                 className="img-fluid mb-3"
                 width={792}
