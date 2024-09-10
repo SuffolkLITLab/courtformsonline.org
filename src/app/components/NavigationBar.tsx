@@ -1,14 +1,12 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
 import nextConfig from '../../../next.config';
-import toUpperCase from 'react';
 
 interface PageProps {
   params: {
@@ -17,7 +15,7 @@ interface PageProps {
 }
 
 export default function NavigationBar({ params }: PageProps) {
-  let { path = '' } = useParams();
+  let { path } = params;
   let abbrev = '';
   if (typeof path === 'string' && path.trim().length > 0) {
     abbrev = ' ' + path.toUpperCase();
