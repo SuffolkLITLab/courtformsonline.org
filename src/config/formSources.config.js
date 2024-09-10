@@ -2,6 +2,7 @@ export const pathToServerConfig = {
   ma: {
     path: 'ma',
     servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
+    name: 'Massachusetts',
   },
 };
 

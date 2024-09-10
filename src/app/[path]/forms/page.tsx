@@ -1,11 +1,8 @@
 // Example: courtformsonline.org/ma/forms
 import { Form } from '../../interfaces/Form';
 import InteractiveForm from '../../components/InteractiveForm';
-import { formSources } from '../../../config/formSources.config';
-
-interface LegalFormsPageProps {
-  forms: Form[];
-}
+import { pathToServerConfig, formSources } from '../../../config/formSources.config';
+import { toUrlFriendlyString } from '../../utils/helpers';
 
 async function getData() {
   let allData: Form[] = [];
@@ -46,17 +43,26 @@ async function getData() {
   return allData;
 }
 
-export default async function Page() {
+interface PageProps {
+  params: {
+    path: string;
+  };
+}
+
+export default async function Page({ params }: PageProps) {
   const forms = await getData();
+  const { path } = params;
+  const server = pathToServerConfig[path].name;
 
   return (
     <div className="container">
-      <h1 className="form-heading">All Forms</h1>
+      <h1 className="form-heading">All {server} Forms</h1>
       {forms.map((form, index) => (
         <InteractiveForm
           key={index}
           title={form.title}
           metadata={form.metadata}
+          landingPageURL={'/' + path + '/forms/' + toUrlFriendlyString(form.title)}
           link={form.link}
           serverUrl={form.serverUrl}
         />
