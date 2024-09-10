@@ -1,11 +1,10 @@
 // Example: courtformsonline.org/forms
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
-import { formSources } from '../../config/formSources.config';
+import { pathToServerConfig, formSources } from '../../config/formSources.config';
+import { toUrlFriendlyString } from '../utils/helpers';
 
-interface LegalFormsPageProps {
-  forms: Form[];
-}
+const serverProps = pathToServerConfig;
 
 async function getData() {
   let allData: Form[] = [];
@@ -33,11 +32,17 @@ async function getData() {
       continue; // Skip this server and continue with the next one
     }
 
+    let path = '';
+    for (let key in serverProps) {
+      if (serverProps[key].servers.indexOf(server.name) > -1) path = '/' + key;
+    }
+
     // Include the server name and server URL in the data
     const interviews = data['interviews'].map((interview: Form) => ({
       ...interview,
       serverName: server.name,
       serverUrl: server.url,
+      serverPath: path ? path : '',
     }));
 
     allData = allData.concat(interviews);
@@ -46,7 +51,7 @@ async function getData() {
   return allData;
 }
 
-export default async function Page() {
+export default async function Page(path) {
   const forms = await getData();
 
   return (
@@ -57,6 +62,7 @@ export default async function Page() {
           key={index}
           title={form.title}
           metadata={form.metadata}
+          landingPageURL={form.serverPath + '/forms/' + toUrlFriendlyString(form.title)}
           link={form.link}
           serverUrl={form.serverUrl}
         />

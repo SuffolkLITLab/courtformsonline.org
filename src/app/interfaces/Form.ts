@@ -4,6 +4,8 @@ export interface Form {
   metadata: {
     description: string;
   };
+  landingPageURL: string;
   link: string;
   serverUrl: string;
+  serverPath: string;
 }
