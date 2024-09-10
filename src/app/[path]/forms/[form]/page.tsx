@@ -1,4 +1,4 @@
-// Example: courtformsonline.org/ma/form/[form-slug]
+// Example: courtformsonline.org/ma/forms/[form-slug]
 import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
