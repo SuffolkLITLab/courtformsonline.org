@@ -8,7 +8,7 @@ export const pathToServerConfig = {
 export const formSources = {
   docassembleServers: [
     {
-      key: 'suffolkListLab',
+      key: 'suffolkLITLab',
       url: 'https://apps.suffolklitlab.org',
       name: 'Suffolk LIT Lab',
     },
