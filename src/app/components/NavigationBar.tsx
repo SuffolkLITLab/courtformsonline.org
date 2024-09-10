@@ -16,11 +16,12 @@ interface PageProps {
 }
 
 export default function NavigationBar({ params }: PageProps) {
-  let { path } = useParams();
+  const { path } = useParams();
   let abbrev = '';
+  let pathSegment = '';
   if (typeof path === 'string' && path.trim().length > 0) {
     abbrev = ' ' + path.toUpperCase();
-    path = '/' + path;
+    pathSegment = '/' + path;
   }
   return (
     <nav
@@ -82,7 +83,7 @@ export default function NavigationBar({ params }: PageProps) {
               </ul>
             </li> */}
             <li className="nav-item">
-              <Link href={path + '/forms'} className={styles.NavLink}>
+              <Link href={pathSegment + '/forms'} className={styles.NavLink}>
                 All{abbrev} Forms
               </Link>
             </li>
