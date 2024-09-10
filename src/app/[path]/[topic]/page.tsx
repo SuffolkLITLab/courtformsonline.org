@@ -2,6 +2,7 @@
 import { legalTopics } from '../../../config/topics.config';
 import { fetchInterviews } from '../../../data/fetchInterviewData';
 import { formSources } from '../../../config/formSources.config';
+import { toUrlFriendlyString } from '../../utils/helpers';
 import Button from 'react-bootstrap/Button';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -41,6 +42,7 @@ const Page = async ({ params }: PageProps) => {
             key={index}
             title={interview.title}
             metadata={interview.metadata}
+            landingPageURL={'/' + path + '/forms/' + toUrlFriendlyString(interview.title)}
             link={interview.link}
             serverUrl={interview.serverUrl}
           />
