@@ -87,6 +87,7 @@ const TopicCard = ({
                     }
                     className="form-tag text-decoration-none"
                     href={
+                      '/' +
                       path +
                       '/forms/' +
                       toUrlFriendlyString(interview.metadata.title)

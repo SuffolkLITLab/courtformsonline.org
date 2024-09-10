@@ -16,11 +16,14 @@ interface PageProps {
   };
 }
 
+
 export default function NavigationBar({ params }: PageProps) {
-  const { path = '' } = useParams();
+  let { path = '' } = useParams();
+  console.log(path);
   let abbrev = '';
   if (typeof path === 'string' && path.trim().length > 0) {
     abbrev = ' ' + path.toUpperCase();
+    path = '/' + path;
   }
   return (
     <nav
