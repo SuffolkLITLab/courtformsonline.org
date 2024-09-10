@@ -15,7 +15,7 @@ export default function NavigationBar() {
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
           <Image
-            src="lit-lab-torch-inverted.svg"
+            src="/courtformsonline.org/lit-lab-torch-inverted.svg"
             alt="LIT Lab logo"
             className={styles.NavLogo + ' logo-image me-2'}
             height={263.32}
