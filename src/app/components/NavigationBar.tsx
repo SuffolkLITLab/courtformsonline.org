@@ -1,13 +1,23 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
 import nextConfig from '../../../next.config';
+import toUpperCase from 'react';
 
-export default function NavigationBar() {
+interface PageProps {
+  params: {
+    path: string;
+  };
+}
+
+export default function NavigationBar({ params }: PageProps) {
+  const { path = '' } = useParams();
   return (
     <nav
       role="navigation"
@@ -68,8 +78,8 @@ export default function NavigationBar() {
               </ul>
             </li> */}
             <li className="nav-item">
-              <Link href="/forms" className={styles.NavLink}>
-                Forms
+              <Link href={path + '/forms'} className={styles.NavLink}>
+                All{path ? ' ' + path.toUpperCase() : ''} Forms
               </Link>
             </li>
             <li className="nav-item">
