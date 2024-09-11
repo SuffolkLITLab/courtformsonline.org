@@ -13,7 +13,7 @@ import nextConfig from '../../../next.config';
 
 export default function NavigationBar() {
   const params = useParams();
-  const path = typeof params.path !== 'undefined' ? params.path : false;
+  const path = params && Object.hasOwn(params, 'path') ? params.path : '';
   let pathSegment = '';
   if (path && path.length > 0) pathSegment = '/' + path;
   return (
