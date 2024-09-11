@@ -3,26 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { faLanguage } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowUpRightFromSquare,
+  faLanguage,
+} from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
 import nextConfig from '../../../next.config';
 
-interface PageProps {
-  params: {
-    path: string;
-  };
-}
-
-export default function NavigationBar({ params }: PageProps) {
-  const { path = '' } = useParams();
-  let abbrev = '';
+export default function NavigationBar() {
+  const params = useParams();
+  const path = params.path;
   let pathSegment = '';
-  if (typeof path === 'string' && path.trim().length > 0) {
-    abbrev = ' ' + path.toUpperCase();
-    pathSegment = '/' + path;
-  }
+  if (path && path.length > 0) pathSegment = '/' + path;
   return (
     <nav
       role="navigation"
@@ -84,7 +77,7 @@ export default function NavigationBar({ params }: PageProps) {
             </li> */}
             <li className="nav-item">
               <Link href={pathSegment + '/forms'} className={styles.NavLink}>
-                All{abbrev} Forms
+                All <span className={styles.AllFormsPath}>{path}</span> Forms
               </Link>
             </li>
             <li className="nav-item">

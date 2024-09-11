@@ -1,11 +1,13 @@
-import './globals.css';
 import { Inter } from 'next/font/google';
-import 'bootstrap/dist/css/bootstrap.css';
+import Script from 'next/script';
+
 import NavigationBar from './components/NavigationBar';
 import Footer from './components/Footer';
+
+import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fontsource/inter/700.css'; // Bold weight
-import Script from 'next/script';
+import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,19 +17,22 @@ export const metadata = {
     'Free online interactive court forms from Suffolk University Law School',
 };
 
+interface LayoutParams {
+  params: {
+    path: string;
+  };
+}
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // console.log('params: ' + JSON.stringify(params));
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavigationBar
-          params={{
-            path: '',
-          }}
-        />
+        <NavigationBar />
         <div className="body-container">{children}</div>
         <Footer />
       </body>
