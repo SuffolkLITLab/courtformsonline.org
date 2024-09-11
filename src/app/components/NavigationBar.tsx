@@ -13,7 +13,7 @@ import nextConfig from '../../../next.config';
 
 export default function NavigationBar() {
   const params = useParams();
-  const path = params.path;
+  const path = typeof params.path !== 'undefined' ? params.path : false;
   let pathSegment = '';
   if (path && path.length > 0) pathSegment = '/' + path;
   return (
@@ -77,7 +77,13 @@ export default function NavigationBar() {
             </li> */}
             <li className="nav-item">
               <Link href={pathSegment + '/forms'} className={styles.NavLink}>
-                All <span className={styles.AllFormsPath}>{path}</span> Forms
+                All{' '}
+                {path && path.length > 0 ? (
+                  <span className={styles.AllFormsPath}>{path}</span>
+                ) : (
+                  ' '
+                )}{' '}
+                Forms
               </Link>
             </li>
             <li className="nav-item">
