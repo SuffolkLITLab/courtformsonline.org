@@ -2,13 +2,14 @@ export const pathToServerConfig = {
   ma: {
     path: 'ma',
     servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
+    name: 'Massachusetts',
   },
 };
 
 export const formSources = {
   docassembleServers: [
     {
-      key: 'suffolkListLab',
+      key: 'suffolkLITLab',
       url: 'https://apps.suffolklitlab.org',
       name: 'Suffolk LIT Lab',
     },

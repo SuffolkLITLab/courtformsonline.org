@@ -3,11 +3,11 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
-import { toUrlFriendlyString } from '../utils/helpers';
 
 interface InteractiveFormProps {
   title: string;
   metadata: any;
+  landingPageURL: string;
   link: string;
   serverUrl: string;
 }
@@ -15,17 +15,17 @@ interface InteractiveFormProps {
 const InteractiveForm: React.FC<InteractiveFormProps> = ({
   title,
   metadata,
+  landingPageURL,
   link,
   serverUrl,
 }) => {
   const fullUrl = `${serverUrl}${link}`;
-  const formPageUrl = `/forms/${toUrlFriendlyString(title)}`;
 
   return (
     <div>
       <div className="form-content">
         <div className="form-text-section">
-          <Link className="form-link" href={formPageUrl} passHref>
+          <Link className="form-link" href={landingPageURL} passHref>
             <h2 className="form-subheading">{title}</h2>
           </Link>
           <ReactMarkdown remarkPlugins={[remarkGfm]}>

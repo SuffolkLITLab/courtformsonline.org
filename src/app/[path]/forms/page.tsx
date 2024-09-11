@@ -1,13 +1,11 @@
-// Example: courtformsonline.org/forms
-import { Form } from '../interfaces/Form';
-import InteractiveForm from '../components/InteractiveForm';
+// Example: courtformsonline.org/ma/forms
+import { Form } from '../../interfaces/Form';
+import InteractiveForm from '../../components/InteractiveForm';
 import {
   pathToServerConfig,
   formSources,
-} from '../../config/formSources.config';
-import { toUrlFriendlyString } from '../utils/helpers';
-
-const serverProps = pathToServerConfig;
+} from '../../../config/formSources.config';
+import { toUrlFriendlyString } from '../../utils/helpers';
 
 async function getData() {
   let allData: Form[] = [];
@@ -35,17 +33,11 @@ async function getData() {
       continue; // Skip this server and continue with the next one
     }
 
-    let path = '';
-    for (let key in serverProps) {
-      if (serverProps[key].servers.indexOf(server.name) > -1) path = '/' + key;
-    }
-
     // Include the server name and server URL in the data
     const interviews = data['interviews'].map((interview: Form) => ({
       ...interview,
       serverName: server.name,
       serverUrl: server.url,
-      serverPath: path ? path : '',
     }));
 
     allData = allData.concat(interviews);
@@ -54,19 +46,27 @@ async function getData() {
   return allData;
 }
 
-export default async function Page(path) {
+interface PageProps {
+  params: {
+    path: string;
+  };
+}
+
+export default async function Page({ params }: PageProps) {
   const forms = await getData();
+  const { path } = params;
+  const server = pathToServerConfig[path].name;
 
   return (
     <div className="container">
-      <h1 className="form-heading">All Forms</h1>
+      <h1 className="form-heading">All {server} Forms</h1>
       {forms.map((form, index) => (
         <InteractiveForm
           key={index}
           title={form.title}
           metadata={form.metadata}
           landingPageURL={
-            form.serverPath + '/forms/' + toUrlFriendlyString(form.title)
+            '/' + path + '/forms/' + toUrlFriendlyString(form.title)
           }
           link={form.link}
           serverUrl={form.serverUrl}

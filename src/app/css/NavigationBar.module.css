@@ -20,6 +20,11 @@
   &:not(:hover) {
     text-decoration: none;
   }
+
+}
+
+.AllFormsPath {
+  text-transform: uppercase;
 }
 
 .ExternalLinkIcon {

@@ -1,8 +1,9 @@
-import { fetchInterviews } from '../../../data/fetchInterviewData';
+// Example: courtformsonline.org/ma/forms/[form-slug]
+import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
-import { toUrlFriendlyString } from '../../utils/helpers';
+import { toUrlFriendlyString } from '../../../utils/helpers';
 
 interface PageProps {
   params: {

@@ -1,13 +1,21 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
-import { faLanguage } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowUpRightFromSquare,
+  faLanguage,
+} from '@fortawesome/free-solid-svg-icons';
 import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
 import nextConfig from '../../../next.config';
 
 export default function NavigationBar() {
+  const params = useParams();
+  const path = params && Object.hasOwn(params, 'path') ? params.path : '';
+  let pathSegment = '';
+  if (path && path.length > 0) pathSegment = '/' + path;
   return (
     <nav
       role="navigation"
@@ -68,7 +76,13 @@ export default function NavigationBar() {
               </ul>
             </li> */}
             <li className="nav-item">
-              <Link href="/forms" className={styles.NavLink}>
+              <Link href={pathSegment + '/forms'} className={styles.NavLink}>
+                All{' '}
+                {path && path.length > 0 ? (
+                  <span className={styles.AllFormsPath}>{path}</span>
+                ) : (
+                  ' '
+                )}{' '}
                 Forms
               </Link>
             </li>
