@@ -1,9 +1,10 @@
 // Example: courtformsonline.org/ma/forms/[form-slug]
-import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
+import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import { toUrlFriendlyString } from '../../../utils/helpers';
+import styles from '../../../css/FormLangingPage.module.css';
 
 interface PageProps {
   params: {
@@ -37,7 +38,7 @@ const Page = async ({ params }: PageProps) => {
   const startFormUrl = `${formDetails.serverUrl}${formDetails.link}`;
 
   return (
-    <div className="container my-4">
+    <div className={styles.FormLandingPage + ' container my-4'}>
       <h1>{formDetails.title}</h1>
       <h2>Description</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -51,7 +52,7 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
       </ReactMarkdown>
-      <Button className="form-start-button" href={startFormUrl}>
+      <Button className="interview-start-button" href={startFormUrl}>
         Start Form
       </Button>
     </div>
