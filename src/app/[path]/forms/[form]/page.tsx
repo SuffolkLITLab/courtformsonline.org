@@ -40,20 +40,19 @@ const Page = async ({ params }: PageProps) => {
   return (
     <div className={styles.FormLandingPage + ' container my-4'}>
       <h1>{formDetails.title}</h1>
-      <h2>Description</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
-      <h2>Can I use this form?</h2>
+      <h2>Can You Use This Interview?</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.can_I_use_this_form}
       </ReactMarkdown>
-      <h2>Before you start:</h2>
+      <h2>Before You Start</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
       </ReactMarkdown>
-      <Button className="interview-start-button" href={startFormUrl}>
-        Start Form
+      <Button className="interview-start-button my-3" href={startFormUrl}>
+        Start Interview
       </Button>
     </div>
   );
