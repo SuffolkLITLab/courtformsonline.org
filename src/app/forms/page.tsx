@@ -1,6 +1,7 @@
 // Example: courtformsonline.org/forms
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
+import SearchSection from '../components/SearchSection';
 import {
   pathToServerConfig,
   formSources,
@@ -60,6 +61,7 @@ export default async function Page(path) {
   return (
     <div className="container">
       <h1 className="form-heading">All Forms</h1>
+      <SearchSection />
       {forms.map((form, index) => (
         <InteractiveForm
           key={index}
