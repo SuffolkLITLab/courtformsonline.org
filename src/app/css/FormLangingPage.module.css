@@ -1,7 +1,4 @@
 .FormLandingPage {
+  max-width: 60ch;
 
-  & .interview-start-button {
-    background-color: #002e60;
-    border-color: #002e60;
-  }
 }

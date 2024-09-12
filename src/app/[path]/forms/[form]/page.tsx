@@ -38,20 +38,21 @@ const Page = async ({ params }: PageProps) => {
   const startFormUrl = `${formDetails.serverUrl}${formDetails.link}`;
 
   return (
-    <div className={styles.FormLandingPage + ' container my-4'}>
-      <h1>{formDetails.title}</h1>
+    <div className={styles.FormLandingPage + ' container my-5'}>
+      <p className="badge text-bg-secondary fs-6 fw-normal">Interview</p>
+      <h1 className="display-5 mb-4">{formDetails.title}</h1>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
-      <h2>Can You Use This Interview?</h2>
+      <h2 className="mt-4">Can I Use This Interview?</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.can_I_use_this_form}
       </ReactMarkdown>
-      <h2>Before You Start</h2>
+      <h2 className="mt-4">Before You Start</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
       </ReactMarkdown>
-      <Button className="interview-start-button my-3" href={startFormUrl}>
+      <Button className="btn btn-primary btn-lg my-3" href={startFormUrl}>
         Start Interview
       </Button>
     </div>
