@@ -40,33 +40,35 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className={styles.FormLandingPage + ' container my-5'}>
-      <p className="badge text-bg-secondary fs-6 fw-normal">Guided Interview</p>
+      <p className="badge text-bg-secondary fs-6 fw-normal">Form</p>
       <h1 className="display-5 mb-4">{formDetails.title}</h1>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
-      {
-        (formDetails.metadata.help_page_url || formDetails.metadata.original_form) && 
+      {(formDetails.metadata.help_page_url ||
+        formDetails.metadata.original_form) && (
         <>
-          <p><strong>More information:</strong></p>
+          <p>
+            <strong>More information:</strong>
+          </p>
           <ul>
-            {formDetails.metadata.help_page_url &&
+            {formDetails.metadata.help_page_url && (
               <li>
-                <Link
-                  href={formDetails.metadata.help_page_url}
-                  target="_blank"
-                >{formDetails.metadata.help_page_title}</Link>
-              </li>}
-            {formDetails.metadata.original_form &&
+                <Link href={formDetails.metadata.help_page_url} target="_blank">
+                  {formDetails.metadata.help_page_title}
+                </Link>
+              </li>
+            )}
+            {formDetails.metadata.original_form && (
               <li>
-                <Link
-                  href={formDetails.metadata.original_form}
-                  target="_blank"
-                >Original form</Link>
-              </li>}
+                <Link href={formDetails.metadata.original_form} target="_blank">
+                  Original form
+                </Link>
+              </li>
+            )}
           </ul>
         </>
-      }
+      )}
       <h2 className="mt-4">Can I Use This Interview?</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.can_I_use_this_form}
