@@ -73,7 +73,9 @@ export default function SearchSection({ serverName }) {
       >
         Clear search
       </a>
-      <p id="no-search-results" className="no-search-results mt-5 hidden">No forms found.</p>
+      <p id="no-search-results" className="no-search-results mt-5 hidden">
+        No forms found.
+      </p>
     </section>
   );
 }
