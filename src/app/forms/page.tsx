@@ -1,7 +1,7 @@
 // Example: courtformsonline.org/forms
+import dynamic from 'next/dynamic';
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
-import SearchSection from '../components/SearchSection';
 import {
   pathToServerConfig,
   formSources,
@@ -9,6 +9,10 @@ import {
 import { toUrlFriendlyString } from '../utils/helpers';
 
 const serverProps = pathToServerConfig;
+
+const SearchSection = dynamic(() => import('../components/SearchSection'), {
+  ssr: false,
+});
 
 async function getData() {
   let allData: Form[] = [];
@@ -61,7 +65,7 @@ export default async function Page(path) {
   return (
     <div className="container">
       <h1 className="form-heading">All Forms</h1>
-      <SearchSection />
+      <SearchSection serverName={''} />
       {forms.map((form, index) => (
         <InteractiveForm
           key={index}
