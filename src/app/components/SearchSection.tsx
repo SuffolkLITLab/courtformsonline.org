@@ -14,7 +14,10 @@ export default function SearchSection({ serverName }) {
   const handleSearchInput = (event) => {
     let searchText = event.target.value.toLowerCase();
     let clearSearch = document.querySelector('#clear-search');
+    let interviewsShown = 0;
+    let noSearchResults = document.querySelector('#no-search-results');
     setSearchText(searchText);
+    noSearchResults.classList.add('hidden');
     if (searchText) {
       clearSearch.classList.remove('hidden');
     } else {
@@ -28,8 +31,12 @@ export default function SearchSection({ serverName }) {
         interview.classList.add('hidden');
       } else {
         interview.classList.remove('hidden');
+        interviewsShown++;
       }
     });
+    if (interviewsShown == 0) {
+      noSearchResults.classList.remove('hidden');
+    }
   };
 
   const clearSearchInput = () => {
@@ -38,9 +45,11 @@ export default function SearchSection({ serverName }) {
         '#search-field'
       ) as HTMLInputElement;
       let clearSearch = document.querySelector('#clear-search');
+      let noSearchResults = document.querySelector('#no-search-results');
       searchField.value = '';
       clearSearch.classList.add('hidden');
       interview.classList.remove('hidden');
+      noSearchResults.classList.add('hidden');
     });
   };
 
@@ -64,6 +73,7 @@ export default function SearchSection({ serverName }) {
       >
         Clear search
       </a>
+      <p id="no-search-results" className="no-search-results mt-5 hidden">No forms found.</p>
     </section>
   );
 }
