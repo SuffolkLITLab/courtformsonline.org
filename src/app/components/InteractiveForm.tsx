@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Button from 'react-bootstrap/Button';
+import { toUrlFriendlyString } from '../utils/helpers';
 
 interface InteractiveFormProps {
   title: string;
@@ -22,7 +23,7 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
   const fullUrl = `${serverUrl}${link}`;
 
   return (
-    <div>
+    <div id={toUrlFriendlyString(title)} className="form">
       <div className="form-content">
         <div className="form-text-section">
           <Link className="form-link" href={landingPageURL} passHref>
