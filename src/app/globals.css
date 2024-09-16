@@ -187,23 +187,11 @@
   justify-content: center;
 }
 
-.form-start-button {
-  margin: 2rem;
-  background-color: #002e60;
-  border-color: #002e60;
-}
-
 @font-face {
   font-family: 'Inter';
   src: url('/fonts/Inter-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
-}
-
-.form-start-button {
-  margin: 2rem;
-  background-color: #002e60;
-  border-color: #002e60;
 }
 
 h1,
