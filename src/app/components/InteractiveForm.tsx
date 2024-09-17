@@ -39,6 +39,7 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {metadata.description}
           </ReactMarkdown>
+          <Link href={landingPageURL}>Learn more about this form</Link>
         </div>
       </div>
       <div className={styles.FormButtonContainer + ' d-flex flex-column'}>
