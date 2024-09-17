@@ -1,5 +1,9 @@
 /*********************** Suffolk-added styles **********************/
 
+.body-container:has(#hero-section:first-child) {
+  padding-top: 0 !important;
+}
+
 #how-it-works-section {
   padding: 5em 0 5em 0;
   background-color: #3e7d9a54;
