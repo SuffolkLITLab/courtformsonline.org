@@ -2,14 +2,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowUpRightFromSquare,
   faLanguage,
 } from '@fortawesome/free-solid-svg-icons';
+
 import { prefix } from '../../../prefix';
-import styles from '../css/NavigationBar.module.css';
 import nextConfig from '../../../next.config';
+import styles from '../css/NavigationBar.module.css';
 
 export default function NavigationBar() {
   const params = useParams();
@@ -27,8 +29,8 @@ export default function NavigationBar() {
             src={nextConfig.basePath + '/lit-lab-torch-inverted.svg'}
             alt="LIT Lab logo"
             className={styles.NavLogo + ' logo-image me-2'}
-            height={263.32}
-            width={120.52}
+            height={47.99}
+            width={21.97}
           />
           <span
             id="nav-header-text"
