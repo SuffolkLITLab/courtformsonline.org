@@ -65,7 +65,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className={styles.AllFormsContainer + ' container'}>
-      <h1 className="form-heading">All {server} Forms</h1>
+      <h1 className="form-heading text-center mb-3">All {server} Forms</h1>
       <SearchSection serverName={server} />
       {forms.map((form, index) => (
         <InteractiveForm
