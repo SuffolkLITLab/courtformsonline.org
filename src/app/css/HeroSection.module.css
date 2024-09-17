@@ -1,0 +1,7 @@
+.HeroSection {
+  background-color: #fbfafe;
+
+  & textarea {
+    min-height: 6lh;
+  }
+}

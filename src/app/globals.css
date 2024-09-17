@@ -1,24 +1,5 @@
 /*********************** Suffolk-added styles **********************/
 
-#hero-section {
-  background-color: #fbfafe;
-  padding-top: 7em;
-  padding-bottom: 7em;
-}
-
-#hero-section h1 {
-  font-size: 3em;
-}
-
-#hero-section textarea {
-  min-height: 8em;
-}
-
-.hero-button {
-  background: #002e60 !important;
-  border: none !important;
-}
-
 #how-it-works-section {
   padding: 5em 0 5em 0;
   background-color: #3e7d9a54;
