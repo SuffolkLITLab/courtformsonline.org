@@ -26,7 +26,7 @@ export default function AffiliatesBlock() {
   return (
     <section
       id="affiliates-section"
-      className={styles.AffiliatesSection + ' container-fluid my-5 p-4'}
+      className={styles.AffiliatesSection + ' container-fluid p-4'}
     >
       <div className={styles.AffiliatesContainer}>
         <p className="text-center">

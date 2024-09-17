@@ -1,0 +1,36 @@
+.Form {
+  gap: 1rem;
+
+  &:last-child{
+    border-bottom: 0 !important;
+  }
+
+  @media (max-width: 768px) {
+    & {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+
+.FormTitleContainer {
+  max-width: 768px;
+}
+
+.FormLink {
+  &:not(:hover):not(:focus):not(:active) {
+    color: unset;
+    text-decoration: none;
+  }
+}
+
+
+.FormButtonContainer {
+  margin-left: auto;
+
+  @media (max-width: 768px) {
+    & {
+      margin-left: 0;
+    }
+  }
+}

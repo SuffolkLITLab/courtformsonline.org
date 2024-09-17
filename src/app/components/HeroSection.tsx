@@ -1,8 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import SpotResultsContainer from './SpotResultsContainer';
+
 import { fetchSpotData } from '../../data/fetchSpotData';
+import SpotResultsContainer from './SpotResultsContainer';
+import styles from '../css/HeroSection.module.css';
 
 const HeroSection = ({ path, interviews, isError }) => {
   const [text, setText] = useState('');
@@ -49,11 +51,13 @@ const HeroSection = ({ path, interviews, isError }) => {
   };
 
   return (
-    <section id="hero-section">
+    <section id="hero-section" className={styles.HeroSection + ' py-5'}>
       <div className="container">
         <div className="row gx-5">
           <div className="col-lg-6" id="hero-left">
-            <h1>Free DIY legal help for Massachusetts</h1>
+            <h1 className="display-5 mb-4">
+              Free DIY Legal Help for Massachusetts
+            </h1>
             <p>
               Use our free step-by-step interactive forms to get help with your
               legal problem. Use your own words to find the right form or browse
@@ -82,8 +86,8 @@ const HeroSection = ({ path, interviews, isError }) => {
                   Use my reply to help others
                 </label>
               </div>
-              <Button onClick={handleFindHelpClick} className="hero-button">
-                Find help
+              <Button onClick={handleFindHelpClick} className="btn btn-primary">
+                Find Help
               </Button>
             </div>
             {validationError && (

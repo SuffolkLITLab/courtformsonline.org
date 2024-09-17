@@ -1,0 +1,49 @@
+.TopicCard {
+  transition: all 0.2s ease-in-out;
+}
+
+.CardTitleLink {
+  &:not(:hover):not(:focus):not(:active) {
+    color: unset;
+    text-decoration: none;
+  }
+}
+
+.TopicIcon {
+  background-color: #162a47;
+  color: #fdb714;
+}
+
+.TagContainer {
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
+  gap: .5rem;
+}
+
+.FormTag {
+  background-color: #3e7d9a2d;
+  border-color: LightGray;
+  transition: all 0.05s ease-in-out;
+  color: inherit;
+  display: inline-block;
+  font-size: 80%;
+
+  &:hover {
+    background-color: #3e7d9a2d;
+    color: inherit;
+    border-color: DarkGray;
+  }
+}
+
+.ShowMore {
+  cursor: pointer;
+  font-size: 80%;
+
+  &:not(:hover):not(:focus):not(:active) {
+    color: unset;
+    text-decoration: none;
+  }
+}
+
+.ShowContainer {
+}

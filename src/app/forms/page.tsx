@@ -7,6 +7,7 @@ import {
   formSources,
 } from '../../config/formSources.config';
 import { toUrlFriendlyString } from '../utils/helpers';
+import styles from '../css/AllFormsContainer.module.css';
 
 const serverProps = pathToServerConfig;
 
@@ -63,21 +64,23 @@ export default async function Page(path) {
   const forms = await getData();
 
   return (
-    <div className="container">
-      <h1 className="form-heading">All Forms</h1>
+    <div className={styles.AllFormsContainer + ' container'}>
+      <h1 className="text-center">All Forms</h1>
       <SearchSection serverName={''} />
-      {forms.map((form, index) => (
-        <InteractiveForm
-          key={index}
-          title={form.title}
-          metadata={form.metadata}
-          landingPageURL={
-            form.serverPath + '/forms/' + toUrlFriendlyString(form.title)
-          }
-          link={form.link}
-          serverUrl={form.serverUrl}
-        />
-      ))}
+      <div className="forms">
+        {forms.map((form, index) => (
+          <InteractiveForm
+            key={index}
+            title={form.title}
+            metadata={form.metadata}
+            landingPageURL={
+              form.serverPath + '/forms/' + toUrlFriendlyString(form.title)
+            }
+            link={form.link}
+            serverUrl={form.serverUrl}
+          />
+        ))}
+      </div>
     </div>
   );
 }

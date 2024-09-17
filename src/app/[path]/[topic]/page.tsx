@@ -1,13 +1,13 @@
 // Example: courtformsonline.org/ma/housing
-import { legalTopics } from '../../../config/topics.config';
+import ReactMarkdown from 'react-markdown';
+import Button from 'react-bootstrap/Button';
+import remarkGfm from 'remark-gfm';
 import { fetchInterviews } from '../../../data/fetchInterviewData';
 import { formSources } from '../../../config/formSources.config';
-import { toUrlFriendlyString } from '../../utils/helpers';
-import Button from 'react-bootstrap/Button';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-
 import InteractiveForm from '../../components/InteractiveForm';
+import { legalTopics } from '../../../config/topics.config';
+import { toUrlFriendlyString } from '../../utils/helpers';
+import styles from '../../css/TopicPage.module.css';
 
 interface PageProps {
   params: {
@@ -34,8 +34,10 @@ const Page = async ({ params }: PageProps) => {
   const interviews = interviewsByTopic[topic] || [];
 
   return (
-    <div className="container">
-      <h1 className="form-heading">{topicDetails?.long_name || 'Topic'}</h1>
+    <div className={styles.TopicPage + ' container'}>
+      <h1 className="form-heading text-center mb-3">
+        {topicDetails?.long_name || 'Topic'}
+      </h1>
       {interviews.length > 0 ? (
         interviews.map((interview, index) => (
           <InteractiveForm

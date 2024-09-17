@@ -9,7 +9,7 @@ export default async function Page() {
   const { interviewsByTopic, isError } = await fetchInterviews('ma');
 
   return (
-    <div>
+    <>
       <HeroSection
         path={'ma'}
         interviews={interviewsByTopic}
@@ -22,6 +22,6 @@ export default async function Page() {
         isError={isError}
       />
       <AffiliatesSection />
-    </div>
+    </>
   );
 }
