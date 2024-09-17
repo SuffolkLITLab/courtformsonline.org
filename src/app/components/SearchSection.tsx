@@ -54,7 +54,7 @@ export default function SearchSection({ serverName }) {
   };
 
   return (
-    <section id="search-forms" className="mb-5">
+    <section id="search-forms" className="mt-3 mb-5">
       <label htmlFor="search-field" className="form-label">
         {serverName && serverName.length > 0
           ? 'Search ' + serverName + ' forms'
