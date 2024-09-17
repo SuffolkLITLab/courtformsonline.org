@@ -1,7 +1,8 @@
-import { legalTopics } from '../../config/topics.config';
 import { formSources } from '../../config/formSources.config';
-import TopicCard from './TopicCard';
+import { legalTopics } from '../../config/topics.config';
 import ShowAllToggle from './ShowAllToggle';
+import TopicCard from './TopicCard';
+import styles from '../css/TopicsSection.module.css';
 
 const TopicsSection = async ({ path, interviews, isError }) => {
   if (isError) {
@@ -21,11 +22,11 @@ const TopicsSection = async ({ path, interviews, isError }) => {
     );
 
   return (
-    <section id="topics">
+    <section id="topics" className={styles.TopicsSection + ' py-5'}>
       <div className="container">
-        <h2>Browse Court Forms by Category</h2>
+        <h2 className="mb-3">Browse Court Forms by Category</h2>
         {filteredTopics.length > 9 && <ShowAllToggle />}
-        <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
+        <div className="row row-cols-1 row-cols-md-3 g-4 card-container">
           {filteredTopics.map((topic, index) => (
             <TopicCard
               key={topic.codes[0]}

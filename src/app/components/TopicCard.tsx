@@ -1,7 +1,8 @@
 'use client';
-import Link from 'next/link';
 import { useState } from 'react';
+import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
+import styles from '../css/TopicCard.module.css';
 
 interface TopicCardProps {
   topic: {
@@ -55,25 +56,34 @@ const TopicCard = ({
 
   return (
     <div
-      className={`col-lg-4 ${cardClassName} ${visibilityClass}`}
+      className={`col col-lg-4 ${cardClassName} ${visibilityClass}`}
       key={topic.codes[0]}
     >
-      <div className="card topic-card m-1 h-100">
+      <div className={styles.TopicCard + ' card topic-card h-100'}>
         <Link
           href={`/${path}/${topic.name.toLowerCase()}`}
-          className="card-header d-flex align-items-center text-decoration-none text-dark"
+          className={
+            styles.CardTitleLink +
+            ' card-header d-flex align-items-center bg-transparent border-0 pt-3'
+          }
         >
           <div
             style={{ minWidth: '40px', minHeight: '40px' }}
-            className="icon-container d-inline-flex justify-content-center align-items-center rounded"
+            className={
+              styles.TopicIcon +
+              ' icon-container d-flex justify-content-center align-items-center fs-5 p-2 rounded-circle'
+            }
           >
             <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
           </div>
-          <h5 className="card-title ms-3">{topic.long_name}</h5>
+          <h5 className="card-title fs-5 m-0 ms-2">{topic.long_name}</h5>
         </Link>
-        <div className="card-body">
+        <div className="card-body d-flex flex-column justify-content-space-between">
           <div
-            className="tag-container"
+            className={
+              styles.TagContainer +
+              ' tag-container d-flex flex-column flex-grow-1 mb-3'
+            }
             style={{ maxHeight: isExpanded ? '800px' : '200px' }}
           >
             {displayInterviews.map((interview, index) => {
@@ -85,7 +95,10 @@ const TopicCard = ({
                       '-' +
                       index
                     }
-                    className="form-tag text-decoration-none"
+                    className={
+                      styles.FormTag +
+                      ' form-tag btn btn-outline-secondary border-2 align-self-start text-start'
+                    }
                     href={
                       '/' +
                       path +
@@ -101,11 +114,16 @@ const TopicCard = ({
             })}
           </div>
           {interviews.length > 3 && (
-            <div className="show-container">
-              <div className="show-more" onClick={toggleExpand}>
-                {isExpanded ? 'Show Less' : 'Show More'}
+            <div className={styles.ShowContainer + ' show-container ms-auto'}>
+              <div
+                className={
+                  styles.ShowMore + ' show-more d-flex align-items-center'
+                }
+                onClick={toggleExpand}
+              >
+                {isExpanded ? 'Show less' : 'Show more'}
                 <i
-                  className={`fas fa-chevron-${isExpanded ? 'up' : 'down'}`}
+                  className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} ms-1`}
                 ></i>
               </div>
             </div>
