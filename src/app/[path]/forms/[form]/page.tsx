@@ -39,7 +39,7 @@ const Page = async ({ params }: PageProps) => {
   const startFormUrl = `${formDetails.serverUrl}${formDetails.link}`;
 
   return (
-    <div className={styles.FormLandingPage + ' container my-5'}>
+    <div className={styles.FormLandingPage + ' container'}>
       <p className="badge text-bg-secondary fs-6 fw-normal">Form</p>
       <h1 className="display-5 mb-4">{formDetails.title}</h1>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
