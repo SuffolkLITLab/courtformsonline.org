@@ -7,6 +7,7 @@ import {
   formSources,
 } from '../../../config/formSources.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
+import styles from '../../css/AllFormsContainer.module.css';
 
 const SearchSection = dynamic(() => import('../../components/SearchSection'), {
   ssr: false,
@@ -63,7 +64,7 @@ export default async function Page({ params }: PageProps) {
   const server = pathToServerConfig[path].name;
 
   return (
-    <div className="container">
+    <div className={styles.AllFormsContainer + ' container'}>
       <h1 className="form-heading">All {server} Forms</h1>
       <SearchSection serverName={server} />
       {forms.map((form, index) => (

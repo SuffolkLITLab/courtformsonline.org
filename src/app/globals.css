@@ -139,39 +139,6 @@
   margin-top: 10em;
 }
 
-.form-heading {
-  text-transform: capitalize;
-  text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.form-subheading {
-  margin-top: 1rem;
-  color: #002e60;
-}
-
-.form-link {
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.form-content {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.form-text-section {
-  max-width: 70%;
-}
-
-.form-button-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 @font-face {
   font-family: 'Inter';
   src: url('/fonts/Inter-Bold.ttf') format('truetype');
