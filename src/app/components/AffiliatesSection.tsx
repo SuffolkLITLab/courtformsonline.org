@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Interface } from 'readline';
 import styles from '../css/AffiliatesSection.module.css';
-import nextConfig from '../../../next.config';
 
 interface Affiliate {
   name: string;
@@ -38,7 +37,7 @@ export default function AffiliatesBlock() {
           return (
             <Link href={affiliate.url} className="d-block" key={affiliate.name}>
               <Image
-                src={nextConfig.basePath + '/affiliates/' + affiliate.filename}
+                src={'/affiliates/' + affiliate.filename}
                 alt={affiliate.name}
                 className={styles.AffiliateLogo}
                 height={affiliate.height}

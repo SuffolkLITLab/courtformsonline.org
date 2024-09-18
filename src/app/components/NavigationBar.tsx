@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { prefix } from '../../../prefix';
-import nextConfig from '../../../next.config';
 import styles from '../css/NavigationBar.module.css';
 
 export default function NavigationBar() {
@@ -26,7 +25,7 @@ export default function NavigationBar() {
       <div className="container">
         <Link href="/" className="navbar-brand d-flex align-items-center">
           <Image
-            src={nextConfig.basePath + '/lit-lab-torch-inverted.svg'}
+            src={'/lit-lab-torch-inverted.svg'}
             alt="LIT Lab logo"
             className={styles.NavLogo + ' logo-image me-2'}
             height={47.99}
