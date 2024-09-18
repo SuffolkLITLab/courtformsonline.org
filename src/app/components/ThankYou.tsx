@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Interface } from 'readline';
 import styles from '../css/ThankYou.module.css';
-import nextConfig from '../../../next.config';
 
 interface Organization {
   name: string;
@@ -125,7 +124,7 @@ export default function ThankYou() {
             <div className="col" key={org.name}>
               <Link href={org.url} className="d-block">
                 <Image
-                  src={nextConfig.basePath + '/partners/' + org.icon}
+                  src={'/partners/' + org.icon}
                   alt={org.name}
                   height={org.height}
                   width={org.width}
