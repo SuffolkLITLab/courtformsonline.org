@@ -17,18 +17,11 @@ export const metadata = {
     'Free online interactive court forms from Suffolk University Law School',
 };
 
-interface LayoutParams {
-  params: {
-    path: string;
-  };
-}
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // console.log('params: ' + JSON.stringify(params));
   return (
     <html lang="en">
       <body className={inter.className}>
