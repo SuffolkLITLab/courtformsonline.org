@@ -47,7 +47,7 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
           className="form-button btn btn-primary text-nowrap"
           href={fullUrl}
         >
-          Start Interview
+          Start interview
         </Button>
       </div>
     </div>

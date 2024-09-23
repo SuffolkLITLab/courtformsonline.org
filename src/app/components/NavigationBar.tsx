@@ -84,7 +84,7 @@ export default function NavigationBar() {
                 ) : (
                   ' '
                 )}{' '}
-                Forms
+                forms
               </Link>
             </li>
             <li className="nav-item">

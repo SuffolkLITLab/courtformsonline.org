@@ -56,7 +56,7 @@ const HeroSection = ({ path, interviews, isError }) => {
         <div className="row gx-5">
           <div className="col-lg-6" id="hero-left">
             <h1 className="display-5 mb-4">
-              Free DIY Legal Help for Massachusetts
+              Free DIY legal help for Massachusetts
             </h1>
             <p>
               Use our free step-by-step interactive forms to get help with your
@@ -87,7 +87,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                 </label>
               </div>
               <Button onClick={handleFindHelpClick} className="btn btn-primary">
-                Find Help
+                Find help
               </Button>
             </div>
             {validationError && (
