@@ -1,4 +1,3 @@
-// Example: courtformsonline.org/ma/forms/[form-slug]
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
@@ -12,6 +11,15 @@ interface PageProps {
     form: string;
   };
 }
+
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 
 const Page = async ({ params }: PageProps) => {
   const { form } = params;
@@ -46,7 +54,7 @@ const Page = async ({ params }: PageProps) => {
         {formDetails.metadata.description}
       </ReactMarkdown>
       {(formDetails.metadata.help_page_url ||
-        formDetails.metadata.original_form) && (
+        (formDetails.metadata.original_form && isValidUrl(formDetails.metadata.original_form))) && (
         <>
           <p>
             <strong>More information:</strong>
@@ -59,7 +67,7 @@ const Page = async ({ params }: PageProps) => {
                 </Link>
               </li>
             )}
-            {formDetails.metadata.original_form && (
+            {formDetails.metadata.original_form && isValidUrl(formDetails.metadata.original_form) && (
               <li>
                 <Link href={formDetails.metadata.original_form} target="_blank">
                   Original form
