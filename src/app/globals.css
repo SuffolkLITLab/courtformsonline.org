@@ -24,6 +24,16 @@ h5,
 }
 
 /**
+ * Layout
+ */
+
+@media (max-width: 576px) {
+  h1.text-center {
+    text-align: left !important;
+  }
+}
+
+/**
  * Utilities
  */
 
