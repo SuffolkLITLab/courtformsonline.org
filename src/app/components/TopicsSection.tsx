@@ -24,7 +24,7 @@ const TopicsSection = async ({ path, interviews, isError }) => {
   return (
     <section id="topics" className={styles.TopicsSection + ' py-5'}>
       <div className="container">
-        <h2 className="mb-3">Browse Court Forms by Category</h2>
+        <h2 className="mb-3">Browse court forms by category</h2>
         {filteredTopics.length > 9 && <ShowAllToggle />}
         <div className="row row-cols-1 row-cols-md-3 g-4 card-container">
           {filteredTopics.map((topic, index) => (

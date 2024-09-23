@@ -1,18 +1,16 @@
-/*********************** Suffolk-added styles **********************/
-
-.body-container:has(#hero-section:first-child) {
-  padding-top: 0 !important;
-}
-
-.body-container:has(#affiliates-section:last-child) {
-  padding-bottom: 0 !important;
-}
+/**
+ * Font
+ */
 
 @font-face {
   font-family: 'Inter';
   src: url('/fonts/Inter-Bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
+}
+
+body {
+  font-family: 'Inter';
 }
 
 h1,
@@ -25,19 +23,14 @@ h5,
   font-weight: 600;
 }
 
-body {
-  font-family: 'Inter';
-}
+/**
+ * Layout
+ */
 
-.show-all-toggle {
-  cursor: pointer;
-  border: none !important;
-  background: #002e60 !important;
-  margin-top: 10px;
-}
-
-.hidden-topics {
-  display: none;
+@media (max-width: 576px) {
+  h1.text-center {
+    text-align: left !important;
+  }
 }
 
 /**
@@ -45,9 +38,19 @@ body {
  */
 
 .visible {
-  display: block;
+  display: block !important;
 }
 
 .hidden {
   display: none !important;
+}
+
+/* Removes body top padding if the first child element is the hero section. */
+.body-container:has(#hero-section:first-child) {
+  padding-top: 0 !important;
+}
+
+/* Removes body bottom padding if the last child element is the affiliates section. */
+.body-container:has(#affiliates-section:last-child) {
+  padding-bottom: 0 !important;
 }

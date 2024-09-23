@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
         <div className="row">
           <div className="col">
-            <Link href="/privacy">Terms of Use</Link>
+            <Link href="/privacy">Terms of use</Link>
           </div>
           <div className="col">
             <a href="mailto:massaccess@suffolk.edu">Contact</a>

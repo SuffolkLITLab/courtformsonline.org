@@ -13,7 +13,7 @@ export default function HowItWorksSection() {
       className={styles.HowItWorksSection + ' py-5'}
     >
       <div className="container">
-        <h2 className="mb-3">How it Works</h2>
+        <h2 className="mb-3">How it works</h2>
         <div className="row">
           <div className="col-md-4">
             <div className="d-flex align-items-start justify-content-center how-it-works-step">

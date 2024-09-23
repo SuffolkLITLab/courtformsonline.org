@@ -108,7 +108,7 @@ const organizations: Array<Organization> = [
 export default function ThankYou() {
   return (
     <section className={styles.ThankYouSection + ' container'}>
-      <h2>Thank You</h2>
+      <h2>Thank you</h2>
       <p>
         The organizations listed below all helped build the first version of
         Court Forms Online. It would not exist without their help.

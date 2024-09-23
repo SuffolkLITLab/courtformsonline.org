@@ -69,16 +69,16 @@ const Page = async ({ params }: PageProps) => {
           </ul>
         </>
       )}
-      <h2 className="mt-4">Can I Use This Interview?</h2>
+      <h2 className="mt-4">Can I use this interview?</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.can_I_use_this_form}
       </ReactMarkdown>
-      <h2 className="mt-4">Before You Start</h2>
+      <h2 className="mt-4">Before you start</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
       </ReactMarkdown>
       <Button className="btn btn-primary btn-lg my-3" href={startFormUrl}>
-        Start Interview
+        Start interview
       </Button>
     </div>
   );
