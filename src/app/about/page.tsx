@@ -6,7 +6,9 @@ export default function About() {
     <div>
       <div className="container">
         <section className="about-document-assembly-line mt-4">
-          <h1>About Court Forms Online</h1>
+          <h1 className="display-5 text-center mb-4">
+            About Court Forms Online
+          </h1>
           <p>
             Court Forms Online is a free website built by the{' '}
             <a href="https://suffolklitlab.org">
