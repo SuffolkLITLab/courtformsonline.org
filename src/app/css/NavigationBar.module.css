@@ -21,7 +21,6 @@
   &:not(:hover) {
     text-decoration: none;
   }
-
 }
 
 .AllFormsPath {
@@ -29,7 +28,7 @@
 }
 
 .ExternalLinkIcon {
-  height: .8em;
-  width: .8em;
+  height: 0.8em;
+  width: 0.8em;
   vertical-align: top;
 }

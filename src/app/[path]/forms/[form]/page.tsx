@@ -13,6 +13,15 @@ interface PageProps {
   };
 }
 
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 const Page = async ({ params }: PageProps) => {
   const { form } = params;
   const { interviewsByTopic, isError } = await fetchInterviews('ma');
@@ -46,7 +55,8 @@ const Page = async ({ params }: PageProps) => {
         {formDetails.metadata.description}
       </ReactMarkdown>
       {(formDetails.metadata.help_page_url ||
-        formDetails.metadata.original_form) && (
+        (formDetails.metadata.original_form &&
+          isValidUrl(formDetails.metadata.original_form))) && (
         <>
           <p>
             <strong>More information:</strong>
@@ -59,13 +69,17 @@ const Page = async ({ params }: PageProps) => {
                 </Link>
               </li>
             )}
-            {formDetails.metadata.original_form && (
-              <li>
-                <Link href={formDetails.metadata.original_form} target="_blank">
-                  Original form
-                </Link>
-              </li>
-            )}
+            {formDetails.metadata.original_form &&
+              isValidUrl(formDetails.metadata.original_form) && (
+                <li>
+                  <Link
+                    href={formDetails.metadata.original_form}
+                    target="_blank"
+                  >
+                    Original form
+                  </Link>
+                </li>
+              )}
           </ul>
         </>
       )}

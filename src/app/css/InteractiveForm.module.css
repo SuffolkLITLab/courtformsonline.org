@@ -1,7 +1,7 @@
 .Form {
   gap: 1rem;
 
-  &:last-child{
+  &:last-child {
     border-bottom: 0 !important;
   }
 
@@ -11,7 +11,6 @@
     }
   }
 }
-
 
 .FormTitleContainer {
   max-width: 768px;
@@ -23,7 +22,6 @@
     text-decoration: none;
   }
 }
-
 
 .FormButtonContainer {
   margin-left: auto;
