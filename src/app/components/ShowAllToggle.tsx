@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import Button from 'react-bootstrap/Button';
+import styles from '../css/ShowAllToggle.module.css';
 
 const ShowAllToggle = () => {
   const [showAll, setShowAll] = useState(false);
@@ -24,7 +25,10 @@ const ShowAllToggle = () => {
   };
 
   return (
-    <Button className={'show-all-toggle'} onClick={handleToggle}>
+    <Button
+      className={styles.ShowAllToggle + ' show-all-toggle'}
+      onClick={handleToggle}
+    >
       {showAll ? 'Hide extra categories' : 'Show all categories'}
     </Button>
   );
