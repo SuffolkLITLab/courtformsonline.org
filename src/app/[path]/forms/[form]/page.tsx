@@ -54,7 +54,8 @@ const Page = async ({ params }: PageProps) => {
         {formDetails.metadata.description}
       </ReactMarkdown>
       {(formDetails.metadata.help_page_url ||
-        (formDetails.metadata.original_form && isValidUrl(formDetails.metadata.original_form))) && (
+        (formDetails.metadata.original_form &&
+          isValidUrl(formDetails.metadata.original_form))) && (
         <>
           <p>
             <strong>More information:</strong>
@@ -67,13 +68,17 @@ const Page = async ({ params }: PageProps) => {
                 </Link>
               </li>
             )}
-            {formDetails.metadata.original_form && isValidUrl(formDetails.metadata.original_form) && (
-              <li>
-                <Link href={formDetails.metadata.original_form} target="_blank">
-                  Original form
-                </Link>
-              </li>
-            )}
+            {formDetails.metadata.original_form &&
+              isValidUrl(formDetails.metadata.original_form) && (
+                <li>
+                  <Link
+                    href={formDetails.metadata.original_form}
+                    target="_blank"
+                  >
+                    Original form
+                  </Link>
+                </li>
+              )}
           </ul>
         </>
       )}
