@@ -1,5 +1,6 @@
 import { formSources, pathToServerConfig } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
+import { excludedForms } from '../config/formSources.config';
 import { findClosestTopic } from './helpers';
 
 export const fetchInterviews = async (path) => {
@@ -22,6 +23,16 @@ export const fetchInterviews = async (path) => {
       if (data && data.interviews) {
         const taggedInterviews = data.interviews
           .filter((interview) => !interview.metadata.unlisted) // exclude unlisted interviews
+          // exclude interviews with titles that are in the excludedForms list relative to this server
+          .filter((interview) => {
+            // Check if an exclusion list exists for the server, and use it if available
+            const exclusions = excludedForms[server.key];
+            if (exclusions) {
+              return !exclusions.includes(interview.filename);
+            } else {
+              return true;
+            }
+          })
           .map((interview) => ({
             ...interview,
             serverUrl: server.url,

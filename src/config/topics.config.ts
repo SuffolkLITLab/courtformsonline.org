@@ -49,7 +49,7 @@ export const legalTopics: Topic[] = [
     priority: 1,
   },
   {
-    codes: ['CO-00-00-00-00'],
+    codes: ['CO-00-00-00-00', 'CO-07-06-01-00'],
     name: 'courts',
     long_name: 'Court and hearings',
     icon: 'gavel',
