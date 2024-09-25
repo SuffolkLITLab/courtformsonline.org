@@ -20,3 +20,17 @@ export const formSources = {
     },
   ],
 };
+
+export const excludedForms = {
+  greaterBostonLegalService: [
+    'docassemble.Collection:data/questions/validationOrDoNotCallLetterForAdvocates.yml',
+    'docassemble.MAAffidavitofIndigency:data/questions/affidavit.yml',
+    'docassemble.MAAffidavitofIndigency:data/questions/affidavit_advocate.yml',
+    'docassemble.docsign:data/questions/upload_template.yml',
+    'docassemble.Collection:data/questions/exemptOrNotQuestions.yml',
+    'docassemble.docsign:data/questions/fill_generic_template.yml',
+    'docassemble.startOfCaseDocs:data/questions/caseStartDocs.yml',
+    'docassemble.HousingCodeChecklist:data/questions/housing_code_interview.yml',
+    'docassemble.HousingCodeChecklist:data/questions/feedback.yml',
+  ],
+};
