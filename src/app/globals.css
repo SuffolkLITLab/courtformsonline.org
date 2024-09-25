@@ -2,35 +2,13 @@
  * Font
  */
 
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/Inter-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
-}
-
-body {
-  font-family: 'Inter';
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 .logo-text {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-weight: 600;
-}
-
-/**
- * Layout
- */
-
-@media (max-width: 576px) {
-  h1.text-center {
-    text-align: left !important;
-  }
+  font-weight: bold;
 }
 
 /**
@@ -53,4 +31,14 @@ h5,
 /* Removes body bottom padding if the last child element is the affiliates section. */
 .body-container:has(#affiliates-section:last-child) {
   padding-bottom: 0 !important;
+}
+
+/**
+ * Responsive changes
+ */
+
+ @media (max-width: 576px) {
+  h1.text-center {
+    text-align: left !important;
+  }
 }
