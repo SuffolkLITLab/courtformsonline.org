@@ -1,4 +1,4 @@
-import { Inter } from 'next/font/google';
+import { Atkinson_Hyperlegible } from 'next/font/google';
 import Script from 'next/script';
 
 import NavigationBar from './components/NavigationBar';
@@ -6,10 +6,24 @@ import Footer from './components/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import '@fontsource/inter/700.css'; // Bold weight
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const AtkinsonHyperLegible = Atkinson_Hyperlegible({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  adjustFontFallback: false,
+  fallback: [
+    'system-ui',
+    '-apple-system',
+    'Segoe UI',
+    'Roboto',
+    'Helvetica Neue',
+    'Arial',
+    'Noto Sans',
+    'Liberation Sans',
+    'sans-serif',
+  ],
+});
 
 export const metadata = {
   title: 'Court Forms Online',
@@ -24,7 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={AtkinsonHyperLegible.className}>
         <NavigationBar />
         <div className="body-container py-5">{children}</div>
         <Footer />
