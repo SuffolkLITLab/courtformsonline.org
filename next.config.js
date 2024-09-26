@@ -13,6 +13,12 @@ const nextConfig = {
         destination: '/forms',
         permanent: true,
       },
+      {
+        source: '/(.*)/slack_archive/(.*).html',
+        destination:
+          'https://assemblyline.suffolklitlab.org/docs/get_started#join-the-community',
+        permanent: true,
+      },
     ];
   },
 };
