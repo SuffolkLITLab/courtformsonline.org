@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faEnvelope,
+  faInbox,
   faMagnifyingGlass,
   faList,
 } from '@fortawesome/free-solid-svg-icons';
@@ -79,7 +79,7 @@ export default function HowItWorksSection() {
                 }}
               >
                 <FontAwesomeIcon
-                  icon={faEnvelope}
+                  icon={faInbox}
                   size="2x"
                   className="text-white"
                 />
