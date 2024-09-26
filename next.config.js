@@ -19,6 +19,26 @@ const nextConfig = {
           'https://assemblyline.suffolklitlab.org/docs/get_started#join-the-community',
         permanent: true,
       },
+      {
+        source: '/ma/forms/courtformsonline-massaccess',
+        destination: '/ma/forms',
+        permanent: true,
+      },
+      {
+        source: '/myforms',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/forms/form_data.csv',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/hackathon/',
+        destination: 'https://suffolklitlab.org/events/',
+        permanent: true,
+      },
     ];
   },
 };
