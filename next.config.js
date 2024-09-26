@@ -1,9 +1,19 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  output: 'export',
-  images: {
-    unoptimized: true,
+  async redirects() {
+    return [
+      {
+        source: '/forms/(.*).pdf',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/pdfs/(.*).pdf',
+        destination: '/forms',
+        permanent: true,
+      },
+    ];
   },
 };
 
