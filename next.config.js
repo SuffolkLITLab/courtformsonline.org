@@ -3,40 +3,19 @@
 const nextConfig = {
   async redirects() {
     return [
+      // Form Explorer PDFs
       {
-        source: '/forms/(.*).pdf',
-        destination: '/forms',
+        source: '/forms/:slug([a-zA-Z\\d]*.pdf)', // https://courtformsonline.org/forms/6b4ebd487f82f387512ac20da28803db.pdf
+        destination: 'https://formexplorer.suffolklitlab.org/forms/:slug', // https://s3.amazonaws.com/massaccess.suffolklitlab.org/forms/6b4ebd487f82f387512ac20da28803db.pdf
+        basePath: false,
         permanent: true,
       },
-      {
-        source: '/pdfs/(.*).pdf',
-        destination: '/forms',
-        permanent: true,
-      },
-      {
-        source: '/(.*)/slack_archive/(.*).html',
-        destination:
-          'https://assemblyline.suffolklitlab.org/docs/get_started#join-the-community',
-        permanent: true,
-      },
-      {
-        source: '/ma/forms/courtformsonline-massaccess',
-        destination: '/ma/forms',
-        permanent: true,
-      },
-      {
-        source: '/myforms',
-        destination: '/forms',
-        permanent: true,
-      },
+      // Form Explorer CSV
       {
         source: '/forms/form_data.csv',
-        destination: '/forms',
-        permanent: true,
-      },
-      {
-        source: '/hackathon/',
-        destination: 'https://suffolklitlab.org/events/',
+        destination:
+          'https://formexplorer.suffolklitlab.org/forms/form_data.csv',
+        basePath: false,
         permanent: true,
       },
     ];
