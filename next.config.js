@@ -5,8 +5,8 @@ const nextConfig = {
     return [
       // Form Explorer PDFs
       {
-        source: '/forms/:slug([a-zA-Z\\d]*.pdf)', // https://courtformsonline.org/forms/6b4ebd487f82f387512ac20da28803db.pdf
-        destination: 'https://formexplorer.suffolklitlab.org/forms/:slug', // https://s3.amazonaws.com/massaccess.suffolklitlab.org/forms/6b4ebd487f82f387512ac20da28803db.pdf
+        source: '/forms/:slug([a-zA-Z\\d]*.pdf)',
+        destination: 'https://formexplorer.suffolklitlab.org/forms/:slug',
         basePath: false,
         permanent: true,
       },
