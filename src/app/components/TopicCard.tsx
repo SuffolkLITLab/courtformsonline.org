@@ -43,7 +43,7 @@ const TopicCard = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const visibilityClass = index > 8 ? 'hidden' : '';
   const displayInterviews = isExpanded
-    ? interviews.slice(0, Math.min(10, interviews.length))
+    ? interviews.slice(0, Math.min(20, interviews.length))
     : interviews.slice(0, 3);
   const remainingCount = interviews.length > 10 ? interviews.length - 10 : 0;
   const cardClassName = isSpot ? 'spot-topic-card-parent' : 'topic-card-parent';
@@ -90,11 +90,7 @@ const TopicCard = ({
               if (interview.metadata && interview.metadata.title) {
                 return (
                   <Link
-                    key={
-                      toUrlFriendlyString(interview.metadata.title) +
-                      '-' +
-                      index
-                    }
+                    key={`${toUrlFriendlyString(interview.filename)}-${topic.name}-${index}`}
                     className={
                       styles.FormTag +
                       ' form-tag btn btn-outline-secondary border-2 align-self-start text-start'

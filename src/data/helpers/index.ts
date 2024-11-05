@@ -1,21 +1,39 @@
-export function findClosestTopic(topicCode, legalTopics) {
-  const prefix = topicCode.slice(0, 2);
-  const numericCode = parseInt(topicCode.slice(3).replace(/-/g, ''), 10);
-  let closestTopic;
-  let smallestDiff = Infinity;
+import { legalTopics } from '../../config/topics.config';
 
-  // Find topics by closest, smaller topic code with matching prefix
-  legalTopics.forEach((topic) => {
-    topic.codes.forEach((code) => {
-      if (code.startsWith(prefix)) {
-        const topicNumeric = parseInt(code.slice(3).replace(/-/g, ''), 10);
-        const diff = numericCode - topicNumeric;
-        if (diff >= 0 && diff < smallestDiff) {
-          smallestDiff = diff;
-          closestTopic = topic;
+function getTopicNames(
+  tags: string[],
+  defaultName: string = 'other'
+): string[] {
+  const topicNames = new Set<string>();
+
+  // Preprocess topics' codes by cleaning them
+  const topicsWithCleanCodes = legalTopics.map((topic) => ({
+    ...topic,
+    cleanedCodes: topic.codes.map((code) => code.replace(/(-00)+$/, '')),
+  }));
+
+  if (tags.length === 0) {
+    topicNames.add(defaultName);
+  } else {
+    tags.forEach((tag) => {
+      const cleanedTag = tag.replace(/(-00)+$/, '');
+      for (const topic of topicsWithCleanCodes) {
+        for (const cleanedCode of topic.cleanedCodes) {
+          if (cleanedTag.startsWith(cleanedCode)) {
+            topicNames.add(topic.name);
+            // We don't break here because multiple topics might match
+          }
         }
       }
     });
-  });
-  return closestTopic;
+
+    // If none of the tags matched any topic, add the default topic
+    if (!(topicNames.size > 0)) {
+      topicNames.add(defaultName);
+    }
+  }
+
+  return Array.from(topicNames);
 }
+
+export { getTopicNames };

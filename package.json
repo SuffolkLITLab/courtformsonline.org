@@ -42,6 +42,7 @@
     "@testing-library/react": "^15.0.6",
     "@types/bootstrap": "^5.2.6",
     "@types/eslint": "^8",
+    "@types/jest": "^29.5.14",
     "eslint": "8",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
