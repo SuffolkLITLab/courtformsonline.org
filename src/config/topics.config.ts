@@ -17,7 +17,7 @@ export const legalTopics: Topic[] = [
     priority: 100,
   },
   {
-    codes: ['FA-00-00-00-00'],
+    codes: ['FA-00-00-00-00', 'ES-03-00-00-00'],
     name: 'family',
     long_name: 'Family and safety',
     icon: 'people-roof',
@@ -185,15 +185,3 @@ export const legalTopics: Topic[] = [
     priority: 0,
   },
 ];
-
-export function findParentTopic(tag: string) {
-  // Remove trailing sections of "-00" from the tag
-  const cleanedTag = tag.replace(/(-00)+$/, '');
-
-  // Find the first topic that starts with the same characters as the cleaned tag
-  const parentTopic = legalTopics.find((topic) =>
-    cleanedTag.startsWith(topic.codes[0].replace(/(-00)+$/, ''))
-  );
-
-  return parentTopic; // This will be undefined if no matching topic is found
-}

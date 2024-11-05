@@ -1,7 +1,37 @@
 import { formSources, pathToServerConfig } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
 import { excludedForms } from '../config/formSources.config';
-import { findClosestTopic } from './helpers';
+import { getTopicNames } from './helpers';
+
+interface LocalizedString {
+  [key: string]: string;
+}
+
+interface RawInterview {
+  metadata?: {
+    unlisted?: boolean;
+    LIST_topics?: string[];
+    description?: string | LocalizedString;
+    can_I_use_this_form?: string | LocalizedString;
+    help_page_url?: string | LocalizedString;
+    help_page_title?: string | LocalizedString;
+    original_form?: string | LocalizedString;
+    before_you_start?: string | LocalizedString;
+    form_titles?: string[] | LocalizedString;
+    form_numbers?: string[] | LocalizedString;
+    jurisdiction?: string | LocalizedString;
+    maturity?: string | LocalizedString;
+    footer?: string | LocalizedString;
+    'short title'?: string | LocalizedString;
+    title?: string | LocalizedString;
+    [key: string]: any;
+  };
+  tags?: string[];
+  filename?: string;
+  title?: string | LocalizedString;
+  link?: string;
+  [key: string]: any;
+}
 
 interface Interview {
   metadata: {
@@ -17,9 +47,13 @@ interface Interview {
     form_numbers: string[];
     jurisdiction: string;
     maturity: string;
+    footer: string;
+    'short title': string;
+    title: string;
     estimated_completion_minutes: number;
     estimated_completion_delta: number;
     languages: string[];
+    [key: string]: any;
   };
   tags: string[];
   filename: string;
@@ -29,7 +63,41 @@ interface Interview {
 }
 
 interface Data {
-  interviews?: Interview[];
+  interviews?: RawInterview[];
+}
+
+// Helper function to extract localized strings
+function extractLocalizedString(
+  value: string | LocalizedString | undefined,
+  locale: string
+): string {
+  if (typeof value === 'string') {
+    return value;
+  } else if (value && typeof value === 'object') {
+    return value[locale] ?? value['en'] ?? Object.values(value)[0] ?? '';
+  } else {
+    return '';
+  }
+}
+
+// Helper function to extract localized arrays
+function extractLocalizedArray(
+  value: string[] | LocalizedString | undefined,
+  locale: string
+): string[] {
+  if (Array.isArray(value)) {
+    return value;
+  } else if (value && typeof value === 'object') {
+    const localizedValue =
+      value[locale] ?? value['en'] ?? Object.values(value)[0];
+    return Array.isArray(localizedValue)
+      ? localizedValue
+      : localizedValue
+        ? [localizedValue]
+        : [];
+  } else {
+    return [];
+  }
 }
 
 export const fetchInterviews = async (path: string) => {
@@ -40,6 +108,8 @@ export const fetchInterviews = async (path: string) => {
   const servers = formSources.docassembleServers.filter((server) =>
     serverNames.includes(server.name)
   );
+
+  const locale = 'en'; // Todo: make this dynamic
 
   let allInterviews: Interview[] = [];
   for (const server of servers) {
@@ -52,45 +122,87 @@ export const fetchInterviews = async (path: string) => {
 
       if (data && data.interviews) {
         const taggedInterviews = data.interviews
-          .filter((interview: Interview) => !interview.metadata?.unlisted) // exclude unlisted interviews safely
-          // exclude interviews with filenames that are in the excludedForms list relative to this server
-          .filter((interview: Interview) => {
-            // Check if an exclusion list exists for the server, and use it if available
+          .filter((interview: RawInterview) => !interview.metadata?.unlisted)
+          .filter((interview: RawInterview) => {
             const exclusions = excludedForms[server.key];
-            const filename = interview.filename || ''; // safe fallback for filename
+            const filename = interview.filename ?? '';
             if (exclusions) {
               return !exclusions.includes(filename);
             } else {
               return true;
             }
           })
-          .map((interview: Interview) => ({
-            ...interview,
-            serverUrl: server.url,
-            metadata: {
-              unlisted: interview.metadata?.unlisted ?? false,
-              LIST_topics: interview.metadata?.LIST_topics || [],
-              description: interview.metadata?.description || '',
-              can_I_use_this_form:
-                interview.metadata?.can_I_use_this_form || '',
-              help_page_url: interview.metadata?.help_page_url || '',
-              help_page_title: interview.metadata?.help_page_title || '',
-              original_form: interview.metadata?.original_form || '',
-              before_you_start: interview.metadata?.before_you_start || '',
-              form_titles: interview.metadata?.form_titles || [],
-              form_numbers: interview.metadata?.form_numbers || [],
-              jurisdiction: interview.metadata?.jurisdiction || '',
-              maturity: interview.metadata?.maturity || '',
-              estimated_completion_minutes:
-                interview.metadata?.estimated_completion_minutes ?? 0,
-              estimated_completion_delta:
-                interview.metadata?.estimated_completion_delta ?? 0,
-              languages: interview.metadata?.languages || [],
-            },
-            tags: interview.tags || [],
-            filename: interview.filename || '',
-            title: interview.title || '',
-          }));
+          .map(
+            (interview: RawInterview): Interview => ({
+              ...interview,
+              serverUrl: server.url,
+              metadata: {
+                ...interview.metadata,
+                unlisted: interview.metadata?.unlisted ?? false,
+                LIST_topics: interview.metadata?.LIST_topics ?? [],
+                description: extractLocalizedString(
+                  interview.metadata?.description,
+                  locale
+                ),
+                can_I_use_this_form: extractLocalizedString(
+                  interview.metadata?.can_I_use_this_form,
+                  locale
+                ),
+                help_page_url: extractLocalizedString(
+                  interview.metadata?.help_page_url,
+                  locale
+                ),
+                help_page_title: extractLocalizedString(
+                  interview.metadata?.help_page_title,
+                  locale
+                ),
+                original_form: extractLocalizedString(
+                  interview.metadata?.original_form,
+                  locale
+                ),
+                before_you_start: extractLocalizedString(
+                  interview.metadata?.before_you_start,
+                  locale
+                ),
+                form_titles: extractLocalizedArray(
+                  interview.metadata?.form_titles,
+                  locale
+                ),
+                form_numbers: extractLocalizedArray(
+                  interview.metadata?.form_numbers,
+                  locale
+                ),
+                jurisdiction: extractLocalizedString(
+                  interview.metadata?.jurisdiction,
+                  locale
+                ),
+                maturity: extractLocalizedString(
+                  interview.metadata?.maturity,
+                  locale
+                ),
+                footer: extractLocalizedString(
+                  interview.metadata?.footer,
+                  locale
+                ),
+                'short title': extractLocalizedString(
+                  interview.metadata?.['short title'],
+                  locale
+                ),
+                title: extractLocalizedString(
+                  interview.metadata?.title,
+                  locale
+                ),
+                estimated_completion_minutes:
+                  interview.metadata?.estimated_completion_minutes ?? 0,
+                estimated_completion_delta:
+                  interview.metadata?.estimated_completion_delta ?? 0,
+                languages: interview.metadata?.languages ?? [],
+              },
+              tags: interview.tags ?? [],
+              filename: interview.filename ?? '',
+              title: extractLocalizedString(interview.title, locale),
+            })
+          );
         allInterviews = allInterviews.concat(taggedInterviews);
       }
     } catch (error) {
@@ -102,6 +214,7 @@ export const fetchInterviews = async (path: string) => {
     }
   }
 
+  // Initialize interviewsByTopic and titlesInTopics with all topics
   const interviewsByTopic: { [key: string]: Interview[] } = {};
   const titlesInTopics: { [key: string]: Set<string> } = {};
   legalTopics.forEach((topic) => {
@@ -112,29 +225,28 @@ export const fetchInterviews = async (path: string) => {
 
   allInterviews.forEach((interview: Interview) => {
     const uniqueTopics = new Set<string>();
-    const title = interview.title || ''; // safe fallback for title
+    const title = interview.title;
 
-    // Match topics by metadata.LIST_topics and tags
-    (interview.metadata.LIST_topics || [])
-      .concat(interview.tags || [])
-      .forEach((code: string) => {
-        const topic = findClosestTopic(code, legalTopics);
-        if (topic) {
-          const topicName = topic.name.toLowerCase();
-          if (!uniqueTopics.has(topicName)) {
-            uniqueTopics.add(topicName);
-            if (!titlesInTopics[topicName].has(title)) {
-              interviewsByTopic[topicName].push(interview);
-              titlesInTopics[topicName].add(title);
-            }
-          }
-        }
-      });
+    // Collect all codes from metadata.LIST_topics and tags
+    const codes = [...interview.metadata.LIST_topics, ...interview.tags];
 
+    // Get matching topic names
+    const topicNames = getTopicNames(codes);
+
+    topicNames.forEach((topicName) => {
+      topicName = topicName.toLowerCase();
+      //if (!uniqueTopics.has(topicName)) {
+      uniqueTopics.add(topicName);
+      if (!titlesInTopics[topicName].has(title)) {
+        interviewsByTopic[topicName].push(interview);
+        titlesInTopics[topicName].add(title);
+      }
+      //}
+    });
+
+    // If no topics matched, add to 'other'
     if (uniqueTopics.size === 0) {
       const otherTopic = 'other';
-      interviewsByTopic[otherTopic] = interviewsByTopic[otherTopic] || [];
-      titlesInTopics[otherTopic] = titlesInTopics[otherTopic] || new Set();
       if (!titlesInTopics[otherTopic].has(title)) {
         interviewsByTopic[otherTopic].push(interview);
         titlesInTopics[otherTopic].add(title);
