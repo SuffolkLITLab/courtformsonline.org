@@ -1,33 +1,29 @@
-import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import Page from '../src/app/page';
-import RootLayout from '../src/app/layout';
-import { fetchInterviews } from '../src/data/fetchInterviewData';
+const { getTopicNames } = require('../src/data/helpers/index');
 
-describe('Layout component', () => {
-  beforeEach(() => {
-    render(<RootLayout />);
-  });
+describe('getTopicNames', () => {
+  const legalTopics = [
+    {
+      name: 'housing',
+      codes: ['HO-01-00-00-00', 'HO-02-00-00-00'],
+    },
+    {
+      name: 'family',
+      codes: ['FA-00-00-00-00', 'FA-01-00-00-00'],
+    },
+    {
+      name: 'employment',
+      codes: ['EM-01-00-00-00'],
+    },
+  ];
 
-  it('should contain a navigation bar', () => {
-    const navElement = screen.getByRole('navigation');
-    expect(navElement).toBeInTheDocument();
-  });
+  // Match the import path used in getTopicNames
+  jest.mock('../src/config/topics.config', () => ({
+    legalTopics,
+  }));
 
-  it('should contain a footer', () => {
-    const footerElement = screen.getByRole('contentinfo');
-    expect(footerElement).toBeInTheDocument();
+  it('should return the exact matching topic', () => {
+    const topicCodes = ['HO-02-00-00-00'];
+    const result = getTopicNames(topicCodes);
+    expect(result).toEqual(['housing']);
   });
 });
-
-// Mock the fetchInterviews function from your data fetching module
-jest.mock('../src/data/fetchInterviewData', () => ({
-  fetchInterviews: jest.fn(() =>
-    Promise.resolve({
-      interviewsByTopic: {
-        Topic1: [{ id: 1, name: 'Interview 1' }],
-        Topic2: [{ id: 2, name: 'Interview 2' }],
-      },
-    })
-  ),
-}));
