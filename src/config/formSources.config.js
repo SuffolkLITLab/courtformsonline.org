@@ -34,6 +34,6 @@ export const excludedForms = {
     'docassemble.HousingCodeChecklist:data/questions/feedback.yml',
   ],
   suffolkLITLab: [
-    'docassemble.MAPetitionToSealEviction:data/questions/petition_to_seal_eviction.yml', // TODO: REMOVE on May 4th 2025
+    // 'docassemble.MAPetitionToSealEviction:data/questions/petition_to_seal_eviction.yml', // TODO: REMOVE on May 4th 2025
   ],
 };
