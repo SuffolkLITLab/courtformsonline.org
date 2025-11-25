@@ -19,7 +19,7 @@ function formatDate(dateStr: string) {
   }
 }
 
-const FormStatus = ({ maturity, reviewDate }: FormStatusProps) => {
+const FormStatus = ({ maturity }: FormStatusProps) => {
   const mat = (maturity || '').toLowerCase();
 
   const badgeInfo = (() => {
@@ -29,7 +29,10 @@ const FormStatus = ({ maturity, reviewDate }: FormStatusProps) => {
       case 'testing':
         return { label: 'Testing', className: 'text-bg-info text-dark' };
       case 'development':
-        return { label: 'Development', className: 'text-bg-warning text-white' };
+        return {
+          label: 'Development',
+          className: 'text-bg-warning text-white',
+        };
       default:
         return null;
     }
@@ -39,7 +42,9 @@ const FormStatus = ({ maturity, reviewDate }: FormStatusProps) => {
     <div className={styles.FormStatus}>
       {badgeInfo ? (
         <div className={styles.StatusBox} aria-hidden>
-          <span className={`badge ${badgeInfo.className} ${styles.statusBadge}`}>
+          <span
+            className={`badge ${badgeInfo.className} ${styles.statusBadge}`}
+          >
             {badgeInfo.label}
           </span>
         </div>

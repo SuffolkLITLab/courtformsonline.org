@@ -32,3 +32,12 @@
     }
   }
 }
+
+.FeeInfo {
+  font-size: 0.95rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-left: 4px solid #0d6efd;
+  border-radius: 4px;
+}

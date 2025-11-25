@@ -59,10 +59,13 @@ const Page = async ({ params }: PageProps) => {
               <span className="text-muted" style={{ fontSize: '0.875rem' }}>
                 Last reviewed:{' '}
                 <time dateTime={formDetails.metadata.review_date}>
-                  {new Date(formDetails.metadata.review_date).toLocaleDateString(
-                    'en-US',
-                    { year: 'numeric', month: 'long', day: 'numeric' }
-                  )}
+                  {new Date(
+                    formDetails.metadata.review_date
+                  ).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
                 </time>
               </span>
             </div>
@@ -75,6 +78,32 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
+      {/* Filing fee information - only show if there's a fee */}
+      {Array.isArray(formDetails.metadata.fees) &&
+        formDetails.metadata.fees.some(
+          (fee) => fee.amount && fee.amount > 0
+        ) && (
+          <div className={styles.FeeInfo + ' mt-3 mb-3'}>
+            <strong>Filing fee:</strong>{' '}
+            {formDetails.metadata.fees.map((fee, idx) =>
+              fee.amount && fee.amount > 0 ? (
+                <span key={idx}>
+                  {fee.name ? `${fee.name}: $${fee.amount}` : `$${fee.amount}`}
+                  {idx < formDetails.metadata.fees.length - 1 ? ', ' : ''}
+                </span>
+              ) : null
+            )}
+            <br />
+            <span>
+              If you have a low income, you may qualify for a fee waiver.
+            </span>
+            <br />
+            <span>
+              Completing forms with CourtFormsOnline.org is always free, but a
+              court may require a payment to file a completed document.
+            </span>
+          </div>
+        )}
       {(formDetails.metadata.help_page_url ||
         (formDetails.metadata.original_form &&
           isValidUrl(formDetails.metadata.original_form))) && (
