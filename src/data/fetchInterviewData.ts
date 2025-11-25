@@ -7,6 +7,15 @@ interface LocalizedString {
   [key: string]: string;
 }
 
+interface Fee {
+  name: string;
+  amount?: number;
+}
+
+interface RawFee {
+  [key: string]: number | string;
+}
+
 interface RawInterview {
   metadata?: {
     unlisted?: boolean;
@@ -16,6 +25,8 @@ interface RawInterview {
     help_page_url?: string | LocalizedString;
     help_page_title?: string | LocalizedString;
     original_form?: string | LocalizedString;
+    original_form_published_on?: string | LocalizedString;
+    review_date?: string | LocalizedString;
     before_you_start?: string | LocalizedString;
     form_titles?: string[] | LocalizedString;
     form_numbers?: string[] | LocalizedString;
@@ -24,6 +35,11 @@ interface RawInterview {
     footer?: string | LocalizedString;
     'short title'?: string | LocalizedString;
     title?: string | LocalizedString;
+    estimated_completion_minutes?: number;
+    estimated_completion_delta?: number;
+    languages?: string[];
+    fees?: RawFee[] | string[] | LocalizedString;
+    update_notes?: string | LocalizedString;
     [key: string]: any;
   };
   tags?: string[];
@@ -50,9 +66,13 @@ interface Interview {
     footer: string;
     'short title': string;
     title: string;
+    original_form_published_on?: string;
+    review_date?: string;
     estimated_completion_minutes: number;
     estimated_completion_delta: number;
     languages: string[];
+    fees: Fee[];
+    update_notes: string;
     [key: string]: any;
   };
   tags: string[];
@@ -100,6 +120,122 @@ function extractLocalizedArray(
   }
 }
 
+function parseFeeAmount(value: any): number | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  if (typeof value === 'number') return value;
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    if (trimmed === '') return undefined;
+    const parsed = parseFloat(trimmed.replace(/[^0-9.-]+/g, ''));
+    if (!isNaN(parsed)) return parsed;
+    const lowered = trimmed.toLowerCase();
+    // Interpret common no-fee phrases as 0
+    if (
+      lowered.includes('no') ||
+      lowered.includes('none') ||
+      lowered.includes('no fee') ||
+      lowered.includes('no filing fee') ||
+      lowered.includes('free') ||
+      lowered.includes('waived') ||
+      lowered.includes('n/a')
+    ) {
+      return 0;
+    }
+    return undefined;
+  }
+  return undefined;
+}
+
+export function extractLocalizedFees(
+  value: RawFee[] | string[] | string | LocalizedString | undefined,
+  locale: string
+): Fee[] {
+  if (!value) return [];
+
+  // Resolve localized wrapper if present
+  if (typeof value === 'object' && !Array.isArray(value)) {
+    const localizedVal =
+      (value as LocalizedString)[locale] ??
+      (value as LocalizedString)['en'] ??
+      value;
+    // If localizedVal is the same structure, recurse
+    if (localizedVal === value) {
+      // Could be an object mapping name->amount
+      const obj = value as { [key: string]: any };
+      // If it has 'name' or 'amount' keys, treat as single fee object
+      if ('name' in obj || 'amount' in obj) {
+        return [
+          {
+            name: obj['name'] ?? Object.keys(obj)[0],
+            amount: parseFeeAmount(obj['amount'] ?? obj[Object.keys(obj)[0]]),
+          },
+        ];
+      }
+      // Otherwise, treat each key as name: amount
+      return Object.keys(obj).map((k) => ({
+        name: k,
+        amount: parseFeeAmount(obj[k]),
+      }));
+    }
+    return extractLocalizedFees(localizedVal as any, locale);
+  }
+
+  // Handle array of items
+  if (Array.isArray(value)) {
+    const arr: any[] = value as any[];
+    return arr.flatMap((item) => {
+      if (!item && item !== 0) return [];
+      if (typeof item === 'string') {
+        const [name, ...rest] = item.split(':');
+        const amountStr = rest.join(':').trim();
+        let amount: number | undefined = undefined;
+        if (amountStr) {
+          amount = parseFeeAmount(amountStr);
+        } else {
+          // Try parsing the whole string for patterns like 'No filing fee' or 'Filing fee $25'
+          amount = parseFeeAmount(item);
+        }
+        return [{ name: name.trim(), amount }];
+      } else if (typeof item === 'object') {
+        if ('name' in item || 'amount' in item) {
+          return [
+            {
+              name: item['name'] ?? Object.keys(item)[0],
+              amount: parseFeeAmount(
+                item['amount'] ?? item[Object.keys(item)[0]]
+              ),
+            },
+          ];
+        }
+        const key = Object.keys(item)[0];
+        return [
+          {
+            name: key,
+            amount: parseFeeAmount(item[key]),
+          },
+        ];
+      } else {
+        return [];
+      }
+    });
+  }
+
+  // Handle string value
+  if (typeof value === 'string') {
+    const [name, ...rest] = value.split(':');
+    const amountStr = rest.join(':').trim();
+    const amount = parseFeeAmount(amountStr);
+    return [
+      {
+        name: name.trim(),
+        amount,
+      },
+    ];
+  }
+
+  return [];
+}
+
 export const fetchInterviews = async (path: string) => {
   const config = pathToServerConfig[path];
   const serverNames = config
@@ -137,7 +273,7 @@ export const fetchInterviews = async (path: string) => {
               ...interview,
               serverUrl: server.url,
               metadata: {
-                ...interview.metadata,
+                ...(interview.metadata as any),
                 unlisted: interview.metadata?.unlisted ?? false,
                 LIST_topics: interview.metadata?.LIST_topics ?? [],
                 description: extractLocalizedString(
@@ -192,11 +328,27 @@ export const fetchInterviews = async (path: string) => {
                   interview.metadata?.title,
                   locale
                 ),
+                original_form_published_on: extractLocalizedString(
+                  interview.metadata?.original_form_published_on,
+                  locale
+                ),
+                review_date: extractLocalizedString(
+                  interview.metadata?.review_date,
+                  locale
+                ),
                 estimated_completion_minutes:
                   interview.metadata?.estimated_completion_minutes ?? 0,
                 estimated_completion_delta:
                   interview.metadata?.estimated_completion_delta ?? 0,
                 languages: interview.metadata?.languages ?? [],
+                fees: extractLocalizedFees(
+                  interview.metadata?.fees as any,
+                  locale
+                ),
+                update_notes: extractLocalizedString(
+                  interview.metadata?.update_notes,
+                  locale
+                ),
               },
               tags: interview.tags ?? [],
               filename: interview.filename ?? '',

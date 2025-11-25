@@ -3,6 +3,7 @@ export interface Form {
   title: string;
   metadata: {
     description: string;
+    fees?: { name: string; amount?: number }[];
   };
   landingPageURL: string;
   link: string;
