@@ -28,4 +28,26 @@ describe('FormStatus component', () => {
     const { container } = render(<FormStatus />);
     expect(container.firstChild?.firstChild).toBeNull();
   });
+
+  test('renders E-filing available badge when efilingEnabled is true', () => {
+    render(<FormStatus efilingEnabled={true} />);
+    expect(screen.getByText('E-filing available')).toBeInTheDocument();
+  });
+
+  test('renders Email filing available badge when efilingEnabled is "email"', () => {
+    render(<FormStatus efilingEnabled="email" />);
+    expect(screen.getByText('Email filing available')).toBeInTheDocument();
+  });
+
+  test('does not render e-filing badge when efilingEnabled is false', () => {
+    const { container } = render(<FormStatus efilingEnabled={false} />);
+    expect(screen.queryByText('E-filing available')).not.toBeInTheDocument();
+    expect(screen.queryByText('Email filing available')).not.toBeInTheDocument();
+  });
+
+  test('renders both maturity and e-filing badges when both are present', () => {
+    render(<FormStatus maturity="Preview" efilingEnabled={true} />);
+    expect(screen.getByText('Preview')).toBeInTheDocument();
+    expect(screen.getByText('E-filing available')).toBeInTheDocument();
+  });
 });

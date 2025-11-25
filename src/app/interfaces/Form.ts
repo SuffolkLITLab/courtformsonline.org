@@ -4,6 +4,7 @@ export interface Form {
   metadata: {
     description: string;
     fees?: { name: string; amount?: number }[];
+    efiling_enabled?: boolean | 'email';
   };
   landingPageURL: string;
   link: string;

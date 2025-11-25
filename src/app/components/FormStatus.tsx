@@ -3,6 +3,7 @@ import styles from '../css/FormStatus.module.css';
 
 interface FormStatusProps {
   maturity?: string | null;
+  efilingEnabled?: boolean | 'email' | null;
 }
 
 function formatDate(dateStr: string) {
@@ -19,7 +20,7 @@ function formatDate(dateStr: string) {
   }
 }
 
-const FormStatus = ({ maturity }: FormStatusProps) => {
+const FormStatus = ({ maturity, efilingEnabled }: FormStatusProps) => {
   const mat = (maturity || '').toLowerCase();
 
   const badgeInfo = (() => {
@@ -38,6 +39,21 @@ const FormStatus = ({ maturity }: FormStatusProps) => {
     }
   })();
 
+  const efilingBadgeInfo = (() => {
+    if (efilingEnabled === 'email') {
+      return {
+        label: 'Email filing available',
+        className: 'text-bg-success text-white',
+      };
+    } else if (efilingEnabled === true) {
+      return {
+        label: 'E-filing available',
+        className: 'text-bg-success text-white',
+      };
+    }
+    return null;
+  })();
+
   return (
     <div className={styles.FormStatus}>
       {badgeInfo ? (
@@ -46,6 +62,15 @@ const FormStatus = ({ maturity }: FormStatusProps) => {
             className={`badge ${badgeInfo.className} ${styles.statusBadge}`}
           >
             {badgeInfo.label}
+          </span>
+        </div>
+      ) : null}
+      {efilingBadgeInfo ? (
+        <div className={styles.StatusBox}>
+          <span
+            className={`badge ${efilingBadgeInfo.className} ${styles.statusBadge}`}
+          >
+            {efilingBadgeInfo.label}
           </span>
         </div>
       ) : null}

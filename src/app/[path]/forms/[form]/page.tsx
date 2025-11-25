@@ -110,7 +110,10 @@ const Page = async ({ params }: PageProps) => {
           )}
         </div>
         <div>
-          <FormStatus maturity={formDetails.metadata.maturity} />
+          <FormStatus
+            maturity={formDetails.metadata.maturity}
+            efilingEnabled={formDetails.metadata.efiling_enabled}
+          />
         </div>
       </div>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
