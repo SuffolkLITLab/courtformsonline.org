@@ -42,7 +42,9 @@ describe('FormStatus component', () => {
   test('does not render e-filing badge when efilingEnabled is false', () => {
     const { container } = render(<FormStatus efilingEnabled={false} />);
     expect(screen.queryByText('E-filing available')).not.toBeInTheDocument();
-    expect(screen.queryByText('Email filing available')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Email filing available')
+    ).not.toBeInTheDocument();
   });
 
   test('renders both maturity and e-filing badges when both are present', () => {
