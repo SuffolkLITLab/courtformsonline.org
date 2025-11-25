@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import { toUrlFriendlyString } from '../../../utils/helpers';
 import styles from '../../../css/FormPage.module.css';
+import FormStatus from '../../../components/FormStatus';
 
 interface PageProps {
   params: {
@@ -49,8 +50,28 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className={styles.FormPage + ' container'}>
-      <p className="badge text-bg-secondary fs-6 fw-normal">Form</p>
-      <h1 className="display-5 mb-4">{formDetails.title}</h1>
+      <div className="d-flex justify-content-between align-items-start flex-wrap mb-3">
+        <div>
+          <p className="badge text-bg-secondary fs-6 fw-normal">Form</p>
+          <h1 className="display-5 mb-0">{formDetails.title}</h1>
+          {formDetails.metadata.review_date && (
+            <div className="mt-2">
+              <span className="text-muted" style={{ fontSize: '0.875rem' }}>
+                Last reviewed:{' '}
+                <time dateTime={formDetails.metadata.review_date}>
+                  {new Date(formDetails.metadata.review_date).toLocaleDateString(
+                    'en-US',
+                    { year: 'numeric', month: 'long', day: 'numeric' }
+                  )}
+                </time>
+              </span>
+            </div>
+          )}
+        </div>
+        <div>
+          <FormStatus maturity={formDetails.metadata.maturity} />
+        </div>
+      </div>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
