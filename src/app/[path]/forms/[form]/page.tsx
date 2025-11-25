@@ -78,6 +78,18 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
+      {/* Documents this tool helps make - only show if form_titles is defined and non-empty */}
+      {Array.isArray(formDetails.metadata.form_titles) &&
+        formDetails.metadata.form_titles.length > 0 && (
+          <div className={styles.DocumentsList + ' mt-4 mb-4'}>
+            <h3>This tool helps you make the following documents</h3>
+            <ul>
+              {formDetails.metadata.form_titles.map((title, idx) => (
+                <li key={idx}>{title}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       {/* Filing fee information - only show if there's a fee */}
       {Array.isArray(formDetails.metadata.fees) &&
         formDetails.metadata.fees.some(
