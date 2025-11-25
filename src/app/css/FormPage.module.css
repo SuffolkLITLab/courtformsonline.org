@@ -1,3 +1,33 @@
 .FormPage {
   max-width: 768px;
 }
+
+.FeeInfo {
+  font-size: 0.95rem;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-left: 4px solid #0d6efd;
+  border-radius: 4px;
+}
+
+.DocumentsList {
+  background-color: #f0f7ff;
+  padding: 1rem;
+  border-left: 4px solid #0d6efd;
+  border-radius: 4px;
+}
+
+.DocumentsList h3 {
+  margin-bottom: 1rem;
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.DocumentsList ul {
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+}
+
+.DocumentsList li {
+  margin-bottom: 0.5rem;
+}

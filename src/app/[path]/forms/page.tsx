@@ -15,40 +15,48 @@ const SearchSection = dynamic(() => import('../../components/SearchSection'), {
 
 async function getData() {
   let allData: Form[] = [];
+  // Import fee extraction logic
+  // @ts-ignore
+  const { extractLocalizedFees } = await import(
+    '../../../data/fetchInterviewData'
+  );
+  const locale = 'en';
 
-  // Iterating over an array of server objects
   for (const server of formSources.docassembleServers) {
-    const url = new URL(server.url); // Access the URL directly from the server object
+    const url = new URL(server.url);
     url.pathname = '/list';
     url.search = 'json=1';
 
     const res = await fetch(url.toString());
-
-    // Handle errors
     if (!res.ok) {
       console.error(`Failed to fetch data from ${server.url}`);
-      continue; // Skip this server and continue with the next one
+      continue;
     }
-
     const data = await res.json();
-
     if (!data.hasOwnProperty('interviews')) {
       console.error(
         `Data from ${server.url} does not contain "interviews" key`
       );
-      continue; // Skip this server and continue with the next one
+      continue;
     }
-
-    // Include the server name and server URL in the data
-    const interviews = data['interviews'].map((interview: Form) => ({
-      ...interview,
-      serverName: server.name,
-      serverUrl: server.url,
-    }));
-
+    // Normalize fees in metadata
+    const interviews = data['interviews'].map((interview: any) => {
+      let fees = [];
+      if (interview.metadata && interview.metadata.fees) {
+        fees = extractLocalizedFees(interview.metadata.fees, locale);
+      }
+      return {
+        ...interview,
+        serverName: server.name,
+        serverUrl: server.url,
+        metadata: {
+          ...interview.metadata,
+          fees,
+        },
+      };
+    });
     allData = allData.concat(interviews);
   }
-
   return allData;
 }
 
