@@ -7,10 +7,14 @@ import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import { toUrlFriendlyString } from '../../../utils/helpers';
 import styles from '../../../css/FormPage.module.css';
 import FormStatus from '../../../components/FormStatus';
+import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
+import { pathToServerConfig } from '../../../../config/formSources.config';
+import { legalTopics } from '../../../../config/topics.config';
 
 interface PageProps {
   params: {
     form: string;
+    path: string;
   };
 }
 
@@ -24,8 +28,8 @@ const isValidUrl = (url: string): boolean => {
 };
 
 const Page = async ({ params }: PageProps) => {
-  const { form } = params;
-  const { interviewsByTopic, isError } = await fetchInterviews('ma');
+  const { form, path } = params;
+  const { interviewsByTopic, isError } = await fetchInterviews(path);
 
   if (isError) {
     return <div>Error loading form details</div>;
@@ -33,11 +37,16 @@ const Page = async ({ params }: PageProps) => {
 
   // Find the form details based on the title converted to the format
   let formDetails = null;
+  let formTopic: string | null = null;
   Object.keys(interviewsByTopic).forEach((topic) => {
     interviewsByTopic[topic].forEach((interview) => {
       const formattedTitle = toUrlFriendlyString(interview.title);
       if (formattedTitle === form) {
         formDetails = interview;
+        // Get the first topic this form belongs to
+        if (!formTopic) {
+          formTopic = topic;
+        }
       }
     });
   });
@@ -46,13 +55,42 @@ const Page = async ({ params }: PageProps) => {
     return <div>Form not found</div>;
   }
 
+  // Get jurisdiction name from path config
+  const jurisdictionConfig = pathToServerConfig[path];
+  const jurisdictionName = jurisdictionConfig?.name || path.toUpperCase();
+
+  // Get topic display name
+  const topicDetails = formTopic
+    ? legalTopics.find((t) => t.name.toLowerCase() === formTopic.toLowerCase())
+    : null;
+  const topicDisplayName = topicDetails?.long_name || formTopic || 'Forms';
+
+  // Build breadcrumb items
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { label: 'Home', href: '/' },
+    { label: jurisdictionName, href: `/${path}` },
+  ];
+
+  if (formTopic && topicDetails) {
+    breadcrumbItems.push({
+      label: topicDisplayName,
+      href: `/${path}/${formTopic.toLowerCase()}`,
+    });
+  }
+
+  breadcrumbItems.push({ label: formDetails.title });
+
   const startFormUrl = `${formDetails.serverUrl}${formDetails.link}`;
+
+  // Remove the form title from breadcrumbs
+  const displayBreadcrumbs = breadcrumbItems.slice(0, -1);
 
   return (
     <div className={styles.FormPage + ' container'}>
+      <Breadcrumbs items={displayBreadcrumbs} large />
       <div className="d-flex justify-content-between align-items-start flex-wrap mb-3">
         <div>
-          <p className="badge text-bg-secondary fs-6 fw-normal">Form</p>
+          {/* Removed Form badge */}
           <h1 className="display-5 mb-0">{formDetails.title}</h1>
           {formDetails.metadata.review_date && (
             <div className="mt-2">
@@ -162,16 +200,17 @@ const Page = async ({ params }: PageProps) => {
 
 export default Page;
 
-export async function generateStaticParams() {
-  const { interviewsByTopic } = await fetchInterviews('ma');
+export async function generateStaticParams({ params }) {
+  const { path } = params;
+  const { interviewsByTopic } = await fetchInterviews(path);
 
-  const params = [];
+  const params_list = [];
   Object.keys(interviewsByTopic).forEach((topic) => {
     interviewsByTopic[topic].forEach((interview) => {
       const formattedTitle = toUrlFriendlyString(interview.title);
-      params.push({ form: formattedTitle });
+      params_list.push({ form: formattedTitle });
     });
   });
 
-  return params;
+  return params_list;
 }
