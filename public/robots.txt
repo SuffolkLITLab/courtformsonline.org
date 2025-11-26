@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /forms/
+
+Sitemap: https://courtformsonline.org/sitemap.xml
