@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
 import styles from '../css/TopicCard.module.css';
-
-// Maximum number of interviews to show in an expanded card
-const MAX_VISIBLE_PER_CARD = 10;
+import {
+  MAX_VISIBLE_PER_CARD,
+  MAX_VISIBLE_CATEGORIES,
+} from '../../config/constants';
 
 interface TopicCardProps {
   topic: {
@@ -45,13 +46,18 @@ const TopicCard = ({
   isSpot = false,
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const visibilityClass = index > 8 ? 'hidden' : '';
+  // Hide when index is at or above the visible count (0-based index)
+  const visibilityClass = index >= MAX_VISIBLE_CATEGORIES ? 'hidden' : '';
   const displayInterviews = isExpanded
     ? interviews.slice(0, Math.min(MAX_VISIBLE_PER_CARD, interviews.length))
     : interviews.slice(0, 3);
-  const remainingCount = interviews.length > 10 ? interviews.length - 10 : 0;
   const totalInterviews = interviews.length;
-  const viewAllLabel = `${totalInterviews} ${totalInterviews === 1 ? 'form' : 'forms'}`;
+  const remainingCount =
+    totalInterviews > MAX_VISIBLE_PER_CARD
+      ? totalInterviews - MAX_VISIBLE_PER_CARD
+      : 0;
+  const displayedCount = Math.min(MAX_VISIBLE_PER_CARD, totalInterviews);
+  const viewAllLabel = `showing ${displayedCount} of ${totalInterviews} ${totalInterviews === 1 ? 'form' : 'forms'}`;
   const cardClassName = isSpot ? 'spot-topic-card-parent' : 'topic-card-parent';
   
   // Calculate which row this card is in (3 cards per row)

@@ -57,10 +57,8 @@
 }
 
 .ViewAllCount {
-  /* font-size: 75%; */
   color: #6c757d; /* bootstrap text-muted color */
   margin-left: 0.25rem;
 }
 
-.ShowContainer {
-}
+/* ShowContainer uses utility classes only; no custom CSS */
