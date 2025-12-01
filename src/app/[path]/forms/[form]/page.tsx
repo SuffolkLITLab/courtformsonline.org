@@ -4,6 +4,8 @@ import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import { fetchInterviews } from '../../../../data/fetchInterviewData';
+import { getFormDetails } from '../../../../data/getFormDetails';
+import type { Metadata } from 'next';
 import { toUrlFriendlyString } from '../../../utils/helpers';
 import styles from '../../../css/FormPage.module.css';
 import FormStatus from '../../../components/FormStatus';
@@ -29,27 +31,7 @@ const isValidUrl = (url: string): boolean => {
 
 const Page = async ({ params }: PageProps) => {
   const { form, path } = params;
-  const { interviewsByTopic, isError } = await fetchInterviews(path);
-
-  if (isError) {
-    return <div>Error loading form details</div>;
-  }
-
-  // Find the form details based on the title converted to the format
-  let formDetails = null;
-  let formTopic: string | null = null;
-  Object.keys(interviewsByTopic).forEach((topic) => {
-    interviewsByTopic[topic].forEach((interview) => {
-      const formattedTitle = toUrlFriendlyString(interview.title);
-      if (formattedTitle === form) {
-        formDetails = interview;
-        // Get the first topic this form belongs to
-        if (!formTopic) {
-          formTopic = topic;
-        }
-      }
-    });
-  });
+  const { formDetails, formTopic } = await getFormDetails(path, form);
 
   if (!formDetails) {
     return <div>Form not found</div>;
@@ -204,6 +186,22 @@ const Page = async ({ params }: PageProps) => {
 };
 
 export default Page;
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { form, path } = params;
+  const { formDetails } = await getFormDetails(path, form);
+
+  if (!formDetails) {
+    return { title: 'Court Forms Online' };
+  }
+
+  return {
+    title: `${formDetails.title} - Court Forms Online`,
+    description: formDetails.metadata?.description,
+  };
+}
 
 export async function generateStaticParams({ params }) {
   const { path } = params;
