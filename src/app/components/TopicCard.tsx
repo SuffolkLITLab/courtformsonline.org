@@ -59,7 +59,6 @@ const TopicCard = ({
   const displayedCount = Math.min(MAX_VISIBLE_PER_CARD, totalInterviews);
   const viewAllLabel = `showing ${displayedCount} of ${totalInterviews} ${totalInterviews === 1 ? 'form' : 'forms'}`;
   const cardClassName = isSpot ? 'spot-topic-card-parent' : 'topic-card-parent';
-  
   // Calculate which row this card is in (3 cards per row)
   const rowIndex = Math.floor(index / 3);
 
@@ -84,7 +83,6 @@ const TopicCard = ({
     event.preventDefault();
     const newExpandedState = !isExpanded;
     setIsExpanded(newExpandedState);
-    
     // Dispatch event to toggle all cards in the same row
     window.dispatchEvent(
       new CustomEvent('topicCardToggle', {

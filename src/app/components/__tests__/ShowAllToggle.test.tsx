@@ -44,10 +44,13 @@ describe('ShowAllToggle component', () => {
     render(<ShowAllToggle />);
 
     // Wait for the component to decide it should render
-    await waitFor(() => expect(screen.getByText('Show all categories')).toBeInTheDocument());
+    await waitFor(() => {
+      expect(screen.getByText('Show all categories')).toBeInTheDocument();
+    });
 
     const button = screen.getByText('Show all categories');
-    const extraTopic = document.querySelectorAll('.topic-card-parent')[MAX_VISIBLE_CATEGORIES];
+    const extraTopic =
+      document.querySelectorAll('.topic-card-parent')[MAX_VISIBLE_CATEGORIES];
     expect(extraTopic).toHaveClass('hidden');
 
     // Click to show all

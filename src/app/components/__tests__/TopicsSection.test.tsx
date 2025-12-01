@@ -11,14 +11,16 @@ describe('TopicsSection toggle behavior', () => {
   it("doesn't show the ShowAllToggle when number of topics <= MAX_VISIBLE_CATEGORIES", async () => {
     // Mock topics.config with exactly MAX_VISIBLE_CATEGORIES entries
     const { MAX_VISIBLE_CATEGORIES } = require('../../../config/constants');
-    const topics = new Array(MAX_VISIBLE_CATEGORIES).fill(null).map((_, idx) => ({
-      codes: [`T-${idx}`],
-      name: `topic${idx}`,
-      long_name: `Topic ${idx}`,
-      icon: 'file',
-      always_visible: false,
-      priority: 0,
-    }));
+    const topics = new Array(MAX_VISIBLE_CATEGORIES)
+      .fill(null)
+      .map((_, idx) => ({
+        codes: [`T-${idx}`],
+        name: `topic${idx}`,
+        long_name: `Topic ${idx}`,
+        icon: 'file',
+        always_visible: false,
+        priority: 0,
+      }));
 
     jest.doMock('../../../config/topics.config', () => ({
       legalTopics: topics,
@@ -42,10 +44,16 @@ describe('TopicsSection toggle behavior', () => {
     // Build an interviews object with one entry for each mocked topic
     const interviews = {};
     for (let i = 0; i < MAX_VISIBLE_CATEGORIES; i++) {
-      interviews[`topic${i}`] = [{ metadata: { title: `Form ${i}` }, filename: `form-${i}` }];
+      interviews[`topic${i}`] = [
+        { metadata: { title: `Form ${i}` }, filename: `form-${i}` },
+      ];
     }
 
-    const sectionJsx = await TopicsSection({ path: 'ma', interviews, isError: false });
+    const sectionJsx = await TopicsSection({
+      path: 'ma',
+      interviews,
+      isError: false,
+    });
     const { container } = render(sectionJsx);
     expect(container).toBeTruthy();
     // The button text should not be present
@@ -55,14 +63,16 @@ describe('TopicsSection toggle behavior', () => {
   it('shows the ShowAllToggle when number of topics > MAX_VISIBLE_CATEGORIES', async () => {
     // Mock topics.config with one more than MAX_VISIBLE_CATEGORIES entries
     const { MAX_VISIBLE_CATEGORIES } = require('../../../config/constants');
-    const topics = new Array(MAX_VISIBLE_CATEGORIES + 1).fill(null).map((_, idx) => ({
-      codes: [`T-${idx}`],
-      name: `topic${idx}`,
-      long_name: `Topic ${idx}`,
-      icon: 'file',
-      always_visible: false,
-      priority: 0,
-    }));
+    const topics = new Array(MAX_VISIBLE_CATEGORIES + 1)
+      .fill(null)
+      .map((_, idx) => ({
+        codes: [`T-${idx}`],
+        name: `topic${idx}`,
+        long_name: `Topic ${idx}`,
+        icon: 'file',
+        always_visible: false,
+        priority: 0,
+      }));
 
     jest.doMock('../../../config/topics.config', () => ({
       legalTopics: topics,
@@ -96,12 +106,17 @@ describe('TopicsSection toggle behavior', () => {
     // Build interviews for each mocked topic
     const interviews = {};
     for (let i = 0; i <= MAX_VISIBLE_CATEGORIES; i++) {
-      interviews[`topic${i}`] = [{ metadata: { title: `Form ${i}` }, filename: `form-${i}` }];
+      interviews[`topic${i}`] = [
+        { metadata: { title: `Form ${i}` }, filename: `form-${i}` },
+      ];
     }
 
-    const sectionJsx = await TopicsSection({ path: 'ma', interviews, isError: false });
+    const sectionJsx = await TopicsSection({
+      path: 'ma',
+      interviews,
+      isError: false,
+    });
     render(sectionJsx);
     expect(screen.getByText('Show all categories')).toBeInTheDocument();
   });
 });
-
