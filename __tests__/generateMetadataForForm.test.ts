@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { toUrlFriendlyString } = require('../src/app/utils/helpers');
-const { render, screen: screenLib } = require('@testing-library/react');
-require('@testing-library/jest-dom');
-const React = require('react');
+import { toUrlFriendlyString } from '../src/app/utils/helpers';
+import { render, screen as screenLib } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import React from 'react';
 
 // Stub ESM imports from node_modules which Jest doesn't transform by default
 jest.mock('react-markdown', () => ({ __esModule: true, default: ({ children }) => children }));
@@ -14,8 +14,8 @@ jest.mock('../src/data/getFormDetails', () => ({
   getFormDetails: jest.fn(),
 }));
 
-const { fetchInterviews } = require('../src/data/fetchInterviewData');
-const { getFormDetails } = require('../src/data/getFormDetails');
+import { fetchInterviews } from '../src/data/fetchInterviewData';
+import { getFormDetails } from '../src/data/getFormDetails';
 
 describe('generateMetadata for form page', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('generateMetadata for form page', () => {
       link: '/start',
     };
 
-    getFormDetails.mockResolvedValue({
+    (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
     });
@@ -56,7 +56,7 @@ describe('generateMetadata for form page', () => {
       link: '/start',
     };
 
-    getFormDetails.mockResolvedValue({
+    (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
     });
