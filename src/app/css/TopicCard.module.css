@@ -45,5 +45,22 @@
   }
 }
 
+.ViewAll {
+  cursor: pointer;
+  font-size: 80%;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.ViewAllCount {
+  /* font-size: 75%; */
+  color: #6c757d; /* bootstrap text-muted color */
+  margin-left: 0.25rem;
+}
+
 .ShowContainer {
 }

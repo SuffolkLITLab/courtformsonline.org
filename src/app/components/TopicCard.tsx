@@ -1,9 +1,12 @@
 'use client';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
 import styles from '../css/TopicCard.module.css';
+
+// Maximum number of interviews to show in an expanded card
+const MAX_VISIBLE_PER_CARD = 10;
 
 interface TopicCardProps {
   topic: {
@@ -44,15 +47,44 @@ const TopicCard = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const visibilityClass = index > 8 ? 'hidden' : '';
   const displayInterviews = isExpanded
-    ? interviews.slice(0, Math.min(20, interviews.length))
+    ? interviews.slice(0, Math.min(MAX_VISIBLE_PER_CARD, interviews.length))
     : interviews.slice(0, 3);
   const remainingCount = interviews.length > 10 ? interviews.length - 10 : 0;
+  const totalInterviews = interviews.length;
+  const viewAllLabel = `${totalInterviews} ${totalInterviews === 1 ? 'form' : 'forms'}`;
   const cardClassName = isSpot ? 'spot-topic-card-parent' : 'topic-card-parent';
+  
+  // Calculate which row this card is in (3 cards per row)
+  const rowIndex = Math.floor(index / 3);
+
+  // Listen for expand/collapse events from other cards in the same row
+  useEffect(() => {
+    const handleRowToggle = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent?.detail?.rowIndex === rowIndex) {
+        setIsExpanded(customEvent.detail.expanded);
+      }
+    };
+
+    window.addEventListener('topicCardToggle', handleRowToggle);
+    return () => {
+      window.removeEventListener('topicCardToggle', handleRowToggle);
+    };
+  }, [rowIndex]);
+
   const toggleExpand = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
     event.preventDefault();
-    setIsExpanded(!isExpanded);
+    const newExpandedState = !isExpanded;
+    setIsExpanded(newExpandedState);
+    
+    // Dispatch event to toggle all cards in the same row
+    window.dispatchEvent(
+      new CustomEvent('topicCardToggle', {
+        detail: { rowIndex, expanded: newExpandedState },
+      })
+    );
   };
 
   return (
@@ -63,6 +95,7 @@ const TopicCard = ({
       <div className={styles.TopicCard + ' card topic-card h-100'}>
         <Link
           href={`/${path}/${topic.name.toLowerCase()}`}
+          title={`View all ${topic.long_name} forms`}
           className={
             styles.CardTitleLink +
             ' card-header d-flex align-items-center bg-transparent border-0 pt-3'
@@ -111,7 +144,12 @@ const TopicCard = ({
             })}
           </div>
           {interviews.length > 3 && (
-            <div className={styles.ShowContainer + ' show-container ms-auto'}>
+            <div
+              className={
+                styles.ShowContainer +
+                ' show-container d-flex align-items-center justify-content-end gap-3'
+              }
+            >
               <div
                 className={
                   styles.ShowMore + ' show-more d-flex align-items-center'
@@ -123,6 +161,19 @@ const TopicCard = ({
                   className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} ms-1`}
                 ></i>
               </div>
+              {isExpanded && interviews.length > MAX_VISIBLE_PER_CARD && (
+                <Link
+                  href={`/${path}/${topic.name.toLowerCase()}`}
+                  className={
+                    styles.ViewAll +
+                    ' view-all d-flex align-items-center text-decoration-none'
+                  }
+                >
+                  View all
+                  <span className={styles.ViewAllCount}>{viewAllLabel}</span>
+                  <i className="fas fa-arrow-right ms-1"></i>
+                </Link>
+              )}
             </div>
           )}
         </div>

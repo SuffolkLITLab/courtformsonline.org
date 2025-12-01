@@ -13,15 +13,20 @@ const ShowAllToggle = () => {
       '.topic-card-parent'
     ) as NodeListOf<HTMLElement>;
     setShowAll(!showAll);
-    topics.forEach((topic, index) => {
-      if (topic.style.display === 'none' || !topic.style.display) {
-        topic.style.display = 'block';
-      } else {
+
+    if (showAll) {
+      // Hide all boxes after index 8 (hide all rows after the first 3 rows)
+      topics.forEach((topic, index) => {
         if (index > 8) {
           topic.style.display = 'none';
         }
-      }
-    });
+      });
+    } else {
+      // Show all boxes
+      topics.forEach((topic) => {
+        topic.style.display = 'block';
+      });
+    }
   };
 
   return (
