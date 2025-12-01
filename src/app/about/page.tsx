@@ -51,7 +51,7 @@ export default function About() {
         Some forms need to be printed and delivered by you. Some forms include
         button that delivers your form by email. And other works are integrated
         directly with the court’s{' '}
-        <a href="https://assemblyline.suffolklitlab.org/docs/efiling/overview/">
+        <a href="https://assemblyline.suffolklitlab.org/docs/components/EFSPIntegration/overview/">
           electronic filing system
         </a>
         .
