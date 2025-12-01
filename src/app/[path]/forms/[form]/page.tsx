@@ -83,7 +83,7 @@ const Page = async ({ params }: PageProps) => {
           </ul>
         </>
       )}
-      <h2 className="mt-4">Can I use this tool??</h2>
+      <h2 className="mt-4">Can I use this tool?</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.can_I_use_this_form}
       </ReactMarkdown>
