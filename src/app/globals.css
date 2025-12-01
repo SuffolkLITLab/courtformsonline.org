@@ -37,7 +37,7 @@ h5,
  * Responsive changes
  */
 
- @media (max-width: 576px) {
+@media (max-width: 576px) {
   h1.text-center {
     text-align: left !important;
   }

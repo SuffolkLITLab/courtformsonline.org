@@ -1,0 +1,60 @@
+.Breadcrumbs {
+  margin-bottom: 1rem;
+}
+
+.BreadcrumbsLarge {
+  margin-bottom: 2rem;
+}
+
+.BreadcrumbListLarge {
+  font-size: 1.3rem;
+}
+
+.BreadcrumbItemLarge {
+  font-size: 1.3rem;
+}
+
+.SeparatorLarge {
+  font-size: 1.3rem;
+  margin: 0 0.5rem;
+}
+
+.BreadcrumbLinkLarge {
+  font-size: 1.3rem;
+}
+
+.BreadcrumbCurrentLarge {
+  font-size: 1.3rem;
+}
+
+.BreadcrumbList {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.BreadcrumbItem {
+  display: flex;
+  align-items: center;
+}
+
+.Separator {
+  margin: 0 0.5rem;
+  color: #6c757d;
+}
+
+.BreadcrumbLink {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.BreadcrumbLink:hover {
+  text-decoration: underline;
+}
+
+.BreadcrumbCurrent {
+  color: #6c757d;
+}

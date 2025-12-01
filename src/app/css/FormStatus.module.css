@@ -1,0 +1,24 @@
+.FormStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.StatusBox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.statusBadge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .FormStatus {
+    align-items: flex-end;
+  }
+}
