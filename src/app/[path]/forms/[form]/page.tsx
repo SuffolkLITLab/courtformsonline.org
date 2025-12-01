@@ -95,7 +95,7 @@ const Page = async ({ params }: PageProps) => {
           {formDetails.metadata.review_date && (
             <div className="mt-2">
               <span className="text-muted" style={{ fontSize: '0.875rem' }}>
-                Last reviewed:{' '}
+                <span>Last reviewed </span>
                 <time dateTime={formDetails.metadata.review_date}>
                   {new Date(
                     formDetails.metadata.review_date
@@ -123,7 +123,7 @@ const Page = async ({ params }: PageProps) => {
       {Array.isArray(formDetails.metadata.form_titles) &&
         formDetails.metadata.form_titles.length > 0 && (
           <div className={styles.DocumentsList + ' mt-4 mb-4'}>
-            <h3>This tool helps you make the following documents</h3>
+            <h3>This tool helps you make the following documents:</h3>
             <ul>
               {formDetails.metadata.form_titles.map((title, idx) => (
                 <li key={idx}>{title}</li>
@@ -137,23 +137,25 @@ const Page = async ({ params }: PageProps) => {
           (fee) => fee.amount && fee.amount > 0
         ) && (
           <div className={styles.FeeInfo + ' mt-3 mb-3'}>
-            <strong>Filing fee:</strong>{' '}
-            {formDetails.metadata.fees.map((fee, idx) =>
-              fee.amount && fee.amount > 0 ? (
-                <span key={idx}>
-                  {fee.name ? `${fee.name}: $${fee.amount}` : `$${fee.amount}`}
-                  {idx < formDetails.metadata.fees.length - 1 ? ', ' : ''}
-                </span>
-              ) : null
-            )}
-            <br />
+            <strong>Fees:</strong>
+            <ul>
+              {formDetails.metadata.fees.map((fee, idx) =>
+                fee.amount && fee.amount > 0 ? (
+                  <li key={idx}>
+                    {fee.name
+                      ? `${fee.name}: $${fee.amount}`
+                      : `$${fee.amount}`}
+                  </li>
+                ) : null
+              )}
+            </ul>
             <span>
-              If you have a low income, you may qualify for a fee waiver.
+              CourtFormsOnline.org is free, but a court may require a payment to
+              file a completed document.
             </span>
             <br />
             <span>
-              Completing forms with CourtFormsOnline.org is always free, but a
-              court may require a payment to file a completed document.
+              If you have a low income, you may qualify for a fee waiver.
             </span>
           </div>
         )}
