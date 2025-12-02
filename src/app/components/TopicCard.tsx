@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
+import { MASSLRF_LINKS } from '../../config/constants';
 import styles from '../css/TopicCard.module.css';
 
 interface TopicCardProps {
@@ -17,6 +18,7 @@ interface TopicCardProps {
   serverUrl: string;
   path: string;
   isSpot?: boolean;
+  searchQuery?: string;
 }
 
 interface IconProps {
@@ -40,6 +42,7 @@ const TopicCard = ({
   serverUrl,
   path,
   isSpot = false,
+  searchQuery = '',
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const visibilityClass = index > 8 ? 'hidden' : '';
@@ -110,6 +113,57 @@ const TopicCard = ({
               return null;
             })}
           </div>
+          {isSpot && path === 'ma' && (
+            <div className="mb-3 pb-2 border-top pt-2">
+              <p className="text-muted small mb-2">
+                More resources from Massachusetts Legal Resource Finder:
+              </p>
+              <div className="d-flex flex-column gap-2">
+                {MASSLRF_LINKS[topic.name] ? (
+                  MASSLRF_LINKS[topic.name].map((link, idx) => {
+                    // Extract the category name from the URL
+                    const categoryName = link.split('/').pop() || '';
+                    const capitalize = (word: string) =>
+                      word.charAt(0).toUpperCase() + word.slice(1);
+                    const displayName = categoryName
+                      .split('_')
+                      .map(capitalize)
+                      .join(' ');
+                    return (
+                      <a
+                        key={`${topic.name}-masslrf-${idx}`}
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-sm btn-outline-primary align-self-start"
+                      >
+                        {displayName}
+                        <i
+                          className="fas fa-external-link-alt ms-2"
+                          style={{ fontSize: '0.75rem' }}
+                        ></i>
+                      </a>
+                    );
+                  })
+                ) : (
+                  <a
+                    href={`https://masslrf.org/en/triage/search/${encodeURIComponent(
+                      searchQuery
+                    )}/1`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary align-self-start"
+                  >
+                    Search MassLegalResourceFinder
+                    <i
+                      className="fas fa-external-link-alt ms-2"
+                      style={{ fontSize: '0.75rem' }}
+                    ></i>
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
           {interviews.length > 3 && (
             <div className={styles.ShowContainer + ' show-container ms-auto'}>
               <div

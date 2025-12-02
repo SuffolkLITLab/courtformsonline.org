@@ -1,6 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 import { fetchSpotData } from '../../data/fetchSpotData';
 import SpotResultsContainer from './SpotResultsContainer';
@@ -12,6 +14,8 @@ const HeroSection = ({ path, interviews, isError }) => {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
   const [validationError, setValidationError] = useState('');
+  // Stable container ref for popover
+  const popoverContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleInputChange = (event) => {
     setText(event.target.value);
@@ -42,11 +46,27 @@ const HeroSection = ({ path, interviews, isError }) => {
       });
       const showAllButton = document.querySelector('.show-all-toggle');
       if (showAllButton) {
-        showAllButton.classList.remove('hidden');
+        showAllButton.classList.add('hidden');
       }
     } catch (e) {
       setError(e.message);
       setResults(null);
+    }
+  };
+
+  const handleCancelSpotSearch = () => {
+    setResults(null);
+    setText('');
+    setError('');
+    setValidationError('');
+    // Restore topic cards visibility
+    const topicCards = document.querySelectorAll('.topic-card-parent');
+    topicCards.forEach((card) => {
+      card.classList.remove('hidden');
+    });
+    const showAllButton = document.querySelector('.show-all-toggle');
+    if (showAllButton) {
+      showAllButton.classList.remove('hidden');
     }
   };
 
@@ -64,7 +84,7 @@ const HeroSection = ({ path, interviews, isError }) => {
               forms by category.
             </p>
           </div>
-          <div className="col-lg-6" id="hero-right">
+          <div className="col-lg-6" id="hero-right" ref={popoverContainerRef}>
             <h2>Describe your legal problem</h2>
             <textarea
               className="form-control form-control-lg"
@@ -90,6 +110,47 @@ const HeroSection = ({ path, interviews, isError }) => {
                 Find help
               </Button>
             </div>
+            <div className={styles.SpotInfo + ' mt-2'}>
+              <OverlayTrigger
+                placement="right"
+                trigger={['click']}
+                rootClose={true}
+                container={() => popoverContainerRef.current}
+                overlay={
+                  <Popover id="spot-popover">
+                    <Popover.Header as="h3">About SPOT</Popover.Header>
+                    <Popover.Body>
+                      <p className="mb-1">
+                        When you type in your problem description, we use the
+                        nonprofit SPOT legal problem spotter to help find the
+                        best legal resources for you. If you do not want to
+                        share your problem with SPOT, please pick a topic from
+                        the list below.
+                      </p>
+                      <p className="mb-0">
+                        Read SPOT's{' '}
+                        <a
+                          href="https://spot.suffolklitlab.org/terms/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          privacy policy
+                        </a>
+                        .
+                      </p>
+                    </Popover.Body>
+                  </Popover>
+                }
+              >
+                <button
+                  type="button"
+                  className="btn btn-link p-0 small text-muted"
+                  aria-label="What is this?"
+                >
+                  what is this?
+                </button>
+              </OverlayTrigger>
+            </div>
             {validationError && (
               <p className="text-danger">{validationError}</p>
             )}
@@ -104,6 +165,8 @@ const HeroSection = ({ path, interviews, isError }) => {
           data={results}
           interviews={interviews}
           path={path}
+          searchQuery={text}
+          onCancel={handleCancelSpotSearch}
         />
       )}
     </section>

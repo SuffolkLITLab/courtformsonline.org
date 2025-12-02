@@ -5,3 +5,8 @@
     min-height: 6lh;
   }
 }
+
+.SpotInfo {
+  /* Small, muted text under the header */
+  font-size: 0.9rem;
+}
