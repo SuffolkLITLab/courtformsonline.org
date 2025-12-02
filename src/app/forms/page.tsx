@@ -5,6 +5,7 @@ import InteractiveForm from '../components/InteractiveForm';
 import {
   pathToServerConfig,
   formSources,
+  excludedForms,
 } from '../../config/formSources.config';
 import { toUrlFriendlyString } from '../utils/helpers';
 import styles from '../css/AllFormsContainer.module.css';
@@ -46,13 +47,18 @@ async function getData() {
       if (serverProps[key].servers.indexOf(server.name) > -1) path = '/' + key;
     }
 
+    // Filter out excluded forms for this server
+    const exclusions = excludedForms[server.key] || [];
+
     // Include the server name and server URL in the data
-    const interviews = data['interviews'].map((interview: Form) => ({
-      ...interview,
-      serverName: server.name,
-      serverUrl: server.url,
-      serverPath: path ? path : '',
-    }));
+    const interviews = data['interviews']
+      .filter((interview: any) => !exclusions.includes(interview.filename))
+      .map((interview: Form) => ({
+        ...interview,
+        serverName: server.name,
+        serverUrl: server.url,
+        serverPath: path ? path : '',
+      }));
 
     allData = allData.concat(interviews);
   }
