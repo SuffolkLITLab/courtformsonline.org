@@ -1,0 +1,70 @@
+.SimilarFormsCard {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-top: 2rem;
+  border: 1px solid #e9ecef;
+}
+
+.Title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  color: #212529;
+}
+
+.CategoryContainer {
+  border-top: 1px solid #e9ecef;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.CategoryItem {
+}
+
+.CategoryLink {
+  font-size: 0.95rem;
+  color: #495057; /* muted/darker than form links */
+  text-decoration: none;
+  font-weight: 600; /* more prominent but muted color */
+}
+
+.CategoryLink:hover {
+  color: #212529;
+  text-decoration: underline;
+}
+
+.FormList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.FormItem {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.FormItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.FormItem:first-child {
+  padding-top: 0;
+}
+
+.FormLink {
+  color: #0d6efd;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out;
+}
+
+.FormLink:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}

@@ -5,7 +5,10 @@ import '@testing-library/jest-dom';
 import React from 'react';
 
 // Stub ESM imports from node_modules which Jest doesn't transform by default
-jest.mock('react-markdown', () => ({ __esModule: true, default: ({ children }) => children }));
+jest.mock('react-markdown', () => ({
+  __esModule: true,
+  default: ({ children }) => children,
+}));
 jest.mock('remark-gfm', () => ({}));
 jest.mock('../src/data/fetchInterviewData', () => ({
   fetchInterviews: jest.fn(),
@@ -36,11 +39,15 @@ describe('generateMetadata for form page', () => {
     (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
+      formTopics: [],
+      relatedForms: [],
     });
 
     const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
 
-    const metadata = await generateMetadata({ params: { path: 'ma', form: slug } });
+    const metadata = await generateMetadata({
+      params: { path: 'ma', form: slug },
+    });
     expect(metadata.title).toBe(`${formTitle} - Court Forms Online`);
     expect(metadata.description).toBe('A form for testing');
   });
@@ -59,11 +66,15 @@ describe('generateMetadata for form page', () => {
     (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
+      formTopics: [],
+      relatedForms: [],
     });
 
     const { default: Page } = require('../src/app/[path]/forms/[form]/page');
     const element = await Page({ params: { path: 'ma', form: slug } });
     render(element as any);
-    expect(screenLib.getByRole('heading', { level: 1 })).toHaveTextContent(formTitle);
+    expect(screenLib.getByRole('heading', { level: 1 })).toHaveTextContent(
+      formTitle
+    );
   });
 });

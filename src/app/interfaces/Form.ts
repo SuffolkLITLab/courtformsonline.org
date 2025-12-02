@@ -5,6 +5,7 @@ export interface Form {
     description: string;
     fees?: { name: string; amount?: number }[];
     efiling_enabled?: boolean | 'email';
+    LIST_topics?: string[];
   };
   landingPageURL: string;
   link: string;
