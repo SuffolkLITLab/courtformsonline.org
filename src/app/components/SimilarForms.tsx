@@ -19,7 +19,12 @@ interface SimilarFormsProps {
   jurisdictionPath?: string; // e.g., "ma", used to build topic landing links
 }
 
-const SimilarForms = ({ forms, basePath, topics = [], jurisdictionPath }: SimilarFormsProps) => {
+const SimilarForms = ({
+  forms,
+  basePath,
+  topics = [],
+  jurisdictionPath,
+}: SimilarFormsProps) => {
   if ((!forms || forms.length === 0) && topics.length === 0) {
     return null;
   }
@@ -51,7 +56,11 @@ const SimilarForms = ({ forms, basePath, topics = [], jurisdictionPath }: Simila
           {dedupedTopics.map((topic, idx) => (
             <div key={`${topic.name}-${idx}`} className={styles.CategoryItem}>
               <Link
-                href={jurisdictionPath ? `/${jurisdictionPath}/${topic.name}` : `/${topic.name}`}
+                href={
+                  jurisdictionPath
+                    ? `/${jurisdictionPath}/${topic.name}`
+                    : `/${topic.name}`
+                }
                 className={styles.CategoryLink}
               >
                 View all {topic.long_name.toLowerCase()} forms

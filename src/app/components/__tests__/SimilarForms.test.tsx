@@ -2,9 +2,14 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
 
-jest.mock('next/link', () => ({ __esModule: true, default: ({ children, href, className }) => (
-  <a href={href} className={className}>{children}</a>
-)}));
+jest.mock('next/link', () => ({
+  __esModule: true,
+  default: ({ children, href, className }) => (
+    <a href={href} className={className}>
+      {children}
+    </a>
+  ),
+}));
 
 import SimilarForms from '../SimilarForms';
 
@@ -13,9 +18,7 @@ describe('SimilarForms component', () => {
     const props = {
       forms: [],
       basePath: '/ma/forms',
-      topics: [
-        { name: 'housing', long_name: 'Housing' },
-      ],
+      topics: [{ name: 'housing', long_name: 'Housing' }],
       jurisdictionPath: 'ma',
     } as any;
 
@@ -48,16 +51,16 @@ describe('SimilarForms component', () => {
         { title: 'Form B', slug: 'form-b', similarity: 2 },
       ],
       basePath: '/ma/forms',
-      topics: [
-        { name: 'housing', long_name: 'Housing' },
-      ],
+      topics: [{ name: 'housing', long_name: 'Housing' }],
       jurisdictionPath: 'ma',
     } as any;
 
     render(<SimilarForms {...props} />);
 
     // The first items should appear in the list of forms
-    const formItems = screen.getAllByRole('listitem').map((li) => li.textContent);
+    const formItems = screen
+      .getAllByRole('listitem')
+      .map((li) => li.textContent);
     expect(formItems[0]).toContain('Form A');
     expect(formItems[1]).toContain('Form B');
     // Category links are not list items in the forms list; ensure a category link is present later

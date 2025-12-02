@@ -33,12 +33,8 @@ const isValidUrl = (url: string): boolean => {
 const Page = async ({ params }: PageProps) => {
   const { form, path } = params;
   const _formDetailsResponse = await getFormDetails(path, form);
-  const { 
-    formDetails,
-    formTopic,
-    formTopics,
-    relatedForms
-  } = _formDetailsResponse;
+  const { formDetails, formTopic, formTopics, relatedForms } =
+    _formDetailsResponse;
 
   if (!formDetails) {
     return <div>Form not found</div>;
@@ -81,7 +77,9 @@ const Page = async ({ params }: PageProps) => {
       (t) => t.name.toLowerCase() === formTopic.toLowerCase()
     );
     if (existingIndex === -1) {
-      const ft = legalTopics.find((t) => t.name.toLowerCase() === formTopic.toLowerCase());
+      const ft = legalTopics.find(
+        (t) => t.name.toLowerCase() === formTopic.toLowerCase()
+      );
       if (ft) {
         topicsForSimilar.unshift({ name: ft.name, long_name: ft.long_name });
       }
