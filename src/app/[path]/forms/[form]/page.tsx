@@ -2,6 +2,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
 import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import { getFormDetails } from '../../../../data/getFormDetails';
@@ -34,7 +35,7 @@ const Page = async ({ params }: PageProps) => {
   const { formDetails, formTopic } = await getFormDetails(path, form);
 
   if (!formDetails) {
-    return <div>Form not found</div>;
+    notFound();
   }
 
   // Get jurisdiction name from path config
@@ -203,15 +204,19 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams({ params }) {
+export async function generateStaticParams({
+  params,
+}: {
+  params: { path: string };
+}) {
   const { path } = params;
   const { interviewsByTopic } = await fetchInterviews(path);
 
-  const params_list = [];
+  const params_list: Array<{ path: string; form: string }> = [];
   Object.keys(interviewsByTopic).forEach((topic) => {
     interviewsByTopic[topic].forEach((interview) => {
       const formattedTitle = toUrlFriendlyString(interview.title);
-      params_list.push({ form: formattedTitle });
+      params_list.push({ path, form: formattedTitle });
     });
   });
 
