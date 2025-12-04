@@ -9,6 +9,7 @@ import type { Metadata } from 'next';
 import { toUrlFriendlyString } from '../../../utils/helpers';
 import styles from '../../../css/FormPage.module.css';
 import FormStatus from '../../../components/FormStatus';
+import SimilarForms from '../../../components/SimilarForms';
 import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
 import { pathToServerConfig } from '../../../../config/formSources.config';
 import { legalTopics } from '../../../../config/topics.config';
@@ -31,7 +32,9 @@ const isValidUrl = (url: string): boolean => {
 
 const Page = async ({ params }: PageProps) => {
   const { form, path } = params;
-  const { formDetails, formTopic } = await getFormDetails(path, form);
+  const _formDetailsResponse = await getFormDetails(path, form);
+  const { formDetails, formTopic, formTopics, relatedForms } =
+    _formDetailsResponse;
 
   if (!formDetails) {
     return <div>Form not found</div>;
@@ -66,6 +69,26 @@ const Page = async ({ params }: PageProps) => {
 
   // Remove the form title from breadcrumbs
   const displayBreadcrumbs = breadcrumbItems.slice(0, -1);
+
+  // Build topics list for SimilarForms: include any matching topics and ensure the main topic is present
+  const topicsForSimilar = (formTopics || []).slice();
+  if (formTopic) {
+    const existingIndex = topicsForSimilar.findIndex(
+      (t) => t.name.toLowerCase() === formTopic.toLowerCase()
+    );
+    if (existingIndex === -1) {
+      const ft = legalTopics.find(
+        (t) => t.name.toLowerCase() === formTopic.toLowerCase()
+      );
+      if (ft) {
+        topicsForSimilar.unshift({ name: ft.name, long_name: ft.long_name });
+      }
+    } else {
+      // If it's already present, ensure it appears at the front (duplicate allowed)
+      const [existing] = topicsForSimilar.splice(existingIndex, 1);
+      topicsForSimilar.unshift(existing);
+    }
+  }
 
   return (
     <div className={styles.FormPage + ' container'}>
@@ -181,6 +204,12 @@ const Page = async ({ params }: PageProps) => {
       <Button className="btn btn-primary btn-lg my-3" href={startFormUrl}>
         Start tool
       </Button>
+      <SimilarForms
+        forms={relatedForms}
+        basePath={`/${path}/forms`}
+        topics={topicsForSimilar}
+        jurisdictionPath={path}
+      />
     </div>
   );
 };
