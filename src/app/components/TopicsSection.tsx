@@ -1,6 +1,7 @@
 import { formSources } from '../../config/formSources.config';
 import { legalTopics } from '../../config/topics.config';
 import ShowAllToggle from './ShowAllToggle';
+import { MAX_VISIBLE_CATEGORIES } from '../../config/constants';
 import TopicCard from './TopicCard';
 import styles from '../css/TopicsSection.module.css';
 
@@ -25,7 +26,8 @@ const TopicsSection = async ({ path, interviews, isError }) => {
     <section id="topics" className={styles.TopicsSection + ' py-5'}>
       <div className="container">
         <h2 className="mb-3">Browse court forms by category</h2>
-        {filteredTopics.length > 9 && <ShowAllToggle />}
+        {/* Only show the toggle if there are more topics than the configured visible max */}
+        {filteredTopics.length > MAX_VISIBLE_CATEGORIES && <ShowAllToggle />}
         <div className="row row-cols-1 row-cols-md-3 g-4 card-container">
           {filteredTopics.map((topic, index) => (
             <TopicCard

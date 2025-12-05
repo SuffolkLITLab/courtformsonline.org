@@ -39,6 +39,8 @@ describe('generateMetadata for form page', () => {
     (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
+      formTopics: [],
+      relatedForms: [],
     });
 
     const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
@@ -64,6 +66,8 @@ describe('generateMetadata for form page', () => {
     (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
+      formTopics: [],
+      relatedForms: [],
     });
 
     const { default: Page } = require('../src/app/[path]/forms/[form]/page');
