@@ -3,6 +3,8 @@ export const pathToServerConfig = {
     path: 'ma',
     servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
     name: 'Massachusetts',
+    // Optional link to an authoritative jurisdiction listing of court forms.
+    moreFormsUrl: 'https://www.mass.gov/topics/court-forms',
   },
 };
 

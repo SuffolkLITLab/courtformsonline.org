@@ -22,8 +22,6 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 The `formSources.config.js` file allows new paths and server sources to be added to courtformsonline. There are two main components to this config file:
 
-- pathToServerConfig: Maps paths to servers, which facilitates adding new paths or modifying existing connections to different servers.
-- formSources: Contains the details of the servers, including URLs and names, used by the application.
 
 ### Form source example
 
@@ -39,3 +37,10 @@ The `formSources.config.js` file allows new paths and server sources to be added
   path: 'yourPath',
   servers: ['New Server Name', 'Existing Server Name'],
 },`
+
+## Sitemap Generation
+
+This project uses Next.js [Metadata Route](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap) to generate `sitemap.xml`.
+
+- **Development**: The sitemap is available at `/sitemap.xml` and is generated dynamically on request.
+- **Production (Static Export)**: When running `npm run build`, Next.js automatically generates `sitemap.xml` in the output directory based on the logic in `src/app/sitemap.ts`. No manual scripts are required.
