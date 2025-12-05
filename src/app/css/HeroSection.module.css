@@ -9,4 +9,11 @@
 .SpotInfo {
   /* Small, muted text under the header */
   font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .SpotInfo {
+    white-space: normal;
+  }
 }

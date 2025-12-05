@@ -37,18 +37,7 @@ const SpotResultsContainer = ({
   return (
     <section id="topics">
       <div className="container">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2>It looks like you may be looking for help with...</h2>
-          {onCancel && (
-            <Button
-              variant="outline-secondary"
-              onClick={onCancel}
-              aria-label="Cancel search and return to all categories"
-            >
-              Cancel
-            </Button>
-          )}
-        </div>
+        <h2 className="mb-4">It looks like you may be looking for help with...</h2>
         <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
           {sortedTopics.map((topic, index) => (
             <TopicCard

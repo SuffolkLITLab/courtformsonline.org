@@ -85,7 +85,50 @@ const HeroSection = ({ path, interviews, isError }) => {
             </p>
           </div>
           <div className="col-lg-6" id="hero-right" ref={popoverContainerRef}>
-            <h2>Describe your legal problem</h2>
+            <div className="d-flex align-items-end gap-2 flex-wrap mb-3">
+              <h2 className="mb-0">Describe your legal problem</h2>
+              <div className={styles.SpotInfo}>
+                <OverlayTrigger
+                  placement="left"
+                  trigger={['click']}
+                  rootClose={true}
+                  container={() => popoverContainerRef.current}
+                  overlay={
+                    <Popover id="spot-popover">
+                      <Popover.Header as="h3">How this works</Popover.Header>
+                      <Popover.Body>
+                        <p className="mb-1">
+                          When you type in your problem description, we use the
+                          nonprofit SPOT legal problem spotter to help find the
+                          best legal resources for you. If you do not want to
+                          share your problem with SPOT, please pick a topic from
+                          the list below.
+                        </p>
+                        <p className="mb-0">
+                          Read SPOT's{' '}
+                          <a
+                            href="https://spot.suffolklitlab.org/terms/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            privacy policy
+                          </a>
+                          .
+                        </p>
+                      </Popover.Body>
+                    </Popover>
+                  }
+                >
+                  <button
+                    type="button"
+                    className="btn btn-link p-0 small text-muted"
+                    aria-label="What is this?"
+                  >
+                    What is this?
+                  </button>
+                </OverlayTrigger>
+              </div>
+            </div>
             <textarea
               className="form-control form-control-lg"
               value={text}
@@ -106,50 +149,20 @@ const HeroSection = ({ path, interviews, isError }) => {
                   Use my reply to help others
                 </label>
               </div>
-              <Button onClick={handleFindHelpClick} className="btn btn-primary">
-                Find help
-              </Button>
-            </div>
-            <div className={styles.SpotInfo + ' mt-2'}>
-              <OverlayTrigger
-                placement="right"
-                trigger={['click']}
-                rootClose={true}
-                container={() => popoverContainerRef.current}
-                overlay={
-                  <Popover id="spot-popover">
-                    <Popover.Header as="h3">About SPOT</Popover.Header>
-                    <Popover.Body>
-                      <p className="mb-1">
-                        When you type in your problem description, we use the
-                        nonprofit SPOT legal problem spotter to help find the
-                        best legal resources for you. If you do not want to
-                        share your problem with SPOT, please pick a topic from
-                        the list below.
-                      </p>
-                      <p className="mb-0">
-                        Read SPOT's{' '}
-                        <a
-                          href="https://spot.suffolklitlab.org/terms/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          privacy policy
-                        </a>
-                        .
-                      </p>
-                    </Popover.Body>
-                  </Popover>
-                }
-              >
-                <button
-                  type="button"
-                  className="btn btn-link p-0 small text-muted"
-                  aria-label="What is this?"
-                >
-                  what is this?
-                </button>
-              </OverlayTrigger>
+              <div className="d-flex gap-2">
+                {results && (
+                  <Button
+                    variant="outline-secondary"
+                    onClick={handleCancelSpotSearch}
+                    aria-label="Cancel search and return to all categories"
+                  >
+                    Cancel
+                  </Button>
+                )}
+                <Button onClick={handleFindHelpClick} className="btn btn-primary">
+                  Find help
+                </Button>
+              </div>
             </div>
             {validationError && (
               <p className="text-danger">{validationError}</p>
