@@ -1,4 +1,15 @@
 // Example: courtformsonline.org/ma/forms/[form-slug]
+/*
+  Schema.org & Legal Help Dashboard references used for structured data and tagging:
+  - Legal Help Dashboard: https://schema.legalhelpdashboard.org/
+  - SoftwareApplication (Schema.org): https://schema.org/SoftwareApplication
+  - Thing (Schema.org, used for 'about'): https://schema.org/Thing
+  - Place (Schema.org, used for 'areaServed'): https://schema.org/Place
+  - timeRequired (Schema.org): https://schema.org/timeRequired
+  - about (Schema.org): https://schema.org/about
+  - areaServed (Schema.org): https://schema.org/areaServed
+  - Schema validator: https://validator.schema.org/
+*/
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
@@ -38,8 +49,37 @@ const Page = async ({ params }: PageProps) => {
     _formDetailsResponse;
 
   if (!formDetails) {
-    notFound();
+    return <div>Form not found</div>;
   }
+
+  // Build schema.org structured data for this form page
+  // See: https://schema.legalhelpdashboard.org/ for guidance and examples
+  // Schema.org docs: https://schema.org/SoftwareApplication, https://schema.org/Thing, https://schema.org/Place
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: formDetails.title,
+    description: formDetails.metadata?.description || '',
+    applicationCategory: 'LegalApplication',
+    url: `${formDetails.serverUrl}${formDetails.link}`,
+    isAccessibleForFree: true,
+    ...(formDetails.metadata?.LIST_topics &&
+      formDetails.metadata.LIST_topics.length > 0 && {
+        about: formDetails.metadata.LIST_topics.map((topic) => ({
+          '@type': 'Thing',
+          name: topic,
+        })),
+      }),
+    ...(formDetails.metadata?.estimated_completion_minutes && {
+      timeRequired: `PT${formDetails.metadata.estimated_completion_minutes}M`,
+    }),
+    ...(formDetails.metadata?.jurisdiction && {
+      areaServed: {
+        '@type': 'Place',
+        name: formDetails.metadata.jurisdiction,
+      },
+    }),
+  };
 
   // Get jurisdiction name from path config
   const jurisdictionConfig = pathToServerConfig[path];
@@ -211,6 +251,10 @@ const Page = async ({ params }: PageProps) => {
         topics={topicsForSimilar}
         jurisdictionPath={path}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
     </div>
   );
 };
@@ -227,10 +271,51 @@ export async function generateMetadata({
     return { title: 'Court Forms Online' };
   }
 
-  return {
+  /*
+    Next.js Metadata generation
+    - We set `title` and `description` which will populate <title> and <meta name="description">.
+    - OpenGraph tags are included for richer social previews (og:title, og:description, og:type).
+    - Adding additional tags in `other` helps include custom metadata like LIST codes.
+    For schema.org mapping and best practices, see:
+    - https://schema.org/
+    - https://schema.org/SoftwareApplication
+    - https://schema.org/about
+  */
+
+  const description = formDetails.metadata?.description || '';
+  const listTopics = formDetails.metadata?.LIST_topics || [];
+
+  const metadata: Metadata = {
     title: `${formDetails.title} - Court Forms Online`,
-    description: formDetails.metadata?.description,
+    description: description,
+    openGraph: {
+      title: `${formDetails.title} - Court Forms Online`,
+      description: description,
+      type: 'website',
+    },
+    other: {
+      description: description,
+    },
   };
+
+  // Add LIST codes as meta tags for semantic content understanding
+  if (listTopics.length > 0) {
+    metadata.other = {
+      ...metadata.other,
+      ...listTopics.reduce(
+        (acc, topic) => {
+          if (!acc['LIST']) {
+            acc['LIST'] = [];
+          }
+          (acc['LIST'] as string[]).push(topic);
+          return acc;
+        },
+        metadata.other as Record<string, any>
+      ),
+    };
+  }
+
+  return metadata;
 }
 
 export async function generateStaticParams({
