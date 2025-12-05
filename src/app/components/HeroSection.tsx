@@ -1,6 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 import { fetchSpotData } from '../../data/fetchSpotData';
 import SpotResultsContainer from './SpotResultsContainer';
@@ -12,6 +14,8 @@ const HeroSection = ({ path, interviews, isError }) => {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
   const [validationError, setValidationError] = useState('');
+  // Stable container ref for popover
+  const popoverContainerRef = useRef<HTMLDivElement | null>(null);
 
   const handleInputChange = (event) => {
     setText(event.target.value);
@@ -42,11 +46,27 @@ const HeroSection = ({ path, interviews, isError }) => {
       });
       const showAllButton = document.querySelector('.show-all-toggle');
       if (showAllButton) {
-        showAllButton.classList.remove('hidden');
+        showAllButton.classList.add('hidden');
       }
     } catch (e) {
       setError(e.message);
       setResults(null);
+    }
+  };
+
+  const handleCancelSpotSearch = () => {
+    setResults(null);
+    setText('');
+    setError('');
+    setValidationError('');
+    // Restore topic cards visibility
+    const topicCards = document.querySelectorAll('.topic-card-parent');
+    topicCards.forEach((card) => {
+      card.classList.remove('hidden');
+    });
+    const showAllButton = document.querySelector('.show-all-toggle');
+    if (showAllButton) {
+      showAllButton.classList.remove('hidden');
     }
   };
 
@@ -64,8 +84,51 @@ const HeroSection = ({ path, interviews, isError }) => {
               forms by category.
             </p>
           </div>
-          <div className="col-lg-6" id="hero-right">
-            <h2>Describe your legal problem</h2>
+          <div className="col-lg-6" id="hero-right" ref={popoverContainerRef}>
+            <div className="d-flex align-items-end gap-2 flex-wrap mb-3">
+              <h2 className="mb-0">Describe your legal problem</h2>
+              <div className={styles.SpotInfo}>
+                <OverlayTrigger
+                  placement="left"
+                  trigger={['click']}
+                  rootClose={true}
+                  container={() => popoverContainerRef.current}
+                  overlay={
+                    <Popover id="spot-popover">
+                      <Popover.Header as="h3">How this works</Popover.Header>
+                      <Popover.Body>
+                        <p className="mb-1">
+                          When you type in your problem description, we use the
+                          nonprofit SPOT legal problem spotter to help find the
+                          best legal resources for you. If you do not want to
+                          share your problem with SPOT, please pick a topic from
+                          the list below.
+                        </p>
+                        <p className="mb-0">
+                          Read SPOT's{' '}
+                          <a
+                            href="https://spot.suffolklitlab.org/terms/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            privacy policy
+                          </a>
+                          .
+                        </p>
+                      </Popover.Body>
+                    </Popover>
+                  }
+                >
+                  <button
+                    type="button"
+                    className="btn btn-link p-0 small text-muted"
+                    aria-label="What is this?"
+                  >
+                    What is this?
+                  </button>
+                </OverlayTrigger>
+              </div>
+            </div>
             <textarea
               className="form-control form-control-lg"
               value={text}
@@ -86,9 +149,20 @@ const HeroSection = ({ path, interviews, isError }) => {
                   Use my reply to help others
                 </label>
               </div>
-              <Button onClick={handleFindHelpClick} className="btn btn-primary">
-                Find help
-              </Button>
+              <div className="d-flex gap-2">
+                {results && (
+                  <Button
+                    variant="outline-secondary"
+                    onClick={handleCancelSpotSearch}
+                    aria-label="Cancel search and return to all categories"
+                  >
+                    Cancel
+                  </Button>
+                )}
+                <Button onClick={handleFindHelpClick} className="btn btn-primary">
+                  Find help
+                </Button>
+              </div>
             </div>
             {validationError && (
               <p className="text-danger">{validationError}</p>
@@ -104,6 +178,8 @@ const HeroSection = ({ path, interviews, isError }) => {
           data={results}
           interviews={interviews}
           path={path}
+          searchQuery={text}
+          onCancel={handleCancelSpotSearch}
         />
       )}
     </section>

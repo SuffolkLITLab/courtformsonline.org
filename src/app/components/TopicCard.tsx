@@ -3,6 +3,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
+import { deepLinks } from '../../config/formSources.config';
 import styles from '../css/TopicCard.module.css';
 import {
   MAX_VISIBLE_PER_CARD,
@@ -21,6 +22,7 @@ interface TopicCardProps {
   serverUrl: string;
   path: string;
   isSpot?: boolean;
+  searchQuery?: string;
 }
 
 interface IconProps {
@@ -44,6 +46,7 @@ const TopicCard = ({
   serverUrl,
   path,
   isSpot = false,
+  searchQuery = '',
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   // Hide when index is at or above the visible count (0-based index)
@@ -147,6 +150,54 @@ const TopicCard = ({
               return null;
             })}
           </div>
+          {isSpot && path === 'ma' && (
+            <div className="mb-3 pb-2 border-top pt-2">
+              <div className="d-flex flex-column gap-2">
+                {deepLinks.ma[topic.name] ? (
+                  deepLinks.ma[topic.name].map((link, idx) => {
+                    // Extract the category name from the URL
+                    const categoryName = link.split('/').pop() || '';
+                    const capitalize = (word: string) =>
+                      word.charAt(0).toUpperCase() + word.slice(1);
+                    const displayName = categoryName
+                      .split('_')
+                      .map(capitalize)
+                      .join(' ');
+                    return (
+                      <a
+                        key={`${topic.name}-masslrf-${idx}`}
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-sm btn-outline-primary align-self-start"
+                      >
+                        Find free help about this topic
+                        <i
+                          className="fas fa-external-link-alt ms-2"
+                          style={{ fontSize: '0.75rem' }}
+                        ></i>
+                      </a>
+                    );
+                  })
+                ) : (
+                  <a
+                    href={`https://masslrf.org/en/triage/search/${encodeURIComponent(
+                      searchQuery
+                    )}/1`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary align-self-start"
+                  >
+                    Search MassLegalResourceFinder
+                    <i
+                      className="fas fa-external-link-alt ms-2"
+                      style={{ fontSize: '0.75rem' }}
+                    ></i>
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
           {interviews.length > 3 && (
             <div
               className={

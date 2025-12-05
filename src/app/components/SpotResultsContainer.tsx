@@ -1,9 +1,16 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import { legalTopics } from '../../config/topics.config';
 import { formSources } from '../../config/formSources.config';
 import TopicCard from './TopicCard';
 
-const SpotResultsContainer = ({ data, interviews, path }) => {
+const SpotResultsContainer = ({
+  data,
+  interviews,
+  path,
+  searchQuery,
+  onCancel,
+}) => {
   if (!data || !data.labels) {
     return <p>No matching topics found.</p>;
   }
@@ -30,7 +37,7 @@ const SpotResultsContainer = ({ data, interviews, path }) => {
   return (
     <section id="topics">
       <div className="container">
-        <h2>It looks like you may be looking for help with...</h2>
+        <h2 className="mb-4">It looks like you may be looking for help with...</h2>
         <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
           {sortedTopics.map((topic, index) => (
             <TopicCard
@@ -41,6 +48,7 @@ const SpotResultsContainer = ({ data, interviews, path }) => {
               serverUrl={serverUrl}
               index={index}
               isSpot={true}
+              searchQuery={searchQuery}
             />
           ))}
         </div>
