@@ -10,6 +10,7 @@
   /* Small, muted text under the header */
   font-size: 0.9rem;
   white-space: nowrap;
+  margin-bottom: 0.125rem;
 }
 
 @media (max-width: 576px) {

@@ -39,11 +39,11 @@ describe('HeroSection SPOT modal', () => {
     // We don't require any icons, but ensure the specific question icon class is not present
     expect(document.querySelector('.fa-question-circle')).toBeNull();
 
-    // The SPOT link should appear after the checkbox in the DOM order
+    // The SPOT link should appear before the checkbox in the DOM order
     const checkbox = screen.getByLabelText('Use my reply to help others');
-    // Info button should be a following node after checkbox
+    // Info button should be a preceding node before checkbox
     expect(
-      checkbox.compareDocumentPosition(infoButton) &
+      infoButton.compareDocumentPosition(checkbox) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });

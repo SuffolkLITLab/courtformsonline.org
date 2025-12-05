@@ -13,14 +13,14 @@ interface TopicLink {
 }
 
 interface SimilarFormsProps {
-  forms: RelatedForm[];
+  forms?: RelatedForm[];
   basePath: string; // e.g., "/ma/forms"
   topics?: TopicLink[]; // top-level topics matching the form
   jurisdictionPath?: string; // e.g., "ma", used to build topic landing links
 }
 
 const SimilarForms = ({
-  forms,
+  forms = [],
   basePath,
   topics = [],
   jurisdictionPath,
