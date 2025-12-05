@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
-import { MASSLRF_LINKS } from '../../config/constants';
+import { deepLinks } from '../../config/formSources.config';
 import styles from '../css/TopicCard.module.css';
 
 interface TopicCardProps {
@@ -115,12 +115,9 @@ const TopicCard = ({
           </div>
           {isSpot && path === 'ma' && (
             <div className="mb-3 pb-2 border-top pt-2">
-              <p className="text-muted small mb-2">
-                More resources from Massachusetts Legal Resource Finder:
-              </p>
               <div className="d-flex flex-column gap-2">
-                {MASSLRF_LINKS[topic.name] ? (
-                  MASSLRF_LINKS[topic.name].map((link, idx) => {
+                {deepLinks.ma[topic.name] ? (
+                  deepLinks.ma[topic.name].map((link, idx) => {
                     // Extract the category name from the URL
                     const categoryName = link.split('/').pop() || '';
                     const capitalize = (word: string) =>
@@ -137,7 +134,7 @@ const TopicCard = ({
                         rel="noopener noreferrer"
                         className="btn btn-sm btn-outline-primary align-self-start"
                       >
-                        {displayName}
+                        Find free help about this topic
                         <i
                           className="fas fa-external-link-alt ms-2"
                           style={{ fontSize: '0.75rem' }}
