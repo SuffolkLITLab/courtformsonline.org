@@ -60,9 +60,14 @@ const Page = async ({ params }: PageProps) => {
 
 export default Page;
 
-export async function generateStaticParams({ params }) {
+export async function generateStaticParams({
+  params,
+}: {
+  params: { path: string };
+}) {
   const { path } = params;
   return legalTopics.map((topic) => ({
+    path,
     topic: topic.name.toLowerCase(),
   }));
 }

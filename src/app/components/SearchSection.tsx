@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import styles from '../css/SearchSection.module.css';
@@ -9,48 +9,93 @@ import styles from '../css/SearchSection.module.css';
 
 export default function SearchSection({ serverName }) {
   const [searchText, setSearchText] = useState('');
-  const interviews = document.querySelectorAll('.form');
 
-  const handleSearchInput = (event) => {
-    let searchText = event.target.value.toLowerCase();
-    let clearSearch = document.querySelector('#clear-search');
+  // Function to perform the actual search/filter
+  const performSearch = useCallback((text: string) => {
+    const interviews = document.querySelectorAll('.form');
+    const clearSearch = document.querySelector('#clear-search');
+    const noSearchResults = document.querySelector('#no-search-results');
+
+    if (!noSearchResults || !clearSearch) return;
+
     let interviewsShown = 0;
-    let noSearchResults = document.querySelector('#no-search-results');
-    setSearchText(searchText);
+    const searchLower = text.toLowerCase();
+
     noSearchResults.classList.add('hidden');
-    if (searchText) {
+
+    if (text) {
       clearSearch.classList.remove('hidden');
     } else {
       clearSearch.classList.add('hidden');
       interviews.forEach((interview) => {
         interview.classList.remove('hidden');
       });
+      return;
     }
+
     interviews.forEach((interview) => {
-      if (interview.textContent.toLowerCase().indexOf(searchText) == -1) {
+      if (interview.textContent?.toLowerCase().indexOf(searchLower) === -1) {
         interview.classList.add('hidden');
       } else {
         interview.classList.remove('hidden');
         interviewsShown++;
       }
     });
-    if (interviewsShown == 0) {
+
+    if (interviewsShown === 0) {
       noSearchResults.classList.remove('hidden');
     }
+  }, []);
+
+  // Check for stored search keyword from 404 page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedKeyword = sessionStorage.getItem('searchKeyword');
+      if (storedKeyword) {
+        sessionStorage.removeItem('searchKeyword');
+        setSearchText(storedKeyword);
+
+        // Set the search field value
+        const searchField = document.querySelector(
+          '#search-field'
+        ) as HTMLInputElement;
+        if (searchField) {
+          searchField.value = storedKeyword;
+        }
+
+        // Wait for the forms to be rendered, then perform search
+        // Use a small delay and also observe for DOM changes
+        const trySearch = () => {
+          const interviews = document.querySelectorAll('.form');
+          if (interviews.length > 0) {
+            performSearch(storedKeyword);
+          } else {
+            // Retry after a short delay if forms aren't loaded yet
+            setTimeout(trySearch, 100);
+          }
+        };
+
+        // Start trying after a brief delay to let the page render
+        setTimeout(trySearch, 100);
+      }
+    }
+  }, [performSearch]);
+
+  const handleSearchInput = (event) => {
+    const text = event.target.value;
+    setSearchText(text);
+    performSearch(text);
   };
 
   const clearSearchInput = () => {
-    interviews.forEach((interview) => {
-      let searchField = document.querySelector(
-        '#search-field'
-      ) as HTMLInputElement;
-      let clearSearch = document.querySelector('#clear-search');
-      let noSearchResults = document.querySelector('#no-search-results');
+    const searchField = document.querySelector(
+      '#search-field'
+    ) as HTMLInputElement;
+    if (searchField) {
       searchField.value = '';
-      clearSearch.classList.add('hidden');
-      interview.classList.remove('hidden');
-      noSearchResults.classList.add('hidden');
-    });
+    }
+    setSearchText('');
+    performSearch('');
   };
 
   return (
