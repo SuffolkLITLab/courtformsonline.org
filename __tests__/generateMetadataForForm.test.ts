@@ -157,9 +157,7 @@ describe('generateMetadata for form page', () => {
     const element = await Page({ params: { path: 'ma', form: slug } });
     render(element as any);
     expect(screenLib.getByRole('heading', { level: 1 })).toHaveTextContent(
-      
       formTitle
-    
     );
   });
 

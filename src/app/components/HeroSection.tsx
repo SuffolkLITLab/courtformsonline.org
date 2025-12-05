@@ -159,7 +159,10 @@ const HeroSection = ({ path, interviews, isError }) => {
                     Cancel
                   </Button>
                 )}
-                <Button onClick={handleFindHelpClick} className="btn btn-primary">
+                <Button
+                  onClick={handleFindHelpClick}
+                  className="btn btn-primary"
+                >
                   Find help
                 </Button>
               </div>

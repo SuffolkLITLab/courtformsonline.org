@@ -37,7 +37,9 @@ const SpotResultsContainer = ({
   return (
     <section id="topics">
       <div className="container">
-        <h2 className="mb-4">It looks like you may be looking for help with...</h2>
+        <h2 className="mb-4">
+          It looks like you may be looking for help with...
+        </h2>
         <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
           {sortedTopics.map((topic, index) => (
             <TopicCard

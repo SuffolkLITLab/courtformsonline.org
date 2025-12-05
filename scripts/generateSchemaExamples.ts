@@ -1,6 +1,6 @@
 /**
  * Schema.org Markup Snapshot Test Generator
- * 
+ *
  * Generates example JSON-LD output so you can manually verify the structure
  * This helps validate that your form pages will render correct schema markup
  */
@@ -155,9 +155,7 @@ function generateExamples(): void {
 
     console.log(`\n### Example ${index + 1}: ${form.title}`);
     console.log(`Path: ${form.serverPath}${form.link}`);
-    console.log(
-      '\n```json\n' + JSON.stringify(schema, null, 2) + '\n```\n'
-    );
+    console.log('\n```json\n' + JSON.stringify(schema, null, 2) + '\n```\n');
 
     // Validation notes
     console.log('**Validation Notes:**');
@@ -180,8 +178,7 @@ function generateExamples(): void {
   // Write examples to a file
   const examplesContent = {
     title: 'Schema.org Markup Examples',
-    description:
-      'Example JSON-LD structured data for court forms pages',
+    description: 'Example JSON-LD structured data for court forms pages',
     generated: new Date().toISOString(),
     examples: exampleForms.map((form) => ({
       form: form.title,
@@ -190,14 +187,8 @@ function generateExamples(): void {
     })),
   };
 
-  const outputPath = path.join(
-    process.cwd(),
-    'schema-examples.json'
-  );
-  fs.writeFileSync(
-    outputPath,
-    JSON.stringify(examplesContent, null, 2)
-  );
+  const outputPath = path.join(process.cwd(), 'schema-examples.json');
+  fs.writeFileSync(outputPath, JSON.stringify(examplesContent, null, 2));
   console.log(`\n✓ Examples saved to: ${outputPath}`);
 }
 
@@ -237,14 +228,13 @@ ${JSON.stringify(exampleSchema, null, 2)}
 </body>
 </html>`;
 
-  const outputPath = path.join(
-    process.cwd(),
-    'schema-example.html'
-  );
+  const outputPath = path.join(process.cwd(), 'schema-example.html');
   fs.writeFileSync(outputPath, html);
   console.log(`✓ HTML example saved to: ${outputPath}`);
   console.log('\n  You can open this file in a browser to see the structure');
-  console.log('  Use DevTools (F12) → Elements → <script type="application/ld+json">');
+  console.log(
+    '  Use DevTools (F12) → Elements → <script type="application/ld+json">'
+  );
 }
 
 // Run

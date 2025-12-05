@@ -22,7 +22,6 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 The `formSources.config.js` file allows new paths and server sources to be added to courtformsonline. There are two main components to this config file:
 
-
 ### Form source example
 
 `{

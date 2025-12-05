@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
  * Schema.org Markup Validator
- * 
+ *
  * This script validates schema.org structured data without requiring a live website.
  * It can:
  * 1. Validate raw JSON-LD schema
  * 2. Check for common schema.org errors
  * 3. Generate validator URLs for manual inspection
- * 
+ *
  * Usage:
  *   npx ts-node scripts/validateSchema.ts
  */
@@ -77,7 +77,9 @@ class SchemaValidator {
     if (!schema.name) {
       this.errors.push('Missing required property: name');
     } else if (typeof schema.name !== 'string') {
-      this.errors.push(`Invalid type for name: ${typeof schema.name}. Should be string`);
+      this.errors.push(
+        `Invalid type for name: ${typeof schema.name}. Should be string`
+      );
     } else if (schema.name.trim().length === 0) {
       this.errors.push('Property name cannot be empty');
     } else {
@@ -113,9 +115,7 @@ class SchemaValidator {
     }
 
     if (!schema.applicationCategory) {
-      this.warnings.push(
-        'Recommended property missing: applicationCategory'
-      );
+      this.warnings.push('Recommended property missing: applicationCategory');
     } else {
       const validCategories = [
         'GameApplication',
@@ -144,9 +144,7 @@ class SchemaValidator {
         this.info.push(`✓ isAccessibleForFree: ${schema.isAccessibleForFree}`);
       }
     } else {
-      this.warnings.push(
-        'Recommended property missing: isAccessibleForFree'
-      );
+      this.warnings.push('Recommended property missing: isAccessibleForFree');
     }
 
     // Optional properties
@@ -173,9 +171,7 @@ class SchemaValidator {
 
     about.forEach((item, index) => {
       if (!item['@type']) {
-        this.errors.push(
-          `about[${index}]: Missing required property @type`
-        );
+        this.errors.push(`about[${index}]: Missing required property @type`);
       } else if (item['@type'] !== 'Thing') {
         this.warnings.push(
           `about[${index}]: Type is "${item['@type']}", typically should be "Thing" for topics`
@@ -183,9 +179,7 @@ class SchemaValidator {
       }
 
       if (!item.name) {
-        this.errors.push(
-          `about[${index}]: Missing required property name`
-        );
+        this.errors.push(`about[${index}]: Missing required property name`);
       } else if (typeof item.name !== 'string') {
         this.errors.push(
           `about[${index}].name: Invalid type ${typeof item.name}. Should be string`
