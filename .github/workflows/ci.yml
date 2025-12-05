@@ -20,13 +20,12 @@ jobs:
         node-version: '20'
 
     - name: Install dependencies
-      run: |
-        yarn install --immutable
+      run: npm ci
 
     - name: Run Tests
-      run: yarn test
+      run: npm test
         
     - name: Build the project
-      run: yarn build
+      run: npm run build
       env:
         NEXT_PUBLIC_SPOT_API_BEARER_TOKEN: ${{ secrets.NEXT_PUBLIC_SPOT_API_BEARER_TOKEN }}
