@@ -55,10 +55,10 @@ export default function NotFound() {
 
           <p className="mb-4">
             <Link href="/" className="btn btn-outline-secondary me-2">
-              Go to Home
+              Go to home
             </Link>
             <Link href="/forms" className="btn btn-outline-secondary">
-              Browse All Forms
+              Browse all forms
             </Link>
           </p>
         </div>
