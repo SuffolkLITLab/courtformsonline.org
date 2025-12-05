@@ -9,6 +9,10 @@ jest.mock('react-markdown', () => ({
   __esModule: true,
   default: ({ children }) => children,
 }));
+jest.mock('react-markdown', () => ({
+  __esModule: true,
+  default: ({ children }) => children,
+}));
 jest.mock('remark-gfm', () => ({}));
 jest.mock('../src/data/fetchInterviewData', () => ({
   fetchInterviews: jest.fn(),
@@ -39,6 +43,8 @@ describe('generateMetadata for form page', () => {
     (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
+      formTopics: [],
+      relatedForms: [],
     });
 
     const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
@@ -143,13 +149,17 @@ describe('generateMetadata for form page', () => {
     (getFormDetails as jest.Mock).mockResolvedValue({
       formDetails: mockFormDetails,
       formTopic: 'other',
+      formTopics: [],
+      relatedForms: [],
     });
 
     const { default: Page } = require('../src/app/[path]/forms/[form]/page');
     const element = await Page({ params: { path: 'ma', form: slug } });
     render(element as any);
     expect(screenLib.getByRole('heading', { level: 1 })).toHaveTextContent(
+      
       formTitle
+    
     );
   });
 

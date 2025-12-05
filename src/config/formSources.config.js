@@ -3,6 +3,30 @@ export const pathToServerConfig = {
     path: 'ma',
     servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
     name: 'Massachusetts',
+    // Optional link to an authoritative jurisdiction listing of court forms.
+    moreFormsUrl: 'https://www.mass.gov/topics/court-forms',
+  },
+};
+
+// Jurisdiction-specific deep links mapping
+// Maps topic names to their corresponding resource finder URLs
+export const deepLinks = {
+  ma: {
+    // MassLegalResource Finder deep links mapping
+    // Maps topic names to their corresponding MassLRF URLs
+    housing: ['https://masslrf.org/en/triage/start/housing'],
+    family: [
+      'https://masslrf.org/en/triage/start/family',
+      'https://masslrf.org/en/triage/start/abuse_crime',
+    ],
+    consumer: ['https://masslrf.org/en/triage/start/debt_consumer'],
+    benefits: ['https://masslrf.org/en/triage/start/benefits'],
+    criminal: ['https://masslrf.org/en/triage/start/criminal'],
+    education: ['https://masslrf.org/en/triage/start/education'],
+    health: ['https://masslrf.org/en/triage/start/health'],
+    immigration: ['https://masslrf.org/en/triage/start/immigration'],
+    employment: ['https://masslrf.org/en/triage/start/employment'],
+    wills: ['https://masslrf.org/en/triage/start/wills'],
   },
 };
 

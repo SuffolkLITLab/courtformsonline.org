@@ -70,10 +70,19 @@ export default async function Page({ params }: PageProps) {
   const forms = await getData();
   const { path } = params;
   const server = pathToServerConfig[path].name;
+  const moreFormsUrl = pathToServerConfig[path].moreFormsUrl;
 
   return (
     <div className={styles.AllFormsContainer + ' container'}>
       <h1 className="form-heading text-center mb-3">All {server} forms</h1>
+      {moreFormsUrl && (
+        <p className="text-muted small mb-2">
+          Don't see your form? It may not be automated yet.{' '}
+          <a href={moreFormsUrl} target="_blank" rel="noopener noreferrer">
+            Find more {server} court forms.
+          </a>
+        </p>
+      )}
       <SearchSection serverName={server} />
       {forms.map((form, index) => (
         <InteractiveForm
