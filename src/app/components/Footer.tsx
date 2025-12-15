@@ -25,11 +25,10 @@ export default function Footer() {
           </div>
         </div>
         <div className="row">
-          <div className="col">
-            <Link href="/privacy">Terms of use and privacy policy</Link>
-          </div>
-          <div className="col">
+          <div className="col d-flex gap-2 justify-content-center flex-wrap">
             <a href="mailto:massaccess@suffolk.edu">Contact</a>
+            <Link href="/privacy">Terms of use and privacy policy</Link>
+            <Link href="/sitemap.xml">Sitemap</Link>
           </div>
         </div>
         <div className="row mt-3">
