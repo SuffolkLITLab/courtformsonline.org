@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /*.pdf
+Disallow: /form_data.csv
 
 Sitemap: https://courtformsonline.org/sitemap.xml
