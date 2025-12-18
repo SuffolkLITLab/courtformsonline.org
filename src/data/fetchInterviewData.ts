@@ -2,6 +2,10 @@ import { formSources, pathToServerConfig } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
 import { excludedForms } from '../config/formSources.config';
 import { getTopicNames } from './helpers';
+import {
+  getJurisdictionFromPath,
+  jurisdictionMatches,
+} from '../utils/jurisdiction';
 
 interface LocalizedString {
   [key: string]: string;
@@ -365,6 +369,12 @@ export const fetchInterviews = async (path: string) => {
       );
     }
   }
+
+  // Filter interviews by jurisdiction
+  const expectedJurisdiction = getJurisdictionFromPath(path);
+  allInterviews = allInterviews.filter((interview) =>
+    jurisdictionMatches(interview.metadata?.jurisdiction, expectedJurisdiction)
+  );
 
   // Initialize interviewsByTopic and titlesInTopics with all topics
   const interviewsByTopic: { [key: string]: Interview[] } = {};

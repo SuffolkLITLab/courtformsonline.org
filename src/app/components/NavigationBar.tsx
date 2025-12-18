@@ -7,16 +7,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowUpRightFromSquare,
   faLanguage,
+  faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
+import { pathToServerConfig } from '../../config/formSources.config';
 
 export default function NavigationBar() {
   const params = useParams();
-  const path = params && Object.hasOwn(params, 'path') ? params.path : '';
+  const path = params && Object.hasOwn(params, 'path') ? params.path : 'ma';
   let pathSegment = '';
   if (path && path.length > 0) pathSegment = '/' + path;
+
+  // Get current jurisdiction name and available jurisdictions
+  const currentJurisdiction =
+    pathToServerConfig[path as string]?.name || 'Massachusetts';
+  const availableJurisdictions = Object.entries(pathToServerConfig).map(
+    ([p, config]) => ({
+      path: p,
+      name: (config as any).name,
+    })
+  );
   return (
     <nav
       role="navigation"
@@ -51,40 +63,45 @@ export default function NavigationBar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            {/* Removed until spanish data is available */}
-            {/* <li className="nav-item dropdown">
+            {/* Jurisdiction selector dropdown */}
+            <li className="nav-item dropdown">
               <a
-                className={styles.NavLink + ' dropdown-toggle'
+                className={styles.NavLink + ' dropdown-toggle'}
                 href="#"
-                id="navbarDropdown"
+                id="jurisdictionDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <i className="fas fa-language fa-lg"></i> Language
+                {currentJurisdiction}
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="ms-1"
+                  style={{ fontSize: '0.7em' }}
+                />
               </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <Link href="#" className="dropdown-item">
-                    English
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="dropdown-item">
-                    Español
-                  </Link>
-                </li>
+              <ul
+                className="dropdown-menu"
+                aria-labelledby="jurisdictionDropdown"
+              >
+                {availableJurisdictions.map((j) => (
+                  <li key={j.path}>
+                    <Link
+                      href={`/${j.path}`}
+                      className={
+                        'dropdown-item' +
+                        (j.path === path ? ' active fw-bold' : '')
+                      }
+                    >
+                      {j.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
-            </li> */}
+            </li>
             <li className="nav-item">
               <Link href={pathSegment + '/forms'} className={styles.NavLink}>
-                All{' '}
-                {path && path.length > 0 ? (
-                  <span className={styles.AllFormsPath}>{path}</span>
-                ) : (
-                  ' '
-                )}{' '}
-                forms
+                All forms
               </Link>
             </li>
             <li className="nav-item">

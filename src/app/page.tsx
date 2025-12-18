@@ -1,27 +1,8 @@
 // Example: courtformsonline.org
-import AffiliatesSection from './components/AffiliatesSection';
-import HeroSection from './components/HeroSection';
-import HowItWorksSection from './components/HowItWorksSection';
-import TopicsSection from './components/TopicsSection';
-import { fetchInterviews } from '../data/fetchInterviewData';
+// Redirect to the default jurisdiction (Massachusetts)
+import { redirect } from 'next/navigation';
+import { DEFAULT_PATH } from '../utils/jurisdiction';
 
-export default async function Page() {
-  const { interviewsByTopic, isError } = await fetchInterviews('ma');
-
-  return (
-    <>
-      <HeroSection
-        path={'ma'}
-        interviews={interviewsByTopic}
-        isError={isError}
-      />
-      <HowItWorksSection />
-      <TopicsSection
-        path={'ma'}
-        interviews={interviewsByTopic}
-        isError={isError}
-      />
-      <AffiliatesSection />
-    </>
-  );
+export default function Page() {
+  redirect(`/${DEFAULT_PATH}`);
 }
