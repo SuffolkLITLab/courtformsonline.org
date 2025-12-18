@@ -3,12 +3,29 @@ import { useState, useEffect, useCallback } from 'react';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import styles from '../css/SearchSection.module.css';
+import { pathToServerConfig } from '../../config/formSources.config';
 
 // This is a front-end search form. It only searches the information shown
 // in the DOM (the interview title and description).
 
-export default function SearchSection({ serverName }) {
+interface SearchSectionProps {
+  serverName?: string;
+  currentPath?: string;
+}
+
+export default function SearchSection({
+  serverName,
+  currentPath,
+}: SearchSectionProps) {
   const [searchText, setSearchText] = useState('');
+
+  // Get available jurisdictions for the filter
+  const availableJurisdictions = Object.entries(pathToServerConfig).map(
+    ([path, config]) => ({
+      path,
+      name: (config as any).name,
+    })
+  );
 
   // Function to perform the actual search/filter
   const performSearch = useCallback((text: string) => {
@@ -100,16 +117,41 @@ export default function SearchSection({ serverName }) {
 
   return (
     <section id="search-forms" className="mt-3 mb-5">
-      <label htmlFor="search-field" className="form-label">
-        {serverName && serverName.length > 0
-          ? 'Search ' + serverName + ' forms'
-          : 'Search forms'}
-      </label>
-      <input
-        id="search-field"
-        className="search-field form-control"
-        onInput={handleSearchInput}
-      />
+      <div className="d-flex gap-3 align-items-end flex-wrap">
+        <div className="flex-grow-1">
+          <label htmlFor="search-field" className="form-label">
+            {serverName && serverName.length > 0
+              ? 'Search ' + serverName + ' forms'
+              : 'Search forms'}
+          </label>
+          <input
+            id="search-field"
+            className="search-field form-control"
+            onInput={handleSearchInput}
+          />
+        </div>
+        {availableJurisdictions.length > 1 && currentPath && (
+          <div>
+            <label htmlFor="jurisdiction-filter" className="form-label">
+              Jurisdiction
+            </label>
+            <select
+              id="jurisdiction-filter"
+              className="form-select"
+              value={currentPath}
+              onChange={(e) => {
+                window.location.href = `/${e.target.value}/forms`;
+              }}
+            >
+              {availableJurisdictions.map((j) => (
+                <option key={j.path} value={j.path}>
+                  {j.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
       <a
         id="clear-search"
         className={styles.ClearSearchButton + ' clear-search hidden'}

@@ -8,6 +8,11 @@ import {
 } from '../../../config/formSources.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 import styles from '../../css/AllFormsContainer.module.css';
+import {
+  getJurisdictionFromPath,
+  jurisdictionMatches,
+  getAvailableJurisdictions,
+} from '../../../utils/jurisdiction';
 
 const SearchSection = dynamic(() => import('../../components/SearchSection'), {
   ssr: false,
@@ -67,23 +72,44 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  const forms = await getData();
+  const allForms = await getData();
   const { path } = params;
-  const server = pathToServerConfig[path].name;
-  const moreFormsUrl = pathToServerConfig[path].moreFormsUrl;
+  const jurisdictionName = getJurisdictionFromPath(path);
+  const moreFormsUrl = pathToServerConfig[path]?.moreFormsUrl;
+  const availableJurisdictions = getAvailableJurisdictions();
+
+  // Filter forms by jurisdiction
+  const forms = allForms.filter((form) =>
+    jurisdictionMatches(form.metadata?.jurisdiction, jurisdictionName)
+  );
 
   return (
     <div className={styles.AllFormsContainer + ' container'}>
-      <h1 className="form-heading text-center mb-3">All {server} forms</h1>
+      <h1 className="form-heading text-center mb-3">
+        All {jurisdictionName} forms
+      </h1>
+      {availableJurisdictions.length > 1 && (
+        <p className="text-center mb-3">
+          Looking for a different state?{' '}
+          {availableJurisdictions
+            .filter((j) => j.path !== path)
+            .map((j, index, arr) => (
+              <span key={j.path}>
+                <a href={`/${j.path}/forms`}>{j.name}</a>
+                {index < arr.length - 1 ? ', ' : ''}
+              </span>
+            ))}
+        </p>
+      )}
       {moreFormsUrl && (
         <p className="text-muted small mb-2">
           Don't see your form? It may not be automated yet.{' '}
           <a href={moreFormsUrl} target="_blank" rel="noopener noreferrer">
-            Find more {server} court forms.
+            Find more {jurisdictionName} court forms.
           </a>
         </p>
       )}
-      <SearchSection serverName={server} />
+      <SearchSection serverName={jurisdictionName} currentPath={path} />
       {forms.map((form, index) => (
         <InteractiveForm
           key={index}

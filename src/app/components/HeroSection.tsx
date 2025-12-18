@@ -7,6 +7,7 @@ import Popover from 'react-bootstrap/Popover';
 import { fetchSpotData } from '../../data/fetchSpotData';
 import SpotResultsContainer from './SpotResultsContainer';
 import styles from '../css/HeroSection.module.css';
+import { pathToServerConfig } from '../../config/formSources.config';
 
 const HeroSection = ({ path, interviews, isError }) => {
   const [text, setText] = useState('');
@@ -16,6 +17,9 @@ const HeroSection = ({ path, interviews, isError }) => {
   const [validationError, setValidationError] = useState('');
   // Stable container ref for popover
   const popoverContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Get jurisdiction name from path
+  const jurisdictionName = pathToServerConfig[path]?.name || 'Massachusetts';
 
   const handleInputChange = (event) => {
     setText(event.target.value);
@@ -76,7 +80,7 @@ const HeroSection = ({ path, interviews, isError }) => {
         <div className="row gx-5">
           <div className="col-lg-6" id="hero-left">
             <h1 className="display-5 mb-4">
-              Free DIY legal help for Massachusetts
+              Free DIY legal help for {jurisdictionName}
             </h1>
             <p>
               Use our free step-by-step interactive forms to get help with your

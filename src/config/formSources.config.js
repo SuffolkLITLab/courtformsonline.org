@@ -6,6 +6,12 @@ export const pathToServerConfig = {
     // Optional link to an authoritative jurisdiction listing of court forms.
     moreFormsUrl: 'https://www.mass.gov/topics/court-forms',
   },
+  mn: {
+    path: 'mn',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Minnesota',
+    moreFormsUrl: 'https://mncourts.gov/getforms',
+  },
 };
 
 // Jurisdiction-specific deep links mapping
