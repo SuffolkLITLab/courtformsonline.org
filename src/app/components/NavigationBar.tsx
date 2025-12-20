@@ -74,11 +74,6 @@ export default function NavigationBar() {
                 aria-expanded="false"
               >
                 {currentJurisdiction}
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  className="ms-1"
-                  style={{ fontSize: '0.7em' }}
-                />
               </a>
               <ul
                 className="dropdown-menu"

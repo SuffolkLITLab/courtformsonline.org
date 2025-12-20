@@ -80,7 +80,11 @@ export default async function Page({ params }: PageProps) {
 
   // Filter forms by jurisdiction
   const forms = allForms.filter((form) =>
-    jurisdictionMatches(form.metadata?.jurisdiction, jurisdictionName)
+    jurisdictionMatches(
+      form.metadata?.jurisdiction,
+      jurisdictionName,
+      form.serverUrl
+    )
   );
 
   return (

@@ -1,25 +1,10 @@
-import { pathToServerConfig } from '../config/formSources.config';
-
-/**
- * Jurisdiction code mapping.
- * Maps standardized state names to various codes that might appear in metadata.
- * Includes SALI/FOLIO location codes (e.g., NAM-US-US+MA) and two-letter state codes.
- */
-const jurisdictionAliases: Record<string, string[]> = {
-  Massachusetts: ['MA', 'NAM-US-US+MA', 'Massachusetts', 'ma'],
-  Minnesota: ['MN', 'NAM-US-US+MN', 'Minnesota', 'mn'],
-  // Add more jurisdictions as needed
-};
-
-/**
- * Default jurisdiction when none is specified in form metadata
- */
-export const DEFAULT_JURISDICTION = 'Massachusetts';
-
-/**
- * Default path for the default jurisdiction
- */
-export const DEFAULT_PATH = 'ma';
+import {
+  pathToServerConfig,
+  formSources,
+  jurisdictionAliases,
+  DEFAULT_JURISDICTION,
+  DEFAULT_PATH,
+} from '../config/formSources.config';
 
 /**
  * Normalizes a jurisdiction code to a standardized state name.
@@ -50,6 +35,32 @@ export function normalizeJurisdiction(
 }
 
 /**
+ * Gets the default jurisdiction for a server.
+ *
+ * @param serverUrl - The server URL
+ * @returns The default jurisdiction for that server, or global default
+ */
+export function getServerDefaultJurisdiction(serverUrl: string): string {
+  const server = formSources.docassembleServers.find(
+    (s) => s.url === serverUrl
+  );
+  return server?.defaultJurisdiction || DEFAULT_JURISDICTION;
+}
+
+/**
+ * Gets the default jurisdiction for a server key.
+ *
+ * @param serverKey - The server key
+ * @returns The default jurisdiction for that server, or global default
+ */
+export function getServerDefaultJurisdictionByKey(serverKey: string): string {
+  const server = formSources.docassembleServers.find(
+    (s) => s.key === serverKey
+  );
+  return server?.defaultJurisdiction || DEFAULT_JURISDICTION;
+}
+
+/**
  * Gets the expected jurisdiction name for a given URL path.
  *
  * @param path - The URL path segment (e.g., 'ma', 'mn')
@@ -77,21 +88,26 @@ export function getPathFromJurisdiction(jurisdictionName: string): string {
 
 /**
  * Checks if a form's jurisdiction matches the expected jurisdiction for a path.
- * Forms without a jurisdiction default to Massachusetts.
+ * Forms without a jurisdiction default to the server's default jurisdiction.
  *
  * @param formJurisdiction - The jurisdiction from form metadata
  * @param expectedJurisdiction - The expected jurisdiction for the current path
+ * @param serverUrl - The server URL the form came from (for default jurisdiction)
  * @returns True if the form should be shown for this jurisdiction
  */
 export function jurisdictionMatches(
   formJurisdiction: string | undefined,
-  expectedJurisdiction: string
+  expectedJurisdiction: string,
+  serverUrl?: string
 ): boolean {
   const normalized = normalizeJurisdiction(formJurisdiction);
 
-  // If no jurisdiction specified, default to Massachusetts
+  // If no jurisdiction specified, use server's default jurisdiction
   if (!normalized) {
-    return expectedJurisdiction === DEFAULT_JURISDICTION;
+    const serverDefault = serverUrl
+      ? getServerDefaultJurisdiction(serverUrl)
+      : DEFAULT_JURISDICTION;
+    return expectedJurisdiction === serverDefault;
   }
 
   return normalized === expectedJurisdiction;
@@ -111,3 +127,6 @@ export function getAvailableJurisdictions(): Array<{
     name: (config as any).name,
   }));
 }
+
+// Re-export config for consumers that need it directly
+export { DEFAULT_JURISDICTION, DEFAULT_PATH, jurisdictionAliases };
