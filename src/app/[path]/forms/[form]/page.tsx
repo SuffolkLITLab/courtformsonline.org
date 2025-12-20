@@ -19,9 +19,11 @@ import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import { getFormDetails } from '../../../../data/getFormDetails';
 import type { Metadata } from 'next';
 import { toUrlFriendlyString } from '../../../utils/helpers';
+import { getMassLRFDeepLink } from '../../../../utils/masslrf';
 import styles from '../../../css/FormPage.module.css';
 import FormStatus from '../../../components/FormStatus';
 import SimilarForms from '../../../components/SimilarForms';
+import LegalResourceLink from '../../../components/LegalResourceLink';
 import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
 import { pathToServerConfig } from '../../../../config/formSources.config';
 import { legalTopics } from '../../../../config/topics.config';
@@ -48,8 +50,48 @@ const Page = async ({ params }: PageProps) => {
   const { formDetails, formTopic, formTopics, relatedForms } =
     _formDetailsResponse;
 
+  console.log('DEBUG Form Page:', {
+    form,
+    path,
+    formTopic,
+    formTopicsCount: formTopics?.length,
+    formTopicsNames: formTopics?.map((t) => t.name),
+  });
+
   if (!formDetails) {
     return <div>Form not found</div>;
+  }
+
+  // Compute deep link server-side using LIST_topics (NSMI codes)
+  let deepLink: string | null = null;
+  const topicToUse =
+    formTopic ||
+    (formTopics && formTopics.length > 0 ? formTopics[0]?.name : null);
+
+  if (path === 'ma') {
+    let nsmiCodeToUse: string | null = null;
+
+    // First, try to use the form's LIST_topics
+    const listTopics = formDetails.metadata?.LIST_topics || [];
+    if (listTopics.length > 0) {
+      nsmiCodeToUse = listTopics[0];
+    } else if (topicToUse) {
+      // Fall back to using the topic's primary code
+      const matchingTopic = legalTopics.find(
+        (t) => t.name.toLowerCase() === topicToUse.toLowerCase()
+      );
+      if (matchingTopic && matchingTopic.codes.length > 0) {
+        nsmiCodeToUse = matchingTopic.codes[0];
+      }
+    }
+
+    if (nsmiCodeToUse) {
+      try {
+        deepLink = await getMassLRFDeepLink(nsmiCodeToUse);
+      } catch (err) {
+        console.error('Error fetching MassLRF deep link:', err);
+      }
+    }
   }
 
   // Build schema.org structured data for this form page
@@ -251,6 +293,13 @@ const Page = async ({ params }: PageProps) => {
         topics={topicsForSimilar}
         jurisdictionPath={path}
       />
+      {deepLink && (
+        <LegalResourceLink
+          topic={topicToUse!}
+          jurisdiction={jurisdictionName}
+          deepLink={deepLink}
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

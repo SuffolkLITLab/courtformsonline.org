@@ -8,6 +8,8 @@ import {
   pathToServerConfig,
 } from '../../../config/formSources.config';
 import InteractiveForm from '../../components/InteractiveForm';
+import LegalResourceLink from '../../components/LegalResourceLink';
+import { getMassLRFDeepLink } from '../../../utils/masslrf';
 import { legalTopics } from '../../../config/topics.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 import styles from '../../css/TopicPage.module.css';
@@ -40,6 +42,17 @@ const Page = async ({ params }: PageProps) => {
 
   const interviews = interviewsByTopic[topic] || [];
 
+  // Compute deep link server-side using NSMI code from topic
+  let deepLink: string | null = null;
+  if (path === 'ma' && topicDetails && topicDetails.codes.length > 0) {
+    try {
+      // Use the first LIST code from the topic configuration for top-level category link
+      deepLink = await getMassLRFDeepLink(topicDetails.codes[0], true);
+    } catch (err) {
+      console.error('Error fetching MassLRF deep link:', err);
+    }
+  }
+
   // Build breadcrumb items
   const breadcrumbItems: BreadcrumbItem[] = [
     { label: 'Home', href: '/' },
@@ -68,6 +81,13 @@ const Page = async ({ params }: PageProps) => {
         ))
       ) : (
         <p>No interviews found for this topic.</p>
+      )}
+      {deepLink && (
+        <LegalResourceLink
+          topic={topic}
+          jurisdiction={jurisdictionName}
+          deepLink={deepLink}
+        />
       )}
     </div>
   );

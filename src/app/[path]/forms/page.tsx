@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic';
 import { Form } from '../../interfaces/Form';
 import InteractiveForm from '../../components/InteractiveForm';
+import LegalResourceLink from '../../components/LegalResourceLink';
 import {
   pathToServerConfig,
   formSources,
@@ -13,6 +14,7 @@ import {
   jurisdictionMatches,
   getAvailableJurisdictions,
 } from '../../../utils/jurisdiction';
+import { getMassLRFRootUrl } from '../../../utils/masslrf';
 
 const SearchSection = dynamic(() => import('../../components/SearchSection'), {
   ssr: false,
@@ -87,6 +89,9 @@ export default async function Page({ params }: PageProps) {
     )
   );
 
+  // Get the root MassLRF URL for this jurisdiction
+  const massLRFRootUrl = getMassLRFRootUrl(path);
+
   return (
     <div className={styles.AllFormsContainer + ' container'}>
       <h1 className="form-heading text-center mb-3">
@@ -126,6 +131,13 @@ export default async function Page({ params }: PageProps) {
           serverUrl={form.serverUrl}
         />
       ))}
+      {massLRFRootUrl && (
+        <LegalResourceLink
+          topic="legal assistance"
+          jurisdiction={jurisdictionName}
+          deepLink={massLRFRootUrl}
+        />
+      )}
     </div>
   );
 }

@@ -1,0 +1,64 @@
+.LegalResourceLink {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.Card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid #e9ecef;
+}
+
+.Heading {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0 0 0.75rem 0;
+}
+
+.Description {
+  color: #495057;
+  margin: 0 0 1.25rem 0;
+  font-size: 0.95rem;
+}
+
+.Button {
+  background-color: transparent;
+  color: #495057;
+  border: 1px solid #495057;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.Button:hover {
+  background-color: #495057;
+  color: white;
+  text-decoration: none;
+  border-color: #495057;
+}
+
+.Button:focus {
+  outline: 2px solid #495057;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .Card {
+    padding: 1rem;
+  }
+
+  .Heading {
+    font-size: 1.1rem;
+  }
+
+  .Button {
+    width: 100%;
+  }
+}
