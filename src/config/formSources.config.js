@@ -12,7 +12,43 @@ export const pathToServerConfig = {
     name: 'Minnesota',
     moreFormsUrl: 'https://mncourts.gov/getforms',
   },
+  me: {
+    path: 'me',
+    servers: ['Pine Tree Legal Assistance'],
+    name: 'Maine',
+    moreFormsUrl: 'https://www.courts.maine.gov/maine_courts/forms/index.html',
+  },
+  mi: {
+    path: 'mi',
+    servers: ['Michigan Legal Help'],
+    name: 'Michigan',
+    moreFormsUrl:
+      'https://www.michigan.gov/courts/0,4601,7-412-2297_2310---,00.html',
+  },
 };
+
+/**
+ * Jurisdiction code mapping.
+ * Maps standardized state names to various codes that might appear in metadata.
+ * Includes SALI/FOLIO location codes (e.g., NAM-US-US+MA) and two-letter state codes.
+ */
+export const jurisdictionAliases = {
+  Massachusetts: ['MA', 'NAM-US-US+MA', 'Massachusetts', 'ma'],
+  Minnesota: ['MN', 'NAM-US-US+MN', 'Minnesota', 'mn'],
+  Maine: ['ME', 'NAM-US-US+ME', 'Maine', 'me'],
+  Michigan: ['MI', 'NAM-US-US+MI', 'Michigan', 'mi'],
+  // Add more jurisdictions as needed
+};
+
+/**
+ * Default jurisdiction when none is specified in form metadata
+ */
+export const DEFAULT_JURISDICTION = 'Massachusetts';
+
+/**
+ * Default path for the default jurisdiction
+ */
+export const DEFAULT_PATH = 'ma';
 
 // Jurisdiction-specific deep links mapping
 // Maps topic names to their corresponding resource finder URLs
@@ -42,11 +78,25 @@ export const formSources = {
       key: 'suffolkLITLab',
       url: 'https://apps.suffolklitlab.org',
       name: 'Suffolk LIT Lab',
+      defaultJurisdiction: 'Massachusetts', // Default for forms without jurisdiction metadata
     },
     {
       key: 'greaterBostonLegalService',
       url: 'https://interviews.gbls.org',
       name: 'Greater Boston Legal Services',
+      defaultJurisdiction: 'Massachusetts', // Default for forms without jurisdiction metadata
+    },
+    {
+      key: 'pineTreeLegalAssistance',
+      url: 'https://apps.ptla.org/',
+      name: 'Pine Tree Legal Assistance',
+      defaultJurisdiction: 'Maine', // Default for forms without jurisdiction metadata
+    },
+    {
+      key: 'michiganLegalHelp',
+      url: 'https://forms.michiganlegalhelp.org/',
+      name: 'Michigan Legal Help',
+      defaultJurisdiction: 'Michigan', // Default for forms without jurisdiction metadata
     },
   ],
 };
@@ -65,5 +115,11 @@ export const excludedForms = {
   ],
   suffolkLITLab: [
     // 'docassemble.MAPetitionToSealEviction:data/questions/petition_to_seal_eviction.yml', // TODO: REMOVE on May 4th 2025
+  ],
+  pineTreeLegalAssistance: [
+    // Add any forms to exclude from Pine Tree Legal Assistance server
+  ],
+  michiganLegalHelp: [
+    // Add any forms to exclude from Michigan Legal Help server
   ],
 };

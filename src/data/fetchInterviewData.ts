@@ -373,7 +373,11 @@ export const fetchInterviews = async (path: string) => {
   // Filter interviews by jurisdiction
   const expectedJurisdiction = getJurisdictionFromPath(path);
   allInterviews = allInterviews.filter((interview) =>
-    jurisdictionMatches(interview.metadata?.jurisdiction, expectedJurisdiction)
+    jurisdictionMatches(
+      interview.metadata?.jurisdiction,
+      expectedJurisdiction,
+      interview.serverUrl
+    )
   );
 
   // Initialize interviewsByTopic and titlesInTopics with all topics
