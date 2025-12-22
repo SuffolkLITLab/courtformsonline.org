@@ -49,6 +49,17 @@
   outline-offset: 2px;
 }
 
+.DisclaimerInfo {
+  margin-top: 1rem;
+}
+
+.DisclaimerText {
+  color: #6c757d;
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .Card {
     padding: 1rem;
@@ -62,3 +73,4 @@
     width: 100%;
   }
 }
+

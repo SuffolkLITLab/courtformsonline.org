@@ -20,10 +20,20 @@ import { getFormDetails } from '../../../../data/getFormDetails';
 import type { Metadata } from 'next';
 import { toUrlFriendlyString } from '../../../utils/helpers';
 import { getMassLRFDeepLink } from '../../../../utils/masslrf';
+import {
+  getMichiganLegalHelpDeepLink,
+  getMichiganLegalHelpRootUrl,
+} from '../../../../utils/michiganlegalhelp';
+import { getMaineLegalHelpLink } from '../../../../utils/mainelegalhelp';
+import { getMinnesotaLegalHelpLink } from '../../../../utils/minnesotalegalhelp';
 import styles from '../../../css/FormPage.module.css';
 import FormStatus from '../../../components/FormStatus';
 import SimilarForms from '../../../components/SimilarForms';
 import LegalResourceLink from '../../../components/LegalResourceLink';
+import MassLRFDisclaimerInfo from '../../../components/MassLRFDisclaimerInfo';
+import MichiganLegalHelpDisclaimerInfo from '../../../components/MichiganLegalHelpDisclaimerInfo';
+import MaineLegalHelpDisclaimerInfo from '../../../components/MaineLegalHelpDisclaimerInfo';
+import MinnesotaLegalHelpDisclaimerInfo from '../../../components/MinnesotaLegalHelpDisclaimerInfo';
 import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
 import { pathToServerConfig } from '../../../../config/formSources.config';
 import { legalTopics } from '../../../../config/topics.config';
@@ -92,6 +102,26 @@ const Page = async ({ params }: PageProps) => {
         console.error('Error fetching MassLRF deep link:', err);
       }
     }
+  } else if (path === 'mi') {
+    // Michigan Legal Help deep linking
+    // First, try to use the form's LIST_topics
+    const listTopics = formDetails.metadata?.LIST_topics || [];
+    if (listTopics.length > 0) {
+      deepLink = getMichiganLegalHelpDeepLink(listTopics[0]);
+    } else if (topicToUse) {
+      // Fall back to using the topic name directly
+      deepLink = getMichiganLegalHelpDeepLink(topicToUse);
+    }
+    // If no topic-specific mapping found, use the root Guide URL
+    if (!deepLink) {
+      deepLink = getMichiganLegalHelpRootUrl();
+    }
+  } else if (path === 'me') {
+    // Maine Legal Help - link to Pine Tree Legal Assistance contact page
+    deepLink = getMaineLegalHelpLink(topicToUse);
+  } else if (path === 'mn') {
+    // Minnesota Legal Help - link to LawHelpMN
+    deepLink = getMinnesotaLegalHelpLink(topicToUse);
   }
 
   // Build schema.org structured data for this form page
@@ -295,9 +325,20 @@ const Page = async ({ params }: PageProps) => {
       />
       {deepLink && (
         <LegalResourceLink
-          topic={topicToUse!}
+          topic={topicDisplayName}
           jurisdiction={jurisdictionName}
           deepLink={deepLink}
+          disclaimerInfo={
+            path === 'ma' ? (
+              <MassLRFDisclaimerInfo />
+            ) : path === 'mi' ? (
+              <MichiganLegalHelpDisclaimerInfo />
+            ) : path === 'me' ? (
+              <MaineLegalHelpDisclaimerInfo />
+            ) : path === 'mn' ? (
+              <MinnesotaLegalHelpDisclaimerInfo />
+            ) : undefined
+          }
         />
       )}
       <script

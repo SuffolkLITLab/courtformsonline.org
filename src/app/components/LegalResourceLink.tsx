@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import styles from '../css/LegalResourceLink.module.css';
 
@@ -8,12 +8,14 @@ interface LegalResourceLinkProps {
   topic: string;
   jurisdiction: string;
   deepLink: string | null;
+  disclaimerInfo?: ReactNode;
 }
 
 const LegalResourceLink = ({
   topic,
   jurisdiction,
   deepLink,
+  disclaimerInfo,
 }: LegalResourceLinkProps) => {
   // Don't render if no link found
   if (!deepLink) {
@@ -33,6 +35,7 @@ const LegalResourceLink = ({
         <Link href={deepLink} target="_blank" rel="noopener noreferrer">
           <button className={styles.Button}>Get legal help for {topic}</button>
         </Link>
+        {disclaimerInfo && <>{disclaimerInfo}</>}
       </div>
     </div>
   );

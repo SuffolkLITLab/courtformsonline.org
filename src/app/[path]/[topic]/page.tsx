@@ -1,4 +1,5 @@
 // Example: courtformsonline.org/ma/housing
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Button from 'react-bootstrap/Button';
 import remarkGfm from 'remark-gfm';
@@ -9,7 +10,17 @@ import {
 } from '../../../config/formSources.config';
 import InteractiveForm from '../../components/InteractiveForm';
 import LegalResourceLink from '../../components/LegalResourceLink';
-import { getMassLRFDeepLink } from '../../../utils/masslrf';
+import MassLRFDisclaimerInfo from '../../components/MassLRFDisclaimerInfo';
+import MichiganLegalHelpDisclaimerInfo from '../../components/MichiganLegalHelpDisclaimerInfo';
+import MaineLegalHelpDisclaimerInfo from '../../components/MaineLegalHelpDisclaimerInfo';
+import MinnesotaLegalHelpDisclaimerInfo from '../../components/MinnesotaLegalHelpDisclaimerInfo';
+import { getMassLRFDeepLink, getMassLRFRootUrl } from '../../../utils/masslrf';
+import {
+  getMichiganLegalHelpDeepLink,
+  getMichiganLegalHelpRootUrl,
+} from '../../../utils/michiganlegalhelp';
+import { getMaineLegalHelpLink } from '../../../utils/mainelegalhelp';
+import { getMinnesotaLegalHelpLink } from '../../../utils/minnesotalegalhelp';
 import { legalTopics } from '../../../config/topics.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 import styles from '../../css/TopicPage.module.css';
@@ -39,18 +50,47 @@ const Page = async ({ params }: PageProps) => {
   }
 
   const topicDetails = legalTopics.find((t) => t.name.toLowerCase() === topic);
+  const topicDisplayName = topicDetails?.long_name || topic;
 
   const interviews = interviewsByTopic[topic] || [];
 
   // Compute deep link server-side using NSMI code from topic
+  // Falls back to root URL if no topic-specific deep link is available
   let deepLink: string | null = null;
-  if (path === 'ma' && topicDetails && topicDetails.codes.length > 0) {
-    try {
-      // Use the first LIST code from the topic configuration for top-level category link
-      deepLink = await getMassLRFDeepLink(topicDetails.codes[0], true);
-    } catch (err) {
-      console.error('Error fetching MassLRF deep link:', err);
+  let disclaimerInfo: React.ReactNode = undefined;
+
+  if (path === 'ma') {
+    if (topicDetails && topicDetails.codes.length > 0) {
+      try {
+        // Use the first LIST code from the topic configuration for top-level category link
+        deepLink = await getMassLRFDeepLink(topicDetails.codes[0], true);
+      } catch (err) {
+        console.error('Error fetching MassLRF deep link:', err);
+      }
     }
+    // Fall back to root URL if no deep link was found (e.g., for "other" topic)
+    if (!deepLink) {
+      deepLink = getMassLRFRootUrl(path);
+    }
+    disclaimerInfo = <MassLRFDisclaimerInfo />;
+  } else if (path === 'mi') {
+    // Try to get a topic-specific deep link for Michigan
+    if (topic) {
+      deepLink = getMichiganLegalHelpDeepLink(topic);
+    }
+    // Fall back to root URL if no deep link was found
+    if (!deepLink) {
+      deepLink = getMichiganLegalHelpRootUrl();
+    }
+    disclaimerInfo = <MichiganLegalHelpDisclaimerInfo />;
+  } else if (path === 'me') {
+    // Maine Legal Help - link to Pine Tree Legal Assistance contact page
+    deepLink = getMaineLegalHelpLink(topic);
+    disclaimerInfo = <MaineLegalHelpDisclaimerInfo />;
+  } else if (path === 'mn') {
+    // Minnesota Legal Help - link to LawHelpMN
+    deepLink = getMinnesotaLegalHelpLink(topic);
+    disclaimerInfo = <MinnesotaLegalHelpDisclaimerInfo />;
   }
 
   // Build breadcrumb items
@@ -84,9 +124,10 @@ const Page = async ({ params }: PageProps) => {
       )}
       {deepLink && (
         <LegalResourceLink
-          topic={topic}
+          topic={topicDisplayName}
           jurisdiction={jurisdictionName}
           deepLink={deepLink}
+          disclaimerInfo={disclaimerInfo}
         />
       )}
     </div>
