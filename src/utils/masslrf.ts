@@ -55,9 +55,10 @@ async function fetchTriageTaxonomy(): Promise<TriageData> {
 /**
  * Finds a node in the triage tree by matching against an NSMI code
  * Returns the redirect mapping and root redirect if available
+ * If the specific code isn't found, falls back to the root category code
  *
  * @param nsmiCode - The NSMI/LIST code to search for (e.g., 'HO-02-00-00-00')
- * @returns An object with rootRedirect and redirect, or null if not found
+ * @returns An object with rootRedirect and childRedirect, or null if root not found
  */
 export async function findTriageNodeByNSMI(
   nsmiCode: string
@@ -65,7 +66,7 @@ export async function findTriageNodeByNSMI(
   const data = await fetchTriageTaxonomy();
   const normalizedCode = nsmiCode.trim().toUpperCase();
 
-  // Search through the triage structure
+  // First, search through the triage structure for exact match
   for (const root of data.triage) {
     // Check if root NSMI matches the code
     if (root.nsmi && root.nsmi.toUpperCase() === normalizedCode) {
@@ -85,6 +86,22 @@ export async function findTriageNodeByNSMI(
             childRedirect: child.redirect || null, // Only include if redirect exists
           };
         }
+      }
+    }
+  }
+
+  // If exact code not found, try to find the root category
+  // Extract the root part of the NSMI code (e.g., "HO" from "HO-05-00-00-00")
+  const rootPrefix = normalizedCode.split('-')[0];
+  if (rootPrefix) {
+    // Find a node where the code starts with this prefix
+    for (const root of data.triage) {
+      if (root.nsmi && root.nsmi.toUpperCase().startsWith(rootPrefix)) {
+        // Found the root category for this code
+        return {
+          rootRedirect: root.redirect || root.id,
+          childRedirect: null,
+        };
       }
     }
   }
