@@ -1,5 +1,6 @@
 // Example: courtformsonline.org/ma/forms
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { Form } from '../../interfaces/Form';
 import InteractiveForm from '../../components/InteractiveForm';
 import LegalResourceLink from '../../components/LegalResourceLink';
@@ -97,6 +98,14 @@ export default async function Page({ params }: PageProps) {
       <h1 className="form-heading text-center mb-3">
         All {jurisdictionName} forms
       </h1>
+      <p className="text-center text-muted mb-3">
+        New to guided interviews?{' '}
+        <Link href="/guides/how-interviews-work">Learn how they work</Link>
+        {' · '}
+        <Link href="/guides/what-information-you-need">
+          What information you&apos;ll need
+        </Link>
+      </p>
       {availableJurisdictions.length > 1 && (
         <p className="text-center mb-3">
           Looking for a different state?{' '}

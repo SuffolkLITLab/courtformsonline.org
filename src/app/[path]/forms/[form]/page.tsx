@@ -186,6 +186,11 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
+      <p className="text-muted small">
+        <Link href="/guides/how-interviews-work">
+          Learn how interactive interviews work
+        </Link>
+      </p>
       {/* Documents this tool helps make - only show if form_titles is defined and non-empty */}
       {Array.isArray(formDetails.metadata.form_titles) &&
         formDetails.metadata.form_titles.length > 0 && (
@@ -263,6 +268,24 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
       </ReactMarkdown>
+      <p className="text-muted small">
+        <Link href="/guides/what-information-you-need">
+          What information court forms typically need
+        </Link>
+        {' · '}
+        <Link href={`/guides/find-your-court/${path}`}>
+          Find your {jurisdictionName} courthouse
+        </Link>
+      </p>
+      <h2 className="mt-4">What happens after you finish</h2>
+      <p>
+        After completing this interview, you&apos;ll receive your completed
+        forms ready for filing.{' '}
+        <Link href={`/guides/how-to-file/${path}`}>
+          Learn how to file in {jurisdictionName}
+        </Link>
+        .
+      </p>
       <Button className="btn btn-primary btn-lg my-3" href={startFormUrl}>
         Start tool
       </Button>

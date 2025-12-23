@@ -3,6 +3,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Button from 'react-bootstrap/Button';
 import remarkGfm from 'remark-gfm';
+import Link from 'next/link';
 import { fetchInterviews } from '../../../data/fetchInterviewData';
 import {
   formSources,
@@ -64,6 +65,11 @@ const Page = async ({ params }: PageProps) => {
       <h1 className="form-heading text-center mb-3">
         {jurisdictionName}: {topicDetails?.long_name || 'Topic'}
       </h1>
+      <p className="text-center text-muted mb-4">
+        Our{' '}
+        <Link href="/guides/how-interviews-work">interactive interviews</Link> help
+        you complete court forms step-by-step.
+      </p>
       {interviews.length > 0 ? (
         interviews.map((interview, index) => (
           <InteractiveForm

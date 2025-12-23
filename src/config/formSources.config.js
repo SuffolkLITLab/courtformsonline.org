@@ -10,20 +10,19 @@ export const pathToServerConfig = {
     path: 'mn',
     servers: ['Suffolk LIT Lab'],
     name: 'Minnesota',
-    moreFormsUrl: 'https://mncourts.gov/getforms',
+    moreFormsUrl: 'https://www.mncourts.gov/GetForms.aspx',
   },
   me: {
     path: 'me',
     servers: ['Pine Tree Legal Assistance'],
     name: 'Maine',
-    moreFormsUrl: 'https://www.courts.maine.gov/maine_courts/forms/index.html',
+    moreFormsUrl: 'https://www.courts.maine.gov/forms/index.html',
   },
   mi: {
     path: 'mi',
     servers: ['Michigan Legal Help'],
     name: 'Michigan',
-    moreFormsUrl:
-      'https://www.michigan.gov/courts/0,4601,7-412-2297_2310---,00.html',
+    moreFormsUrl: 'https://www.courts.michigan.gov/SCAO-forms/',
   },
 };
 
