@@ -82,10 +82,14 @@ export const deepLinks = {
     traffic: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=279'],
     education: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=272'],
     employment: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=275'],
-    immigration: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=281'],
+    immigration: [
+      'https://michiganlegalhelp.org/guide-to-legal-help?issue=281',
+    ],
     wills: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=404'],
     courts: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=2594'],
-    government: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=3048'],
+    government: [
+      'https://michiganlegalhelp.org/guide-to-legal-help?issue=3048',
+    ],
   },
   me: {
     // Maine Legal Help - Pine Tree Legal Assistance contact page
