@@ -50,15 +50,6 @@ export const DEFAULT_JURISDICTION = 'Massachusetts';
  */
 export const DEFAULT_PATH = 'ma';
 
-// Jurisdiction-specific triage function mapping
-// Maps jurisdiction paths to their triage function modules
-export const triageFunctions = {
-  ma: 'masslrf', // Uses the MassLRF module
-  mi: 'michiganlegalhelp', // Uses the Michigan Legal Help module
-  me: 'mainelegalhelp', // Uses the Maine Legal Help module
-  mn: 'minnesotalegalhelp', // Uses the Minnesota Legal Help module
-};
-
 // Jurisdiction-specific deep links mapping
 // Maps topic names to their corresponding resource finder URLs
 export const deepLinks = {

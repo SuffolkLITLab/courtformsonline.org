@@ -15,6 +15,28 @@ interface TriageData {
   triage: TriageNode[];
 }
 
+/**
+ * Mapping from CourtFormsOnline NSMI prefixes to MassLRF NSMI prefixes
+ * MassLRF uses different NSMI codes than CourtFormsOnline for some categories
+ * For example, CourtFormsOnline uses "BE" for benefits, but MassLRF uses "GO" (Government Services)
+ */
+const NSMI_PREFIX_MAP: Record<string, string> = {
+  BE: 'GO', // Benefits -> Government Services in MassLRF
+};
+
+/**
+ * Translates a CourtFormsOnline NSMI code to MassLRF's equivalent code
+ * If no mapping exists, returns the original code
+ */
+function translateNSMICode(nsmiCode: string): string {
+  const prefix = nsmiCode.split('-')[0].toUpperCase();
+  const mappedPrefix = NSMI_PREFIX_MAP[prefix];
+  if (mappedPrefix) {
+    return nsmiCode.replace(new RegExp(`^${prefix}`, 'i'), mappedPrefix);
+  }
+  return nsmiCode;
+}
+
 // Cache for the triage data to avoid repeated API calls
 let triageCache: TriageData | null = null;
 let triageCachePromise: Promise<TriageData> | null = null;
@@ -64,7 +86,9 @@ export async function findTriageNodeByNSMI(
   nsmiCode: string
 ): Promise<{ rootRedirect: string; childRedirect: string | null } | null> {
   const data = await fetchTriageTaxonomy();
-  const normalizedCode = nsmiCode.trim().toUpperCase();
+  // Translate the NSMI code to MassLRF's equivalent (e.g., BE -> GO)
+  const translatedCode = translateNSMICode(nsmiCode);
+  const normalizedCode = translatedCode.trim().toUpperCase();
 
   // First, search through the triage structure for exact match
   for (const root of data.triage) {

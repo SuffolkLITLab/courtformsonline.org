@@ -71,37 +71,51 @@ const LEGAL_HELP_CONFIG: Record<string, LegalHelpJurisdictionConfig> = {
   ma: {
     getDeepLink: async (topicOrCode, options) => {
       // Massachusetts supports NSMI code-based deep linking via MassLRF API
-      let nsmiCodeToUse: string | null = null;
+      // Try all provided LIST_topics until we find one that works
 
-      // First, try to use provided LIST_topics
+      // Build a list of NSMI codes to try, in order of priority
+      const codesToTry: string[] = [];
+
+      // First, add all provided LIST_topics
       if (options?.listTopics && options.listTopics.length > 0) {
-        nsmiCodeToUse = options.listTopics[0];
-      } else if (topicOrCode) {
+        codesToTry.push(...options.listTopics);
+      }
+
+      // If no listTopics, fall back to topicOrCode
+      if (codesToTry.length === 0 && topicOrCode) {
         // Check if it looks like an NSMI code
         if (topicOrCode.includes('-') && /^[A-Z]{2}-/i.test(topicOrCode)) {
-          nsmiCodeToUse = topicOrCode;
+          codesToTry.push(topicOrCode);
         } else {
           // Fall back to looking up topic's primary code
           const matchingTopic = legalTopics.find(
             (t) => t.name.toLowerCase() === topicOrCode.toLowerCase()
           );
           if (matchingTopic && matchingTopic.codes.length > 0) {
-            nsmiCodeToUse = matchingTopic.codes[0];
+            codesToTry.push(...matchingTopic.codes);
           }
         }
       }
 
-      if (nsmiCodeToUse) {
+      // Try each code until one returns a valid deep link
+      for (const nsmiCode of codesToTry) {
         try {
-          // For topic pages, get the root category only
-          return await getMassLRFDeepLink(
-            nsmiCodeToUse,
+          const deepLink = await getMassLRFDeepLink(
+            nsmiCode,
             options?.isTopicPage ?? false
           );
+          if (deepLink) {
+            return deepLink;
+          }
         } catch (err) {
-          console.error('Error fetching MassLRF deep link:', err);
+          // Continue to next code
+          console.error(
+            `Error fetching MassLRF deep link for ${nsmiCode}:`,
+            err
+          );
         }
       }
+
       return null;
     },
     getRootUrl: () => getMassLRFRootUrl('ma'),
