@@ -70,6 +70,55 @@ export const deepLinks = {
     employment: ['https://masslrf.org/en/triage/start/employment'],
     wills: ['https://masslrf.org/en/triage/start/wills'],
   },
+  mi: {
+    // Michigan Legal Help "Guide to Legal Help" deep links
+    // Maps topic names to their corresponding issue IDs
+    // Full URL format: https://michiganlegalhelp.org/guide-to-legal-help?issue=<ID>
+    housing: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=11'],
+    family: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=33'],
+    consumer: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=29'],
+    benefits: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=274'],
+    criminal: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=279'],
+    traffic: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=279'],
+    education: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=272'],
+    employment: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=275'],
+    immigration: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=281'],
+    wills: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=404'],
+    courts: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=2594'],
+    government: ['https://michiganlegalhelp.org/guide-to-legal-help?issue=3048'],
+  },
+  me: {
+    // Maine Legal Help - Pine Tree Legal Assistance contact page
+    // No detailed triage available, but structured for future expansion
+    housing: ['https://www.ptla.org/contact-us'],
+    family: ['https://www.ptla.org/contact-us'],
+    consumer: ['https://www.ptla.org/contact-us'],
+    benefits: ['https://www.ptla.org/contact-us'],
+    criminal: ['https://www.ptla.org/contact-us'],
+    traffic: ['https://www.ptla.org/contact-us'],
+    education: ['https://www.ptla.org/contact-us'],
+    employment: ['https://www.ptla.org/contact-us'],
+    immigration: ['https://www.ptla.org/contact-us'],
+    wills: ['https://www.ptla.org/contact-us'],
+    courts: ['https://www.ptla.org/contact-us'],
+    government: ['https://www.ptla.org/contact-us'],
+  },
+  mn: {
+    // Minnesota Legal Help - LawHelpMN
+    // No detailed triage available, but structured for future expansion
+    housing: ['https://www.lawhelpmn.org/'],
+    family: ['https://www.lawhelpmn.org/'],
+    consumer: ['https://www.lawhelpmn.org/'],
+    benefits: ['https://www.lawhelpmn.org/'],
+    criminal: ['https://www.lawhelpmn.org/'],
+    traffic: ['https://www.lawhelpmn.org/'],
+    education: ['https://www.lawhelpmn.org/'],
+    employment: ['https://www.lawhelpmn.org/'],
+    immigration: ['https://www.lawhelpmn.org/'],
+    wills: ['https://www.lawhelpmn.org/'],
+    courts: ['https://www.lawhelpmn.org/'],
+    government: ['https://www.lawhelpmn.org/'],
+  },
 };
 
 export const formSources = {

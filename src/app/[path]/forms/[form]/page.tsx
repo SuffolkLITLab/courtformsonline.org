@@ -19,9 +19,11 @@ import { fetchInterviews } from '../../../../data/fetchInterviewData';
 import { getFormDetails } from '../../../../data/getFormDetails';
 import type { Metadata } from 'next';
 import { toUrlFriendlyString } from '../../../utils/helpers';
+import { getLegalHelpInfo } from '../../../../utils/legalHelpService';
 import styles from '../../../css/FormPage.module.css';
 import FormStatus from '../../../components/FormStatus';
 import SimilarForms from '../../../components/SimilarForms';
+import LegalResourceLink from '../../../components/LegalResourceLink';
 import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
 import { pathToServerConfig } from '../../../../config/formSources.config';
 import { legalTopics } from '../../../../config/topics.config';
@@ -48,9 +50,28 @@ const Page = async ({ params }: PageProps) => {
   const { formDetails, formTopic, formTopics, relatedForms } =
     _formDetailsResponse;
 
+  console.log('DEBUG Form Page:', {
+    form,
+    path,
+    formTopic,
+    formTopicsCount: formTopics?.length,
+    formTopicsNames: formTopics?.map((t) => t.name),
+  });
+
   if (!formDetails) {
     return <div>Form not found</div>;
   }
+
+  // Get legal help info using centralized service
+  const topicToUse =
+    formTopic ||
+    (formTopics && formTopics.length > 0 ? formTopics[0]?.name : null);
+
+  const { deepLink, DisclaimerComponent } = await getLegalHelpInfo({
+    jurisdiction: path,
+    topic: topicToUse,
+    listTopics: formDetails.metadata?.LIST_topics,
+  });
 
   // Build schema.org structured data for this form page
   // See: https://schema.legalhelpdashboard.org/ for guidance and examples
@@ -251,6 +272,14 @@ const Page = async ({ params }: PageProps) => {
         topics={topicsForSimilar}
         jurisdictionPath={path}
       />
+      {deepLink && DisclaimerComponent && (
+        <LegalResourceLink
+          topic={topicDisplayName}
+          jurisdiction={jurisdictionName}
+          deepLink={deepLink}
+          disclaimerInfo={<DisclaimerComponent />}
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

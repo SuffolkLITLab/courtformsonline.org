@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { toUrlFriendlyString } from '../utils/helpers';
 import { deepLinks } from '../../config/formSources.config';
+import LegalResourceLink from './LegalResourceLink';
 import styles from '../css/TopicCard.module.css';
 import {
   MAX_VISIBLE_PER_CARD,

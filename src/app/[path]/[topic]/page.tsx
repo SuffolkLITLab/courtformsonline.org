@@ -1,4 +1,5 @@
 // Example: courtformsonline.org/ma/housing
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Button from 'react-bootstrap/Button';
 import remarkGfm from 'remark-gfm';
@@ -8,6 +9,8 @@ import {
   pathToServerConfig,
 } from '../../../config/formSources.config';
 import InteractiveForm from '../../components/InteractiveForm';
+import LegalResourceLink from '../../components/LegalResourceLink';
+import { getLegalHelpInfo } from '../../../utils/legalHelpService';
 import { legalTopics } from '../../../config/topics.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 import styles from '../../css/TopicPage.module.css';
@@ -37,8 +40,16 @@ const Page = async ({ params }: PageProps) => {
   }
 
   const topicDetails = legalTopics.find((t) => t.name.toLowerCase() === topic);
+  const topicDisplayName = topicDetails?.long_name || topic;
 
   const interviews = interviewsByTopic[topic] || [];
+
+  // Get legal help info using centralized service
+  const { deepLink, DisclaimerComponent } = await getLegalHelpInfo({
+    jurisdiction: path,
+    topic,
+    isTopicPage: true,
+  });
 
   // Build breadcrumb items
   const breadcrumbItems: BreadcrumbItem[] = [
@@ -68,6 +79,14 @@ const Page = async ({ params }: PageProps) => {
         ))
       ) : (
         <p>No interviews found for this topic.</p>
+      )}
+      {deepLink && DisclaimerComponent && (
+        <LegalResourceLink
+          topic={topicDisplayName}
+          jurisdiction={jurisdictionName}
+          deepLink={deepLink}
+          disclaimerInfo={<DisclaimerComponent />}
+        />
       )}
     </div>
   );
