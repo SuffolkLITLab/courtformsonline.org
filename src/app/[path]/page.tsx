@@ -2,6 +2,7 @@
 import AffiliatesSection from '../components/AffiliatesSection';
 import HeroSection from '../components/HeroSection';
 import HowItWorksSection from '../components/HowItWorksSection';
+import HowToUseFormsSection from '../components/HowToUseFormsSection';
 import TopicsSection from '../components/TopicsSection';
 import { fetchInterviews } from '../../data/fetchInterviewData';
 
@@ -28,6 +29,7 @@ const Page = async ({ params }: PageProps) => {
         interviews={interviewsByTopic}
         isError={isError}
       />
+      <HowToUseFormsSection />
       <AffiliatesSection />
     </div>
   );
