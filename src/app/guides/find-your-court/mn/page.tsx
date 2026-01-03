@@ -70,7 +70,9 @@ export default function FindYourCourtMN() {
       <p>To find your local court:</p>
       <ol>
         <li>Identify the county where you live or where the matter occurred</li>
-        <li>Use the Minnesota Judicial Branch directory to find your courthouse</li>
+        <li>
+          Use the Minnesota Judicial Branch directory to find your courthouse
+        </li>
         <li>Check for specific divisions or locations for your case type</li>
       </ol>
 
@@ -122,7 +124,10 @@ export default function FindYourCourtMN() {
         <Link href="/mn/forms" className="btn btn-primary me-2">
           Browse all Minnesota forms
         </Link>
-        <Link href="/guides/find-your-court" className="btn btn-outline-secondary">
+        <Link
+          href="/guides/find-your-court"
+          className="btn btn-outline-secondary"
+        >
           Find courts in other jurisdictions
         </Link>
       </div>

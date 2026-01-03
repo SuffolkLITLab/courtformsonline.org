@@ -54,7 +54,7 @@ export default function IsItSafe() {
       <p>
         We use multiple layers of security, including software controls and
         firewalls, continuous monitoring to detect unauthorized access, and
-        secure storage of saved answers on protected servers.
+        secure (encrypted) storage of saved answers on protected servers.
       </p>
 
       <h2>Your information and accounts</h2>
@@ -89,9 +89,9 @@ export default function IsItSafe() {
       <h3>Escape button</h3>
       <p>
         Some guided interviews include an <strong>Escape</strong> button. This
-        button allows you to exit the interview immediately without saving your
-        answers. Your information will not be stored if you use the Escape
-        button.
+        button immediately takes you to a neutral website (like Google) if you
+        need to quickly leave the interview for safety or privacy reasons. You
+        should still return later to delete your saved answers if needed.
       </p>
 
       <h2>Data privacy</h2>

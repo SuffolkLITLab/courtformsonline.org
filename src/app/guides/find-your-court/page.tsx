@@ -37,24 +37,33 @@ export default function FindYourCourt() {
       <h1>Finding your courthouse</h1>
 
       <p className="lead">
-        Filing in the right court is essential. Filing in the wrong court can
-        cause delays or require you to start over.
+        Filing in the wrong court can cause delays or require you to start over.
+        Our guided interviews often help you identify the correct court based on
+        your situation, but you can also use the information below to find your
+        court.
       </p>
 
       <h2>Why the right court matters</h2>
       <p>
         Different courts handle different types of cases, and each court only
         has authority (called &quot;jurisdiction&quot;) over certain geographic
-        areas and subject matters.
+        areas and subject matters. There may also be other requirements, like a
+        minimum or maximum dollar amount for certain courts.
       </p>
       <ul>
         <li>
-          <strong>Geographic jurisdiction:</strong> Usually based on where you
-          live, where the other party lives, or where an event occurred.
+          <strong>Geographic jurisdiction:</strong> Depends on where you live,
+          where the other party lives, or where something happened.
         </li>
         <li>
           <strong>Subject matter jurisdiction:</strong> Different courts handle
-          family matters, housing disputes, criminal cases, small claims, etc.
+          family matters, cases about someone who died, housing disagreements,
+          criminal cases, small claims, criminal cases involving children, and
+          cases about ownership of land.
+        </li>
+        <li>
+          <strong>Monetary limits:</strong> Some courts only handle cases
+          involving amounts below or above a certain dollar value.
         </li>
       </ul>
 

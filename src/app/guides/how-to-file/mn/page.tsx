@@ -106,9 +106,7 @@ export default function HowToFileMN() {
 
       <div className="mt-5 p-4 bg-light rounded">
         <h3>Browse Minnesota forms</h3>
-        <p>
-          Find guided interviews for Minnesota court forms.
-        </p>
+        <p>Find guided interviews for Minnesota court forms.</p>
         <Link href="/mn/forms" className="btn btn-primary me-2">
           Browse all Minnesota forms
         </Link>

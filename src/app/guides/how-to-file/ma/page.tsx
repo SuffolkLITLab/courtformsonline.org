@@ -41,9 +41,7 @@ export default function HowToFileMA() {
         Court&apos;s e-filing system. When completing forms through Court Forms
         Online, some forms offer direct e-filing integration.
       </p>
-      <p>
-        Benefits of e-filing in Massachusetts:
-      </p>
+      <p>Benefits of e-filing in Massachusetts:</p>
       <ul>
         <li>File 24/7 without visiting the courthouse</li>
         <li>Receive instant confirmation of filing</li>
@@ -65,7 +63,10 @@ export default function HowToFileMA() {
       <h3>What to bring</h3>
       <ul>
         <li>Your completed, signed forms</li>
-        <li>At least two copies of all documents (one for the court, one for yourself)</li>
+        <li>
+          At least two copies of all documents (one for the court, one for
+          yourself)
+        </li>
         <li>Filing fee payment (check accepted methods for your court)</li>
         <li>Photo ID</li>
       </ul>
@@ -73,8 +74,8 @@ export default function HowToFileMA() {
       <h2>Filing fees</h2>
       <p>
         Filing fees vary depending on the type of case and court. If you have a
-        low income, you may qualify for a fee waiver. The Affidavit of
-        Indigency form can be completed through Court Forms Online.
+        low income, you may qualify for a fee waiver. The Affidavit of Indigency
+        form can be completed through Court Forms Online.
       </p>
 
       <h2>Massachusetts court resources</h2>
@@ -110,9 +111,7 @@ export default function HowToFileMA() {
 
       <div className="mt-5 p-4 bg-light rounded">
         <h3>Browse Massachusetts forms</h3>
-        <p>
-          Find guided interviews for Massachusetts court forms.
-        </p>
+        <p>Find guided interviews for Massachusetts court forms.</p>
         <Link href="/ma/forms" className="btn btn-primary me-2">
           Browse all Massachusetts forms
         </Link>

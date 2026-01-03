@@ -133,14 +133,19 @@ export default function PreventRejectedForms() {
       <ul>
         <li>
           <strong>E-filing:</strong> Some forms can be submitted directly to the
-          court electronically.
+          court electronically through a special button in the interview. In
+          other cases, you can use your own e-filing account with the court.
         </li>
         <li>
-          <strong>Email delivery:</strong> Certain forms can be sent via email.
+          <strong>Email delivery:</strong> Certain forms can be sent via email
+          through a special button in the interview. This is option is only
+          available in a few interviews where we have a special arrangement with
+          the court. Most courts do not accept forms by email.
         </li>
         <li>
           <strong>Print and file:</strong> Download your completed forms to
-          print and deliver.{' '}
+          print and deliver, either by mailing it to the right court or
+          delivering it in person.{' '}
           <Link href="/guides/how-to-file">Learn how to file your forms</Link>.
         </li>
       </ul>

@@ -67,8 +67,8 @@ const Page = async ({ params }: PageProps) => {
       </h1>
       <p className="text-center text-muted mb-4">
         Our{' '}
-        <Link href="/guides/how-interviews-work">interactive interviews</Link> help
-        you complete court forms step-by-step.
+        <Link href="/guides/how-interviews-work">interactive interviews</Link>{' '}
+        help you complete court forms step-by-step.
       </p>
       {interviews.length > 0 ? (
         interviews.map((interview, index) => (

@@ -54,9 +54,7 @@ export default function FindYourCourtME() {
       </ul>
 
       <h2>Finding your Maine court</h2>
-      <p>
-        Maine courts are organized by county. To find your local court:
-      </p>
+      <p>Maine courts are organized by county. To find your local court:</p>
       <ol>
         <li>Determine the type of case you have</li>
         <li>Identify the county where you live or where the matter occurred</li>
@@ -102,7 +100,10 @@ export default function FindYourCourtME() {
         <Link href="/me/forms" className="btn btn-primary me-2">
           Browse all Maine forms
         </Link>
-        <Link href="/guides/find-your-court" className="btn btn-outline-secondary">
+        <Link
+          href="/guides/find-your-court"
+          className="btn btn-outline-secondary"
+        >
           Find courts in other jurisdictions
         </Link>
       </div>

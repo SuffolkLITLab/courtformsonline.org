@@ -104,9 +104,7 @@ export default function HowToFileMI() {
 
       <div className="mt-5 p-4 bg-light rounded">
         <h3>Browse Michigan forms</h3>
-        <p>
-          Find guided interviews for Michigan court forms.
-        </p>
+        <p>Find guided interviews for Michigan court forms.</p>
         <Link href="/mi/forms" className="btn btn-primary me-2">
           Browse all Michigan forms
         </Link>

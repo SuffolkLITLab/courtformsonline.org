@@ -98,9 +98,7 @@ export default function HowToFileME() {
 
       <div className="mt-5 p-4 bg-light rounded">
         <h3>Browse Maine forms</h3>
-        <p>
-          Find guided interviews for Maine court forms.
-        </p>
+        <p>Find guided interviews for Maine court forms.</p>
         <Link href="/me/forms" className="btn btn-primary me-2">
           Browse all Maine forms
         </Link>

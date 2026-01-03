@@ -59,12 +59,13 @@ export default function FindYourCourtMI() {
       </ul>
 
       <h2>Finding your Michigan court</h2>
-      <p>
-        Michigan courts are organized by county. To find your local court:
-      </p>
+      <p>Michigan courts are organized by county. To find your local court:</p>
       <ol>
         <li>Determine the type of case you have</li>
-        <li>Identify the correct county based on where you live or where the dispute occurred</li>
+        <li>
+          Identify the correct county based on where you live or where the
+          dispute occurred
+        </li>
         <li>Use the Michigan Courts directory to find contact information</li>
       </ol>
 
@@ -107,7 +108,10 @@ export default function FindYourCourtMI() {
         <Link href="/mi/forms" className="btn btn-primary me-2">
           Browse all Michigan forms
         </Link>
-        <Link href="/guides/find-your-court" className="btn btn-outline-secondary">
+        <Link
+          href="/guides/find-your-court"
+          className="btn btn-outline-secondary"
+        >
           Find courts in other jurisdictions
         </Link>
       </div>
