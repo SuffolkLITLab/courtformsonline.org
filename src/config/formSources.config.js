@@ -10,20 +10,25 @@ export const pathToServerConfig = {
     path: 'mn',
     servers: ['Suffolk LIT Lab'],
     name: 'Minnesota',
-    moreFormsUrl: 'https://mncourts.gov/getforms',
+    moreFormsUrl: 'https://www.mncourts.gov/GetForms.aspx',
   },
   me: {
     path: 'me',
     servers: ['Pine Tree Legal Assistance'],
     name: 'Maine',
-    moreFormsUrl: 'https://www.courts.maine.gov/maine_courts/forms/index.html',
+    moreFormsUrl: 'https://www.courts.maine.gov/forms/index.html',
   },
   mi: {
     path: 'mi',
     servers: ['Michigan Legal Help'],
     name: 'Michigan',
-    moreFormsUrl:
-      'https://www.michigan.gov/courts/0,4601,7-412-2297_2310---,00.html',
+    moreFormsUrl: 'https://www.courts.michigan.gov/SCAO-forms/',
+  },
+  vt: {
+    path: 'vt',
+    servers: ['Vermont Court Forms'],
+    name: 'Vermont',
+    moreFormsUrl: 'https://www.vermontjudiciary.org/court-forms',
   },
 };
 
@@ -37,6 +42,7 @@ export const jurisdictionAliases = {
   Minnesota: ['MN', 'NAM-US-US+MN', 'Minnesota', 'mn'],
   Maine: ['ME', 'NAM-US-US+ME', 'Maine', 'me'],
   Michigan: ['MI', 'NAM-US-US+MI', 'Michigan', 'mi'],
+  Vermont: ['VT', 'NAM-US-US+VT', 'Vermont', 'vt'],
   // Add more jurisdictions as needed
 };
 
@@ -123,6 +129,21 @@ export const deepLinks = {
     courts: ['https://www.lawhelpmn.org/'],
     government: ['https://www.lawhelpmn.org/'],
   },
+  vt: {
+    // Each link points directly to the final results page of the triage tool for a specific path.
+    housing:   ['https://vtlawhelp.org/triage_actions_process/8637'], // Foreclosure/mortgage payments -> behind in payments
+    family:    ['https://vtlawhelp.org/triage_actions_process/8523'], // Divorce: file for divorce -> how & where
+    consumer:  ['https://vtlawhelp.org/triage_actions_process/8441'], // Debt collection: sued by creditor
+    benefits:  ['https://vtlawhelp.org/triage_actions_process/8474'], // Unemployment benefits: how to apply
+    criminal:  ['https://vtlawhelp.org/triage/vt_triage?clear=true'], // no dedicated path; use triage start
+    traffic:   ['https://vtlawhelp.org/triage/vt_triage?clear=true'],
+    education: ['https://vtlawhelp.org/triage/vt_triage?clear=true'],
+    employment:['https://vtlawhelp.org/triage/vt_triage?clear=true'],
+    immigration:['https://vtlawhelp.org/triage/vt_triage?clear=true'],
+    wills:     ['https://vtlawhelp.org/triage/vt_triage?clear=true'], // no wills-specific triage
+    courts:    ['https://vtlawhelp.org/triage/vt_triage?clear=true'],
+    government:['https://vtlawhelp.org/triage/vt_triage?clear=true']
+  },  
 };
 
 export const formSources = {
@@ -151,6 +172,12 @@ export const formSources = {
       name: 'Michigan Legal Help',
       defaultJurisdiction: 'Michigan', // Default for forms without jurisdiction metadata
     },
+    {
+      key: 'VTCourtForms',
+      url: 'https://apps.vtcourtforms.org',
+      name: 'Vermont Court Forms',
+      defaultJurisdiction: 'Vermont', // Default for forms without jurisdiction metadata
+    },
   ],
 };
 
@@ -174,5 +201,8 @@ export const excludedForms = {
   ],
   michiganLegalHelp: [
     // Add any forms to exclude from Michigan Legal Help server
+  ],
+  VTCourtForms: [
+    // Add any forms to exclude from Vermont Court Forms server
   ],
 };
