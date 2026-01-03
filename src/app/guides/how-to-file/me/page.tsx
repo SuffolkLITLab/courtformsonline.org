@@ -78,7 +78,7 @@ export default function HowToFileME() {
         </li>
         <li>
           <a
-            href="https://www.courts.maine.gov/maine_courts/forms/index.html"
+            href="https://www.courts.maine.gov/forms/index.html"
             target="_blank"
             rel="noopener noreferrer"
           >

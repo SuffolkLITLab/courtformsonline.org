@@ -73,7 +73,7 @@ export default function FindYourCourtMI() {
       <ul>
         <li>
           <a
-            href="https://www.michigan.gov/courts"
+            href="https://www.courts.michigan.gov/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -82,11 +82,11 @@ export default function FindYourCourtMI() {
         </li>
         <li>
           <a
-            href="https://www.courts.michigan.gov/courts/trial-courts/district-court/directory/"
+            href="https://www.courts.michigan.gov/trial-court-directory/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Michigan District Court Directory
+            Michigan Trial Court Directory
           </a>
         </li>
         <li>

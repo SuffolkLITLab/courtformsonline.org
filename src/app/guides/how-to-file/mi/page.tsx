@@ -75,7 +75,7 @@ export default function HowToFileMI() {
       <ul>
         <li>
           <a
-            href="https://www.michigan.gov/courts"
+            href="https://www.courts.michigan.gov/"
             target="_blank"
             rel="noopener noreferrer"
           >

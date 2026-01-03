@@ -74,7 +74,7 @@ export default function FindYourCourtME() {
         </li>
         <li>
           <a
-            href="https://www.courts.maine.gov/maine_courts/Locations/index.html"
+            href="https://www.courts.maine.gov/courts/find-by-town.html"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import styles from '../css/AboutPage.module.css';
 
 export const metadata: Metadata = {
-  title: 'How to Use Court Forms - Court Forms Online',
+  title: 'How to use court forms - Court Forms Online',
   description:
     'Learn how to use guided court form interviews, what information you need, common mistakes to avoid, and how to file your completed forms.',
 };
