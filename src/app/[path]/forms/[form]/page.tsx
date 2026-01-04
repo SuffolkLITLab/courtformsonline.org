@@ -264,6 +264,11 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.can_I_use_this_form}
       </ReactMarkdown>
+      <p className="text-muted small">
+        <Link href="/guides/choosing-right-form">
+          How to select the right court form
+        </Link>
+      </p>
       <h2 className="mt-4">Before you start</h2>
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
@@ -294,6 +299,9 @@ const Page = async ({ params }: PageProps) => {
         basePath={`/${path}/forms`}
         topics={topicsForSimilar}
         jurisdictionPath={path}
+        legalHelpLink={deepLink ?? undefined}
+        legalHelpDisclaimerComponent={DisclaimerComponent ?? undefined}
+        jurisdictionName={jurisdictionName}
       />
       {deepLink && DisclaimerComponent && (
         <LegalResourceLink

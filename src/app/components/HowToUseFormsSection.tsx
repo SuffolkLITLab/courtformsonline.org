@@ -45,6 +45,26 @@ export default function HowToUseFormsSection() {
               </div>
             </div>
           </div>
+
+          <div className="col-md-6 mb-4">
+            <div className="card h-100">
+              <div className="card-body">
+                <h3 className="h5 card-title">
+                  How to select the right court form
+                </h3>
+                <p className="card-text text-muted">
+                  Follow these steps to confirm you're using the correct court
+                  form for your situation and avoid delays or rejected filings.
+                </p>
+                <Link
+                  href="/guides/choosing-right-form"
+                  className="btn btn-outline-primary"
+                >
+                  Learn more
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="text-center mt-3">

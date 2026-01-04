@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import React from 'react';
 import styles from '../css/SimilarForms.module.css';
 
 interface RelatedForm {
@@ -17,6 +18,9 @@ interface SimilarFormsProps {
   basePath: string; // e.g., "/ma/forms"
   topics?: TopicLink[]; // top-level topics matching the form
   jurisdictionPath?: string; // e.g., "ma", used to build topic landing links
+  legalHelpLink?: string; // URL to jurisdiction's legal help resource
+  legalHelpDisclaimerComponent?: React.ComponentType; // Disclaimer component for legal help
+  jurisdictionName?: string; // Full name of jurisdiction for display
 }
 
 const SimilarForms = ({
@@ -24,8 +28,11 @@ const SimilarForms = ({
   basePath,
   topics = [],
   jurisdictionPath,
+  legalHelpLink,
+  legalHelpDisclaimerComponent: LegalHelpDisclaimerComponent,
+  jurisdictionName,
 }: SimilarFormsProps) => {
-  if ((!forms || forms.length === 0) && topics.length === 0) {
+  if ((!forms || forms.length === 0) && topics.length === 0 && !legalHelpLink) {
     return null;
   }
 
@@ -41,16 +48,23 @@ const SimilarForms = ({
 
   return (
     <div className={styles.SimilarFormsCard}>
-      <h3 className={styles.Title}>Similar forms</h3>
-      <ul className={styles.FormList}>
-        {forms.map((form) => (
-          <li key={form.slug} className={styles.FormItem}>
-            <Link href={`${basePath}/${form.slug}`} className={styles.FormLink}>
-              {form.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {forms && forms.length > 0 && (
+        <>
+          <h3 className={styles.Title}>Similar forms</h3>
+          <ul className={styles.FormList}>
+            {forms.map((form) => (
+              <li key={form.slug} className={styles.FormItem}>
+                <Link
+                  href={`${basePath}/${form.slug}`}
+                  className={styles.FormLink}
+                >
+                  {form.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
       {dedupedTopics.length > 0 && (
         <div className={styles.CategoryContainer}>
           {dedupedTopics.map((topic, idx) => (
@@ -67,6 +81,25 @@ const SimilarForms = ({
               </Link>
             </div>
           ))}
+        </div>
+      )}
+      {legalHelpLink && (
+        <div className={styles.LegalHelpContainer}>
+          <a
+            href={legalHelpLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.LegalHelpLink}
+          >
+            {jurisdictionName
+              ? `Get legal help in ${jurisdictionName}`
+              : 'Get legal help'}
+          </a>
+          {LegalHelpDisclaimerComponent && (
+            <div className={styles.DisclaimerText}>
+              <LegalHelpDisclaimerComponent />
+            </div>
+          )}
         </div>
       )}
     </div>

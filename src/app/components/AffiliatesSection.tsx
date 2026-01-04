@@ -29,8 +29,8 @@ export default function AffiliatesBlock() {
     >
       <div className={styles.AffiliatesContainer}>
         <p className="text-center">
-          Court Forms Online is a nonprofit service provided by Suffolk Law School&apos;s Legal
-          Innovation Lab and supported by our trusted{' '}
+          Court Forms Online is a nonprofit service provided by Suffolk Law
+          School&apos;s Legal Innovation Lab and supported by our trusted{' '}
           <a href="https://suffolklitlab.org/#affiliates">affiliates</a>,
           including:
         </p>

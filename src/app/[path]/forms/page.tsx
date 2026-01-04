@@ -16,6 +16,7 @@ import {
   getAvailableJurisdictions,
 } from '../../../utils/jurisdiction';
 import { getMassLRFRootUrl } from '../../../utils/masslrf';
+import { getLegalHelpInfo } from '../../../utils/legalHelpService';
 
 const SearchSection = dynamic(() => import('../../components/SearchSection'), {
   ssr: false,
@@ -90,8 +91,10 @@ export default async function Page({ params }: PageProps) {
     )
   );
 
-  // Get the root MassLRF URL for this jurisdiction
-  const massLRFRootUrl = getMassLRFRootUrl(path);
+  // Get legal help info for this jurisdiction
+  const { deepLink, DisclaimerComponent } = await getLegalHelpInfo({
+    jurisdiction: path,
+  });
 
   return (
     <div className={styles.AllFormsContainer + ' container'}>
@@ -140,11 +143,12 @@ export default async function Page({ params }: PageProps) {
           serverUrl={form.serverUrl}
         />
       ))}
-      {massLRFRootUrl && (
+      {deepLink && DisclaimerComponent && (
         <LegalResourceLink
           topic="legal assistance"
           jurisdiction={jurisdictionName}
-          deepLink={massLRFRootUrl}
+          deepLink={deepLink}
+          disclaimerInfo={<DisclaimerComponent />}
         />
       )}
     </div>

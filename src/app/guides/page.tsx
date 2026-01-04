@@ -28,6 +28,12 @@ const guides: GuideLink[] = [
       'Learn what documents and details to gather before starting your court form interview.',
   },
   {
+    href: '/guides/choosing-right-form',
+    title: 'How to select the right court form',
+    description:
+      "Follow these steps to confirm you're using the correct court form for your situation and avoid delays or rejected filings.",
+  },
+  {
     href: '/guides/common-mistakes-prevented',
     title: 'Common mistakes guided interviews prevent',
     description:
