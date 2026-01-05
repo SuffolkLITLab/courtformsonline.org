@@ -58,6 +58,12 @@ const guides: GuideLink[] = [
       'Locate the right courthouse for your case in your jurisdiction.',
   },
   {
+    href: '/guides/find-a-lawyer',
+    title: 'Find legal help',
+    description:
+      'Connect with legal aid organizations, lawyers, and other legal resources when you need professional help.',
+  },
+  {
     href: '/guides/is-it-safe',
     title: 'Are guided interviews safe to use?',
     description:
@@ -68,7 +74,7 @@ const guides: GuideLink[] = [
 export default function GuidesIndex() {
   return (
     <div className={styles.AboutPageContainer + ' container'}>
-      <h1 className="text-center mb-4">How to Use Court Forms</h1>
+      <h1 className="text-center mb-4">How to use court forms</h1>
       <p className="lead text-center mb-5">
         Court Forms Online makes it easier to complete legal documents through
         guided interviews. These guides will help you understand the process and

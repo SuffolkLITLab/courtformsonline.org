@@ -17,7 +17,7 @@ export default function HowToFileMI() {
             <Link href="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link href="/guides">How to Use Court Forms</Link>
+            <Link href="/guides">How to use court forms</Link>
           </li>
           <li className="breadcrumb-item">
             <Link href="/guides/how-to-file">How to file</Link>
@@ -35,14 +35,43 @@ export default function HowToFileMI() {
         filing and in-person submission.
       </p>
 
+      <h2>Not all forms are court forms</h2>
+      <p>
+        Some forms you complete through Court Forms Online may not be official
+        court forms. These could include letters, informational documents or
+        forms for other agencies. Check the specific instructions for your form.
+      </p>
+
       <h2>Electronic filing in Michigan</h2>
       <p>
-        Michigan courts use the MiFILE system for electronic filing. Many case
-        types can be filed electronically, though availability varies by court.
+        Many Michigan courts accept electronic filing through the MiFILE system
+        (
+        <a href="https://mifile.courts.michigan.gov/login?ReturnUrl=%2Fcases&TimeOut=False">
+          MiFILE login
+        </a>
+        ).
       </p>
+      <p>Benefits of e-filing in Michigan:</p>
+      <ul>
+        <li>File 24/7 without visiting the courthouse</li>
+        <li>Receive confirmation of filing electronically</li>
+        <li>Pay filing fees online</li>
+        <li>Track your case status electronically</li>
+      </ul>
+
+      <p>To use e-filing, you will need:</p>
+      <ul>
+        <li>A MiFILE account (create one at the link above)</li>
+        <li>Your completed court forms in PDF format</li>
+        <li>A valid email address</li>
+        <li>A valid phone number</li>
+        <li>Payment method for filing fees (credit/debit card or e-check)</li>
+      </ul>
+
       <p>
-        To use MiFILE, you&apos;ll need to create an account and follow the
-        court&apos;s e-filing procedures.
+        When completing forms through Court Forms Online, some forms offer
+        direct e-filing integration. This can be easier to use when it is
+        available.
       </p>
 
       <h2>In-person filing</h2>
@@ -61,14 +90,16 @@ export default function HowToFileMI() {
         <li>Your completed, signed forms</li>
         <li>Copies for yourself and any other parties</li>
         <li>Filing fee payment</li>
-        <li>Photo ID</li>
       </ul>
 
       <h2>Filing fees</h2>
       <p>
-        Filing fees vary by court and case type. If you cannot afford the filing
-        fee, you may request a fee waiver by filing an Affidavit and Order for
-        Fee Waiver.
+        In most states, a filing fee is only needed when you are starting a new
+        court case. If you are filing an answer, motion, or other document in an
+        existing court case, no fee is required. If you cannot afford to pay the
+        fee, you can ask the court for permission to not pay it. Filing fees
+        vary by court and case type in Michigan, and you may request a fee
+        waiver by filing an Affidavit and Order for Fee Waiver.
       </p>
 
       <h2>Michigan court resources</h2>
@@ -84,11 +115,20 @@ export default function HowToFileMI() {
         </li>
         <li>
           <a
-            href="https://mifile.courts.michigan.gov/"
+            href="https://mifile.courts.michigan.gov/login?ReturnUrl=%2Fcases&TimeOut=False"
             target="_blank"
             rel="noopener noreferrer"
           >
             MiFILE e-filing system
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.courts.michigan.gov/publications/fines,-fees,-costs,-and-rates/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Michigan fines, fees, costs, and rates
           </a>
         </li>
         <li>

@@ -273,19 +273,29 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.before_you_start}
       </ReactMarkdown>
-      <p className="text-muted small">
-        <Link href="/guides/what-information-you-need">
-          What information most court forms need
-        </Link>
-        {' · '}
-        <Link href={`/guides/find-your-court/${path}`}>
-          Find your {jurisdictionName} courthouse
-        </Link>
-      </p>
+      {!formDetails.metadata.before_you_start?.trim() && (
+        <div>
+          <p>General information about court forms:</p>
+          <ul>
+            <li>
+              <Link href="/guides/what-information-you-need">
+                What information most court forms need
+              </Link>
+            </li>
+
+            <li>
+              <Link href={`/guides/find-your-court/${path}`}>
+                Find your {jurisdictionName} courthouse
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
       <h2 className="mt-4">What happens after you finish</h2>
       <p>
-        After completing this interview, you&apos;ll receive your completed
-        forms ready for filing.{' '}
+        After completing this interview, you will get your completed forms ready
+        for filing. This interview may give you more information about what
+        happens next based on your answers.{' '}
         <Link href={`/guides/how-to-file/${path}`}>
           Learn how to file in {jurisdictionName}
         </Link>

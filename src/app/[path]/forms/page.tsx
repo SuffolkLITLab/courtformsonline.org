@@ -108,6 +108,10 @@ export default async function Page({ params }: PageProps) {
         <Link href="/guides/what-information-you-need">
           What information you&apos;ll need
         </Link>
+        {' · '}
+        <Link href="/guides/choosing-right-form">
+          How to select the right court form
+        </Link>
       </p>
       {availableJurisdictions.length > 1 && (
         <p className="text-center mb-3">

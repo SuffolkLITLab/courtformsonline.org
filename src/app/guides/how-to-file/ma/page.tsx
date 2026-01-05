@@ -17,7 +17,7 @@ export default function HowToFileMA() {
             <Link href="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link href="/guides">How to Use Court Forms</Link>
+            <Link href="/guides">How to use court forms</Link>
           </li>
           <li className="breadcrumb-item">
             <Link href="/guides/how-to-file">How to file</Link>
@@ -35,11 +35,21 @@ export default function HowToFileMA() {
         filing and in-person submission.
       </p>
 
+      <h2>Not all forms are court forms</h2>
+      <p>
+        Some forms you complete through Court Forms Online may not be official
+        court forms. These could include letters, informational documents or
+        forms for other agencies. Check the specific instructions for your form.
+      </p>
+
       <h2>Electronic filing in Massachusetts</h2>
       <p>
         Many Massachusetts courts accept electronic filing through the Trial
-        Court&apos;s e-filing system. When completing forms through Court Forms
-        Online, some forms offer direct e-filing integration.
+        Court&apos;s e-filing system,{' '}
+        <Link href="https://www.mass.gov/info-details/learn-about-efiling-in-the-trial-court">
+          Tyler File and Serve
+        </Link>
+        .
       </p>
       <p>Benefits of e-filing in Massachusetts:</p>
       <ul>
@@ -48,6 +58,32 @@ export default function HowToFileMA() {
         <li>Pay filing fees online</li>
         <li>Track your case status electronically</li>
       </ul>
+
+      <p>To use e-filing, you will need:</p>
+      <ul>
+        <li>A Tyler File and Serve account (create one at the link above)</li>
+        <li>Your completed court forms in PDF format</li>
+        <li>A valid email address</li>
+        <li>A valid phone number</li>
+        <li>Payment method for filing fees (credit/debit card or e-check)</li>
+      </ul>
+
+      <p>
+        If you do not have an email, phone number, and credit card, you can
+        still file your forms in person at the courthouse.
+      </p>
+
+      <p>
+        If you do not use it often, it can be hard to use the state's e-filing
+        system. But it can still be the best option for your case to save you
+        postage and from having to visit a courthouse.
+      </p>
+
+      <p>
+        When completing forms through Court Forms Online, some forms offer
+        direct e-filing integration. This can be easier to use when it is
+        available.
+      </p>
 
       <h2>In-person filing</h2>
       <p>
@@ -68,14 +104,15 @@ export default function HowToFileMA() {
           yourself)
         </li>
         <li>Filing fee payment (check accepted methods for your court)</li>
-        <li>Photo ID</li>
       </ul>
 
       <h2>Filing fees</h2>
       <p>
-        Filing fees vary depending on the type of case and court. If you have a
-        low income, you may qualify for a fee waiver. The Affidavit of Indigency
-        form can be completed through Court Forms Online.
+        In Massachusetts, a filing fee is only needed when you are starting a
+        new court case. If you are filing an answer, motion, or other document
+        in an existing court case, no fee is required. If you cannot afford to
+        pay the fee, you can ask the court for permission to not pay it. The
+        Affidavit of Indigency form can be completed through Court Forms Online.
       </p>
 
       <h2>Massachusetts court resources</h2>
@@ -105,6 +142,15 @@ export default function HowToFileMA() {
             rel="noopener noreferrer"
           >
             Massachusetts Court System
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.mass.gov/court-filing-fees-payment-information"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Court filing fees and payment information (Mass.gov)
           </a>
         </li>
       </ul>

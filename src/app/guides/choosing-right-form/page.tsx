@@ -17,10 +17,10 @@ export default function SelectRightCourtForm() {
             <Link href="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link href="/guides">How to Use Court Forms</Link>
+            <Link href="/guides">How to use court forms</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Select the right court form
+            Pick the right court form
           </li>
         </ol>
       </nav>
@@ -33,7 +33,16 @@ export default function SelectRightCourtForm() {
         asking for, and it can reduce delays and rejections.
       </p>
 
-      <h2>1) Read the description carefully</h2>
+      <h2>
+        1. Make sure the form is for <strong>your state</strong>
+      </h2>
+      <p>
+        Court forms vary by state and sometimes by county or court. Before
+        filling out a form, confirm it is designed for use in the state that you
+        live in or where you need legal help.
+      </p>
+
+      <h2>2. Read the description carefully</h2>
       <p>
         Start with the form's description. Look for details about what the form
         is used for and what it does (and doesn&apos;t) accomplish.
@@ -56,7 +65,7 @@ export default function SelectRightCourtForm() {
         </li>
       </ul>
 
-      <h2>2) Check whether you are allowed to use the form</h2>
+      <h2>3. Check whether you are allowed to use the form</h2>
       <p>
         Many forms have eligibility rules. Before you invest time filling
         anything out, read the instructions to see if the form is meant for your
@@ -79,7 +88,7 @@ export default function SelectRightCourtForm() {
         </li>
       </ul>
 
-      <h2>3) Review help pages and extra guidance</h2>
+      <h2>4. Review help pages and extra guidance</h2>
       <p>
         Help pages can clarify what the form is for, what you'll need, and how
         the court usually handles that type of request. They can also explain
@@ -101,7 +110,7 @@ export default function SelectRightCourtForm() {
         </li>
       </ul>
 
-      <h2>4) Confirm it's the right step—and consider alternatives</h2>
+      <h2>5. Confirm it's the right step—and consider alternatives</h2>
       <p>
         Even if a form seems related, it may not be the best next step in your
         case. Take a moment to confirm you're using the right approach and that

@@ -12,49 +12,50 @@ export const metadata: Metadata = {
 interface JurisdictionInfo {
   path: string;
   name: string;
-  triageToolUrl: string;
+  lawyerFindUrl: string;
   description: string;
 }
 
-// Get available jurisdictions with their triage tool URLs
+// Jurisdiction information including their lawyer finder/triage tool URLs
 const jurisdictions: JurisdictionInfo[] = [
   {
     path: 'ma',
     name: 'Massachusetts',
-    triageToolUrl: 'https://masslrf.org/en/triage/start',
+    lawyerFindUrl: 'https://masslrf.org/en/triage/start',
     description:
-      'Access the Massachusetts Legal Resource Finder to get connected with legal aid and resources.',
+      'Access the Massachusetts Legal Resource Finder to find legal aid, legal services, and lawyer referrals.',
   },
   {
     path: 'mi',
     name: 'Michigan',
-    triageToolUrl: 'https://michiganlegalhelp.org/guide-to-legal-help',
+    lawyerFindUrl: 'https://michiganlegalhelp.org/guide-to-legal-help',
     description:
       'Use the Michigan Legal Help guide to find legal aid organizations and resources in your area.',
   },
   {
     path: 'me',
     name: 'Maine',
-    triageToolUrl: 'https://www.ptla.org/contact-us',
+    lawyerFindUrl: 'https://www.ptla.org/contact-us',
     description:
       'Contact Pine Tree Legal Assistance to connect with legal aid services in Maine.',
   },
   {
     path: 'mn',
     name: 'Minnesota',
-    triageToolUrl: 'https://www.lawhelpmn.org/',
+    lawyerFindUrl: 'https://www.lawhelpmn.org/',
     description:
       'Visit LawHelpMN to find legal aid organizations and resources in Minnesota.',
   },
   {
     path: 'vt',
     name: 'Vermont',
-    triageToolUrl: 'https://www.vtlawhelp.org/',
-    description: 'Access Vermont Law Help to find legal aid and resources.',
+    lawyerFindUrl: 'https://www.vtlawhelp.org/',
+    description:
+      'Access Vermont Law Help to find legal aid and lawyer referral services.',
   },
 ];
 
-export default function FindLegalHelp() {
+export default function FindALawyer() {
   return (
     <div className={styles.AboutPageContainer + ' container'}>
       <nav aria-label="breadcrumb" className="mb-4">
@@ -66,7 +67,7 @@ export default function FindLegalHelp() {
             <Link href="/guides">How to use court forms</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            Find Legal Help
+            Find legal help
           </li>
         </ol>
       </nav>
@@ -74,17 +75,15 @@ export default function FindLegalHelp() {
       <h1>Find legal help</h1>
 
       <p className="lead">
-        When completing court forms on your own isn&apos;t enough, professional
-        legal help is available. Connect with lawyers, legal aid organizations,
-        and other resources in your jurisdiction.
+        When guided interviews aren&apos;t enough, connect with lawyers, legal
+        aid organizations, and other resources in your jurisdiction.
       </p>
 
       <h2>When you need legal help</h2>
 
       <p>
-        Guided interviews are powerful tools, but they&apos;re designed for
-        straightforward situations. You should seek professional legal help
-        when:
+        Guided interviews work best for straightforward situations. Seek
+        professional legal help when:
       </p>
 
       <ul>
@@ -120,28 +119,25 @@ export default function FindLegalHelp() {
       <h3>Legal aid organizations</h3>
       <p>
         Legal aid organizations provide free or low-cost legal services to
-        people who cannot afford a private attorney. They often handle:
+        people who cannot afford a private attorney. They often handle family
+        law matters (divorce, custody, abuse), housing and eviction disputes,
+        consumer and debt issues, benefits and public assistance, and
+        immigration matters.
       </p>
-      <ul>
-        <li>Family law matters (divorce, custody, abuse)</li>
-        <li>Housing and eviction disputes</li>
-        <li>Consumer and debt issues</li>
-        <li>Benefits and public assistance</li>
-        <li>Immigration matters</li>
-      </ul>
       <p>
-        For most legal aid organizations, the income limit is a percentage of
-        the federal poverty level. Be prepared to provide financial information
-        when you contact them. For example, in Massachusetts most people can get
-        help from legal aid if they earn less than 200% of the federal poverty
-        level.
+        To get help from legal aid, you usually cannot earn more than a certain
+        income limit. The most common limit is 125-200% of the federal poverty
+        level. Be prepared to explain your situation, provide financial
+        information, share relevant documents, and ask about their specific
+        services.
       </p>
 
       <h3>Court self-help centers</h3>
       <p>
-        Many courts have self-help or legal resource centers that provide free
-        information about court procedures, forms, and basic legal information
-        to people representing themselves.
+        Many courts have self-help centers that provide free information about
+        court procedures, forms, deadlines, and basic legal information to
+        people representing themselves. They often offer tips on completing
+        forms and referrals to legal aid and other resources.
       </p>
 
       <h3>Private attorneys</h3>
@@ -171,63 +167,27 @@ export default function FindLegalHelp() {
       </p>
 
       <div className="row">
-        {jurisdictions.map((j) => (
-          <div key={j.path} className="col-md-6 lg:col-4 mb-4">
+        {jurisdictions.map((jurisdiction) => (
+          <div key={jurisdiction.path} className="col-md-6 lg:col-4 mb-4">
             <div className="card h-100">
               <div className="card-body">
-                <h3 className="h5 card-title">{j.name}</h3>
-                <p className="card-text text-muted">{j.description}</p>
+                <h3 className="h5 card-title">{jurisdiction.name}</h3>
+                <p className="card-text text-muted">
+                  {jurisdiction.description}
+                </p>
                 <a
-                  href={j.triageToolUrl}
+                  href={jurisdiction.lawyerFindUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary btn-sm"
                 >
-                  Find help in {j.name}
+                  Find legal help in {jurisdiction.name}
                 </a>
               </div>
             </div>
           </div>
         ))}
       </div>
-
-      <h2>Getting help from a legal aid organization</h2>
-
-      <p>If you contact a legal aid organization, be prepared to:</p>
-
-      <ul>
-        <li>
-          <strong>Explain your situation:</strong> Briefly describe your legal
-          problem and what outcome you&apos;re seeking
-        </li>
-        <li>
-          <strong>Provide financial information:</strong> Legal aid serves
-          low-income individuals; they may ask about your income to determine
-          eligibility
-        </li>
-        <li>
-          <strong>Share documentation:</strong> Have any relevant documents
-          ready (lease agreements, court papers, identification, etc.)
-        </li>
-        <li>
-          <strong>Ask about their services:</strong> Different organizations
-          handle different types of cases—ask if they can help with yours
-        </li>
-      </ul>
-
-      <h2>Court self-help resources</h2>
-
-      <p>
-        Even if you can&apos;t qualify for legal aid, court self-help centers
-        often provide:
-      </p>
-
-      <ul>
-        <li>Information about how the court system works</li>
-        <li>Explanations of court procedures and deadlines</li>
-        <li>Tips on completing court forms</li>
-        <li>Referrals to legal aid and other resources</li>
-      </ul>
 
       <h2>For emergencies</h2>
 

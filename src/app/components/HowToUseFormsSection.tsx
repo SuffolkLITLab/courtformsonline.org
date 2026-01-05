@@ -65,6 +65,24 @@ export default function HowToUseFormsSection() {
               </div>
             </div>
           </div>
+
+          <div className="col-md-6 mb-4">
+            <div className="card h-100">
+              <div className="card-body">
+                <h3 className="h5 card-title">Find a lawyer</h3>
+                <p className="card-text text-muted">
+                  Connect with legal aid organizations and lawyer referral
+                  services in your jurisdiction when you need professional help.
+                </p>
+                <Link
+                  href="/guides/find-a-lawyer"
+                  className="btn btn-outline-primary"
+                >
+                  Find a lawyer
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="text-center mt-3">

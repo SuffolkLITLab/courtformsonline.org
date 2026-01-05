@@ -26,7 +26,7 @@ export default function HowToFile() {
             <Link href="/">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link href="/guides">How to Use Court Forms</Link>
+            <Link href="/guides">How to use court forms</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             How to file
@@ -37,8 +37,9 @@ export default function HowToFile() {
       <h1>How to file a court form</h1>
 
       <p className="lead">
-        After completing your guided interview, you&apos;ll need to submit your
-        forms to the court. Here are the different ways to file.
+        If your interview creates a court form, after completing your guided
+        interview, you&apos;ll need to submit your forms to the court. Here are
+        the different ways to file.
       </p>
 
       <h2>Filing options</h2>
