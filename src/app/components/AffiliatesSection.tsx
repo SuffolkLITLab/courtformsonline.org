@@ -21,7 +21,7 @@ const affiliates: Array<Affiliate> = [
   },
 ];
 
-export default function AffiliatesBlock() {
+export default function AffiliatesSection() {
   return (
     <section
       id="affiliates-section"
@@ -29,9 +29,10 @@ export default function AffiliatesBlock() {
     >
       <div className={styles.AffiliatesContainer}>
         <p className="text-center">
-          We would also like to thank the LIT Lab's{' '}
-          <a href="https://suffolklitlab.org/#affiliates">affiliates</a>,
-          including:
+          Court Forms Online is a nonprofit service provided by Suffolk Law
+          School&apos;s Legal Innovation and Technology Lab and supported by our
+          trusted <a href="https://suffolklitlab.org/#affiliates">affiliates</a>
+          , including:
         </p>
         {affiliates.map((affiliate) => {
           return (

@@ -113,6 +113,11 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="nav-item">
+              <Link href="/guides" className={styles.NavLink}>
+                How to use court forms
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link href="/about" className={styles.NavLink}>
                 About
               </Link>

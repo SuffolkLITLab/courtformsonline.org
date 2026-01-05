@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import React from 'react';
 import styles from '../css/SimilarForms.module.css';
 
 interface RelatedForm {
@@ -17,6 +18,7 @@ interface SimilarFormsProps {
   basePath: string; // e.g., "/ma/forms"
   topics?: TopicLink[]; // top-level topics matching the form
   jurisdictionPath?: string; // e.g., "ma", used to build topic landing links
+  // Note: legal help UI is rendered at the page-level (see `LegalResourceLink`) to avoid duplication.
 }
 
 const SimilarForms = ({
@@ -39,18 +41,31 @@ const SimilarForms = ({
     }
   }
 
+  // Avoid showing any "Get legal help" entries in the similar-forms list
+  // so legal help is only surfaced via the dedicated page-level component.
+  const visibleForms = (forms || []).filter(
+    (f) => !f.title.toLowerCase().startsWith('get legal help')
+  );
+
   return (
     <div className={styles.SimilarFormsCard}>
-      <h3 className={styles.Title}>Similar forms</h3>
-      <ul className={styles.FormList}>
-        {forms.map((form) => (
-          <li key={form.slug} className={styles.FormItem}>
-            <Link href={`${basePath}/${form.slug}`} className={styles.FormLink}>
-              {form.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {visibleForms && visibleForms.length > 0 && (
+        <>
+          <h3 className={styles.Title}>Similar forms</h3>
+          <ul className={styles.FormList}>
+            {visibleForms.map((form) => (
+              <li key={form.slug} className={styles.FormItem}>
+                <Link
+                  href={`${basePath}/${form.slug}`}
+                  className={styles.FormLink}
+                >
+                  {form.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
       {dedupedTopics.length > 0 && (
         <div className={styles.CategoryContainer}>
           {dedupedTopics.map((topic, idx) => (
@@ -69,6 +84,20 @@ const SimilarForms = ({
           ))}
         </div>
       )}
+      <div className={styles.GuideContainer}>
+        <Link
+          href={
+            jurisdictionPath
+              ? `/${jurisdictionPath}/guides/choosing-right-form`
+              : `/guides/choosing-right-form`
+          }
+          className={styles.GuideLink}
+        >
+          How to select the right court form
+        </Link>
+      </div>
+      {/* Legal help is intentionally rendered at the page level to avoid duplicate
+          jurisdiction- and topic-level legal help blocks. */}
     </div>
   );
 };
