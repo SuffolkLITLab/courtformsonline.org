@@ -29,7 +29,7 @@ const SimilarForms = ({
   topics = [],
   jurisdictionPath,
   legalHelpLink,
-  legalHelpDisclaimerComponent: LegalHelpDisclaimerComponent,
+  legalHelpDisclaimerComponent,
   jurisdictionName,
 }: SimilarFormsProps) => {
   if ((!forms || forms.length === 0) && topics.length === 0 && !legalHelpLink) {
@@ -95,9 +95,9 @@ const SimilarForms = ({
               ? `Get legal help in ${jurisdictionName}`
               : 'Get legal help'}
           </a>
-          {LegalHelpDisclaimerComponent && (
+          {legalHelpDisclaimerComponent && (
             <div className={styles.DisclaimerText}>
-              <LegalHelpDisclaimerComponent />
+              <legalHelpDisclaimerComponent />
             </div>
           )}
         </div>

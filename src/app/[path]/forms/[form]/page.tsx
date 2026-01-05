@@ -275,7 +275,7 @@ const Page = async ({ params }: PageProps) => {
       </ReactMarkdown>
       <p className="text-muted small">
         <Link href="/guides/what-information-you-need">
-          What information court forms typically need
+          What information most court forms need
         </Link>
         {' · '}
         <Link href={`/guides/find-your-court/${path}`}>
@@ -299,8 +299,8 @@ const Page = async ({ params }: PageProps) => {
         basePath={`/${path}/forms`}
         topics={topicsForSimilar}
         jurisdictionPath={path}
-        legalHelpLink={deepLink ?? undefined}
-        legalHelpDisclaimerComponent={DisclaimerComponent ?? undefined}
+        legalHelpLink={deepLink}
+        legalHelpDisclaimerComponent={DisclaimerComponent}
         jurisdictionName={jurisdictionName}
       />
       {deepLink && DisclaimerComponent && (

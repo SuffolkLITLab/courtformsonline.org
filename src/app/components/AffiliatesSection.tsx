@@ -21,7 +21,7 @@ const affiliates: Array<Affiliate> = [
   },
 ];
 
-export default function AffiliatesBlock() {
+export default function AffiliatesSection() {
   return (
     <section
       id="affiliates-section"
