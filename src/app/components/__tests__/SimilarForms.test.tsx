@@ -65,5 +65,40 @@ describe('SimilarForms component', () => {
     expect(formItems[1]).toContain('Form B');
     // Category links are not list items in the forms list; ensure a category link is present later
     expect(screen.getByText(/View all housing forms/i)).toBeInTheDocument();
+    // Cross-link to the guide should appear and be jurisdiction-aware
+    const guideLink = screen.getByText(/How to select the right court form/i);
+    expect(guideLink).toBeInTheDocument();
+    expect(guideLink.closest('a').getAttribute('href')).toBe(
+      '/ma/guides/choosing-right-form'
+    );
+  });
+
+  test('filters out "Get legal help" form from the list and shows the standalone legal help link', () => {
+    const props = {
+      forms: [
+        { title: 'Form A', slug: 'form-a', similarity: 3 },
+        {
+          title: 'Get legal help in Maine',
+          slug: 'get-legal-help',
+          similarity: 1,
+        },
+      ],
+      basePath: '/ma/forms',
+      topics: [],
+      jurisdictionPath: 'ma',
+      jurisdictionName: 'Maine',
+      legalHelpLink: 'https://maine.example',
+    } as any;
+
+    render(<SimilarForms {...props} />);
+
+    // The "Get legal help" entry should not be in the forms list or rendered
+    const formItems = screen
+      .getAllByRole('listitem')
+      .map((li) => li.textContent);
+    expect(formItems.join(' ')).not.toContain('Get legal help');
+
+    // And SimilarForms should not render the standalone legal help link (it's handled at page level)
+    expect(screen.queryByText(/Get legal help/i)).toBeNull();
   });
 });

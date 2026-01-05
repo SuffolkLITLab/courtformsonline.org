@@ -299,9 +299,6 @@ const Page = async ({ params }: PageProps) => {
         basePath={`/${path}/forms`}
         topics={topicsForSimilar}
         jurisdictionPath={path}
-        legalHelpLink={deepLink}
-        legalHelpDisclaimerComponent={DisclaimerComponent}
-        jurisdictionName={jurisdictionName}
       />
       {deepLink && DisclaimerComponent && (
         <LegalResourceLink

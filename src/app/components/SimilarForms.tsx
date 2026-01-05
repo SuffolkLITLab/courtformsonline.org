@@ -18,9 +18,7 @@ interface SimilarFormsProps {
   basePath: string; // e.g., "/ma/forms"
   topics?: TopicLink[]; // top-level topics matching the form
   jurisdictionPath?: string; // e.g., "ma", used to build topic landing links
-  legalHelpLink?: string; // URL to jurisdiction's legal help resource
-  legalHelpDisclaimerComponent?: React.ComponentType; // Disclaimer component for legal help
-  jurisdictionName?: string; // Full name of jurisdiction for display
+  // Note: legal help UI is rendered at the page-level (see `LegalResourceLink`) to avoid duplication.
 }
 
 const SimilarForms = ({
@@ -28,11 +26,8 @@ const SimilarForms = ({
   basePath,
   topics = [],
   jurisdictionPath,
-  legalHelpLink,
-  legalHelpDisclaimerComponent,
-  jurisdictionName,
 }: SimilarFormsProps) => {
-  if ((!forms || forms.length === 0) && topics.length === 0 && !legalHelpLink) {
+  if ((!forms || forms.length === 0) && topics.length === 0) {
     return null;
   }
 
@@ -46,13 +41,19 @@ const SimilarForms = ({
     }
   }
 
+  // Avoid showing any "Get legal help" entries in the similar-forms list
+  // so legal help is only surfaced via the dedicated page-level component.
+  const visibleForms = (forms || []).filter(
+    (f) => !f.title.toLowerCase().startsWith('get legal help')
+  );
+
   return (
     <div className={styles.SimilarFormsCard}>
-      {forms && forms.length > 0 && (
+      {visibleForms && visibleForms.length > 0 && (
         <>
           <h3 className={styles.Title}>Similar forms</h3>
           <ul className={styles.FormList}>
-            {forms.map((form) => (
+            {visibleForms.map((form) => (
               <li key={form.slug} className={styles.FormItem}>
                 <Link
                   href={`${basePath}/${form.slug}`}
@@ -83,25 +84,20 @@ const SimilarForms = ({
           ))}
         </div>
       )}
-      {legalHelpLink && (
-        <div className={styles.LegalHelpContainer}>
-          <a
-            href={legalHelpLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.LegalHelpLink}
-          >
-            {jurisdictionName
-              ? `Get legal help in ${jurisdictionName}`
-              : 'Get legal help'}
-          </a>
-          {legalHelpDisclaimerComponent && (
-            <div className={styles.DisclaimerText}>
-              <legalHelpDisclaimerComponent />
-            </div>
-          )}
-        </div>
-      )}
+      <div className={styles.GuideContainer}>
+        <Link
+          href={
+            jurisdictionPath
+              ? `/${jurisdictionPath}/guides/choosing-right-form`
+              : `/guides/choosing-right-form`
+          }
+          className={styles.GuideLink}
+        >
+          How to select the right court form
+        </Link>
+      </div>
+      {/* Legal help is intentionally rendered at the page level to avoid duplicate
+          jurisdiction- and topic-level legal help blocks. */}
     </div>
   );
 };

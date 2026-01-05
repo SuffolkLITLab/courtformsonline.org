@@ -38,6 +38,24 @@
   text-decoration: underline;
 }
 
+.GuideContainer {
+  border-top: 1px solid #e9ecef;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+}
+
+.GuideLink {
+  font-size: 0.95rem;
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.GuideLink:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
 .FormList {
   list-style: none;
   padding: 0;
