@@ -100,16 +100,8 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                href="https://suffolklitlab.org/category/document-assembly-line/"
-                className={styles.NavLink}
-                target="_blank"
-              >
+              <Link href="/blog" className={styles.NavLink}>
                 News
-                <FontAwesomeIcon
-                  icon={faArrowUpRightFromSquare}
-                  className={styles.ExternalLinkIcon + ' text-white ms-1'}
-                />
               </Link>
             </li>
             <li className="nav-item">

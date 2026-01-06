@@ -1,0 +1,148 @@
+.blogContainer {
+  padding: 3rem 0;
+}
+
+.blogHeader {
+  margin-bottom: 2rem;
+}
+
+.blogCard {
+  border: 1px solid #dee2e6;
+}
+
+/* 
+.blogCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+*/
+
+.blogDate {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.blogAuthor {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.blogSummary {
+  color: #495057;
+}
+
+.syndicatedSection {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.syndicatedTitle {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #495057;
+}
+
+.syndicatedList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.syndicatedItem {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.syndicatedItem:last-child {
+  border-bottom: none;
+}
+
+.syndicatedLink {
+  text-decoration: none;
+  color: #0d6efd;
+}
+
+.syndicatedLink:hover {
+  text-decoration: underline;
+}
+
+.syndicatedDate {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-left: 0.5rem;
+}
+
+.blogImageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.blogImage {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.blogHeroImage {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Blog post page styles */
+.blogPost {
+  padding: 3rem 0;
+}
+
+.blogPostHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.blogPostTitle {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.blogPostMeta {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.blogPostContent {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.blogPostContent h1,
+.blogPostContent h2,
+.blogPostContent h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.blogPostContent p {
+  margin-bottom: 1.5rem;
+}
+
+.blogPostContent ul,
+.blogPostContent ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.blogPostContent li {
+  margin-bottom: 0.5rem;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 2rem;
+}

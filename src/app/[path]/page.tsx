@@ -1,5 +1,6 @@
 // Example: courtformsonline.org/ma
 import AffiliatesSection from '../components/AffiliatesSection';
+import BlogPreview from '../components/BlogPreview';
 import HeroSection from '../components/HeroSection';
 import HowItWorksSection from '../components/HowItWorksSection';
 import HowToUseFormsSection from '../components/HowToUseFormsSection';
@@ -30,6 +31,7 @@ const Page = async ({ params }: PageProps) => {
         isError={isError}
       />
       <HowToUseFormsSection />
+      <BlogPreview />
       <AffiliatesSection />
     </div>
   );
