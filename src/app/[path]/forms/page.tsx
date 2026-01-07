@@ -26,9 +26,8 @@ async function getData() {
   let allData: Form[] = [];
   // Import fee extraction logic
   // @ts-ignore
-  const { extractLocalizedFees } = await import(
-    '../../../data/fetchInterviewData'
-  );
+  const { extractLocalizedFees } =
+    await import('../../../data/fetchInterviewData');
   const locale = 'en';
 
   for (const server of formSources.docassembleServers) {

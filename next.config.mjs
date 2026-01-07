@@ -1,20 +1,10 @@
 /** @type {import('next').NextConfig} */
-import createMDX from '@next/mdx';
-
 const nextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
   },
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
 };
 
-const withMDX = createMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [],
-  },
-});
-
-export default withMDX(nextConfig);
+export default nextConfig;
