@@ -18,7 +18,6 @@
 /public/blog/
 
 # lock files
-package-lock.json
 yarn.lock
 
 # misc
