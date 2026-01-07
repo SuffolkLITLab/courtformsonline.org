@@ -3,7 +3,15 @@ const path = require('path');
 
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog');
 const PUBLIC_BLOG_DIR = path.join(process.cwd(), 'public', 'blog');
-const ALLOWED_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.avif']);
+const ALLOWED_EXT = new Set([
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.svg',
+  '.webp',
+  '.avif',
+]);
 
 function walkDir(dir, cb) {
   if (!fs.existsSync(dir)) return;
@@ -66,7 +74,10 @@ walkDir(BLOG_DIR, (file) => {
     if (data && data.image) {
       const imagePath = String(data.image || '').replace(/^\.\//, '');
       const fileName = path.basename(imagePath);
-      const slug = path.relative(BLOG_DIR, file).replace(/\\/g, '/').replace(/\.mdx?$/, '');
+      const slug = path
+        .relative(BLOG_DIR, file)
+        .replace(/\\/g, '/')
+        .replace(/\.mdx?$/, '');
       const srcTop = path.join(BLOG_DIR, fileName);
       const destDir = path.join(PUBLIC_BLOG_DIR, slug);
       const destPath = path.join(destDir, fileName);
