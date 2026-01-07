@@ -51,12 +51,12 @@ export default function FindYourCourtMA() {
             your case. Answer a few questions about your location and case type
             to get directed to the appropriate courthouse.
           </p>
-          <Link
-            href="/ma/forms/massachusetts-court-locator"
+          <a
+            href="https://apps.suffolklitlab.org/start/locator"
             className="btn btn-primary"
           >
             Find my court
-          </Link>
+          </a>
         </div>
       </div>
 

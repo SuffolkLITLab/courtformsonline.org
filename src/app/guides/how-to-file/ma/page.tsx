@@ -91,9 +91,9 @@ export default function HowToFileMA() {
         in person at the appropriate courthouse.
       </p>
       <p>
-        <Link href="/guides/find-your-court/ma">
+        <a href="https://apps.suffolklitlab.org/start/locator">
           Find your Massachusetts courthouse
-        </Link>
+        </a>
       </p>
 
       <h3>What to bring</h3>
