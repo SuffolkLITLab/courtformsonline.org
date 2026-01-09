@@ -135,11 +135,11 @@ export default function HowToFileVT() {
         </li>
         <li>
           <a
-            href="https://www.vermontjudiciary.org/court-forms"
+            href="https://www.vermontjudiciary.org/court-divisions"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Vermont Court Forms
+            Vermont Court Divisions (Vermont Judiciary)
           </a>
         </li>
         <li>
