@@ -28,7 +28,8 @@ export const pathToServerConfig = {
     path: 'vt',
     servers: ['Vermont Court Forms'],
     name: 'Vermont',
-    moreFormsUrl: 'https://www.vermontjudiciary.org/court-forms',
+    // Link updated to point at Vermont Judiciary's Court Divisions page
+    moreFormsUrl: 'https://www.vermontjudiciary.org/court-divisions',
   },
 };
 
