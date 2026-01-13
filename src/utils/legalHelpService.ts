@@ -23,12 +23,14 @@ import {
 } from './michiganlegalhelp';
 import { getMaineLegalHelpLink } from './mainelegalhelp';
 import { getMinnesotaLegalHelpLink } from './minnesotalegalhelp';
+import { getMissouriLegalHelpLink } from './missourilegalhelp';
 
 // Import disclaimer components
 import MassLRFDisclaimerInfo from '../app/components/MassLRFDisclaimerInfo';
 import MichiganLegalHelpDisclaimerInfo from '../app/components/MichiganLegalHelpDisclaimerInfo';
 import MaineLegalHelpDisclaimerInfo from '../app/components/MaineLegalHelpDisclaimerInfo';
 import MinnesotaLegalHelpDisclaimerInfo from '../app/components/MinnesotaLegalHelpDisclaimerInfo';
+import MissouriLegalHelpDisclaimerInfo from '../app/components/MissouriLegalHelpDisclaimerInfo';
 
 /**
  * Configuration for a jurisdiction's legal help integration
@@ -156,6 +158,16 @@ const LEGAL_HELP_CONFIG: Record<string, LegalHelpJurisdictionConfig> = {
     },
     getRootUrl: () => getMinnesotaLegalHelpLink(),
     DisclaimerComponent: MinnesotaLegalHelpDisclaimerInfo,
+    supportsNsmiCodes: false,
+  },
+
+  mo: {
+    getDeepLink: (topicOrCode) => {
+      // Missouri uses a single URL for all topics
+      return getMissouriLegalHelpLink(topicOrCode ?? undefined);
+    },
+    getRootUrl: () => getMissouriLegalHelpLink(),
+    DisclaimerComponent: MissouriLegalHelpDisclaimerInfo,
     supportsNsmiCodes: false,
   },
 };

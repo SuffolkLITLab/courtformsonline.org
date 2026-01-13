@@ -31,6 +31,12 @@ export const pathToServerConfig = {
     // Link updated to point at Vermont Judiciary's Court Divisions page
     moreFormsUrl: 'https://www.vermontjudiciary.org/court-divisions',
   },
+  mo: {
+    path: 'mo',
+    servers: ['Missouri Legal Help'],
+    name: 'Missouri',
+    moreFormsUrl: 'https://www.courts.mo.gov/page.jsp?id=321',
+  },
 };
 
 /**
@@ -44,6 +50,7 @@ export const jurisdictionAliases = {
   Maine: ['ME', 'NAM-US-US+ME', 'Maine', 'me'],
   Michigan: ['MI', 'NAM-US-US+MI', 'Michigan', 'mi'],
   Vermont: ['VT', 'NAM-US-US+VT', 'Vermont', 'vt'],
+  Missouri: ['MO', 'NAM-US-US+MO', 'Missouri', 'mo'],
   // Add more jurisdictions as needed
 };
 
@@ -145,6 +152,22 @@ export const deepLinks = {
     courts: ['https://vtlawhelp.org/triage/vt_triage?clear=true'],
     government: ['https://vtlawhelp.org/triage/vt_triage?clear=true'],
   },
+  mo: {
+    // Missouri LawHelp triage - Missouri Poverty Law Services
+    // Maps topic names to their corresponding URLs
+    housing: ['https://apps.molawhelp.org/list'],
+    family: ['https://apps.molawhelp.org/list'],
+    consumer: ['https://apps.molawhelp.org/list'],
+    benefits: ['https://apps.molawhelp.org/list'],
+    criminal: ['https://apps.molawhelp.org/list'],
+    traffic: ['https://apps.molawhelp.org/list'],
+    education: ['https://apps.molawhelp.org/list'],
+    employment: ['https://apps.molawhelp.org/list'],
+    immigration: ['https://apps.molawhelp.org/list'],
+    wills: ['https://apps.molawhelp.org/list'],
+    courts: ['https://apps.molawhelp.org/list'],
+    government: ['https://apps.molawhelp.org/list'],
+  },
 };
 
 export const formSources = {
@@ -179,6 +202,12 @@ export const formSources = {
       name: 'Vermont Court Forms',
       defaultJurisdiction: 'Vermont', // Default for forms without jurisdiction metadata
     },
+    {
+      key: 'missouriLegalHelp',
+      url: 'https://apps.molawhelp.org',
+      name: 'Missouri Legal Help',
+      defaultJurisdiction: 'Missouri', // Default for forms without jurisdiction metadata
+    },
   ],
 };
 
@@ -205,5 +234,8 @@ export const excludedForms = {
   ],
   VTCourtForms: [
     // Add any forms to exclude from Vermont Court Forms server
+  ],
+  missouriLegalHelp: [
+    // Add any forms to exclude from Missouri Legal Help server
   ],
 };
