@@ -6,12 +6,6 @@ export const pathToServerConfig = {
     // Optional link to an authoritative jurisdiction listing of court forms.
     moreFormsUrl: 'https://www.mass.gov/topics/court-forms',
   },
-  mn: {
-    path: 'mn',
-    servers: ['Suffolk LIT Lab'],
-    name: 'Minnesota',
-    moreFormsUrl: 'https://www.mncourts.gov/GetForms.aspx',
-  },
   me: {
     path: 'me',
     servers: ['Pine Tree Legal Assistance'],
@@ -24,18 +18,24 @@ export const pathToServerConfig = {
     name: 'Michigan',
     moreFormsUrl: 'https://www.courts.michigan.gov/SCAO-forms/',
   },
-  vt: {
-    path: 'vt',
-    servers: ['Vermont Court Forms'],
-    name: 'Vermont',
-    // Link updated to point at Vermont Judiciary's Court Divisions page
-    moreFormsUrl: 'https://www.vermontjudiciary.org/court-divisions',
+  mn: {
+    path: 'mn',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Minnesota',
+    moreFormsUrl: 'https://www.mncourts.gov/GetForms.aspx',
   },
   mo: {
     path: 'mo',
     servers: ['Missouri Legal Help'],
     name: 'Missouri',
     moreFormsUrl: 'https://www.courts.mo.gov/page.jsp?id=321',
+  },
+  vt: {
+    path: 'vt',
+    servers: ['Vermont Court Forms'],
+    name: 'Vermont',
+    // Link updated to point at Vermont Judiciary's Court Divisions page
+    moreFormsUrl: 'https://www.vermontjudiciary.org/court-divisions',
   },
 };
 
