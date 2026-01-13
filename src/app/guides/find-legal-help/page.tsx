@@ -52,6 +52,13 @@ const jurisdictions: JurisdictionInfo[] = [
     triageToolUrl: 'https://www.vtlawhelp.org/',
     description: 'Access Vermont Law Help to find legal aid and resources.',
   },
+  {
+    path: 'mo',
+    name: 'Missouri',
+    triageToolUrl: 'https://apps.molawhelp.org/list',
+    description:
+      'Visit Missouri LawHelp to access legal aid programs and self-help resources.',
+  },
 ];
 
 export default function FindLegalHelp() {

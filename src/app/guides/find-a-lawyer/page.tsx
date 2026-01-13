@@ -53,6 +53,13 @@ const jurisdictions: JurisdictionInfo[] = [
     description:
       'Access Vermont Law Help to find legal aid and lawyer referral services.',
   },
+  {
+    path: 'mo',
+    name: 'Missouri',
+    lawyerFindUrl: 'https://apps.molawhelp.org/list',
+    description:
+      'Visit Missouri LawHelp to access legal aid programs and find lawyer referral services.',
+  },
 ];
 
 export default function FindALawyer() {
