@@ -213,15 +213,20 @@ export const formSources = {
 
 export const excludedForms = {
   greaterBostonLegalService: [
-    'docassemble.Collection:data/questions/validationOrDoNotCallLetterForAdvocates.yml',
+    // GBLS forms we don't want on courtformsonline.org (developer/admin tools)
+    'docassemble.Collection:data/questions/validationOrDoNotCallLetterForAdvocates.yml', // /start/advocate%20vacate/
+    'docassemble.Collection:data/questions/exemptOrNotQuestions.yml', // /start/exempt/
+    'docassemble.Collection:data/questions/docsign.yml', // /start/simple%20esign/
+    'docassemble.Collection:data/questions/motionToVacateDefault.yml', // /start/vacate/
+    'docassemble.Collection:data/questions/validationOrDoNotCallLetter.yml', // /start/validation/
+    'docassemble.docsign:data/questions/upload_template.yml', // /start/esign/
+    'docassemble.docsign:data/questions/fill_generic_template.yml', // /start/generic/
+    'docassemble.startOfCaseDocs:data/questions/caseStartDocs.yml', // /start/sign/
+    'docassemble.HousingCodeChecklist:data/questions/housing_code_interview.yml', // /start/uptocode/
+    'docassemble.HousingCodeChecklist:data/questions/feedback.yml', // /start/uptocode_feedback/
+    // Other GBLS forms we don't want on courtformsonline.org
     'docassemble.MAAffidavitofIndigency:data/questions/affidavit.yml',
     'docassemble.MAAffidavitofIndigency:data/questions/affidavit_advocate.yml',
-    'docassemble.docsign:data/questions/upload_template.yml',
-    'docassemble.Collection:data/questions/exemptOrNotQuestions.yml',
-    'docassemble.docsign:data/questions/fill_generic_template.yml',
-    'docassemble.startOfCaseDocs:data/questions/caseStartDocs.yml',
-    'docassemble.HousingCodeChecklist:data/questions/housing_code_interview.yml',
-    'docassemble.HousingCodeChecklist:data/questions/feedback.yml',
   ],
   suffolkLITLab: [
     // 'docassemble.MAPetitionToSealEviction:data/questions/petition_to_seal_eviction.yml', // TODO: REMOVE on May 4th 2025
