@@ -7,6 +7,7 @@ import LegalResourceLink from '../../components/LegalResourceLink';
 import {
   pathToServerConfig,
   formSources,
+  excludedForms,
 } from '../../../config/formSources.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 import styles from '../../css/AllFormsContainer.module.css';
@@ -47,22 +48,27 @@ async function getData() {
       );
       continue;
     }
+    // Filter out excluded forms for this server
+    const exclusions = excludedForms[server.key] || [];
+
     // Normalize fees in metadata
-    const interviews = data['interviews'].map((interview: any) => {
-      let fees = [];
-      if (interview.metadata && interview.metadata.fees) {
-        fees = extractLocalizedFees(interview.metadata.fees, locale);
-      }
-      return {
-        ...interview,
-        serverName: server.name,
-        serverUrl: server.url,
-        metadata: {
-          ...interview.metadata,
-          fees,
-        },
-      };
-    });
+    const interviews = data['interviews']
+      .filter((interview: any) => !exclusions.includes(interview.filename))
+      .map((interview: any) => {
+        let fees = [];
+        if (interview.metadata && interview.metadata.fees) {
+          fees = extractLocalizedFees(interview.metadata.fees, locale);
+        }
+        return {
+          ...interview,
+          serverName: server.name,
+          serverUrl: server.url,
+          metadata: {
+            ...interview.metadata,
+            fees,
+          },
+        };
+      });
     allData = allData.concat(interviews);
   }
   return allData;
