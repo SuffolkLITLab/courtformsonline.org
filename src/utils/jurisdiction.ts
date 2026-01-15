@@ -2,6 +2,7 @@ import {
   pathToServerConfig,
   formSources,
   jurisdictionAliases,
+  nationalJurisdictions,
   DEFAULT_JURISDICTION,
   DEFAULT_PATH,
 } from '../config/formSources.config';
@@ -89,6 +90,7 @@ export function getPathFromJurisdiction(jurisdictionName: string): string {
 /**
  * Checks if a form's jurisdiction matches the expected jurisdiction for a path.
  * Forms without a jurisdiction default to the server's default jurisdiction.
+ * Forms with national jurisdiction codes appear on all jurisdiction pages.
  *
  * @param formJurisdiction - The jurisdiction from form metadata
  * @param expectedJurisdiction - The expected jurisdiction for the current path
@@ -100,6 +102,19 @@ export function jurisdictionMatches(
   expectedJurisdiction: string,
   serverUrl?: string
 ): boolean {
+  // Check if the form has a national jurisdiction code that applies everywhere
+  if (formJurisdiction) {
+    const trimmedJurisdiction = formJurisdiction.trim();
+    if (
+      nationalJurisdictions.some(
+        (national) =>
+          national.toLowerCase() === trimmedJurisdiction.toLowerCase()
+      )
+    ) {
+      return true;
+    }
+  }
+
   const normalized = normalizeJurisdiction(formJurisdiction);
 
   // If no jurisdiction specified, use server's default jurisdiction
@@ -129,4 +144,9 @@ export function getAvailableJurisdictions(): Array<{
 }
 
 // Re-export config for consumers that need it directly
-export { DEFAULT_JURISDICTION, DEFAULT_PATH, jurisdictionAliases };
+export {
+  DEFAULT_JURISDICTION,
+  DEFAULT_PATH,
+  jurisdictionAliases,
+  nationalJurisdictions,
+};
