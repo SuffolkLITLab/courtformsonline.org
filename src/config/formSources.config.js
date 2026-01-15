@@ -8,13 +8,13 @@ export const pathToServerConfig = {
   },
   me: {
     path: 'me',
-    servers: ['Pine Tree Legal Assistance'],
+    servers: ['Pine Tree Legal Assistance', 'Suffolk LIT Lab'],
     name: 'Maine',
     moreFormsUrl: 'https://www.courts.maine.gov/forms/index.html',
   },
   mi: {
     path: 'mi',
-    servers: ['Michigan Legal Help'],
+    servers: ['Michigan Legal Help', 'Suffolk LIT Lab'],
     name: 'Michigan',
     moreFormsUrl: 'https://www.courts.michigan.gov/SCAO-forms/',
   },
@@ -26,13 +26,13 @@ export const pathToServerConfig = {
   },
   mo: {
     path: 'mo',
-    servers: ['Missouri Legal Help'],
+    servers: ['Missouri Legal Help', 'Suffolk LIT Lab'],
     name: 'Missouri',
     moreFormsUrl: 'https://www.courts.mo.gov/page.jsp?id=321',
   },
   vt: {
     path: 'vt',
-    servers: ['Vermont Court Forms'],
+    servers: ['Vermont Court Forms', 'Suffolk LIT Lab'],
     name: 'Vermont',
     // Link updated to point at Vermont Judiciary's Court Divisions page
     moreFormsUrl: 'https://www.vermontjudiciary.org/court-divisions',
@@ -53,6 +53,26 @@ export const jurisdictionAliases = {
   Missouri: ['MO', 'NAM-US-US+MO', 'Missouri', 'mo'],
   // Add more jurisdictions as needed
 };
+
+/**
+ * National jurisdiction codes that should appear on all jurisdiction-specific pages.
+ * 
+ * Forms with these jurisdiction codes will be displayed on EVERY state's jurisdiction page,
+ * in addition to state-specific forms. This is useful for forms that:
+ * - Apply to all states (e.g., immigration forms, federal rights)
+ * - Relate to national rights (e.g., reasonable accommodation, civil rights)
+ * - Are general templates that users from any state can use
+ *
+ * Examples:
+ * - An immigration form might have jurisdiction "NAM-US" or "NAM-US-US"
+ * - A form about reasonable accommodation under the ADA might use "NAM-US"
+ * 
+ * When jurisdictionMatches() is called with one of these codes, it returns true for ANY
+ * jurisdiction, allowing the form to appear on /ma/forms, /me/forms, /mi/forms, etc.
+ * 
+ * You can add more codes to this array as needed for your use cases.
+ */
+export const nationalJurisdictions = ['NAM-US', 'NAM-US-US'];
 
 /**
  * Default jurisdiction when none is specified in form metadata
