@@ -78,19 +78,34 @@ walkDir(BLOG_DIR, (file) => {
         .relative(BLOG_DIR, file)
         .replace(/\\/g, '/')
         .replace(/\.mdx?$/, '');
+      
+      // First try to find the image next to the MDX file (relative path)
+      const srcDir = path.dirname(file);
+      const srcRelative = path.join(srcDir, imagePath);
+      
+      // Fall back to top-level blog folder
       const srcTop = path.join(BLOG_DIR, fileName);
-      const destDir = path.join(PUBLIC_BLOG_DIR, slug);
-      const destPath = path.join(destDir, fileName);
-      if (fs.existsSync(srcTop)) {
+      
+      // Use whichever exists
+      let srcFile = null;
+      if (fs.existsSync(srcRelative)) {
+        srcFile = srcRelative;
+      } else if (fs.existsSync(srcTop)) {
+        srcFile = srcTop;
+      }
+      
+      if (srcFile) {
+        const destDir = path.join(PUBLIC_BLOG_DIR, slug);
+        const destPath = path.join(destDir, fileName);
         ensureDir(destDir);
         let shouldCopy = true;
         if (fs.existsSync(destPath)) {
-          const srcStat = fs.statSync(srcTop);
+          const srcStat = fs.statSync(srcFile);
           const destStat = fs.statSync(destPath);
           shouldCopy = srcStat.mtimeMs > destStat.mtimeMs;
         }
         if (shouldCopy) {
-          fs.copyFileSync(srcTop, destPath);
+          fs.copyFileSync(srcFile, destPath);
           console.log('Copied frontmatter image for', slug, fileName);
         }
       }
