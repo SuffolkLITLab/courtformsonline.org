@@ -56,7 +56,7 @@ export const jurisdictionAliases = {
 
 /**
  * National jurisdiction codes that should appear on all jurisdiction-specific pages.
- * 
+ *
  * Forms with these jurisdiction codes will be displayed on EVERY state's jurisdiction page,
  * in addition to state-specific forms. This is useful for forms that:
  * - Apply to all states (e.g., immigration forms, federal rights)
@@ -66,10 +66,10 @@ export const jurisdictionAliases = {
  * Examples:
  * - An immigration form might have jurisdiction "NAM-US" or "NAM-US-US"
  * - A form about reasonable accommodation under the ADA might use "NAM-US"
- * 
+ *
  * When jurisdictionMatches() is called with one of these codes, it returns true for ANY
  * jurisdiction, allowing the form to appear on /ma/forms, /me/forms, /mi/forms, etc.
- * 
+ *
  * You can add more codes to this array as needed for your use cases.
  */
 export const nationalJurisdictions = ['NAM-US', 'NAM-US-US'];
