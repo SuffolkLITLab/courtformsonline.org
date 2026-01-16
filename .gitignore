@@ -15,7 +15,6 @@
 # production
 /build
 /public/sitemap.xml
-/public/blog/
 
 # lock files
 yarn.lock
