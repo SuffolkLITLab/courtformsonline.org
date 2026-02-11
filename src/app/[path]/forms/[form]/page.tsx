@@ -44,6 +44,22 @@ const isValidUrl = (url: string): boolean => {
   }
 };
 
+const isTruthyNotarizationValue = (value: unknown): boolean => {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'number') return value !== 0;
+  if (value && typeof value === 'object' && !Array.isArray(value)) {
+    const objectValue = value as Record<string, unknown>;
+    const localizedValue =
+      objectValue.en ?? objectValue.default ?? Object.values(objectValue)[0];
+    return isTruthyNotarizationValue(localizedValue);
+  }
+  if (typeof value === 'string') {
+    const normalized = value.trim().toLowerCase();
+    return ['true', 'yes', '1'].includes(normalized);
+  }
+  return false;
+};
+
 const Page = async ({ params }: PageProps) => {
   const { form, path } = params;
   const _formDetailsResponse = await getFormDetails(path, form);
@@ -105,6 +121,12 @@ const Page = async ({ params }: PageProps) => {
   // Get jurisdiction name from path config
   const jurisdictionConfig = pathToServerConfig[path];
   const jurisdictionName = jurisdictionConfig?.name || path.toUpperCase();
+  const requiresNotarization = isTruthyNotarizationValue(
+    formDetails.metadata?.requires_notarization
+  );
+  const notaryGuideHref = jurisdictionConfig
+    ? `/guides/finding-and-using-a-notary/${path}`
+    : '/guides/finding-and-using-a-notary';
 
   // Get topic display name
   const topicDetails = formTopic
@@ -186,6 +208,16 @@ const Page = async ({ params }: PageProps) => {
       <ReactMarkdown remarkPlugins={[remarkGfm]}>
         {formDetails.metadata.description}
       </ReactMarkdown>
+      {requiresNotarization && (
+        <div className="alert alert-warning mt-3 mb-3" role="alert">
+          <strong>This form needs notarization.</strong>{' '}
+          <Link href={notaryGuideHref}>
+            Read the notary guide
+            {jurisdictionConfig ? ` for ${jurisdictionName}` : ''}
+          </Link>{' '}
+          before you sign.
+        </div>
+      )}
       <p className="text-muted small">
         <Link href="/guides/how-interviews-work">
           Learn how interactive interviews work

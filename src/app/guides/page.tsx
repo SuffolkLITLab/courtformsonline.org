@@ -58,6 +58,12 @@ const guides: GuideLink[] = [
       'Locate the right courthouse for your case in your jurisdiction.',
   },
   {
+    href: '/guides/finding-and-using-a-notary',
+    title: 'Finding and using a notary',
+    description:
+      'Learn what notarization means, how to find a notary, and how to prepare if your form must be notarized.',
+  },
+  {
     href: '/guides/find-a-lawyer',
     title: 'Find legal help',
     description:
