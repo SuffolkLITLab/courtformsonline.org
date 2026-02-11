@@ -45,59 +45,8 @@ export default function FindingAndUsingANotary() {
       </p>
 
       {defaultSharedNotarySectionOrder.map((sectionKey) => {
-        const section = sharedNotarySections[sectionKey];
-        const isWhenToSignSection = sectionKey === 'when-to-sign';
-
-        return (
-          <section key={sectionKey} className="mb-4">
-            {isWhenToSignSection ? (
-              <div className="alert alert-warning" role="alert">
-                <h2 className="h4">{section.heading}</h2>
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph} className="mb-2">
-                    {paragraph}
-                  </p>
-                ))}
-                {section.bullets && (
-                  <ul className="mb-0">
-                    {section.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ) : (
-              <>
-                <h2>{section.heading}</h2>
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-                {section.bullets && (
-                  <ul>
-                    {section.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                )}
-                {section.links && (
-                  <ul>
-                    {section.links.map((link) => (
-                      <li key={link.href}>
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </>
-            )}
-          </section>
-        );
+        const Section = sharedNotarySections[sectionKey];
+        return <Section key={sectionKey} />;
       })}
 
       <h2>State-specific notarization information</h2>
