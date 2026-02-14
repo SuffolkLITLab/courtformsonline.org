@@ -40,7 +40,7 @@ export default function FindingAndUsingANotary() {
       <h1>Finding and using a notary</h1>
 
       <p className="lead">
-        Some court forms must be notarized. This page explains what notarization
+        Some formal documents must be notarized. This page explains what notarization
         is, how to prepare, and how to avoid common mistakes.
       </p>
 
