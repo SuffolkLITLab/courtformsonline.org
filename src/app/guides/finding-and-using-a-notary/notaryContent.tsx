@@ -19,17 +19,25 @@ function NotaryLinks({ links }: { links: LinkItem[] }) {
   );
 }
 
+/**
+ * Potentially shared notary information. Individual state pages can mix and
+ * match these as they want.
+ * */
+
 function WhatIsNotarySection() {
   return (
     <section className="mb-4">
-      <h2>What is a notary?</h2>
+      <h2 id="what_is_a_notary">What is a notary?</h2>
       <p>
         A notary public is a person approved by the state to check identity and
-        watch people sign important papers.
+        watch people sign important papers. Notarization helps prevent fraud.
       </p>
       <p>
-        Notarization helps prevent fraud. It does not mean the notary agrees
-        with what the document says.
+        The notary must be neutral. A person who benefits from your document
+        usually should not notarize it. In many states, a beneficiary or a party
+        to the document may not be allowed to notarize. Even if a notary
+        disagrees with what the document says, the notary can still notarize the
+        document.
       </p>
     </section>
   );
@@ -38,8 +46,16 @@ function WhatIsNotarySection() {
 function HowToFindNotarySection() {
   return (
     <section className="mb-4">
-      <h2>How to find a notary</h2>
-      <p>You can often find a notary at:</p>
+      <h2 id="how_to_find_a_notary">How to find a notary</h2>
+      <p>There are multiple ways to find notaries.</p>
+      <p>
+        For example, sometimes notaries can come to your home. You can ask in
+        your community to find out if someone you know is a notary.
+      </p>
+      <p>
+        Also, some businesses or organizations have notaries in their building
+        ready to watch people sign documents. You can often find a notary at:
+      </p>
       <ul>
         <li>Banks and credit unions</li>
         <li>Shipping stores and office service centers</li>
@@ -51,11 +67,38 @@ function HowToFindNotarySection() {
   );
 }
 
+function HowToBecomeANotarySection() {
+  return (
+    <section className="mb-4">
+      <h2 id="how_to_become_a_notary">How to become a notary</h2>
+      <p>
+        We are unable to cover the rules for becoming a notary in every state.
+        For example, in Massachussetts, a person must be over 18 and live in or
+        do regular business in Massachusetts. In Kansas, a person can live in a
+        neighboring state too as long as they work regularly in Kansas.
+      </p>
+      <p>
+        The{' '}
+        <a href="https://www.asnnotary.org/">American Society of Notaries</a>{' '}
+        has information about{' '}
+        <a href="https://asnnotary.org/?form=stateinfo">
+          becoming a notary in each state
+        </a>
+        .
+      </p>
+    </section>
+  );
+}
+
 function HowToUseNotarySection() {
   return (
     <section className="mb-4">
-      <h2>How to use a notary</h2>
-      <p>Before your appointment:</p>
+      <h2 id="how_to_use_a_notary">How to use a notary</h2>
+      <p>
+        We are unable to give the instructions for every state, so ask a local
+        notary for information specific to your situation. Here are some example
+        tasks that are often useful to do before your appointment:
+      </p>
       <ul>
         <li>Bring the full document, including all pages.</li>
         <li>Bring a valid government photo ID.</li>
@@ -70,7 +113,12 @@ function WhenToSignSection() {
   return (
     <section className="mb-4">
       <div className="alert alert-warning" role="alert">
-        <h2 className="h4">When to sign if your document needs notarization</h2>
+        <h2
+          id="when_to_sign_if_your_document_needs_notarization"
+          className="h4"
+        >
+          When to sign if your document needs notarization
+        </h2>
         <p className="mb-2">
           Do not sign early unless your form instructions clearly say you can.
         </p>
@@ -82,21 +130,9 @@ function WhenToSignSection() {
   );
 }
 
-function WhoCanNotarizeSection() {
-  return (
-    <section className="mb-4">
-      <h2>Who can notarize your documents</h2>
-      <p>
-        The notary must be neutral. A person who benefits from your document
-        usually should not notarize it.
-      </p>
-      <p>
-        For example, a beneficiary or a party to the document may not be allowed
-        to notarize, depending on state law.
-      </p>
-    </section>
-  );
-}
+/**
+ * Sections each state can customize
+ * */
 
 function MassachusettsOnlineSection() {
   return (
@@ -633,9 +669,9 @@ function VermontStatutesSection() {
 export type SharedNotarySectionKey =
   | 'what-is-a-notary'
   | 'how-to-find-a-notary'
+  | 'how-to-become-a-notary'
   | 'how-to-use-a-notary'
-  | 'when-to-sign'
-  | 'who-can-notarize';
+  | 'when-to-sign';
 
 export const sharedNotarySections: Record<
   SharedNotarySectionKey,
@@ -643,24 +679,23 @@ export const sharedNotarySections: Record<
 > = {
   'what-is-a-notary': WhatIsNotarySection,
   'how-to-find-a-notary': HowToFindNotarySection,
+  'how-to-become-a-notary': HowToBecomeANotarySection,
   'how-to-use-a-notary': HowToUseNotarySection,
   'when-to-sign': WhenToSignSection,
-  'who-can-notarize': WhoCanNotarizeSection,
 };
 
 export const defaultSharedNotarySectionOrder: SharedNotarySectionKey[] = [
   'what-is-a-notary',
   'how-to-find-a-notary',
+  'how-to-become-a-notary',
   'how-to-use-a-notary',
   'when-to-sign',
-  'who-can-notarize',
 ];
 
-const sharedNotarySectionOrderWithoutFind: SharedNotarySectionKey[] = [
+const usualSharedStateSpecificNotarySectionOrder: SharedNotarySectionKey[] = [
   'what-is-a-notary',
   'how-to-use-a-notary',
   'when-to-sign',
-  'who-can-notarize',
 ];
 
 export type SharedBlockPlacement = 'before' | 'after' | 'omit';
@@ -670,6 +705,10 @@ export interface StateNotaryConfig {
   sharedSectionOrder?: SharedNotarySectionKey[];
   stateSections?: ComponentType[];
 }
+
+/**
+ * Dynamic state content
+ * */
 
 function DefaultStateSection({ stateName }: { stateName: string }) {
   return (
@@ -687,58 +726,115 @@ function DefaultStateSection({ stateName }: { stateName: string }) {
   );
 }
 
+function HowToBecomeANotaryInStateSection({
+  stateName,
+  stateCode,
+}: {
+  stateName: string;
+  stateCode: string;
+}) {
+  /** Return a paragraph about becoming a notary for a specific state.
+   *
+   * @param stateName {str} - Name of the state. Discuss dict instead.
+   * @param stateCode {str} - 2-letter code for the state.
+   *
+   * */
+  return (
+    <section className="mb-4">
+      <h2 id="how_to_become_a_notary">How to become a notary in {stateName}</h2>
+      <p>
+        We are unable to cover the rules for becoming a notary in every state.
+        This is the American Society of Notaries page for{' '}
+        <a
+          href={
+            'https://asnnotary.org/?form=stateinfo&statecode=' +
+            stateCode.toUpperCase()
+          }
+        >
+          how to become a notary in {stateName}
+        </a>
+        .
+      </p>
+    </section>
+  );
+}
+
 export const stateNotaryOverrides: Record<string, StateNotaryConfig> = {
   ma: {
-    sharedSectionOrder: sharedNotarySectionOrderWithoutFind,
+    sharedSectionOrder: usualSharedStateSpecificNotarySectionOrder,
     stateSections: [
       MassachusettsOnlineSection,
       MassachusettsTermsSection,
       MassachusettsFindSection,
+      () => (
+        <HowToBecomeANotaryInStateSection
+          stateName="Massachusetts"
+          stateCode="ma"
+        />
+      ),
       MassachusettsStatutesSection,
     ],
   },
   me: {
-    sharedSectionOrder: sharedNotarySectionOrderWithoutFind,
+    sharedSectionOrder: usualSharedStateSpecificNotarySectionOrder,
     stateSections: [
       MaineOnlineSection,
       MaineTermsSection,
       MaineFindSection,
+      () => (
+        <HowToBecomeANotaryInStateSection stateName="Maine" stateCode="me" />
+      ),
       MaineStatutesSection,
     ],
   },
   mi: {
-    sharedSectionOrder: sharedNotarySectionOrderWithoutFind,
+    sharedSectionOrder: usualSharedStateSpecificNotarySectionOrder,
     stateSections: [
       MichiganOnlineSection,
       MichiganTermsSection,
       MichiganFindSection,
+      () => (
+        <HowToBecomeANotaryInStateSection stateName="Michigan" stateCode="mi" />
+      ),
       MichiganStatutesSection,
     ],
   },
   mn: {
-    sharedSectionOrder: sharedNotarySectionOrderWithoutFind,
+    sharedSectionOrder: usualSharedStateSpecificNotarySectionOrder,
     stateSections: [
       MinnesotaOnlineSection,
       MinnesotaTermsSection,
       MinnesotaFindSection,
+      () => (
+        <HowToBecomeANotaryInStateSection
+          stateName="Minnesota"
+          stateCode="mn"
+        />
+      ),
       MinnesotaStatutesSection,
     ],
   },
   mo: {
-    sharedSectionOrder: sharedNotarySectionOrderWithoutFind,
+    sharedSectionOrder: usualSharedStateSpecificNotarySectionOrder,
     stateSections: [
       MissouriOnlineSection,
       MissouriTermsSection,
       MissouriFindSection,
+      () => (
+        <HowToBecomeANotaryInStateSection stateName="Missouri" stateCode="mo" />
+      ),
       MissouriStatutesSection,
     ],
   },
   vt: {
-    sharedSectionOrder: sharedNotarySectionOrderWithoutFind,
+    sharedSectionOrder: usualSharedStateSpecificNotarySectionOrder,
     stateSections: [
       VermontOnlineSection,
       VermontTermsSection,
       VermontFindSection,
+      () => (
+        <HowToBecomeANotaryInStateSection stateName="Vermont" stateCode="vt" />
+      ),
       VermontStatutesSection,
     ],
   },
