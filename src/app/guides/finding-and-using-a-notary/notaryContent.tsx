@@ -72,10 +72,10 @@ function HowToBecomeANotarySection() {
     <section className="mb-4">
       <h2 id="how_to_become_a_notary">How to become a notary</h2>
       <p>
-        We are unable to cover the rules for becoming a notary in every state.
-        For example, in Massachussetts, a person must be over 18 and live in or
-        do regular business in Massachusetts. In Kansas, a person can live in a
-        neighboring state too as long as they work regularly in Kansas.
+        Each state has its own requirements for becoming a notary. For example,
+        in Massachussetts, a person must be over 18 and live in or do regular
+        business in Massachusetts. In Kansas, a person can live in a neighboring
+        state too as long as they work regularly in Kansas.
       </p>
       <p>
         The{' '}
@@ -95,9 +95,9 @@ function HowToUseNotarySection() {
     <section className="mb-4">
       <h2 id="how_to_use_a_notary">How to use a notary</h2>
       <p>
-        We are unable to give the instructions for every state, so ask a local
-        notary for information specific to your situation. Here are some example
-        tasks that are often useful to do before your appointment:
+        Each state has it's own requirements, so ask a local notary for
+        information specific to your situation. Here are some example tasks that
+        are often useful to do before your appointment:
       </p>
       <ul>
         <li>Bring the full document, including all pages.</li>
@@ -743,7 +743,6 @@ function HowToBecomeANotaryInStateSection({
     <section className="mb-4">
       <h2 id="how_to_become_a_notary">How to become a notary in {stateName}</h2>
       <p>
-        We are unable to cover the rules for becoming a notary in every state.
         This is the American Society of Notaries page for{' '}
         <a
           href={
