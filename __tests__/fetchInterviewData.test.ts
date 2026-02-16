@@ -1,4 +1,7 @@
-import { extractLocalizedFees, normalizeEfilingEnabled } from '../src/data/fetchInterviewData';
+import {
+  extractLocalizedFees,
+  normalizeEfilingEnabled,
+} from '../src/data/fetchInterviewData';
 
 describe('extractLocalizedFees', () => {
   const locale = 'en';
@@ -52,10 +55,11 @@ describe('extractLocalizedFees', () => {
   });
 });
 
-
 describe('normalizeEfilingEnabled', () => {
   it('uses efiling_enabled when integrated keys are not present', () => {
-    expect(normalizeEfilingEnabled({ efiling_enabled: true } as any)).toBe(true);
+    expect(normalizeEfilingEnabled({ efiling_enabled: true } as any)).toBe(
+      true
+    );
     expect(normalizeEfilingEnabled({ efiling_enabled: 'email' } as any)).toBe(
       'email'
     );

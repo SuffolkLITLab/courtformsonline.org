@@ -128,11 +128,9 @@ function extractLocalizedArray(
   }
 }
 
-
-export function normalizeEfilingEnabled(metadata: RawInterview['metadata']):
-  | boolean
-  | 'email'
-  | undefined {
+export function normalizeEfilingEnabled(
+  metadata: RawInterview['metadata']
+): boolean | 'email' | undefined {
   if (!metadata) return undefined;
 
   // Prefer integrated_* keys when present, then fall back to efiling_enabled.
