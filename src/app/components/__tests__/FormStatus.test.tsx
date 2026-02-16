@@ -52,4 +52,20 @@ describe('FormStatus component', () => {
     expect(screen.getByText('Preview')).toBeInTheDocument();
     expect(screen.getByText('E-filing available')).toBeInTheDocument();
   });
+
+  test('renders Email filing available for integrated_email_filing metadata', () => {
+    render(<FormStatus integratedEmailFiling={true} />);
+    expect(screen.getByText('Email filing available')).toBeInTheDocument();
+  });
+
+  test('renders E-filing available for integrated_efiling metadata', () => {
+    render(<FormStatus integratedEfiling={true} />);
+    expect(screen.getByText('E-filing available')).toBeInTheDocument();
+  });
+
+  test('integrated metadata takes precedence over efiling_enabled', () => {
+    render(<FormStatus efilingEnabled={true} integratedEmailFiling={true} />);
+    expect(screen.getByText('Email filing available')).toBeInTheDocument();
+    expect(screen.queryByText('E-filing available')).not.toBeInTheDocument();
+  });
 });

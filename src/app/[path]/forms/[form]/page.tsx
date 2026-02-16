@@ -202,6 +202,8 @@ const Page = async ({ params }: PageProps) => {
           <FormStatus
             maturity={formDetails.metadata.maturity}
             efilingEnabled={formDetails.metadata.efiling_enabled}
+            integratedEfiling={formDetails.metadata.integrated_efiling}
+            integratedEmailFiling={formDetails.metadata.integrated_email_filing}
           />
         </div>
       </div>

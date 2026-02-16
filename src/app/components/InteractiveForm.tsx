@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 
 import { toUrlFriendlyString } from '../utils/helpers';
 import styles from '../css/InteractiveForm.module.css';
+import FormStatus from './FormStatus';
 
 interface InteractiveFormProps {
   title: string;
@@ -35,6 +36,14 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
         <Link className={styles.FormLink} href={landingPageURL}>
           <h2 className="form-title mb-3">{title}</h2>
         </Link>
+        <div className="mb-2">
+          <FormStatus
+            maturity={metadata?.maturity}
+            efilingEnabled={metadata?.efiling_enabled}
+            integratedEfiling={metadata?.integrated_efiling}
+            integratedEmailFiling={metadata?.integrated_email_filing}
+          />
+        </div>
         <div className="form-description">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {metadata.description}
