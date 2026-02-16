@@ -4,6 +4,8 @@ import styles from '../css/FormStatus.module.css';
 interface FormStatusProps {
   maturity?: string | null;
   efilingEnabled?: boolean | 'email' | null;
+  integratedEfiling?: boolean | null;
+  integratedEmailFiling?: boolean | null;
 }
 
 function formatDate(dateStr: string) {
@@ -20,8 +22,33 @@ function formatDate(dateStr: string) {
   }
 }
 
-const FormStatus = ({ maturity, efilingEnabled }: FormStatusProps) => {
+function resolveEfilingStatus({
+  efilingEnabled,
+  integratedEfiling,
+  integratedEmailFiling,
+}: Pick<
+  FormStatusProps,
+  'efilingEnabled' | 'integratedEfiling' | 'integratedEmailFiling'
+>): boolean | 'email' | null | undefined {
+  if (integratedEmailFiling === true) return 'email';
+  if (integratedEfiling === true) return true;
+  if (integratedEmailFiling === false) return false;
+  if (integratedEfiling === false) return false;
+  return efilingEnabled;
+}
+
+const FormStatus = ({
+  maturity,
+  efilingEnabled,
+  integratedEfiling,
+  integratedEmailFiling,
+}: FormStatusProps) => {
   const mat = (maturity || '').toLowerCase();
+  const effectiveEfilingStatus = resolveEfilingStatus({
+    efilingEnabled,
+    integratedEfiling,
+    integratedEmailFiling,
+  });
 
   const badgeInfo = (() => {
     switch (mat) {
@@ -40,12 +67,12 @@ const FormStatus = ({ maturity, efilingEnabled }: FormStatusProps) => {
   })();
 
   const efilingBadgeInfo = (() => {
-    if (efilingEnabled === 'email') {
+    if (effectiveEfilingStatus === 'email') {
       return {
         label: 'Email filing available',
         className: 'text-bg-success text-white',
       };
-    } else if (efilingEnabled === true) {
+    } else if (effectiveEfilingStatus === true) {
       return {
         label: 'E-filing available',
         className: 'text-bg-success text-white',
