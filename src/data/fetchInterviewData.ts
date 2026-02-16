@@ -44,6 +44,9 @@ interface RawInterview {
     languages?: string[];
     fees?: RawFee[] | string[] | LocalizedString;
     update_notes?: string | LocalizedString;
+    efiling_enabled?: boolean | 'email';
+    integrated_efiling?: boolean;
+    integrated_email_filing?: boolean;
     [key: string]: any;
   };
   tags?: string[];
@@ -77,6 +80,7 @@ interface Interview {
     languages: string[];
     fees: Fee[];
     update_notes: string;
+    efiling_enabled?: boolean | 'email';
     [key: string]: any;
   };
   tags: string[];
@@ -122,6 +126,38 @@ function extractLocalizedArray(
   } else {
     return [];
   }
+}
+
+
+export function normalizeEfilingEnabled(metadata: RawInterview['metadata']):
+  | boolean
+  | 'email'
+  | undefined {
+  if (!metadata) return undefined;
+
+  // Prefer integrated_* keys when present, then fall back to efiling_enabled.
+  if (metadata.integrated_email_filing === true) {
+    return 'email';
+  }
+
+  if (metadata.integrated_efiling === true) {
+    return true;
+  }
+
+  if (metadata.integrated_email_filing === false) {
+    return false;
+  }
+
+  if (metadata.integrated_efiling === false) {
+    return false;
+  }
+
+  const explicit = metadata.efiling_enabled;
+  if (explicit === 'email' || typeof explicit === 'boolean') {
+    return explicit;
+  }
+
+  return undefined;
 }
 
 function parseFeeAmount(value: any): number | undefined {
@@ -353,6 +389,7 @@ export const fetchInterviews = async (path: string) => {
                   interview.metadata?.update_notes,
                   locale
                 ),
+                efiling_enabled: normalizeEfilingEnabled(interview.metadata),
               },
               tags: interview.tags ?? [],
               filename: interview.filename ?? '',
