@@ -1,0 +1,67 @@
+.filterButton {
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: 2px solid #dee2e6;
+  background: white;
+  color: #495057;
+}
+
+.filterButton:hover {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.filterButtonActive {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  color: white;
+}
+
+.filterButtonActive:hover {
+  background-color: #0b5ed7;
+  color: white;
+}
+
+.listCard {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.listCard:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-left-color: #0d6efd;
+}
+
+.gridCard {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+
+.gridCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.iconBox {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.iconBoxGrid {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+}

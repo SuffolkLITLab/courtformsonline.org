@@ -1,0 +1,114 @@
+.heroSectionSpanish {
+  background-color: #fdfbf7;
+  border-bottom: 5px solid #e63946;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroSectionSpanish::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(230,57,70,0.1) 0%, rgba(253,251,247,0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.cardSpanish {
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.cardSpanish:hover {
+  border-color: #e63946;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(230,57,70,0.15);
+}
+
+.iconContainer {
+  width: 70px;
+  height: 70px;
+  border-radius: 1rem;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #1d3557;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cardSpanish:hover .iconContainer {
+  background-color: #e63946;
+  color: white;
+}
+
+.stateSelectorSpanish {
+  background-color: #1d3557;
+  color: white;
+  padding: 3rem 0;
+}
+
+.btnPrimarySpanish {
+  background-color: #e63946;
+  border-color: #e63946;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.btnPrimarySpanish:hover {
+  background-color: #d62828;
+  border-color: #d62828;
+  color: white;
+}
+
+.btnOutlineSpanish {
+  color: #1d3557;
+  border: 2px solid #1d3557;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+}
+
+.btnOutlineSpanish:hover {
+  background-color: #1d3557;
+  color: white;
+}
+
+.resourceCard {
+  border-left: 4px solid #457b9d;
+  background-color: #f1faee;
+  padding: 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+.resourceLink {
+  color: #1d3557;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.resourceLink:hover {
+  color: #e63946;
+  text-decoration: underline;
+}
