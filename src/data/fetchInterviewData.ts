@@ -94,6 +94,12 @@ interface Data {
   interviews?: RawInterview[];
 }
 
+export interface FetchInterviewsResult {
+  interviewsByTopic: { [key: string]: Interview[] };
+  isError: boolean;
+  hasFetchErrors: boolean;
+}
+
 const FETCH_RETRY_ATTEMPTS = 3;
 const FETCH_TIMEOUT_MS = 20000;
 
@@ -304,7 +310,9 @@ export function extractLocalizedFees(
   return [];
 }
 
-export const fetchInterviews = async (path: string) => {
+export const fetchInterviews = async (
+  path: string
+): Promise<FetchInterviewsResult> => {
   const config = pathToServerConfig[path];
   const serverNames = config
     ? config.servers

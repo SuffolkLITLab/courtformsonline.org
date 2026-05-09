@@ -9,21 +9,29 @@ interface TopLevelTopicLandingProps {
   topic: string;
 }
 
+const getInterviewsForPath = cache(async (path: string) =>
+  fetchInterviews(path)
+);
+
 const getJurisdictionsWithTopic = cache(async (topic: string) => {
   const results = await Promise.all(
     Object.entries(pathToServerConfig).map(async ([path, config]) => {
-      const { interviewsByTopic, isError } = await fetchInterviews(path);
+      const { interviewsByTopic, isError, hasFetchErrors } =
+        await getInterviewsForPath(path);
       const interviews = interviewsByTopic[topic] || [];
       return {
         path,
         name: (config as { name: string }).name,
         hasTopicMatches: interviews.length > 0,
         isError,
+        hasFetchErrors,
       };
     })
   );
 
-  const hasAnyFetchErrors = results.some((entry) => entry.isError);
+  const hasAnyFetchErrors = results.some(
+    (entry) => entry.isError || entry.hasFetchErrors
+  );
 
   const filteredResults = hasAnyFetchErrors
     ? results

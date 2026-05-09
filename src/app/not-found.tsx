@@ -38,7 +38,7 @@ export default function NotFound() {
         } else {
           void fetch(endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
             body: payload,
             keepalive: true,
             mode: 'no-cors',
