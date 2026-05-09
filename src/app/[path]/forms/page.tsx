@@ -4,74 +4,33 @@ import Link from 'next/link';
 import { Form } from '../../interfaces/Form';
 import InteractiveForm from '../../components/InteractiveForm';
 import LegalResourceLink from '../../components/LegalResourceLink';
-import {
-  pathToServerConfig,
-  formSources,
-  excludedForms,
-} from '../../../config/formSources.config';
+import { pathToServerConfig } from '../../../config/formSources.config';
 import { toUrlFriendlyString } from '../../utils/helpers';
 import styles from '../../css/AllFormsContainer.module.css';
 import {
   getJurisdictionFromPath,
-  jurisdictionMatches,
   getAvailableJurisdictions,
 } from '../../../utils/jurisdiction';
-import { getMassLRFRootUrl } from '../../../utils/masslrf';
 import { getLegalHelpInfo } from '../../../utils/legalHelpService';
+import { fetchInterviews } from '../../../data/fetchInterviewData';
 
 const SearchSection = dynamic(() => import('../../components/SearchSection'), {
   ssr: false,
 });
 
-async function getData() {
-  let allData: Form[] = [];
-  // Import fee extraction logic
-  // @ts-ignore
-  const { extractLocalizedFees } =
-    await import('../../../data/fetchInterviewData');
-  const locale = 'en';
+async function getData(path: string) {
+  const { interviewsByTopic } = await fetchInterviews(path);
+  const formsByTitle = new Map<string, Form>();
 
-  for (const server of formSources.docassembleServers) {
-    const url = new URL(server.url);
-    url.pathname = '/list';
-    url.search = 'json=1';
+  Object.values(interviewsByTopic).forEach((interviews) => {
+    interviews.forEach((interview: any) => {
+      if (!formsByTitle.has(interview.title)) {
+        formsByTitle.set(interview.title, interview);
+      }
+    });
+  });
 
-    const res = await fetch(url.toString());
-    if (!res.ok) {
-      console.error(`Failed to fetch data from ${server.url}`);
-      continue;
-    }
-    const data = await res.json();
-    if (!data.hasOwnProperty('interviews')) {
-      console.error(
-        `Data from ${server.url} does not contain "interviews" key`
-      );
-      continue;
-    }
-    // Filter out excluded forms for this server
-    const exclusions = excludedForms[server.key] || [];
-
-    // Normalize fees in metadata
-    const interviews = data['interviews']
-      .filter((interview: any) => !exclusions.includes(interview.filename))
-      .map((interview: any) => {
-        let fees = [];
-        if (interview.metadata && interview.metadata.fees) {
-          fees = extractLocalizedFees(interview.metadata.fees, locale);
-        }
-        return {
-          ...interview,
-          serverName: server.name,
-          serverUrl: server.url,
-          metadata: {
-            ...interview.metadata,
-            fees,
-          },
-        };
-      });
-    allData = allData.concat(interviews);
-  }
-  return allData;
+  return Array.from(formsByTitle.values());
 }
 
 interface PageProps {
@@ -81,20 +40,11 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  const allForms = await getData();
   const { path } = params;
+  const forms = await getData(path);
   const jurisdictionName = getJurisdictionFromPath(path);
   const moreFormsUrl = pathToServerConfig[path]?.moreFormsUrl;
   const availableJurisdictions = getAvailableJurisdictions();
-
-  // Filter forms by jurisdiction
-  const forms = allForms.filter((form) =>
-    jurisdictionMatches(
-      form.metadata?.jurisdiction,
-      jurisdictionName,
-      form.serverUrl
-    )
-  );
 
   // Get legal help info for this jurisdiction
   const { deepLink, DisclaimerComponent } = await getLegalHelpInfo({
