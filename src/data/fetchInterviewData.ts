@@ -94,6 +94,36 @@ interface Data {
   interviews?: RawInterview[];
 }
 
+const FETCH_RETRY_ATTEMPTS = 3;
+const FETCH_TIMEOUT_MS = 20000;
+
+async function fetchJsonWithRetry(url: string): Promise<Data> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= FETCH_RETRY_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+
+      return (await response.json()) as Data;
+    } catch (error) {
+      lastError = error;
+      if (attempt === FETCH_RETRY_ATTEMPTS) {
+        throw error;
+      }
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  throw lastError;
+}
+
 // Helper function to extract localized strings
 function extractLocalizedString(
   value: string | LocalizedString | undefined,
@@ -286,13 +316,15 @@ export const fetchInterviews = async (path: string) => {
   const locale = 'en'; // Todo: make this dynamic
 
   let allInterviews: Interview[] = [];
+  let successfulServerCount = 0;
+  let hasFetchErrors = false;
   for (const server of servers) {
     const url = new URL(`${server.url}/list`);
     url.search = 'json=1';
 
     try {
-      const response = await fetch(url.toString());
-      const data: Data = await response.json();
+      const data: Data = await fetchJsonWithRetry(url.toString());
+      successfulServerCount++;
 
       if (data && data.interviews) {
         const taggedInterviews = data.interviews
@@ -397,6 +429,7 @@ export const fetchInterviews = async (path: string) => {
         allInterviews = allInterviews.concat(taggedInterviews);
       }
     } catch (error) {
+      hasFetchErrors = true;
       console.error(
         'Failed to fetch interviews from server:',
         server.name,
@@ -455,5 +488,9 @@ export const fetchInterviews = async (path: string) => {
     }
   });
 
-  return { interviewsByTopic, isError: false };
+  return {
+    interviewsByTopic,
+    isError: successfulServerCount === 0,
+    hasFetchErrors,
+  };
 };

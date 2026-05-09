@@ -26,6 +26,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     urls.add(`${siteUrl}${joinWithPrefix(r)}`);
   }
 
+  // Legacy root-level topic pages (e.g., /housing)
+  for (const topic of legalTopics) {
+    urls.add(`${siteUrl}${joinWithPrefix(`/${topic.name.toLowerCase()}`)}`);
+  }
+
   // For all paths defined in config, create path-level pages and fetch interviews
   const paths = Object.keys(pathToServerConfig);
 

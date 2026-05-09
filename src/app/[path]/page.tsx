@@ -15,7 +15,8 @@ interface PageProps {
 
 const Page = async ({ params }: PageProps) => {
   const { path } = params;
-  const { interviewsByTopic, isError } = await fetchInterviews(path);
+  const { interviewsByTopic, isError, hasFetchErrors } =
+    await fetchInterviews(path);
 
   return (
     <div>
@@ -29,6 +30,7 @@ const Page = async ({ params }: PageProps) => {
         path={path}
         interviews={interviewsByTopic}
         isError={isError}
+        hasFetchErrors={hasFetchErrors}
       />
       <HowToUseFormsSection />
       <BlogPreview />

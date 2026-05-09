@@ -20,6 +20,31 @@ export default function NotFound() {
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
       setKeyword(extractKeywordFromPath(pathname));
+
+      const endpoint = process.env.NEXT_PUBLIC_404_LOG_ENDPOINT;
+      if (endpoint) {
+        const payload = JSON.stringify({
+          event: '404',
+          pathname,
+          referrer: document.referrer || null,
+          timestamp: new Date().toISOString(),
+        });
+
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(
+            endpoint,
+            new Blob([payload], { type: 'application/json' })
+          );
+        } else {
+          void fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: payload,
+            keepalive: true,
+            mode: 'no-cors',
+          });
+        }
+      }
     }
   }, []);
 
