@@ -2,68 +2,37 @@
 import dynamic from 'next/dynamic';
 import { Form } from '../interfaces/Form';
 import InteractiveForm from '../components/InteractiveForm';
-import {
-  pathToServerConfig,
-  formSources,
-  excludedForms,
-} from '../../config/formSources.config';
+import { pathToServerConfig } from '../../config/formSources.config';
 import { toUrlFriendlyString } from '../utils/helpers';
 import styles from '../css/AllFormsContainer.module.css';
-
-const serverProps = pathToServerConfig;
+import { fetchInterviews } from '../../data/fetchInterviewData';
 
 const SearchSection = dynamic(() => import('../components/SearchSection'), {
   ssr: false,
 });
 
 async function getData() {
-  let allData: Form[] = [];
+  const formsByPathAndTitle = new Map<string, Form>();
 
-  // Iterating over an array of server objects
-  for (const server of formSources.docassembleServers) {
-    const url = new URL(server.url); // Access the URL directly from the server object
-    url.pathname = '/list';
-    url.search = 'json=1';
+  await Promise.all(
+    Object.keys(pathToServerConfig).map(async (path) => {
+      const { interviewsByTopic } = await fetchInterviews(path);
 
-    const res = await fetch(url.toString());
+      Object.values(interviewsByTopic).forEach((interviews) => {
+        interviews.forEach((interview: any) => {
+          const key = `${path}:${interview.title}`;
+          if (!formsByPathAndTitle.has(key)) {
+            formsByPathAndTitle.set(key, {
+              ...interview,
+              serverPath: `/${path}`,
+            });
+          }
+        });
+      });
+    })
+  );
 
-    // Handle errors
-    if (!res.ok) {
-      console.error(`Failed to fetch data from ${server.url}`);
-      continue; // Skip this server and continue with the next one
-    }
-
-    const data = await res.json();
-
-    if (!data.hasOwnProperty('interviews')) {
-      console.error(
-        `Data from ${server.url} does not contain "interviews" key`
-      );
-      continue; // Skip this server and continue with the next one
-    }
-
-    let path = '';
-    for (let key in serverProps) {
-      if (serverProps[key].servers.indexOf(server.name) > -1) path = '/' + key;
-    }
-
-    // Filter out excluded forms for this server
-    const exclusions = excludedForms[server.key] || [];
-
-    // Include the server name and server URL in the data
-    const interviews = data['interviews']
-      .filter((interview: any) => !exclusions.includes(interview.filename))
-      .map((interview: Form) => ({
-        ...interview,
-        serverName: server.name,
-        serverUrl: server.url,
-        serverPath: path ? path : '',
-      }));
-
-    allData = allData.concat(interviews);
-  }
-
-  return allData;
+  return Array.from(formsByPathAndTitle.values());
 }
 
 export default async function Page(path) {
