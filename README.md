@@ -43,3 +43,15 @@ This project uses Next.js [Metadata Route](https://nextjs.org/docs/app/api-refer
 
 - **Development**: The sitemap is available at `/sitemap.xml` and is generated dynamically on request.
 - **Production (Static Export)**: When running `npm run build`, Next.js automatically generates `sitemap.xml` in the output directory based on the logic in `src/app/sitemap.ts`. No manual scripts are required.
+
+## Tracking 404s on GitHub Pages
+
+Because this site is a static export, there is no server-side 404 log. Instead, the `not-found` page can send client-side events to an external endpoint.
+
+Set this environment variable at build time:
+
+```bash
+NEXT_PUBLIC_404_LOG_ENDPOINT=https://your-endpoint.example/log-404
+```
+
+When configured, every 404 page view sends a small JSON payload (`pathname`, `referrer`, `timestamp`) to that endpoint. You can store those events (for example in a simple database or spreadsheet pipeline) and review them periodically to add redirects or new landing pages.

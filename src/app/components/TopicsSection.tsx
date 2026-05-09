@@ -5,7 +5,7 @@ import { MAX_VISIBLE_CATEGORIES } from '../../config/constants';
 import TopicCard from './TopicCard';
 import styles from '../css/TopicsSection.module.css';
 
-const TopicsSection = async ({ path, interviews, isError }) => {
+const TopicsSection = async ({ path, interviews, isError, hasFetchErrors }) => {
   if (isError) {
     return <div>Error fetching data.</div>;
   }
@@ -19,7 +19,9 @@ const TopicsSection = async ({ path, interviews, isError }) => {
     .sort((a, b) => b.priority - a.priority)
     .filter(
       (topic) =>
-        topic.always_visible || interviews[topic.name.toLowerCase()].length > 0
+        topic.always_visible ||
+        hasFetchErrors ||
+        interviews[topic.name.toLowerCase()].length > 0
     );
 
   return (

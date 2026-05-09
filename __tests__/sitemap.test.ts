@@ -20,6 +20,7 @@ describe('sitemap generation', () => {
         ],
       },
       isError: false,
+      hasFetchErrors: false,
     }));
   });
 

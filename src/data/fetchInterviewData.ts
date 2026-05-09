@@ -94,6 +94,73 @@ interface Data {
   interviews?: RawInterview[];
 }
 
+export interface FetchInterviewsResult {
+  interviewsByTopic: { [key: string]: Interview[] };
+  isError: boolean;
+  hasFetchErrors: boolean;
+}
+
+const FETCH_RETRY_ATTEMPTS = 2;
+const FETCH_TIMEOUT_MS = Number(
+  process.env.INTERVIEW_FETCH_TIMEOUT_MS ?? 10000
+);
+
+type ServerConfig = (typeof formSources.docassembleServers)[number];
+
+interface ServerFetchResult {
+  server: ServerConfig;
+  data?: Data;
+  error?: unknown;
+}
+
+const interviewsCache = new Map<string, Promise<FetchInterviewsResult>>();
+
+async function fetchJsonWithRetry(url: string): Promise<Data> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= FETCH_RETRY_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+
+      return (await response.json()) as Data;
+    } catch (error) {
+      lastError = error;
+      if (attempt === FETCH_RETRY_ATTEMPTS) {
+        throw error;
+      }
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  throw lastError;
+}
+
+async function fetchServerInterviews(
+  server: ServerConfig
+): Promise<ServerFetchResult> {
+  const url = new URL(`${server.url}/list`);
+  url.search = 'json=1';
+
+  try {
+    return {
+      server,
+      data: await fetchJsonWithRetry(url.toString()),
+    };
+  } catch (error) {
+    return {
+      server,
+      error,
+    };
+  }
+}
+
 // Helper function to extract localized strings
 function extractLocalizedString(
   value: string | LocalizedString | undefined,
@@ -274,7 +341,9 @@ export function extractLocalizedFees(
   return [];
 }
 
-export const fetchInterviews = async (path: string) => {
+const fetchInterviewsForPath = async (
+  path: string
+): Promise<FetchInterviewsResult> => {
   const config = pathToServerConfig[path];
   const serverNames = config
     ? config.servers
@@ -286,15 +355,28 @@ export const fetchInterviews = async (path: string) => {
   const locale = 'en'; // Todo: make this dynamic
 
   let allInterviews: Interview[] = [];
-  for (const server of servers) {
-    const url = new URL(`${server.url}/list`);
-    url.search = 'json=1';
+  let successfulServerCount = 0;
+  let hasFetchErrors = false;
 
-    try {
-      const response = await fetch(url.toString());
-      const data: Data = await response.json();
+  const serverResults = await Promise.all(servers.map(fetchServerInterviews));
 
-      if (data && data.interviews) {
+  for (const result of serverResults) {
+    const { server, data, error } = result;
+
+    if (error) {
+      hasFetchErrors = true;
+      console.error(
+        'Failed to fetch interviews from server:',
+        server.name,
+        error
+      );
+      continue;
+    }
+
+    if (data) {
+      successfulServerCount++;
+
+      if (data.interviews) {
         const taggedInterviews = data.interviews
           .filter((interview: RawInterview) => !interview.metadata?.unlisted)
           .filter((interview: RawInterview) => {
@@ -396,12 +478,6 @@ export const fetchInterviews = async (path: string) => {
           );
         allInterviews = allInterviews.concat(taggedInterviews);
       }
-    } catch (error) {
-      console.error(
-        'Failed to fetch interviews from server:',
-        server.name,
-        error
-      );
     }
   }
 
@@ -455,5 +531,23 @@ export const fetchInterviews = async (path: string) => {
     }
   });
 
-  return { interviewsByTopic, isError: false };
+  return {
+    interviewsByTopic,
+    isError: successfulServerCount === 0,
+    hasFetchErrors,
+  };
+};
+
+export const fetchInterviews = (
+  path: string
+): Promise<FetchInterviewsResult> => {
+  const normalizedPath = path.toLowerCase();
+  const cached = interviewsCache.get(normalizedPath);
+  if (cached) {
+    return cached;
+  }
+
+  const promise = fetchInterviewsForPath(normalizedPath);
+  interviewsCache.set(normalizedPath, promise);
+  return promise;
 };
