@@ -4,6 +4,17 @@ import '@testing-library/jest-dom';
 import HeroSection from '../HeroSection';
 
 describe('HeroSection SPOT modal', () => {
+  test('renders a state outline next to the jurisdiction headline', () => {
+    const { container } = render(
+      <HeroSection path="me" interviews={[]} isError={false} />
+    );
+
+    expect(
+      screen.getByRole('heading', { name: /free diy legal help for maine/i })
+    ).toBeInTheDocument();
+    expect(container.querySelector('#hero-left h1 svg')).toBeInTheDocument();
+  });
+
   test('renders the small "what is this?" link and opens popover with explanation and privacy policy link', async () => {
     render(<HeroSection path="test" interviews={[]} isError={false} />);
 
