@@ -4,16 +4,10 @@ import { render, screen as screenLib } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import React from 'react';
 
-// Stub ESM imports from node_modules which Jest doesn't transform by default
-jest.mock('react-markdown', () => ({
+jest.mock('../src/app/components/MarkdownContent', () => ({
   __esModule: true,
   default: ({ children }) => children,
 }));
-jest.mock('react-markdown', () => ({
-  __esModule: true,
-  default: ({ children }) => children,
-}));
-jest.mock('remark-gfm', () => ({}));
 jest.mock('../src/data/fetchInterviewData', () => ({
   fetchInterviews: jest.fn(),
 }));

@@ -10,8 +10,6 @@
   - areaServed (Schema.org): https://schema.org/areaServed
   - Schema validator: https://validator.schema.org/
 */
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
@@ -25,6 +23,7 @@ import FormStatus from '../../../components/FormStatus';
 import SimilarForms from '../../../components/SimilarForms';
 import LegalResourceLink from '../../../components/LegalResourceLink';
 import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
+import MarkdownContent from '../../../components/MarkdownContent';
 import { pathToServerConfig } from '../../../../config/formSources.config';
 import { legalTopics } from '../../../../config/topics.config';
 
@@ -207,9 +206,7 @@ const Page = async ({ params }: PageProps) => {
           />
         </div>
       </div>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-        {formDetails.metadata.description}
-      </ReactMarkdown>
+      <MarkdownContent>{formDetails.metadata.description}</MarkdownContent>
       {requiresNotarization && (
         <div className="alert alert-warning mt-3 mb-3" role="alert">
           <strong>This form needs notarization.</strong>{' '}
@@ -295,18 +292,16 @@ const Page = async ({ params }: PageProps) => {
         </>
       )}
       <h2 className="mt-4">Can I use this tool?</h2>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      <MarkdownContent>
         {formDetails.metadata.can_I_use_this_form}
-      </ReactMarkdown>
+      </MarkdownContent>
       <p className="text-muted small">
         <Link href="/guides/choosing-right-form">
           How to select the right court form
         </Link>
       </p>
       <h2 className="mt-4">Before you start</h2>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-        {formDetails.metadata.before_you_start}
-      </ReactMarkdown>
+      <MarkdownContent>{formDetails.metadata.before_you_start}</MarkdownContent>
       {!formDetails.metadata.before_you_start?.trim() && (
         <div>
           <p>General information about court forms:</p>
