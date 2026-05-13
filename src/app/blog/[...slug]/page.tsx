@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { notFound } from 'next/navigation';
 import { getBlogPostBySlug, getAllBlogSlugs } from '../../../data/getBlogPosts';
+import MarkdownContent from '../../components/MarkdownContent';
 import styles from '../../css/Blog.module.css';
 
 interface PageProps {
@@ -69,9 +68,7 @@ export default function BlogPostPage({ params }: PageProps) {
         </header>
 
         <div className={styles.blogPostContent}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {post.content}
-          </ReactMarkdown>
+          <MarkdownContent>{post.content}</MarkdownContent>
         </div>
       </article>
     </div>

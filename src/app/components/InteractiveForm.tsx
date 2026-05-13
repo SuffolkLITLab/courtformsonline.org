@@ -1,14 +1,12 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import ReactMarkdown from 'react-markdown';
 
 import Link from 'next/link';
-
-import remarkGfm from 'remark-gfm';
 
 import { toUrlFriendlyString } from '../utils/helpers';
 import styles from '../css/InteractiveForm.module.css';
 import FormStatus from './FormStatus';
+import MarkdownContent from './MarkdownContent';
 
 interface InteractiveFormProps {
   title: string;
@@ -45,9 +43,7 @@ const InteractiveForm: React.FC<InteractiveFormProps> = ({
           />
         </div>
         <div className="form-description">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {metadata.description}
-          </ReactMarkdown>
+          <MarkdownContent>{metadata.description}</MarkdownContent>
           <Link href={landingPageURL}>Learn more about this form</Link>
         </div>
       </div>
