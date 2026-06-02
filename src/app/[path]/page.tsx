@@ -18,7 +18,7 @@ interface PageProps {
 }
 
 const Page = async ({ params }: PageProps) => {
-  const normalizedPath = params.path.toLowerCase();
+  const normalizedPath = params.path.toLowerCase().replace(/\/$/, '');
   const isJurisdiction = Boolean(pathToServerConfig[normalizedPath]);
   const isTopLevelTopic = legalTopics.some(
     (topic) => topic.name.toLowerCase() === normalizedPath
