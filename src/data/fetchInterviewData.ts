@@ -541,7 +541,7 @@ const fetchInterviewsForPath = async (
 export const fetchInterviews = (
   path: string
 ): Promise<FetchInterviewsResult> => {
-  const normalizedPath = path.toLowerCase();
+  const normalizedPath = path.toLowerCase().replace(/\/$/, '');
   const cached = interviewsCache.get(normalizedPath);
   if (cached) {
     return cached;

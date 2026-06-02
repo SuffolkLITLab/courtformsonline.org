@@ -40,15 +40,16 @@ const Page = async ({ params }: PageProps) => {
     return <div>Error fetching data.</div>;
   }
 
-  const topicDetails = legalTopics.find((t) => t.name.toLowerCase() === topic);
-  const topicDisplayName = topicDetails?.long_name || topic;
+  const normalizedTopic = topic.toLowerCase().replace(/\/$/, '');
+  const topicDetails = legalTopics.find((t) => t.name.toLowerCase() === normalizedTopic);
+  const topicDisplayName = topicDetails?.long_name || normalizedTopic;
 
-  const interviews = interviewsByTopic[topic] || [];
+  const interviews = interviewsByTopic[normalizedTopic] || [];
 
   // Get legal help info using centralized service
   const { deepLink, DisclaimerComponent } = await getLegalHelpInfo({
     jurisdiction: path,
-    topic,
+    topic: normalizedTopic,
     isTopicPage: true,
   });
 
@@ -56,7 +57,7 @@ const Page = async ({ params }: PageProps) => {
   const breadcrumbItems: BreadcrumbItem[] = [
     { label: 'Home', href: '/' },
     { label: jurisdictionName, href: `/${path}` },
-    { label: topicDetails?.long_name || topic },
+    { label: topicDetails?.long_name || normalizedTopic },
   ];
 
   return (
