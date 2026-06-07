@@ -41,7 +41,9 @@ const Page = async ({ params }: PageProps) => {
   }
 
   const normalizedTopic = topic.toLowerCase().replace(/\/$/, '');
-  const topicDetails = legalTopics.find((t) => t.name.toLowerCase() === normalizedTopic);
+  const topicDetails = legalTopics.find(
+    (t) => t.name.toLowerCase() === normalizedTopic
+  );
   const topicDisplayName = topicDetails?.long_name || normalizedTopic;
 
   const interviews = interviewsByTopic[normalizedTopic] || [];
