@@ -28,15 +28,8 @@ function readHistoryView(state: unknown): CheckupView | null {
     view.needPage < 0
   )
     return null;
-  const topic = checkupTopics.find((topic) => topic.id === view.screen);
-  const pages = topic
-    ? Math.ceil(topic.needs.length / (topic.needs.length > 4 ? 3 : 4))
-    : 1;
-  return {
-    screen: view.screen,
-    page: view.page,
-    needPage: Math.min(view.needPage, pages - 1),
-  };
+  // Pages are clamped at render time, where the page counts are known.
+  return { screen: view.screen, page: view.page, needPage: view.needPage };
 }
 
 export default function LegalCheckup({
@@ -47,7 +40,7 @@ export default function LegalCheckup({
   hasFetchErrors?: boolean;
 }) {
   const [view, setView] = useState<CheckupView>(INITIAL_VIEW);
-  const { screen, needPage } = view;
+  const { screen } = view;
   const [selected, setSelected] = useState<string[]>([]);
   const [reviewed, setReviewed] = useState<string[]>([]);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -57,30 +50,29 @@ export default function LegalCheckup({
   const needPageCount = topic
     ? Math.ceil(topic.needs.length / needsPerPage)
     : 1;
+  const needPage = Math.min(view.needPage, needPageCount - 1);
+  const hasMoreNeeds = needPage + 1 < needPageCount;
   const visibleNeeds = topic?.needs.slice(
     needPage * needsPerPage,
     (needPage + 1) * needsPerPage
   );
-  const selectedNeeds = checkupTopics
-    .flatMap((item) => item.needs)
-    .filter((need) => selected.includes(need.id));
-  const { recommendations, missingCount } = getCheckupRecommendations(
+  const pickedIn = (area: (typeof checkupTopics)[number]) =>
+    area.needs.filter((need) => selected.includes(need.id));
+  const selectedNeeds = checkupTopics.flatMap(pickedIn);
+  const { recommendations: results, missingCount } = getCheckupRecommendations(
     selected,
     forms
   );
-  const results = recommendations;
   const pageCount = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   // An older history entry can refer to a results page removed by edited choices.
   const page = Math.min(view.page, pageCount - 1);
 
   useEffect(() => {
-    const existing = readHistoryView(window.history.state);
-    if (existing) setView(existing);
-    else
-      window.history.replaceState(
-        { ...window.history.state, courtFormsCheckup: INITIAL_VIEW },
-        ''
-      );
+    // Answers are memory-only, so a fresh mount starts a fresh checkup.
+    window.history.replaceState(
+      { ...window.history.state, courtFormsCheckup: INITIAL_VIEW },
+      ''
+    );
 
     const restoreView = (event: PopStateEvent) => {
       const previous = readHistoryView(event.state);
@@ -90,7 +82,8 @@ export default function LegalCheckup({
     return () => window.removeEventListener('popstate', restoreView);
   }, []);
 
-  function navigate(next: CheckupView) {
+  function navigate(nextScreen: string, pages: Partial<CheckupView> = {}) {
+    const next = { ...INITIAL_VIEW, screen: nextScreen, ...pages };
     // Preserve Next.js's own router state. Store navigation only, never answers.
     window.history.pushState(
       { ...window.history.state, courtFormsCheckup: next },
@@ -112,10 +105,6 @@ export default function LegalCheckup({
     heading.current?.focus();
   }, [screen, page, needPage]);
 
-  function showSummary() {
-    navigate({ screen: 'summary', page: 0, needPage: 0 });
-  }
-
   function toggleNeed(id: string) {
     setSelected((previous) =>
       previous.includes(id)
@@ -130,7 +119,7 @@ export default function LegalCheckup({
         previous.includes(topic.id) ? previous : [...previous, topic.id]
       );
     }
-    navigate(INITIAL_VIEW);
+    navigate('areas');
   }
 
   return (
@@ -157,16 +146,12 @@ export default function LegalCheckup({
           </p>
           <div className={styles.choices}>
             {checkupTopics.map((area) => {
-              const count = area.needs.filter((need) =>
-                selected.includes(need.id)
-              ).length;
+              const count = pickedIn(area).length;
               return (
                 <button
                   key={area.id}
                   className={styles.choice}
-                  onClick={() =>
-                    navigate({ screen: area.id, page: 0, needPage: 0 })
-                  }
+                  onClick={() => navigate(area.id)}
                 >
                   <span>
                     <strong>{area.label}</strong>
@@ -190,7 +175,10 @@ export default function LegalCheckup({
             <button type="button" className={styles.back} onClick={goBack}>
               Back
             </button>
-            <button className={styles.primary} onClick={showSummary}>
+            <button
+              className={styles.primary}
+              onClick={() => navigate('summary')}
+            >
               {selected.length
                 ? `See my summary (${selected.length})`
                 : 'Something else / see other help'}
@@ -223,35 +211,38 @@ export default function LegalCheckup({
             </p>
           )}
           <div className={styles.choices}>
-            {visibleNeeds?.map((need) => (
-              <button
-                key={need.id}
-                className={styles.choice}
-                aria-pressed={selected.includes(need.id)}
-                onClick={() => toggleNeed(need.id)}
-              >
-                <span>
-                  <strong>{need.label}</strong>
-                  <span>{need.description}</span>
-                  {selected.includes(need.id) && (
-                    <span className={styles.selected}>
-                      Selected — tap to remove
-                    </span>
+            {visibleNeeds?.map((need) => {
+              const isSelected = selected.includes(need.id);
+              return (
+                <button
+                  key={need.id}
+                  className={styles.choice}
+                  aria-pressed={isSelected}
+                  onClick={() => toggleNeed(need.id)}
+                >
+                  <span>
+                    <strong>{need.label}</strong>
+                    <span>{need.description}</span>
+                    {isSelected && (
+                      <span className={styles.selected}>
+                        Selected — tap to remove
+                      </span>
+                    )}
+                  </span>
+                  {isSelected && (
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      className={styles.selectionCheck}
+                      aria-hidden="true"
+                    />
                   )}
-                </span>
-                {selected.includes(need.id) && (
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    className={styles.selectionCheck}
-                    aria-hidden="true"
-                  />
-                )}
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
           <p role="status" className={styles.finePrint}>
-            {topic.needs.filter((need) => selected.includes(need.id)).length}{' '}
-            selected in this area · {selected.length} total
+            {pickedIn(topic).length} selected in this area · {selected.length}{' '}
+            total
           </p>
           <div className={styles.actions}>
             <button type="button" className={styles.back} onClick={goBack}>
@@ -259,28 +250,18 @@ export default function LegalCheckup({
             </button>
             {needPageCount > 1 && (
               <button
-                className={
-                  needPage + 1 < needPageCount
-                    ? styles.primary
-                    : styles.secondary
-                }
+                className={hasMoreNeeds ? styles.primary : styles.secondary}
                 onClick={() =>
-                  navigate({
-                    screen,
-                    page: 0,
+                  navigate(screen, {
                     needPage: (needPage + 1) % needPageCount,
                   })
                 }
               >
-                {needPage + 1 < needPageCount
-                  ? 'More situations'
-                  : 'Back to first situations'}
+                {hasMoreNeeds ? 'More situations' : 'Back to first situations'}
               </button>
             )}
             <button
-              className={
-                needPage + 1 < needPageCount ? styles.secondary : styles.primary
-              }
+              className={hasMoreNeeds ? styles.secondary : styles.primary}
               onClick={finishArea}
             >
               Done with this area
@@ -303,9 +284,7 @@ export default function LegalCheckup({
             <div className={styles.saved}>
               <h2>You picked</h2>
               {checkupTopics.map((area) => {
-                const needs = area.needs.filter((need) =>
-                  selected.includes(need.id)
-                );
+                const needs = pickedIn(area);
                 return needs.length > 0 ? (
                   <div key={area.id}>
                     <h3>{area.label}</h3>
@@ -338,7 +317,7 @@ export default function LegalCheckup({
               later.
             </p>
           )}
-          {selected.length > 0 && recommendations.length === 0 && (
+          {selected.length > 0 && results.length === 0 && (
             <p>
               We could not find an available tool for your choices. That does
               not mean you have no legal options.
@@ -359,8 +338,9 @@ export default function LegalCheckup({
             {results.map((result, index) => (
               <article
                 key={result.filename}
+                // Off-page results stay in the DOM so printing includes them.
                 hidden={Math.floor(index / PAGE_SIZE) !== page}
-                className={`${styles.result} ${Math.floor(index / PAGE_SIZE) !== page ? styles.offPage : ''}`}
+                className={styles.result}
               >
                 <h3>{result.label}</h3>
                 <p>{result.description}</p>
@@ -371,11 +351,7 @@ export default function LegalCheckup({
                 )}
                 <a
                   href={result.href}
-                  data-print-url={
-                    result.href.startsWith('/')
-                      ? `https://courtformsonline.org${result.href}`
-                      : result.href
-                  }
+                  data-print-url={`https://courtformsonline.org${result.href}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Explore this option: ${result.label} (opens in a new tab)`}
@@ -391,7 +367,7 @@ export default function LegalCheckup({
             </button>
             <button
               className={styles.primary}
-              onClick={() => navigate(INITIAL_VIEW)}
+              onClick={() => navigate('areas')}
             >
               Check another area / change answers
             </button>
@@ -399,11 +375,7 @@ export default function LegalCheckup({
               <button
                 className={styles.secondary}
                 onClick={() =>
-                  navigate({
-                    screen: 'summary',
-                    needPage: 0,
-                    page: (page + 1) % pageCount,
-                  })
+                  navigate('summary', { page: (page + 1) % pageCount })
                 }
               >
                 {page + 1 === pageCount

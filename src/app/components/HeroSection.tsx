@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -77,7 +77,9 @@ const HeroSection = ({ path, interviews, isError }) => {
 
   // Get jurisdiction name from path
   const jurisdictionName = pathToServerConfig[path]?.name || 'Massachusetts';
-  const SearchHeading = path === 'ma' ? 'h3' : 'h2';
+  const hasCheckup = path === 'ma';
+  const showDescribe = !hasCheckup || helpMode === 'describe';
+  const SearchHeading = hasCheckup ? 'h3' : 'h2';
   const handleInputChange = (event) => {
     setText(event.target.value);
     if (validationError) setValidationError('');
@@ -100,15 +102,6 @@ const HeroSection = ({ path, interviews, isError }) => {
       const fetchedResults = await fetchSpotData(data);
       setResults(fetchedResults);
       setError('');
-      // Manage display of topic cards when spot search is used. dom manipulation is used to keep Page components server components
-      const topicCards = document.querySelectorAll('.topic-card-parent');
-      topicCards.forEach((card) => {
-        card.classList.add('hidden');
-      });
-      const showAllButton = document.querySelector('.show-all-toggle');
-      if (showAllButton) {
-        showAllButton.classList.add('hidden');
-      }
     } catch (e) {
       setError(e.message);
       setResults(null);
@@ -120,16 +113,25 @@ const HeroSection = ({ path, interviews, isError }) => {
     setText('');
     setError('');
     setValidationError('');
-    // Restore topic cards visibility
-    const topicCards = document.querySelectorAll('.topic-card-parent');
-    topicCards.forEach((card) => {
-      card.classList.remove('hidden');
-    });
-    const showAllButton = document.querySelector('.show-all-toggle');
-    if (showAllButton) {
-      showAllButton.classList.remove('hidden');
-    }
   };
+
+  useEffect(() => {
+    if (!results || !showDescribe) return;
+    // These cards are rendered by the server page. Restore their previous
+    // visibility when leaving search, including the Show all collapsed state.
+    const elements = Array.from(
+      document.querySelectorAll('.topic-card-parent, .show-all-toggle')
+    ).map((element) => ({
+      element,
+      wasHidden: element.classList.contains('hidden'),
+    }));
+    elements.forEach(({ element }) => element.classList.add('hidden'));
+    return () => {
+      elements.forEach(({ element, wasHidden }) =>
+        element.classList.toggle('hidden', wasHidden)
+      );
+    };
+  }, [results, showDescribe]);
 
   return (
     <section id="hero-section" className={styles.HeroSection + ' py-5'}>
@@ -154,7 +156,7 @@ const HeroSection = ({ path, interviews, isError }) => {
             </p>
           </div>
           <div className="col-lg-6" id="hero-right" ref={popoverContainerRef}>
-            {path === 'ma' && (
+            {hasCheckup && (
               <>
                 <h2 className="mb-3">Find legal help</h2>
                 <div
@@ -183,17 +185,17 @@ const HeroSection = ({ path, interviews, isError }) => {
             )}
             <section
               id="describe-option"
-              hidden={path === 'ma' && helpMode !== 'describe'}
+              hidden={!showDescribe}
               aria-labelledby="describe-problem-heading"
             >
               <div className="d-flex align-items-end gap-2 flex-wrap mb-3">
                 <SearchHeading
                   id="describe-problem-heading"
-                  className={path === 'ma' ? 'visually-hidden' : 'mb-0'}
+                  className={hasCheckup ? 'visually-hidden' : 'mb-0'}
                 >
                   Describe your legal problem
                 </SearchHeading>
-                {path === 'ma' && (
+                {hasCheckup && (
                   <p className="mb-0">
                     Tell us what’s happening in your own words.
                   </p>
@@ -288,7 +290,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                 <p className="text-danger">Error. Please try again later.</p>
               )}
             </section>
-            {path === 'ma' && (
+            {hasCheckup && (
               <section
                 id="checkup-option"
                 hidden={helpMode !== 'checkup'}
@@ -309,7 +311,7 @@ const HeroSection = ({ path, interviews, isError }) => {
           </div>
         </div>
       </div>
-      {results && (path !== 'ma' || helpMode === 'describe') && (
+      {results && showDescribe && (
         <SpotResultsContainer
           data={results}
           interviews={interviews}

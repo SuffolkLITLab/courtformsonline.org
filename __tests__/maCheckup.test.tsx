@@ -121,15 +121,19 @@ function showSummary() {
   fireEvent.click(screen.getByRole('button', { name: /See my summary/ }));
 }
 
+function summarizeRentalRepairs() {
+  fireEvent.click(screen.getByRole('button', { name: /My home/ }));
+  fireEvent.click(
+    screen.getByRole('button', { name: /My rental home has problems/ })
+  );
+  finishArea();
+  showSummary();
+}
+
 describe('Massachusetts checkup interaction', () => {
   it('shows directory and legal help links without creating another results page', () => {
     render(<LegalCheckup forms={forms} />);
-    fireEvent.click(screen.getByRole('button', { name: /My home/ }));
-    fireEvent.click(
-      screen.getByRole('button', { name: /My rental home has problems/ })
-    );
-    finishArea();
-    showSummary();
+    summarizeRentalRepairs();
     expect(screen.getByRole('status')).toHaveTextContent('Options 1–2 of 2');
     expect(
       screen.queryByRole('button', { name: 'More options' })
@@ -138,6 +142,23 @@ describe('Massachusetts checkup interaction', () => {
       screen.getByRole('link', { name: 'Browse all Massachusetts forms' })
     ).toBeVisible();
     expect(screen.getByRole('link', { name: 'find legal help' })).toBeVisible();
+  });
+
+  it('starts fresh after remounting instead of restoring an answerless summary', () => {
+    const first = render(<LegalCheckup forms={forms} />);
+    summarizeRentalRepairs();
+    expect(window.history.state.courtFormsCheckup.screen).toBe('summary');
+    first.unmount();
+    render(<LegalCheckup forms={forms} />);
+    expect(
+      screen.getByRole('heading', {
+        name: 'What could be easier in your life?',
+      })
+    ).toBeVisible();
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '0 situations selected'
+    );
+    expect(window.history.state.courtFormsCheckup.screen).toBe('areas');
   });
 
   it('supports Back and Forward between situation pages without undoing selections', async () => {
@@ -301,9 +322,8 @@ describe('Massachusetts checkup interaction', () => {
       fireEvent.click(
         screen.getByRole('button', { name: new RegExp(topic.label) })
       );
-      const pageSize = topic.needs.length > 4 ? 3 : 4;
-      for (const [index, need] of topic.needs.entries()) {
-        if (index > 0 && index % pageSize === 0) {
+      for (const need of topic.needs) {
+        if (!screen.queryByRole('button', { name: new RegExp(need.label) })) {
           fireEvent.click(
             screen.getByRole('button', { name: 'More situations' })
           );
@@ -361,12 +381,7 @@ describe('Massachusetts checkup interaction', () => {
 
   it('does not equate missing data with no legal needs', () => {
     render(<LegalCheckup forms={[]} hasFetchErrors />);
-    fireEvent.click(screen.getByRole('button', { name: /My home/ }));
-    fireEvent.click(
-      screen.getByRole('button', { name: /My rental home has problems/ })
-    );
-    finishArea();
-    showSummary();
+    summarizeRentalRepairs();
     expect(
       screen.getByText(/That does not mean you have no legal options/)
     ).toBeInTheDocument();

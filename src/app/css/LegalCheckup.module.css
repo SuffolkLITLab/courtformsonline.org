@@ -207,19 +207,13 @@
   color: #155d60;
   text-underline-offset: 0.2rem;
 }
-.offPage {
-  display: none;
-}
 @media (max-width: 480px) {
   .choice {
     padding: 1rem;
     gap: 0.7rem;
   }
-  .actions button {
+  .actions button:not(.back) {
     width: 100%;
-  }
-  .actions .back {
-    width: auto;
   }
 }
 @media print {
@@ -233,7 +227,7 @@
   .finePrint {
     display: none;
   }
-  .offPage {
+  .results > [hidden] {
     display: block !important;
   }
   .result {
