@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef } from 'react';
+import Link from 'next/link';
 import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
@@ -66,6 +67,7 @@ function StateOutline({ pathKey, className }) {
 
 const HeroSection = ({ path, interviews, isError }) => {
   const [text, setText] = useState('');
+  const [helpMode, setHelpMode] = useState<'describe' | 'checkup'>('describe');
   const [saveData, setSaveData] = useState(true);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
@@ -75,6 +77,7 @@ const HeroSection = ({ path, interviews, isError }) => {
 
   // Get jurisdiction name from path
   const jurisdictionName = pathToServerConfig[path]?.name || 'Massachusetts';
+  const SearchHeading = path === 'ma' ? 'h3' : 'h2';
   const handleInputChange = (event) => {
     setText(event.target.value);
     if (validationError) setValidationError('');
@@ -151,98 +154,162 @@ const HeroSection = ({ path, interviews, isError }) => {
             </p>
           </div>
           <div className="col-lg-6" id="hero-right" ref={popoverContainerRef}>
-            <div className="d-flex align-items-end gap-2 flex-wrap mb-3">
-              <h2 className="mb-0">Describe your legal problem</h2>
-              <div className={styles.SpotInfo}>
-                <OverlayTrigger
-                  placement="left"
-                  trigger={['click']}
-                  rootClose={true}
-                  container={() => popoverContainerRef.current}
-                  overlay={
-                    <Popover id="spot-popover">
-                      <Popover.Header as="h3">How this works</Popover.Header>
-                      <Popover.Body>
-                        <p className="mb-1">
-                          When you type in your problem description, we use the
-                          nonprofit SPOT legal problem spotter to help find the
-                          best legal resources for you. If you do not want to
-                          share your problem with SPOT, please pick a topic from
-                          the list below.
-                        </p>
-                        <p className="mb-0">
-                          Read SPOT's{' '}
-                          <a
-                            href="https://spot.suffolklitlab.org/terms/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            privacy policy
-                          </a>
-                          .
-                        </p>
-                      </Popover.Body>
-                    </Popover>
-                  }
+            {path === 'ma' && (
+              <>
+                <h2 className="mb-3">Find legal help</h2>
+                <div
+                  className={styles.HelpSwitch}
+                  role="group"
+                  aria-label="Choose how to find help"
                 >
                   <button
                     type="button"
-                    className="btn btn-link p-0 small text-muted"
-                    aria-label="What is this?"
+                    aria-pressed={helpMode === 'describe'}
+                    aria-controls="describe-option"
+                    onClick={() => setHelpMode('describe')}
                   >
-                    What is this?
+                    Describe your problem
                   </button>
-                </OverlayTrigger>
-              </div>
-            </div>
-            <textarea
-              className="form-control form-control-lg"
-              value={text}
-              onChange={handleInputChange}
-              placeholder="Tell us without including your personal information, like name or address"
-              aria-label="Tell us without including your personal information, like name or address"
-            />
-            <div className="d-flex align-items-center justify-content-between mt-3">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  checked={saveData}
-                  onChange={handleCheckboxChange}
-                  id="flexCheckDefault"
-                />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
-                  Use my reply to help others
-                </label>
-              </div>
-              <div className="d-flex gap-2">
-                {results && (
-                  <Button
-                    variant="outline-secondary"
-                    onClick={handleCancelSpotSearch}
-                    aria-label="Cancel search and return to all categories"
+                  <button
+                    type="button"
+                    aria-pressed={helpMode === 'checkup'}
+                    aria-controls="checkup-option"
+                    onClick={() => setHelpMode('checkup')}
                   >
-                    Cancel
-                  </Button>
-                )}
-                <Button
-                  onClick={handleFindHelpClick}
-                  className="btn btn-primary"
-                >
-                  Find help
-                </Button>
-              </div>
-            </div>
-            {validationError && (
-              <p className="text-danger">{validationError}</p>
+                    Legal checkup
+                  </button>
+                </div>
+              </>
             )}
-            {error && (
-              <p className="text-danger">Error. Please try again later.</p>
+            <section
+              id="describe-option"
+              hidden={path === 'ma' && helpMode !== 'describe'}
+              aria-labelledby="describe-problem-heading"
+            >
+              <div className="d-flex align-items-end gap-2 flex-wrap mb-3">
+                <SearchHeading
+                  id="describe-problem-heading"
+                  className={path === 'ma' ? 'visually-hidden' : 'mb-0'}
+                >
+                  Describe your legal problem
+                </SearchHeading>
+                {path === 'ma' && (
+                  <p className="mb-0">
+                    Tell us what’s happening in your own words.
+                  </p>
+                )}
+                <div className={styles.SpotInfo}>
+                  <OverlayTrigger
+                    placement="left"
+                    trigger={['click']}
+                    rootClose={true}
+                    container={() => popoverContainerRef.current}
+                    overlay={
+                      <Popover id="spot-popover">
+                        <Popover.Header as="h3">How this works</Popover.Header>
+                        <Popover.Body>
+                          <p className="mb-1">
+                            When you type in your problem description, we use
+                            the nonprofit SPOT legal problem spotter to help
+                            find the best legal resources for you. If you do not
+                            want to share your problem with SPOT, please pick a
+                            topic from the list below.
+                          </p>
+                          <p className="mb-0">
+                            Read SPOT's{' '}
+                            <a
+                              href="https://spot.suffolklitlab.org/terms/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              privacy policy
+                            </a>
+                            .
+                          </p>
+                        </Popover.Body>
+                      </Popover>
+                    }
+                  >
+                    <button
+                      type="button"
+                      className="btn btn-link p-0 small text-muted"
+                      aria-label="What is this?"
+                    >
+                      What is this?
+                    </button>
+                  </OverlayTrigger>
+                </div>
+              </div>
+              <textarea
+                className="form-control form-control-lg"
+                value={text}
+                onChange={handleInputChange}
+                placeholder="Tell us without including your personal information, like name or address"
+                aria-label="Tell us without including your personal information, like name or address"
+              />
+              <div className="d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={saveData}
+                    onChange={handleCheckboxChange}
+                    id="flexCheckDefault"
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefault"
+                  >
+                    Use my reply to help others
+                  </label>
+                </div>
+                <div className="d-flex flex-wrap gap-2">
+                  {results && (
+                    <Button
+                      variant="outline-secondary"
+                      onClick={handleCancelSpotSearch}
+                      aria-label="Cancel search and return to all categories"
+                    >
+                      Cancel
+                    </Button>
+                  )}
+                  <Button
+                    onClick={handleFindHelpClick}
+                    className="btn btn-primary"
+                  >
+                    Find help
+                  </Button>
+                </div>
+              </div>
+              {validationError && (
+                <p className="text-danger">{validationError}</p>
+              )}
+              {error && (
+                <p className="text-danger">Error. Please try again later.</p>
+              )}
+            </section>
+            {path === 'ma' && (
+              <section
+                id="checkup-option"
+                hidden={helpMode !== 'checkup'}
+                aria-labelledby="checkup-option-heading"
+              >
+                <h3 id="checkup-option-heading" className="visually-hidden">
+                  Take a legal checkup
+                </h3>
+                <p>
+                  Choose topics and situations to explore tools that may help.
+                  No typing needed. Takes about 5 minutes.
+                </p>
+                <Link href="/ma/checkup" className="btn btn-primary">
+                  Start legal checkup
+                </Link>
+              </section>
             )}
           </div>
         </div>
       </div>
-      {results && (
+      {results && (path !== 'ma' || helpMode === 'describe') && (
         <SpotResultsContainer
           data={results}
           interviews={interviews}

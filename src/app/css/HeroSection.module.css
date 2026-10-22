@@ -18,6 +18,43 @@
   min-width: 0;
 }
 
+.HelpSwitch {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #ccd4de;
+  border-radius: 0.5rem;
+  background: #edf0f5;
+}
+
+.HelpSwitch button {
+  flex: 1;
+  padding: 0.65rem 0.5rem;
+  min-height: 48px;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: #002e60;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.HelpSwitch button[aria-pressed='true'] {
+  background: #fff;
+  border-color: #ccd4de;
+  box-shadow: 0 1px 3px #002e6014;
+}
+
+.HelpSwitch button:hover {
+  background: #fff;
+}
+
+.HelpSwitch button:focus-visible {
+  outline: 3px solid #926200;
+  outline-offset: 2px;
+}
+
 .StateOutlineWrap {
   display: flex;
   align-items: flex-start;

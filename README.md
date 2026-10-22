@@ -14,6 +14,12 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+Use `npm run dev` to preview current source changes, including the Massachusetts
+checkup at `/ma/checkup`. `npm start` serves the last static export from `out/`;
+new routes and edits will not appear there until `npm run build` succeeds.
+If port 3000 is already in use, stop that server or run
+`npm run dev -- --port 3001` and open http://localhost:3001 instead.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Atkinson Hyperlegible, a custom Google Font.

@@ -1,0 +1,550 @@
+[
+  {
+    "id": "home",
+    "label": "My home",
+    "description": "Renting, repairs, moving, or keeping your home",
+    "needs": [
+      {
+        "id": "eviction",
+        "label": "I may lose my home",
+        "description": "Eviction papers, a missed hearing, or a property-tax court case.",
+        "tools": [
+          {
+            "filename": "docassemble.MAEvictionDefense:data/questions/eviction.yml",
+            "label": "Respond to an eviction case",
+            "description": "MADE helps you prepare a response and other papers after an eviction case is filed in court."
+          },
+          {
+            "filename": "docassemble.MTVHousing:data/questions/Motion_to_Vacate.yml",
+            "label": "Ask for another chance after a missed eviction hearing",
+            "description": "Explore asking the court to remove a default judgment and give you a new hearing."
+          },
+          {
+            "filename": "docassemble.MotionToStayEviction:data/questions/SP6A.yml",
+            "label": "Explore an appeal or a delay of your eviction",
+            "description": "For a final eviction decision. The tool explains the steps for an appeal or a temporary delay."
+          },
+          {
+            "filename": "docassemble.MATCTaxLienAnswer:data/questions/taxlien_answer.yml",
+            "label": "Respond to a property-tax court case",
+            "description": "For a tax-lien complaint about your property. Review the tool and the answer date on your papers."
+          }
+        ],
+        "note": "If you have court papers or a move-out date, check the deadlines now. This checkup does not file anything or extend a deadline."
+      },
+      {
+        "id": "repairs",
+        "label": "My rental home has problems",
+        "description": "Repairs, a lockout, utilities, or unwanted entry.",
+        "tools": [
+          {
+            "filename": "docassemble.HousingCodeChecklist:data/questions/housing_code_interview.yml",
+            "label": "Ask your landlord to make repairs",
+            "description": "Document problems, learn about repair options, and make letters or court papers with UpToCode."
+          },
+          {
+            "filename": "docassemble.MAHousingTRO:data/questions/Housing_Temporary_Restraining_Order.yml",
+            "label": "Ask the court for urgent help with your landlord",
+            "description": "Explore help with a lockout, utilities, unwanted entry, or serious repair problems."
+          }
+        ],
+        "note": "For a lockout or urgent housing problem, look at the help options promptly."
+      },
+      {
+        "id": "moving",
+        "label": "I have trouble moving or getting my deposit back",
+        "description": "An old eviction record, a paid judgment, a housing search, or a deposit.",
+        "tools": [
+          {
+            "filename": "docassemble.MAPetitionToSealEviction:data/questions/petition_to_seal_eviction.yml",
+            "label": "See if you can keep an old eviction case private",
+            "description": "The interview checks whether your eviction record may qualify for sealing."
+          },
+          {
+            "filename": "docassemble.PetitionToDeemSatisfied:data/questions/petition_to_deem_satisfied.yml",
+            "label": "Show the court you paid an eviction judgment",
+            "description": "For tenants who paid the full judgment in a nonpayment eviction case."
+          },
+          {
+            "filename": "docassemble.SecurityDepositDemandLetterForTenantsMovingOut:data/questions/security_deposit_demand_letter_for_tenants_moving_out.yml",
+            "label": "Ask for your security deposit back",
+            "description": "Make a demand letter if your landlord has not returned your deposit after you moved out. The tool explains when it applies."
+          },
+          {
+            "filename": "docassemble.HousingSearchLog:data/questions/housing_search_log.yml",
+            "label": "Keep a record of your housing search",
+            "description": "Track places you contacted or applied to when a court or housing authority gives you a deadline to move."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "housing-disability",
+        "label": "I need a housing change because of a disability",
+        "description": "A change to a rule, policy, or the way your landlord does things.",
+        "tools": [
+          {
+            "filename": "docassemble.MLRITenantAccommodationsRequest:data/questions/reasonableaccommodationsrequesttola.yml",
+            "label": "Request a disability accommodation from your landlord",
+            "description": "Make a letter explaining a disability-related change you or someone in your household needs."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "eviction-objection",
+        "label": "I disagree with a request about an old eviction case",
+        "description": "Someone asked to seal the record or mark the judgment as paid.",
+        "tools": [
+          {
+            "filename": "docassemble.MAObjectionToEvictionPetition:data/questions/main.yml",
+            "label": "Respond to a petition about an eviction record or judgment",
+            "description": "For a landlord or tenant in the original eviction case who wants to object to a request to seal it or mark the judgment satisfied."
+          }
+        ],
+        "note": "This option is for responding to someone else’s petition. If you want to seal your own eviction record, choose the moving or records situation instead."
+      }
+    ]
+  },
+  {
+    "id": "money",
+    "label": "Money, benefits & work",
+    "description": "Bills, food benefits, health coverage, Social Security, or your job",
+    "needs": [
+      {
+        "id": "debt",
+        "label": "Debt collectors keep contacting me",
+        "description": "Calls or letters from a collection agency.",
+        "tools": [
+          {
+            "filename": "docassemble.MADebtCollectionLetter:data/questions/cease_letter.yml",
+            "label": "Ask a debt collector to stop contacting you",
+            "description": "Make a letter to a collection agency. The tool can also help explain certain protections for your income."
+          }
+        ],
+        "note": "A letter to a debt collector does not answer a lawsuit or erase the debt. If you have court papers, check their deadlines."
+      },
+      {
+        "id": "benefits",
+        "label": "I have a problem with benefits",
+        "description": "MassHealth, Social Security repayments, or reporting changes.",
+        "tools": [
+          {
+            "filename": "docassemble.MassHealthFairHearingRequestForm:data/questions/mass_health_fair_hearing_request_fo.yml",
+            "label": "Challenge a MassHealth decision",
+            "description": "Explore requesting a hearing about coverage, benefits, eligibility, or a delay in acting on your application."
+          },
+          {
+            "filename": "docassemble.ssioverpaymentwaiver:data/questions/ssi_overpayment_waiver.yml",
+            "label": "Ask for relief from a Social Security overpayment",
+            "description": "Explore a waiver or a lower repayment rate. This tool is not an appeal of whether the overpayment happened."
+          },
+          {
+            "filename": "docassemble.ssareportchangesletter:data/questions/ssa_report_change.yml",
+            "label": "Report a life change to Social Security",
+            "description": "Make a report about changes such as your address, income, work, or living arrangements if you get SSI or SSDI."
+          },
+          {
+            "filename": "docassemble.ssareportchangesletter:data/questions/ssa_report_of_dedicated_account.yml",
+            "label": "Track spending from a child’s SSI account",
+            "description": "For a parent or representative payee tracking spending from a dedicated account for a child’s back benefits."
+          }
+        ],
+        "note": "If you received a benefits notice, check its deadlines. These tools cover particular benefit problems, not every application or appeal."
+      },
+      {
+        "id": "work-disability",
+        "label": "I need a change at work because of a disability",
+        "description": "Help doing your job, applying for a job, or using workplace benefits.",
+        "tools": [
+          {
+            "filename": "docassemble.ReasonableAccommodationLetter:data/questions/reasonable_accommodation_letter.yml",
+            "label": "Request a disability accommodation at work",
+            "description": "Make a letter asking your employer for a change related to a disability."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "car",
+        "label": "My new car keeps needing repairs",
+        "description": "A new car bought or leased from a Massachusetts dealer.",
+        "tools": [
+          {
+            "filename": "docassemble.MALemonLawLetter:data/questions/lemon_law_letter.yml",
+            "label": "Explore a final repair request for a new car",
+            "description": "The tool explains the new-car Lemon Law requirements and helps make a letter to the dealership."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "snap",
+        "label": "I want to estimate my food benefits",
+        "description": "An estimate of Massachusetts SNAP benefits.",
+        "tools": [
+          {
+            "filename": "docassemble.SNAP:data/questions/SnapCalculator-logic.yml",
+            "label": "Estimate a monthly SNAP benefit amount",
+            "description": "A calculator for people familiar with SNAP rules, or working with a helper who is. It provides an estimate, not an application or a decision about eligibility."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "collecting-debt",
+        "label": "I am suing someone to collect a debt",
+        "description": "Court paperwork to verify the other person’s address.",
+        "tools": [
+          {
+            "filename": "docassemble.MAAffidavitofAddressVerification:data/questions/affidavit_of_address_verification.yml",
+            "label": "Verify an address in a debt collection case",
+            "description": "For the person suing to collect certain debts, such as credit-card or loan payments. This affidavit supports an existing case; it does not start a lawsuit or respond to one against you."
+          }
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "id": "family",
+    "label": "Children, family & safety",
+    "description": "Caregiving, child support, getting married, or safety at home",
+    "needs": [
+      {
+        "id": "safety",
+        "label": "I need protection from someone",
+        "description": "Abuse, an unsafe home, or a restraining order you asked for.",
+        "tools": [
+          {
+            "filename": "docassemble.MA209AProtectiveOrder:data/questions/209a_package.yml",
+            "label": "Explore a restraining order for domestic abuse",
+            "description": "For abuse involving certain family, household, or intimate relationships. The tool explains who can use it."
+          },
+          {
+            "filename": "docassemble.209aPlaintiffMotionToModify:data/questions/209a_plaintiff_s_motion_to_modify.yml",
+            "label": "Ask to change an order you requested",
+            "description": "For the person who asked for an existing 209A order and wants to change or end it."
+          },
+          {
+            "filename": "docassemble.MAMotiontoVacateMaritalHome:data/questions/Motion to Vacate Marital Home.yml",
+            "label": "Ask for a spouse or co-parent to leave your home",
+            "description": "Explore this option if you have an existing family court case and need protection for you or your children."
+          }
+        ],
+        "note": "If you are in immediate danger, call 911 if it is safe. This checkup does not request emergency help. For abuse outside these relationships, other protections may be available."
+      },
+      {
+        "id": "child-care",
+        "label": "A child needs someone to care for them",
+        "description": "Temporary help, guardianship, or a change to a guardian.",
+        "tools": [
+          {
+            "filename": "docassemble.CLACareTypeFinder:data/questions/care_type_finder.yml",
+            "label": "Find the right kind of care for a child",
+            "description": "Start here to compare caregiving permission, a temporary agent, and guardianship. It directs you to the relevant forms."
+          },
+          {
+            "filename": "docassemble.CLAGuardianship:data/questions/parent_participate_in_guardianship_case.yml",
+            "label": "Have a say in a child’s guardianship case",
+            "description": "For an existing case: tell the court whether you agree or disagree, or ask to take part."
+          },
+          {
+            "filename": "docassemble.CLAGuardianship:data/questions/petition_for_removal_of_guardian.yml",
+            "label": "Ask to remove or replace a child’s guardian",
+            "description": "Explore asking the court to remove a guardian of a minor."
+          },
+          {
+            "filename": "docassemble.MAAffidavitDisclosingCareOrCustody:data/questions/standalone.yml",
+            "label": "Tell the court about other cases involving a child",
+            "description": "A supporting affidavit for a custody, guardianship, or related family case. Check whether your main interview already includes it before making another copy."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "child-support",
+        "label": "I am struggling with child support payments",
+        "description": "Back support, collections, or a license affected by child support.",
+        "tools": [
+          {
+            "filename": "docassemble.HelpForChildSupportObligors:data/questions/ChildSupportObligors_umbrella.yml",
+            "label": "Explore help with child support collection problems",
+            "description": "Learn about options with DOR/CSE, including back support and some license or collection problems. This tool does not change the amount of your court-ordered support."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "family-case",
+        "label": "I need help with a family or care case",
+        "description": "DCF disability support, a CRA case, a family court request, or an adult guardian report.",
+        "tools": [
+          {
+            "filename": "docassemble.MLRILettertoDCFforADA:data/questions/dcf_disability_accommodations.yml",
+            "label": "Ask DCF for disability-related support",
+            "description": "For a parent or caregiver who needs changes to meetings, services, or other parts of working with DCF."
+          },
+          {
+            "filename": "docassemble.MotionToDismissCRA:data/questions/CRA_Motion_to_Dismiss.yml",
+            "label": "Ask to dismiss a Child Requiring Assistance case",
+            "description": "For a child who already has a CRA case in court."
+          },
+          {
+            "filename": "docassemble.GenericMotionFamilyLaw:data/questions/gmfmvp.yml",
+            "label": "Make a request in an existing family court case",
+            "description": "Ask the judge for a decision in a Probate and Family Court case. This does not start a new divorce or custody case."
+          },
+          {
+            "filename": "docassemble.MATCGuardiansCarePlanReportMpc821:data/questions/guardians_care_plan_report_mpc_821.yml",
+            "label": "Complete an adult guardian’s care report",
+            "description": "For an appointed adult guardian’s 60-day or annual care report. This does not establish guardianship or make an initial report."
+          },
+          {
+            "filename": "docassemble.MAAffidavitDisclosingCareOrCustody:data/questions/standalone.yml",
+            "label": "Tell the court about other cases involving a child",
+            "description": "A supporting affidavit for a custody, guardianship, or related family case. Check whether your main interview already includes it before making another copy."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "marriage",
+        "label": "I need to get married without waiting",
+        "description": "Ask about skipping the usual marriage waiting period.",
+        "tools": [
+          {
+            "filename": "docassemble.MarriageWithoutDelay:data/questions/marriage-without-delay.yml",
+            "label": "Ask to waive the marriage waiting period",
+            "description": "Prepare a request for permission to marry without the usual waiting period. The tool explains the requirements and signatures needed."
+          }
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "id": "education",
+    "label": "School",
+    "description": "Learning needs, school records, translation, or interpretation",
+    "needs": [
+      {
+        "id": "school",
+        "label": "My child may need special education",
+        "description": "Ask the school to evaluate your child’s learning needs.",
+        "tools": [
+          {
+            "filename": "docassemble.StudentEvaluations:data/questions/massachusetts_educational_evaluations_request.yml",
+            "label": "Request a special education evaluation",
+            "description": "Make a letter asking the school to evaluate your child’s needs."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "school-independent",
+        "label": "I disagree with the school’s evaluation",
+        "description": "Explore asking for an independent evaluation.",
+        "tools": [
+          {
+            "filename": "docassemble.StudentEvaluations:data/questions/massachusetts_educational_evaluations_independent_evaluation.yml",
+            "label": "Request an independent evaluation",
+            "description": "For a parent or guardian who disagrees with the school’s special education evaluation."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "school-records",
+        "label": "I need school records",
+        "description": "Request a complete copy of a student’s records.",
+        "tools": [
+          {
+            "filename": "docassemble.StudentEvaluations:data/questions/massachusetts_entire_student_record_request.yml",
+            "label": "Request school records",
+            "description": "Make a request for a complete student record."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "school-language",
+        "label": "I need translation or an interpreter at school",
+        "description": "Report a problem getting language help from the school.",
+        "tools": [
+          {
+            "filename": "docassemble.StudentEvaluations:data/questions/prs_complaint_interview.yml",
+            "label": "Report a school language-access problem",
+            "description": "Make a complaint about a school’s failure to provide required translation or interpretation."
+          }
+        ],
+        "note": ""
+      }
+    ]
+  },
+  {
+    "id": "records-court",
+    "label": "Records & court",
+    "description": "A fresh start, court paperwork, or an appeal",
+    "needs": [
+      {
+        "id": "records",
+        "label": "I want a fresh start with my records or name",
+        "description": "A juvenile record, an old eviction, or a legal name change.",
+        "tools": [
+          {
+            "filename": "docassemble.juvenilesealing:data/questions/entrypoint-petitioner.yml",
+            "label": "See if you can seal a juvenile record",
+            "description": "The interview checks whether you can seal a Massachusetts juvenile record. It is not a general adult criminal-record sealing tool."
+          },
+          {
+            "filename": "docassemble.MAPetitionToSealEviction:data/questions/petition_to_seal_eviction.yml",
+            "label": "See if you can keep an old eviction case private",
+            "description": "The interview checks whether your eviction record may qualify for sealing."
+          },
+          {
+            "filename": "docassemble.PetitionToChangeNameOfAdult:data/questions/petition_to_change_name_of_adult.yml",
+            "label": "Explore a legal name change for an adult",
+            "description": "Prepare a petition for an adult name change in Massachusetts."
+          },
+          {
+            "filename": "docassemble.PetitionToChangeNameMinorCJP25:data/questions/petition_to_name_change_minor_CJP25.yml",
+            "label": "Explore a legal name change for a child",
+            "description": "For a parent or guardian preparing a petition to change a child’s name."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "court-access",
+        "label": "I need help taking part in court",
+        "description": "Court costs, an interpreter, or finding the right court.",
+        "tools": [
+          {
+            "filename": "docassemble.ALAffidavitOfIndigency:data/questions/affidavit.yml",
+            "label": "Ask to waive court fees and costs",
+            "description": "Explore asking the court to waive costs you cannot afford."
+          },
+          {
+            "filename": "docassemble.Interpreternotice:data/questions/interpreter_notice_standalone.yml",
+            "label": "Tell the court you need an interpreter",
+            "description": "Make a notice that you need an interpreter for your court hearings."
+          },
+          {
+            "filename": "docassemble.MACourtLocator:data/questions/court_locator.yml",
+            "label": "Find a Massachusetts court",
+            "description": "Look up which court serves a location."
+          }
+        ],
+        "note": ""
+      },
+      {
+        "id": "missed-court",
+        "label": "I missed a court hearing",
+        "description": "A judgment entered without you, including an eviction hearing.",
+        "tools": [
+          {
+            "filename": "docassemble.MAMotionToVacateDefaultJudgmentForLackOfNotice:data/questions/motion_to_vacate_default_judgment.yml",
+            "label": "Ask to reopen a case when you did not get notice",
+            "description": "For a default judgment after you missed a hearing because you did not get notice."
+          },
+          {
+            "filename": "docassemble.MTVHousing:data/questions/Motion_to_Vacate.yml",
+            "label": "Ask for another chance after a missed eviction hearing",
+            "description": "For tenants with a reason for missing their eviction hearing and a defense to the eviction."
+          }
+        ],
+        "note": "Check your court papers promptly. This checkup does not file anything or extend a deadline."
+      },
+      {
+        "id": "review-decision",
+        "label": "I want a court decision reviewed or paused",
+        "description": "A decision you disagree with, or want put on hold.",
+        "tools": [
+          {
+            "filename": "docassemble.MotionToSingleJusticeAppeals:data/questions/PetitionforSingleJusticeReview.yml",
+            "label": "Explore review of a decision before the case is final",
+            "description": "Ask a single justice of the Appeals Court to review certain trial-court decisions that are not final judgments. The tool explains the limits."
+          },
+          {
+            "filename": "docassemble.MotionToStayGeneral:data/questions/motiontostaygeneral.yml",
+            "label": "Ask the Appeals Court to pause a judgment",
+            "description": "Explore a stay after the trial court has denied your request to pause the judgment. Read the tool’s instructions about the notice of appeal."
+          },
+          {
+            "filename": "docassemble.AppealsMotionToReconsider:data/questions/Motion_to_Reconsider.yml",
+            "label": "Ask the Appeals Court to reconsider its decision",
+            "description": "For a decision by the Appeals Court, not simply a change in your circumstances or a trial-court decision. The tool explains when it can be used."
+          },
+          {
+            "filename": "docassemble.MotionToStayEviction:data/questions/SP6A.yml",
+            "label": "Explore an appeal or a delay of your eviction",
+            "description": "For a final eviction decision. The tool explains the steps for an appeal or a temporary delay."
+          }
+        ],
+        "note": "Review and appeal deadlines can be short. These are different options for different stages of a case, not a checklist. Check your court papers and each tool’s instructions promptly."
+      },
+      {
+        "id": "appeal-papers",
+        "label": "I need help with papers for an appeal",
+        "description": "Starting the next stage, writing a brief, or asking for more time.",
+        "tools": [
+          {
+            "filename": "docassemble.AppealsEntryForm:data/questions/appeals_entry_form.yml",
+            "label": "Prepare a civil appeal entry form",
+            "description": "For a civil appeal after you receive a Notice of Assembly. This is not the notice of appeal filed in the trial court."
+          },
+          {
+            "filename": "docassemble.AppealsCivilDocketingStatement:data/questions/civil_docketing_statement_standalone.yml",
+            "label": "Give the Appeals Court information about your case",
+            "description": "Prepare the statement describing your case and the people involved."
+          },
+          {
+            "filename": "docassemble.MAInformalAppellantBriefForm:data/questions/appellant_brief.yml",
+            "label": "Explain your appeal in an informal brief",
+            "description": "For a person representing themselves who is appealing a decision. Check the tool’s instructions about the informal brief program."
+          },
+          {
+            "filename": "docassemble.MAInformalAppelleeBrief:data/questions/informal_appellee_brief_form.yml",
+            "label": "Reply to an appeal in an informal brief",
+            "description": "For a person representing themselves who needs to respond to the other side’s appeal."
+          },
+          {
+            "filename": "docassemble.EnlargeTimeToFile:data/questions/motion_to_enlarge.yml",
+            "label": "Ask for more time to file your appeal brief",
+            "description": "Request an extension for a brief in an existing Appeals Court case. This does not extend the deadline to start an appeal."
+          },
+          {
+            "filename": "docassemble.AppealsMiscellaneousMotion:data/questions/appealsmiscellaneousmotion.yml",
+            "label": "Make another request in the Appeals Court",
+            "description": "For a motion not covered by a more specific Appeals Court tool. Read the examples and instructions before choosing it."
+          }
+        ],
+        "note": "You may need only some of these papers. This checkup is not a complete guide to starting an appeal and does not extend any deadline."
+      },
+      {
+        "id": "court-papers",
+        "label": "I need to complete other court paperwork",
+        "description": "An appearance, a cover sheet, or permission for a court-record check.",
+        "tools": [
+          {
+            "filename": "docassemble.MANoticeOfAppearanceForm:data/questions/main.yml",
+            "label": "Tell the court you are taking part in a case",
+            "description": "Prepare a Notice of Appearance for a Massachusetts Trial Court case. It does not replace an answer or other papers you may need."
+          },
+          {
+            "filename": "docassemble.CivilActionCoverSheet:data/questions/Civil_Action_Cover_Sheet.yml",
+            "label": "Prepare a cover sheet for a Superior Court civil case",
+            "description": "Provide basic case information to go with your civil filing. A cover sheet alone does not make your legal claim."
+          },
+          {
+            "filename": "docassemble.CARIRequest:data/questions/cari_release_standalone.yml",
+            "label": "Give permission for the court to check your record",
+            "description": "Prepare a CARI form when it is needed for a case such as guardianship, adoption, or a name change. This does not seal a record."
+          }
+        ],
+        "note": ""
+      }
+    ]
+  }
+]
