@@ -34,6 +34,7 @@ describe('sitemap generation', () => {
     const urls = result.map((item) => item.url);
     expect(urls).toContain('https://courtformsonline.org/ma/forms/my-form');
     expect(urls).toContain('https://courtformsonline.org/ma/housing');
+    expect(urls).toContain('https://courtformsonline.org/ma/checkup');
     expect(urls).toContain('https://courtformsonline.org/');
   });
 });
