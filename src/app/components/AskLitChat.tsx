@@ -1,11 +1,13 @@
 'use client';
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
+import AskLitVoiceControls, { VoiceHandle } from './AskLitVoiceControls';
 
 type Source = { filename: string; page: number; content: string };
 type Answer = { answer: string; sources: Source[] };
 type Metadata = {
   title: string;
+  voice?: { browser: boolean; paid: boolean };
   locked?: boolean;
   access_mode?: string;
   url?: string;
@@ -48,6 +50,9 @@ export default function AskLitChat({
   const popup = useRef<Window | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [question, setQuestion] = useState('');
+  const voice = useRef<VoiceHandle | null>(null);
+  const lastVoiceAnswer = useRef({ text: '', id: '' });
+  const [voiceAnswer, setVoiceAnswer] = useState('');
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const fileInput = useRef<HTMLInputElement | null>(null);
   const [busy, setBusy] = useState(false);
@@ -63,6 +68,9 @@ export default function AskLitChat({
     const version = ++generation.current;
     const abort = new AbortController();
     session.current = null;
+    voice.current?.stop();
+    setVoiceAnswer('');
+    lastVoiceAnswer.current = { text: '', id: '' };
     accessToken.current = '';
     setPassword('');
     retry.current = null;
@@ -207,6 +215,9 @@ export default function AskLitChat({
         version === generation.current
       ) {
         session.current = null;
+        voice.current?.stop();
+        lastVoiceAnswer.current = { text: '', id: '' };
+        setVoiceAnswer('');
         setAttachments([]);
         if (response.status === 403 || data.code === 'turn_failed') {
           accessToken.current = '';
@@ -231,14 +242,16 @@ export default function AskLitChat({
     return response.json();
   }
 
-  async function send(event: FormEvent) {
+  async function send(event: FormEvent, dictated?: string) {
     event.preventDefault();
-    if (submitting.current || !question.trim() || !metadata) return;
+    if (submitting.current || !(dictated ?? question).trim() || !metadata)
+      return;
     submitting.current = true;
     setBusy(true);
     setError('');
     const version = generation.current;
-    const message = question.trim();
+    const message = (dictated ?? question).trim();
+    voice.current?.wait();
     controller.current = new AbortController();
     const timeout = setTimeout(() => controller.current?.abort(), 120000);
     try {
@@ -286,9 +299,13 @@ export default function AskLitChat({
         { role: 'user', content: message },
         { role: 'assistant', content: result.answer, sources: result.sources },
       ]);
+      lastVoiceAnswer.current = { text: result.answer, id: request.request_id };
+      setVoiceAnswer(result.answer);
       retry.current = null;
       setQuestion('');
+      await voice.current?.reply(result.answer);
     } catch (e) {
+      if (version === generation.current) voice.current?.stop();
       if (version === generation.current)
         setError(
           e instanceof Error && e.name !== 'AbortError'
@@ -306,6 +323,7 @@ export default function AskLitChat({
 
   async function changeAttachment(file?: File, removeId?: string) {
     if (submitting.current || !metadata?.uploads?.enabled) return;
+    voice.current?.stop();
     if (
       file &&
       (file.size > metadata.uploads.max_bytes ||
@@ -377,8 +395,88 @@ export default function AskLitChat({
     }
   }
 
+  async function voicePolicy() {
+    const current = session.current;
+    const path = current
+      ? `/api/public/conversations/${current.id}/voice`
+      : `/api/public/bots/${botId}`;
+    const bearer = current?.token || accessToken.current;
+    const response = await fetch(base + path, {
+      credentials: 'omit',
+      headers: bearer ? { Authorization: 'Bearer ' + bearer } : {},
+    });
+    if (!response.ok) throw new Error('Voice access could not be checked.');
+    const data = await response.json();
+    if (data.locked) throw new Error('Unlock this AskLit before using voice.');
+    return current ? data : data.voice || { browser: true, paid: false };
+  }
+
+  async function speechRequest(
+    kind: 'transcribe' | 'speech',
+    audio?: Blob
+  ): Promise<Blob | { text: string }> {
+    const version = generation.current;
+    const wasBusy = submitting.current;
+    submitting.current = true;
+    setBusy(true);
+    const abort = new AbortController();
+    controller.current = abort;
+    const timer = setTimeout(() => abort.abort(), 100000);
+    try {
+      if (!session.current) {
+        const created = await post<Session>(
+          `/api/public/bots/${botId}/conversations`,
+          { profile, access_token: accessToken.current }
+        );
+        if (version !== generation.current)
+          throw new Error('The AskLit changed.');
+        session.current = created;
+      }
+      let body: FormData | string;
+      if (audio) {
+        body = new FormData();
+        body.append('file', audio, 'recording.wav');
+      } else body = JSON.stringify({ request_id: lastVoiceAnswer.current.id });
+      const response = await fetch(
+        `${base}/api/public/conversations/${session.current.id}/${kind}`,
+        {
+          method: 'POST',
+          credentials: 'omit',
+          signal: abort.signal,
+          headers: {
+            Authorization: 'Bearer ' + session.current.token,
+            ...(audio ? {} : { 'Content-Type': 'application/json' }),
+          },
+          body,
+        }
+      );
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(
+          typeof error.detail === 'string'
+            ? error.detail
+            : 'Speech service failed. Try Browser voice.'
+        );
+      }
+      if (version !== generation.current)
+        throw new Error('The AskLit changed.');
+      const data =
+        kind === 'transcribe' ? await response.json() : await response.blob();
+      if (version !== generation.current)
+        throw new Error('The AskLit changed.');
+      return data;
+    } finally {
+      clearTimeout(timer);
+      if (version === generation.current) {
+        submitting.current = wasBusy;
+        setBusy(wasBusy);
+      }
+    }
+  }
+
   async function clearConversation() {
     if (busy) return;
+    voice.current?.stop();
     if (session.current) {
       try {
         const response = await fetch(
@@ -403,6 +501,8 @@ export default function AskLitChat({
     retry.current = null;
     setMessages([]);
     setAttachments([]);
+    setVoiceAnswer('');
+    lastVoiceAnswer.current = { text: '', id: '' };
     setQuestion('');
     setError('');
   }
@@ -483,7 +583,10 @@ export default function AskLitChat({
                 disabled={
                   busy || messages.length > 0 || session.current !== null
                 }
-                onChange={(e) => setProfile(e.target.value)}
+                onChange={(e) => {
+                  voice.current?.stop();
+                  setProfile(e.target.value);
+                }}
               >
                 {metadata.profiles.map((p) => (
                   <option key={p.key} value={p.key}>
@@ -667,6 +770,30 @@ export default function AskLitChat({
               </p>
             )}
           </form>
+          <AskLitVoiceControls
+            key={botId}
+            ref={voice}
+            busy={busy}
+            answer={voiceAnswer}
+            policy={metadata.voice || { browser: true, paid: false }}
+            getPolicy={voicePolicy}
+            transcribe={async (audio) =>
+              ((await speechRequest('transcribe', audio)) as { text: string })
+                .text
+            }
+            synthesize={async () => (await speechRequest('speech')) as Blob}
+            onError={setError}
+            onTranscript={async (text, auto) => {
+              if (submitting.current)
+                throw new Error(
+                  'Wait for the current request before speaking again.'
+                );
+              const message = [question.trim(), text].filter(Boolean).join(' ');
+              setQuestion(message);
+              if (auto)
+                await send({ preventDefault() {} } as FormEvent, message);
+            }}
+          />
           {metadata.uploads?.enabled && (
             <p className="small text-muted mt-2">
               Up to 3 files, 5 MB each. Extracted text is sent to this AskLit’s
