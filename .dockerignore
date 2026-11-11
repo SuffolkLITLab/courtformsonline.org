@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+.next
+out
+.env
+.env.*
+*.log
+coverage
+*.tsbuildinfo
+test-build.js
+test_helpers.ts
