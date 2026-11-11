@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 COPY . .
-ARG NEXT_PUBLIC_ASKLIT_API_URL=https://asklit-studio.fly.dev
+ARG NEXT_PUBLIC_ASKLIT_API_URL=https://asklit.suffolklitlab.org
 ENV NEXT_PUBLIC_ASKLIT_API_URL=$NEXT_PUBLIC_ASKLIT_API_URL NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 

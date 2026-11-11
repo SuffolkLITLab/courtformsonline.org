@@ -4,7 +4,7 @@ primary_region = "iad"
 [build]
   dockerfile = "Dockerfile.asklit"
   [build.args]
-    NEXT_PUBLIC_ASKLIT_API_URL = "https://asklit-studio.fly.dev"
+    NEXT_PUBLIC_ASKLIT_API_URL = "https://asklit.suffolklitlab.org"
 
 [http_service]
   internal_port = 8080
