@@ -609,16 +609,16 @@ export default function AskLitChat({
                     disabled={busy}
                     onClick={() => fileInput.current?.click()}
                   >
+                    {/* ! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.  */}
                     <svg
-                      viewBox="0 0 24 24"
+                      viewBox="0 0 448 512"
                       width="20"
                       height="20"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
+                      fill="currentColor"
                       aria-hidden="true"
+                      focusable="false"
                     >
-                      <path d="m21 11-9 9a6 6 0 0 1-8.5-8.5l10-10a4 4 0 0 1 5.7 5.7l-10 10a2 2 0 0 1-2.8-2.8l9-9" />
+                      <path d="M364.2 83.8c-24.4-24.4-64-24.4-88.4 0l-184 184c-42.1 42.1-42.1 110.3 0 152.4s110.3 42.1 152.4 0l152-152c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-152 152c-64 64-167.6 64-231.6 0s-64-167.6 0-231.6l184-184c46.3-46.3 121.3-46.3 167.6 0s46.3 121.3 0 167.6l-176 176c-28.6 28.6-75 28.6-103.6 0s-28.6-75 0-103.6l144-144c10.9-10.9 28.7-10.9 39.6 0s10.9 28.7 0 39.6l-144 144c-6.7 6.7-6.7 17.7 0 24.4s17.7 6.7 24.4 0l176-176c24.4-24.4 24.4-64 0-88.4z" />
                     </svg>
                   </button>
                 </>
