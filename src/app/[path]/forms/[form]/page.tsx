@@ -24,6 +24,7 @@ import SimilarForms from '../../../components/SimilarForms';
 import LegalResourceLink from '../../../components/LegalResourceLink';
 import Breadcrumbs, { BreadcrumbItem } from '../../../components/Breadcrumbs';
 import MarkdownContent from '../../../components/MarkdownContent';
+import AskLitChat from '../../../components/AskLitChat';
 import { pathToServerConfig } from '../../../../config/formSources.config';
 import { legalTopics } from '../../../../config/topics.config';
 
@@ -339,6 +340,11 @@ const Page = async ({ params }: PageProps) => {
         topics={topicsForSimilar}
         jurisdictionPath={path}
       />
+      {process.env.NEXT_PUBLIC_ASKLIT_API_URL &&
+        typeof formDetails.metadata?.asklit_id === 'string' &&
+        /^[a-f0-9]{32}$/.test(formDetails.metadata.asklit_id) && (
+          <AskLitChat botId={formDetails.metadata.asklit_id} />
+        )}
       {deepLink && DisclaimerComponent && (
         <LegalResourceLink
           topic={topicDisplayName}
