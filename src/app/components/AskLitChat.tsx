@@ -197,7 +197,10 @@ export default function AskLitChat({
       const data = await response.json().catch(() => ({}));
       // Definitive failures can be retried as new turns. Network failures reuse
       // the same request ID so a lost response cannot duplicate a billed call.
-      if (!['turn_pending', 'conversation_busy'].includes(data.code))
+      if (
+        path.endsWith('/messages') &&
+        !['turn_pending', 'conversation_busy'].includes(data.code)
+      )
         retry.current = null;
       if (
         [403, 404].includes(response.status) &&
@@ -252,6 +255,21 @@ export default function AskLitChat({
         if (version !== generation.current) return;
         session.current = created;
       }
+      if (metadata.uploads?.enabled) {
+        const response = await fetch(
+          `${base}/api/public/conversations/${session.current.id}/attachments`,
+          {
+            credentials: 'omit',
+            signal: controller.current?.signal,
+            headers: { Authorization: 'Bearer ' + session.current.token },
+          }
+        );
+        if (!response.ok)
+          throw new Error('Could not check the attached files. Try again.');
+        const files: Attachment[] = await response.json();
+        if (version !== generation.current) return;
+        setAttachments(files);
+      }
       const request =
         retry.current?.message === message
           ? retry.current
@@ -303,7 +321,7 @@ export default function AskLitChat({
     setBusy(true);
     setError('');
     controller.current = new AbortController();
-    const timer = setTimeout(() => controller.current?.abort(), 45000);
+    const timer = setTimeout(() => controller.current?.abort(), 120000);
     try {
       if (!session.current) {
         const created = await post<Session>(
@@ -325,21 +343,31 @@ export default function AskLitChat({
         }
       } finally {
         if (version === generation.current && session.current === current) {
-          const response = await fetch(base + path, {
-            credentials: 'omit',
-            signal: controller.current?.signal,
-            headers: { Authorization: 'Bearer ' + current.token },
-          });
-          if (response.ok) {
-            const files: Attachment[] = await response.json();
-            if (version === generation.current) setAttachments(files);
+          const reconcile = new AbortController();
+          const reconcileTimer = setTimeout(() => reconcile.abort(), 10000);
+          try {
+            const response = await fetch(base + path, {
+              credentials: 'omit',
+              signal: reconcile.signal,
+              headers: { Authorization: 'Bearer ' + current.token },
+            });
+            if (response.ok) {
+              const files: Attachment[] = await response.json();
+              if (version === generation.current) setAttachments(files);
+            }
+          } finally {
+            clearTimeout(reconcileTimer);
           }
         }
       }
       retry.current = null;
     } catch (e) {
       if (version === generation.current)
-        setError(e instanceof Error ? e.message : 'Could not attach the file.');
+        setError(
+          e instanceof Error && e.name !== 'AbortError'
+            ? e.message
+            : 'The upload was interrupted. Check the file list before trying again.'
+        );
     } finally {
       clearTimeout(timer);
       if (version === generation.current) {
