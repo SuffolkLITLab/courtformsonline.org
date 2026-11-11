@@ -319,6 +319,7 @@ test('uploads a private attachment before sending, and removes it', async () => 
     )
     .mockImplementationOnce(() => response(file))
     .mockImplementationOnce(() => response([file]))
+    .mockImplementationOnce(() => response([file]))
     .mockImplementationOnce(() => response({ answer: 'Friday', sources: [] }))
     .mockImplementationOnce(() => response({ deleted: true }))
     .mockImplementationOnce(() => response([]));
@@ -351,7 +352,7 @@ test('uploads a private attachment before sending, and removes it', async () => 
   await waitFor(() =>
     expect(screen.queryByText('notice.txt')).not.toBeInTheDocument()
   );
-  expect(fetchMock.mock.calls[5][1].method).toBe('DELETE');
+  expect(fetchMock.mock.calls[6][1].method).toBe('DELETE');
   expect(
     fetchMock.mock.calls.every(([, options]) => options.credentials === 'omit')
   ).toBe(true);
