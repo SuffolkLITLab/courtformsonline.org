@@ -6,6 +6,8 @@ import AskLitVoiceControls, { VoiceHandle } from './AskLitVoiceControls';
 type Source = { filename: string; page: number; content: string };
 type Answer = { answer: string; sources: Source[] };
 type Metadata = {
+  id?: string;
+  organization?: { name: string; slug: string | null };
   title: string;
   voice?: { browser: boolean; paid: boolean };
   locked?: boolean;
@@ -513,6 +515,34 @@ export default function AskLitChat({
       aria-label="AskLit assistant"
     >
       <h2>{metadata?.title || 'Ask a question'}</h2>
+      <div className="border-start border-3 border-warning ps-3 mb-3 small">
+        {metadata?.organization && (
+          <p className="text-muted mb-1">
+            Organization: {metadata.organization.name}
+          </p>
+        )}
+        <p className="mb-1">
+          This AskLit uses AI and can make mistakes. Check important
+          information.
+        </p>
+        <p className="mb-1">
+          Do not enter sensitive identifying information, such as bank account
+          numbers, government ID numbers, or passwords.
+        </p>
+        <details>
+          <summary>About this AskLit</summary>
+          <p className="mb-1">AskLit ID: {metadata?.id || botId}</p>
+          <p className="mb-1">
+            Organization names are supplied by publishers. Hosting an AskLit is
+            not an endorsement of its content.
+          </p>
+          <a
+            href={`mailto:litlab@suffolk.edu?subject=${encodeURIComponent('Report AskLit ' + (metadata?.id || botId))}`}
+          >
+            Report a concern
+          </a>
+        </details>
+      </div>
       {error && (
         <p role="alert" className="alert alert-warning">
           {error}
@@ -570,9 +600,8 @@ export default function AskLitChat({
         <>
           <p>{metadata.welcome}</p>
           <p className="small text-muted">
-            Answers are AI-generated. Check the source passages. Conversations
-            are retained for up to {metadata.retention_days} days; use “Clear
-            conversation” to delete yours sooner.
+            Conversations are retained for up to {metadata.retention_days} days;
+            use “Clear conversation” to delete yours sooner.
           </p>
           {metadata.profiles.length > 1 && (
             <label className="form-label d-block">
