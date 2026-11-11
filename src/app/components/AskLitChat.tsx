@@ -12,7 +12,19 @@ type Metadata = {
   welcome: string;
   footer: string;
   retention_days: number;
+  uploads?: {
+    enabled: boolean;
+    extensions: string[];
+    max_bytes: number;
+    max_files: number;
+  };
   profiles: { key: string; label: string; conversation_starters: string[] }[];
+};
+type Attachment = {
+  id: string;
+  filename: string;
+  size: number;
+  characters: number;
 };
 type Session = { id: string; token: string };
 type ChatMessage = {
@@ -36,6 +48,8 @@ export default function AskLitChat({
   const popup = useRef<Window | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [question, setQuestion] = useState('');
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
+  const fileInput = useRef<HTMLInputElement | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const session = useRef<Session | null>(null);
@@ -56,6 +70,7 @@ export default function AskLitChat({
     submitting.current = false;
     setBusy(false);
     setMessages([]);
+    setAttachments([]);
     setMetadata(null);
     setError('');
     if (!base || !/^[a-f0-9]{32}$/.test(botId)) {
@@ -157,18 +172,26 @@ export default function AskLitChat({
   async function post<T>(
     path: string,
     body: unknown,
-    token?: string
+    token?: string,
+    method = 'POST'
   ): Promise<T> {
     const version = generation.current;
     const response = await fetch(`${base}${path}`, {
-      method: 'POST',
+      method,
       credentials: 'omit',
       signal: controller.current?.signal,
       headers: {
-        'Content-Type': 'application/json',
+        ...(body && !(body instanceof FormData)
+          ? { 'Content-Type': 'application/json' }
+          : {}),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
-      body: JSON.stringify(body),
+      body:
+        body instanceof FormData
+          ? body
+          : body === undefined
+            ? undefined
+            : JSON.stringify(body),
     });
     if (!response.ok) {
       const data = await response.json().catch(() => ({}));
@@ -181,6 +204,7 @@ export default function AskLitChat({
         version === generation.current
       ) {
         session.current = null;
+        setAttachments([]);
         if (response.status === 403 || data.code === 'turn_failed') {
           accessToken.current = '';
           const current = await fetch(`${base}/api/public/bots/${botId}`, {
@@ -262,6 +286,69 @@ export default function AskLitChat({
     }
   }
 
+  async function changeAttachment(file?: File, removeId?: string) {
+    if (submitting.current || !metadata?.uploads?.enabled) return;
+    if (
+      file &&
+      (file.size > metadata.uploads.max_bytes ||
+        attachments.length >= metadata.uploads.max_files)
+    ) {
+      setError(
+        'Choose a file under 5 MB, with at most three files per conversation.'
+      );
+      return;
+    }
+    const version = generation.current;
+    submitting.current = true;
+    setBusy(true);
+    setError('');
+    controller.current = new AbortController();
+    const timer = setTimeout(() => controller.current?.abort(), 45000);
+    try {
+      if (!session.current) {
+        const created = await post<Session>(
+          `/api/public/bots/${botId}/conversations`,
+          { profile, access_token: accessToken.current }
+        );
+        if (version !== generation.current) return;
+        session.current = created;
+      }
+      const current = session.current;
+      const path = `/api/public/conversations/${current.id}/attachments`;
+      try {
+        if (file) {
+          const body = new FormData();
+          body.append('file', file);
+          await post<Attachment>(path, body, current.token);
+        } else if (removeId) {
+          await post(path + '/' + removeId, undefined, current.token, 'DELETE');
+        }
+      } finally {
+        if (version === generation.current && session.current === current) {
+          const response = await fetch(base + path, {
+            credentials: 'omit',
+            signal: controller.current?.signal,
+            headers: { Authorization: 'Bearer ' + current.token },
+          });
+          if (response.ok) {
+            const files: Attachment[] = await response.json();
+            if (version === generation.current) setAttachments(files);
+          }
+        }
+      }
+      retry.current = null;
+    } catch (e) {
+      if (version === generation.current)
+        setError(e instanceof Error ? e.message : 'Could not attach the file.');
+    } finally {
+      clearTimeout(timer);
+      if (version === generation.current) {
+        submitting.current = false;
+        setBusy(false);
+      }
+    }
+  }
+
   async function clearConversation() {
     if (busy) return;
     if (session.current) {
@@ -287,6 +374,7 @@ export default function AskLitChat({
     session.current = null;
     retry.current = null;
     setMessages([]);
+    setAttachments([]);
     setQuestion('');
     setError('');
   }
@@ -417,6 +505,27 @@ export default function AskLitChat({
                 ))}
             </div>
           )}
+          {attachments.length > 0 && (
+            <ul
+              className="list-unstyled d-flex gap-2 flex-wrap"
+              aria-label="Attached files"
+            >
+              {attachments.map((file) => (
+                <li key={file.id} className="border rounded px-2 py-1">
+                  {file.filename}
+                  <button
+                    className="btn btn-sm"
+                    type="button"
+                    aria-label={'Remove ' + file.filename}
+                    disabled={busy}
+                    onClick={() => changeAttachment(undefined, file.id)}
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           <form onSubmit={send}>
             <div className="position-relative">
               <label className="form-label d-block">
@@ -427,6 +536,7 @@ export default function AskLitChat({
                   placeholder="Ask a question…"
                   style={{
                     paddingRight: 64,
+                    paddingBottom: metadata.uploads?.enabled ? 56 : undefined,
                     borderRadius: 16,
                     resize: 'vertical',
                   }}
@@ -449,6 +559,42 @@ export default function AskLitChat({
                   }}
                 />
               </label>
+              {metadata.uploads?.enabled && (
+                <>
+                  <input
+                    ref={fileInput}
+                    type="file"
+                    hidden
+                    accept={metadata.uploads.extensions.join(',')}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      e.target.value = '';
+                      if (file) void changeAttachment(file);
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className="btn position-absolute"
+                    aria-label="Attach file"
+                    title="Attach file"
+                    style={{ left: 8, bottom: 12 }}
+                    disabled={busy}
+                    onClick={() => fileInput.current?.click()}
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="20"
+                      height="20"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      aria-hidden="true"
+                    >
+                      <path d="m21 11-9 9a6 6 0 0 1-8.5-8.5l10-10a4 4 0 0 1 5.7 5.7l-10 10a2 2 0 0 1-2.8-2.8l9-9" />
+                    </svg>
+                  </button>
+                </>
+              )}
               <button
                 className="btn btn-primary rounded-circle position-absolute"
                 style={{
@@ -489,10 +635,16 @@ export default function AskLitChat({
             </div>
             {busy && (
               <p role="status" className="mt-2">
-                The assistant is checking its sources.
+                Working…
               </p>
             )}
           </form>
+          {metadata.uploads?.enabled && (
+            <p className="small text-muted mt-2">
+              Up to 3 files, 5 MB each. Extracted text is sent to this AskLit’s
+              model with your questions and retained with this conversation.
+            </p>
+          )}
           <p className="small text-muted mt-3 mb-0">{metadata.footer}</p>
         </>
       )}

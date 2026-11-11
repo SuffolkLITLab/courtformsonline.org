@@ -293,3 +293,75 @@ test.each([
   expect(submit).toHaveBeenCalledTimes(calls as number);
   submit.mockRestore();
 });
+
+test('uploads a private attachment before sending, and removes it', async () => {
+  const file = {
+    id: 'file-1',
+    filename: 'notice.txt',
+    size: 16,
+    characters: 16,
+  };
+  const fetchMock = global.fetch as jest.Mock;
+  fetchMock
+    .mockImplementationOnce(() =>
+      response({
+        ...metadata,
+        uploads: {
+          enabled: true,
+          extensions: ['.txt'],
+          max_bytes: 5242880,
+          max_files: 3,
+        },
+      })
+    )
+    .mockImplementationOnce(() =>
+      response({ id: 'conversation', token: 'capability' })
+    )
+    .mockImplementationOnce(() => response(file))
+    .mockImplementationOnce(() => response([file]))
+    .mockImplementationOnce(() => response({ answer: 'Friday', sources: [] }))
+    .mockImplementationOnce(() => response({ deleted: true }))
+    .mockImplementationOnce(() => response([]));
+  const { container } = render(
+    <AskLitChat botId={botId} apiBase="https://asklit.example" />
+  );
+  await screen.findByRole('button', { name: 'Attach file' });
+  fireEvent.change(container.querySelector('input[type=file]')!, {
+    target: {
+      files: [
+        new File(['Deadline Friday'], 'notice.txt', { type: 'text/plain' }),
+      ],
+    },
+  });
+  await screen.findByText('notice.txt');
+  expect(fetchMock.mock.calls[2][1].body).toBeInstanceOf(FormData);
+  expect(fetchMock.mock.calls[2][1].headers.Authorization).toBe(
+    'Bearer capability'
+  );
+  expect(fetchMock.mock.calls[2][1].headers['Content-Type']).toBeUndefined();
+  expect(fetchMock.mock.calls.some(([url]) => url.endsWith('/messages'))).toBe(
+    false
+  );
+  fireEvent.change(screen.getByLabelText('Your question'), {
+    target: { value: 'When?' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: 'Send' }));
+  await screen.findByText('Friday');
+  fireEvent.click(screen.getByRole('button', { name: 'Remove notice.txt' }));
+  await waitFor(() =>
+    expect(screen.queryByText('notice.txt')).not.toBeInTheDocument()
+  );
+  expect(fetchMock.mock.calls[5][1].method).toBe('DELETE');
+  expect(
+    fetchMock.mock.calls.every(([, options]) => options.credentials === 'omit')
+  ).toBe(true);
+});
+
+test('does not show file uploads when the author has not enabled them', async () => {
+  (global.fetch as jest.Mock).mockImplementationOnce(() => response(metadata));
+  render(<AskLitChat botId={botId} apiBase="https://asklit.example" />);
+  await screen.findByLabelText('Your question');
+  expect(
+    screen.queryByRole('button', { name: 'Attach file' })
+  ).not.toBeInTheDocument();
+});
