@@ -1,5 +1,11 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AskLitChat from '../src/app/components/AskLitChat';
 
@@ -365,4 +371,97 @@ test('does not show file uploads when the author has not enabled them', async ()
   expect(
     screen.queryByRole('button', { name: 'Attach file' })
   ).not.toBeInTheDocument();
+});
+
+test('Start voice sends successive turns and resumes listening without Send clicks', async () => {
+  const recognizers: any[] = [];
+  const utterances: any[] = [];
+  const browser = window as any;
+  const original = {
+    SpeechRecognition: browser.SpeechRecognition,
+    SpeechSynthesisUtterance: browser.SpeechSynthesisUtterance,
+    speechSynthesis: browser.speechSynthesis,
+  };
+  class Recognition {
+    onresult: any;
+    onend: any;
+    onerror: any;
+    start() {}
+    stop() {}
+    abort() {}
+    constructor() {
+      recognizers.push(this);
+    }
+  }
+  class Utterance {
+    onend: any;
+    onerror: any;
+    constructor(public text: string) {}
+  }
+  Object.defineProperties(window, {
+    SpeechRecognition: { configurable: true, value: Recognition },
+    SpeechSynthesisUtterance: { configurable: true, value: Utterance },
+    speechSynthesis: {
+      configurable: true,
+      value: {
+        cancel: jest.fn(),
+        getVoices: () => [],
+        speak: (utterance: any) => utterances.push(utterance),
+      },
+    },
+  });
+  const fetchMock = global.fetch as jest.Mock;
+  fetchMock
+    .mockImplementationOnce(() => response(metadata))
+    .mockImplementationOnce(() =>
+      response({ id: 'conversation', token: 'capability' })
+    )
+    .mockImplementationOnce(() =>
+      response({ answer: 'First reply', sources: [] })
+    )
+    .mockImplementationOnce(() =>
+      response({ answer: 'Second reply', sources: [] })
+    );
+  const { unmount } = render(
+    <AskLitChat botId={botId} apiBase="https://asklit.example" />
+  );
+  try {
+    await screen.findByLabelText('Your question');
+    fireEvent.click(screen.getByRole('button', { name: 'Start voice' }));
+    await waitFor(() => expect(recognizers).toHaveLength(1));
+    function say(index: number, text: string) {
+      act(() => {
+        recognizers[index].onresult({
+          resultIndex: 0,
+          results: [{ isFinal: true, 0: { transcript: text } }],
+        });
+        recognizers[index].onend();
+      });
+    }
+    say(0, 'First spoken question');
+    await screen.findByText('First reply');
+    await waitFor(() => expect(utterances).toHaveLength(1));
+    expect(recognizers).toHaveLength(1);
+    act(() => utterances[0].onend());
+    await waitFor(() => expect(recognizers).toHaveLength(2));
+    say(1, 'Second spoken question');
+    await screen.findByText('Second reply');
+    const turns = fetchMock.mock.calls.filter(([url]) =>
+      url.endsWith('/messages')
+    );
+    expect(turns).toHaveLength(2);
+    expect(
+      turns.map(([, options]) => JSON.parse(options.body).message)
+    ).toEqual(['First spoken question', 'Second spoken question']);
+    fireEvent.click(screen.getByRole('button', { name: 'Stop voice' }));
+    await waitFor(() =>
+      expect(
+        screen.getByRole('button', { name: 'Start voice' })
+      ).toBeInTheDocument()
+    );
+  } finally {
+    unmount();
+    for (const [key, value] of Object.entries(original))
+      Object.defineProperty(window, key, { configurable: true, value });
+  }
 });
