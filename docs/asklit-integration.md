@@ -14,6 +14,40 @@ existing form landing page. With no bot ID or API origin configured, the panel
 is omitted. Only the bot identifier is accepted from form metadata; the trusted
 backend origin comes from the build environment.
 
+## Add the ID to interview YAML
+
+Add `asklit_id` to the existing **YAML `metadata:` block in the docassemble
+interview**, alongside `title` and the other CFO metadata. For example, the
+Civil Docketing Statement interview already defines `title`, `short title`,
+`description`, `can_I_use_this_form`, and `before_you_start` in
+`civil_docketing_statement_standalone.yml`. Adding an AskLit would look like this:
+
+```yaml
+---
+metadata:
+  title: |
+    Civil Docketing Statement
+  short title: |
+    Civil Docketing
+  # ... existing description, can_I_use_this_form, before_you_start, etc.
+  asklit_id: "0123456789abcdef0123456789abcdef"
+  # ... remaining metadata
+---
+# ... remaining interview blocks
+```
+
+The `# ...` comments represent omitted existing content; keep that content in your
+file. Replace the illustrative ID with the real value from Studio's **Copy bot
+ID** control. Add the field to the existing block rather than creating a second
+metadata block or a separate JSON file.
+
+Publish the updated interview package to the docassemble server that supplies
+CFO's form catalog, then rebuild CFO so it reads the updated metadata. The catalog
+API represents this YAML metadata as JSON in transit; authors edit the YAML
+source. The form component renders `AskLitChat` when the ID is valid and the API
+origin is configured. Later prompt and knowledge-base updates still happen in
+Studio without changing this mapping.
+
 `src/app/components/AskLitChat.tsx` handles metadata, new conversations, messages,
 citations and deletion directly from the browser. Tokens stay in memory; no
 cookies, provider keys, Next.js server routes, or user-supplied bot code are
@@ -43,7 +77,7 @@ appearing in a gallery. Unlisted is public by link, not an access restriction.
 An organization gallery is optional and can remain disabled.
 
 Use **Settings → Sharing → Integration → Copy bot ID** and add the copied value to
-the existing form record's `metadata.asklit_id`, or link directly to
+the interview YAML's existing `metadata:` block as `asklit_id`, or link directly to
 `/asklit?bot=BOT_ID`. The ID stays stable when Studio publishes a new version.
 New conversations use the current publication; existing conversations can remain
 on their original version. Changing the content does not require a CFO rebuild.
