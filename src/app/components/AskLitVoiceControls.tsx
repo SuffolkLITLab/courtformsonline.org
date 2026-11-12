@@ -34,7 +34,7 @@ const AskLitVoiceControls = forwardRef<VoiceHandle, Props>(
     );
     const [state, setState] = useState({ active: false, stage: '' });
     const [mode, setMode] = useState('browser');
-    const [loop, setLoop] = useState(false);
+    const [loop, setLoop] = useState(true);
     const [readReplies, setReadReplies] = useState(true);
     const [lang, setLang] = useState('');
     const selectedMode = useRef(mode);
@@ -162,6 +162,11 @@ const AskLitVoiceControls = forwardRef<VoiceHandle, Props>(
             {state.stage}
           </span>
         </div>
+        <p className="small text-muted mt-2">
+          {loop
+            ? 'Speak naturally. Messages send automatically, and the microphone listens again after each reply. Use Stop voice to end.'
+            : 'Dictation fills the message box. Review the text, then send.'}
+        </p>
         <details className="mt-2">
           <summary>Voice options</summary>
           <label className="form-label mt-2">
@@ -183,7 +188,7 @@ const AskLitVoiceControls = forwardRef<VoiceHandle, Props>(
               checked={loop}
               onChange={(e) => change(() => setLoop(e.target.checked))}
             />{' '}
-            Hands-free conversation — send when I finish speaking
+            Send automatically when I finish speaking
           </label>
           <label className="d-block">
             <input
