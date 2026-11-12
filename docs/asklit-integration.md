@@ -32,3 +32,39 @@ NEXT_PUBLIC_ASKLIT_API_URL=https://YOUR-ASKLIT-HOST npm run build
 
 Serve `out/` through ordinary static hosting with clean URL support. No Node.js
 runtime is required after building.
+
+## Manage CFO assistants in Studio
+
+Create and maintain the assistant at https://asklit.suffolklitlab.org. Select its
+organization, add knowledge bases and instructions, preview/evaluate, then Save
+and Publish. In **Settings → Sharing**, choose **Unlisted** and use **Save access
+& link** when the assistant should be available publicly through CFO without
+appearing in a gallery. Unlisted is public by link, not an access restriction.
+An organization gallery is optional and can remain disabled.
+
+Use **Settings → Sharing → Integration → Copy bot ID** and add the copied value to
+the existing form record's `metadata.asklit_id`, or link directly to
+`/asklit?bot=BOT_ID`. The ID stays stable when Studio publishes a new version.
+New conversations use the current publication; existing conversations can remain
+on their original version. Changing the content does not require a CFO rebuild.
+Changing build-time configuration or build-time form mappings does.
+
+The generic `/asklit` page has gallery behavior when opened without an assistant
+parameter. CFO does not need to link to that gallery: form pages and custom pages
+can render `AskLitChat` directly, with CFO's own navigation around it.
+
+The production build value is:
+
+```sh
+NEXT_PUBLIC_ASKLIT_API_URL=https://asklit.suffolklitlab.org npm run build
+```
+
+Allow the exact deployed CFO origins in the backend's `ASKLIT_CORS_ORIGINS`.
+The build value is the origin without `/api`; it contains no secret. Neither a
+Supabase service key nor model credentials belong in this frontend.
+
+The AssemblyLine documentation has dedicated guides for
+[authors](https://assemblyline.suffolklitlab.org/docs/asklits/studio),
+[administrators](https://assemblyline.suffolklitlab.org/docs/asklits/studio-administration),
+[CFO integration](https://assemblyline.suffolklitlab.org/docs/asklits/court-forms-online),
+and [deployment](https://assemblyline.suffolklitlab.org/docs/asklits/studio-deployment).
