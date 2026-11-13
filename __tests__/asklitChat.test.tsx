@@ -465,3 +465,17 @@ test('Start voice sends successive turns and resumes listening without Send clic
       Object.defineProperty(window, key, { configurable: true, value });
   }
 });
+
+test('shows long student instructions and hides citation excerpts even if a response contains them', async () => {
+  const fetchMock=global.fetch as jest.Mock;
+  fetchMock.mockImplementationOnce(()=>response({...metadata,show_citations:false,student_instructions:'Read the simulation briefing.\nPlay the student lawyer.'}))
+    .mockImplementationOnce(()=>response({id:'conversation',token:'capability'}))
+    .mockImplementationOnce(()=>response({answer:'In-character reply',sources:[{filename:'secret.pdf',page:1,content:'Reference excerpt'}]}));
+  render(<AskLitChat botId={botId} apiBase="https://api.example" />);
+  expect(await screen.findByText(/Read the simulation briefing/)).toBeInTheDocument();
+  fireEvent.change(screen.getByRole('textbox',{name:'Your question'}),{target:{value:'Hello'}});
+  fireEvent.click(screen.getByRole('button',{name:'Send',exact:true}));
+  expect(await screen.findByText('In-character reply')).toBeInTheDocument();
+  expect(screen.queryByText('Reference excerpt')).not.toBeInTheDocument();
+  expect(screen.queryByText(/secret.pdf/)).not.toBeInTheDocument();
+});
