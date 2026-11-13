@@ -7,6 +7,7 @@ export interface Form {
     efiling_enabled?: boolean | 'email';
     LIST_topics?: string[];
     jurisdiction?: string;
+    asklit_id?: string;
   };
   landingPageURL: string;
   link: string;
