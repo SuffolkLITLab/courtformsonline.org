@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useEffect, useRef, useState } from 'react';
+import AskLitInstructorNotes from './AskLitInstructorNotes';
 import AskLitVoiceControls, { VoiceHandle } from './AskLitVoiceControls';
 
 type Source = { filename: string; page: number; content: string };
@@ -14,6 +15,9 @@ type Metadata = {
   access_mode?: string;
   url?: string;
   welcome: string;
+  student_instructions?: string;
+  show_citations?: boolean;
+  instructor_notes_available?: boolean;
   footer: string;
   retention_days: number;
   uploads?: {
@@ -596,8 +600,19 @@ export default function AskLitChat({
           )}
         </div>
       )}
+      {metadata?.instructor_notes_available && (
+        <AskLitInstructorNotes key={botId} botId={botId} apiBase={base} />
+      )}
       {metadata && !metadata.locked && (
         <>
+          {metadata.student_instructions && (
+            <details open className="my-3">
+              <summary>Instructions</summary>
+              <p style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
+                {metadata.student_instructions}
+              </p>
+            </details>
+          )}
           <p>{metadata.welcome}</p>
           <p className="small text-muted">
             Conversations are retained for up to {metadata.retention_days} days;
@@ -637,14 +652,22 @@ export default function AskLitChat({
                 <p style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere' }}>
                   {message.content}
                 </p>
-                {message.sources?.map((source, i) => (
-                  <details key={i} className="mb-2">
-                    <summary>
-                      {source.filename}, page {source.page}
-                    </summary>
-                    <p style={{ whiteSpace: 'pre-wrap' }}>{source.content}</p>
-                  </details>
-                ))}
+                {metadata.show_citations !== false &&
+                  !!message.sources?.length && (
+                    <details>
+                      <summary>Sources</summary>
+                      {message.sources.map((source, i) => (
+                        <details key={i} className="mb-2">
+                          <summary>
+                            {source.filename}, page {source.page}
+                          </summary>
+                          <p style={{ whiteSpace: 'pre-wrap' }}>
+                            {source.content}
+                          </p>
+                        </details>
+                      ))}
+                    </details>
+                  )}
               </div>
             ))}
           </div>
