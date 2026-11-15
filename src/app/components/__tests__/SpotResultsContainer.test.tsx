@@ -64,3 +64,27 @@ test('description keyword matches stay above topics when classification finishes
   ]);
   expect(screen.queryByText('More keyword matches')).not.toBeInTheDocument();
 });
+
+test('keeps West Virginia keyword and topic links in the selected state', () => {
+  render(
+    <SpotResultsContainer
+      path="wv"
+      searchQuery="Kinship"
+      data={{ labels: [{ id: 'ES-03-03-00-00', confidence: 0.9 }] }}
+      interviews={{
+        family: [
+          {
+            filename: 'docassemble.KinshipConnector:data/questions/kin.yml',
+            metadata: { title: 'Kinship Connector' },
+          },
+        ],
+      }}
+    />
+  );
+  expect(
+    screen.getByRole('link', { name: 'Kinship Connector' })
+  ).toHaveAttribute('href', '/wv/forms/kinship-connector');
+  expect(
+    screen.getByRole('link', { name: 'Family and safety' })
+  ).toHaveAttribute('href', '/wv/family');
+});

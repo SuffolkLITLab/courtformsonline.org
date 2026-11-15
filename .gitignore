@@ -52,3 +52,6 @@ next-env.d.ts
 # Worker secrets and local state
 .dev.vars*
 .wrangler/
+
+# Public CA certificates used to validate the LAWV catalog (no private keys).
+!certificates/godaddy-dv-r1-chain.pem

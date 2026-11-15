@@ -1,3 +1,4 @@
+import { getGuideHref } from '../../../../utils/guideLinks';
 // Example: courtformsonline.org/ma/forms/[form-slug]
 /*
   Schema.org & Legal Help Dashboard references used for structured data and tagging:
@@ -314,8 +315,8 @@ const Page = async ({ params }: PageProps) => {
             </li>
 
             <li>
-              <Link href={`/guides/find-your-court/${path}`}>
-                Find your {jurisdictionName} courthouse
+              <Link href={getGuideHref('find-your-court', path)}>
+                How to find your courthouse
               </Link>
             </li>
           </ul>
@@ -323,11 +324,10 @@ const Page = async ({ params }: PageProps) => {
       )}
       <h2 className="mt-4">What happens after you finish</h2>
       <p>
-        After completing this interview, you will get your completed forms ready
-        for filing. This interview may give you more information about what
-        happens next based on your answers.{' '}
-        <Link href={`/guides/how-to-file/${path}`}>
-          Learn how to file in {jurisdictionName}
+        Follow the interview’s instructions for signing and using your
+        documents. If you need to file them with a court,{' '}
+        <Link href={getGuideHref('how-to-file', path)}>
+          learn how to file court forms
         </Link>
         .
       </p>

@@ -43,7 +43,8 @@ const stateOutlines = {
 };
 
 function StateOutline({ pathKey, className }) {
-  const outline = stateOutlines[pathKey] || stateOutlines.ma;
+  const outline = stateOutlines[pathKey];
+  if (!outline) return null;
 
   return (
     <svg

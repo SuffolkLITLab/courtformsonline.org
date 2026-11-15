@@ -1,7 +1,8 @@
 The PR build uses these catalog fixtures to compile and export the site without
 depending on the availability of the interview servers. Suffolk entries are a
 representative subset of the saved public catalog, with the merged family topic
-metadata applied. The other five providers use explicitly labeled test records.
+metadata applied. The original five other providers use explicitly labeled test records. The LAWV
+catalog records its eight public listings without interview answers.
 No interview answers or private data are included.
 
 The fixture includes the twelve student forms, existing child-guardianship tools,

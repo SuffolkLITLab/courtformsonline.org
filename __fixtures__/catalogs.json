@@ -139,11 +139,11 @@
         "metadata": {
           "title": {
             "en": "Massachusetts Care Type Finder",
-            "es": "Herramienta de Selecci\u00f3n de Cuidados de Massachusetts"
+            "es": "Herramienta de Selección de Cuidados de Massachusetts"
           },
           "short title": {
             "en": "Mass. Care Type Finder",
-            "es": "Herramienta de Selecci\u00f3n de Cuidados de Mass."
+            "es": "Herramienta de Selección de Cuidados de Mass."
           },
           "description": "If you know a minor in Massachusetts who needs temporary or permanent care, the Care Type Finder\ncan help you decide the right type of support with a few easy to answer questions.\n\nSome kinds of support need a judge to make a decision. Others can be given by the parent without a judge.\n\nThe Care Type Finder will help you decide between:\n\n* Guardianship\n* Temporary agent\n* Caregiver authorization\n\nAnd if you are the parent of the minor, the tool can also help you let the court know that you disagree\nwith someone trying to become the guardian of your child or that you want a new guardian for your child.\n\nAnswer a few questions about your family's situation to get suggestions for the correct type of support.\n",
           "can_I_use_this_form": "You can use this tool if you are a parent, grandparent, or other person who cares about a minor in Massachusetts.\n\nAt the end of this tool, you will be given a link that can help you make\nthe form that you need to take the action that you decide on.\n",
@@ -371,7 +371,7 @@
           "title": "Motion to Reconsider\n",
           "short title": "Motion to Reconsider\n",
           "description": "If you need the Appeals Court to take a look at your case again you can use this interview to create a motion asking for a reconsideration and or modification. \nThis form can also help you serve your motion to the other party and help you request an interpreter if you need one. \n",
-          "can_I_use_this_form": "You can use this form if it has been ** 14 days or less since the date of the Court's decisions **. You only have 14 days after the date of the Court\u2019s decisions to file a Motion for Reconsideration and Modification.\n\nThe following are the reasons you can request these motions: \n  * the court\u2019s reasoning that led to the current order was wrong,\n  * the court failed to consider evidence, or\n  * the judge should know about new information that affects the decision the court already made.\n\nYou **may not** use this form for the following reasons: \n  * to tell the judge about a real-world change of circumstances, or\n  * to tell the judge about a new argument that you are making for the first time.\n",
+          "can_I_use_this_form": "You can use this form if it has been ** 14 days or less since the date of the Court's decisions **. You only have 14 days after the date of the Court’s decisions to file a Motion for Reconsideration and Modification.\n\nThe following are the reasons you can request these motions: \n  * the court’s reasoning that led to the current order was wrong,\n  * the court failed to consider evidence, or\n  * the judge should know about new information that affects the decision the court already made.\n\nYou **may not** use this form for the following reasons: \n  * to tell the judge about a real-world change of circumstances, or\n  * to tell the judge about a new argument that you are making for the first time.\n",
           "before_you_start": "Before you start, you need to get documents from your case in the Trial Court and Appeals Court, including:\n  * Your Appeals Court notice \n",
           "LIST_topics": ["CR-08-01-01-00", "CO-07-02-00-00"],
           "jurisdiction": "NAM-US-US+MA",
@@ -396,8 +396,8 @@
         "metadata": {
           "title": "MassHealth Fair Hearing Request Form to appeal a MassHealth Decision",
           "short title": "MassHealth Appeal",
-          "description": "If you disagree with a decision made by MassHealth about your coverage, benefits, or eligibility, this interview can help you request a Fair Hearing.\n\nYou can use this interview to appeal decisions such as a denial of MassHealth coverage, a determination that you are not eligible, or a reduction or termination of benefits. For example, you may use this form if MassHealth stops covering a medication or service that your provider says you still need.\n\nAfter you submit your hearing request, the Office of Medicaid, Board of Hearings will review your request and schedule a hearing. At the hearing, you will have the opportunity to explain why you disagree with MassHealth\u2019s decision and provide any supporting information.",
-          "can_I_use_this_form": "You can use this interview if you want to appeal a decision made by MassHealth.\n\nYou may request a hearing if:\n  \u2022 You disagree with a decision about your eligibility, benefits, or coverage, or  \n  \u2022 MassHealth did not act on your application or request within a reasonable time.\n\nThis hearing gives you the opportunity to explain why you think MassHealth\u2019s decision is wrong.\n\nYou can file this request for yourself, or you may file on someone else\u2019s behalf if you are authorized to do so (for example, as a legal representative, guardian, or someone with power of attorney).\n\nYou must request a hearing within 60 days of receiving a notice of MassHealth\u2019s decision. In some situations, if you did not receive a notice or MassHealth did not act, you may have up to 120 days to request a hearing.\n",
+          "description": "If you disagree with a decision made by MassHealth about your coverage, benefits, or eligibility, this interview can help you request a Fair Hearing.\n\nYou can use this interview to appeal decisions such as a denial of MassHealth coverage, a determination that you are not eligible, or a reduction or termination of benefits. For example, you may use this form if MassHealth stops covering a medication or service that your provider says you still need.\n\nAfter you submit your hearing request, the Office of Medicaid, Board of Hearings will review your request and schedule a hearing. At the hearing, you will have the opportunity to explain why you disagree with MassHealth’s decision and provide any supporting information.",
+          "can_I_use_this_form": "You can use this interview if you want to appeal a decision made by MassHealth.\n\nYou may request a hearing if:\n  • You disagree with a decision about your eligibility, benefits, or coverage, or  \n  • MassHealth did not act on your application or request within a reasonable time.\n\nThis hearing gives you the opportunity to explain why you think MassHealth’s decision is wrong.\n\nYou can file this request for yourself, or you may file on someone else’s behalf if you are authorized to do so (for example, as a legal representative, guardian, or someone with power of attorney).\n\nYou must request a hearing within 60 days of receiving a notice of MassHealth’s decision. In some situations, if you did not receive a notice or MassHealth did not act, you may have up to 120 days to request a hearing.\n",
           "before_you_start": "This interview will guide you through completing a MassHealth Fair Hearing request form.\n\nBefore you begin, you should have:\n\n 1. Your MassHealth Member ID number (if you or the person you are filing for has one)\n\n 2. The notice from MassHealth about the decision you are appealing\n\n 3. Any documents that support your appeal (if readily available)\n\nYou will have an opportunity to upload documents during this interview. You may also submit documents after you file your hearing request by emailing them to <u>BOH-FairHearingsubmissions@MassMail.State.MA.US</u> before your hearing.\n",
           "LIST_topics": ["HE-00-00-00-00"],
           "jurisdiction": "NAM-US-US+MA",
@@ -548,7 +548,7 @@
           "short title": "ND parental rights form",
           "description": "Use this form to choose someone to make decisions for your minor child or children. This form will say which parental rights and responsibilities you have given to another person.",
           "can_I_use_this_form": "You can use this form if you are a parent or guardian who wants to choose someone to make decisions for your minor child. You can use this form to grant some or all of your parental rights and responsibilities. This can last for up to six months.\n",
-          "before_you_start": "### Before you get started\n- Have your child(ren)\u2019s names and birth dates.\n- Have the name and address of the person you choose to care for your child(ren).\n- Make sure the person you choose is age 18 or older.\n\n### When you are finished\n- Sign the form in front of a notary public or court clerk to make it official.\n- Provide copies to the person you have chosen and keep one for your records.\n",
+          "before_you_start": "### Before you get started\n- Have your child(ren)’s names and birth dates.\n- Have the name and address of the person you choose to care for your child(ren).\n- Make sure the person you choose is age 18 or older.\n\n### When you are finished\n- Sign the form in front of a notary public or court clerk to make it official.\n- Provide copies to the person you have chosen and keep one for your records.\n",
           "when_you_are_finished": "After completing the form, make sure it is signed and notarized. Share copies with the person you chose and keep a copy for yourself. This will make sure that your wishes are followed.\n",
           "LIST_topics": ["ES-03-03-00-00"],
           "jurisdiction": "NAM-US-US+ND",
@@ -665,10 +665,10 @@
         "metadata": {
           "title": "West Virginia Delegation of Parental Authority",
           "short title": "WV-Delegation",
-          "description": "Use this form to let another adult take care of your child for up to 1 year. That adult can make choices about your child\u2019s school and health care. You are still the parent, and you can cancel this at any time. You must be working with a qualified nonprofit organization to use it.\n",
+          "description": "Use this form to let another adult take care of your child for up to 1 year. That adult can make choices about your child’s school and health care. You are still the parent, and you can cancel this at any time. You must be working with a qualified nonprofit organization to use it.\n",
           "can_I_use_this_form": "You can use this form if you are a parent, guardian, or legal custodian of a child under 18 and a qualified nonprofit organization is helping you set this up. Use it if you need another adult to care for your child for a while, like if you are sick, in the military, working far away, or need to leave the country.\n",
           "before_you_start": "### Before you get started gather the following information\n- Your child(ren)'s full name and birthday\n- The caregiver's full name, address, and phone number(s)\n- The dates you want this to start and end (up to 1 year)\n",
-          "when_you_are_finished": "Print the form. You and the other adult must sign it in front of a notary. Then give the other adult a copy and keep one for yourself. They may need to show it to your child\u2019s school or doctor.\n",
+          "when_you_are_finished": "Print the form. You and the other adult must sign it in front of a notary. Then give the other adult a copy and keep one for yourself. They may need to show it to your child’s school or doctor.\n",
           "LIST_topics": ["ES-03-03-00-00", "ES-03-03-05-00"],
           "jurisdiction": "NAM-US-US+WV",
           "languages": ["en"],
@@ -806,6 +806,209 @@
             }
           ]
         }
+      }
+    ]
+  },
+  "docs.lawv.net": {
+    "action": "menu",
+    "interviews": [
+      {
+        "filename": "docassemble.KinshipConnector:data/questions/kin.yml",
+        "link": "/start/Kinship%20Connector/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Root file for logic of the KIN project.  This file controls logic \nflow and importation of other question files.\n",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Kinship Connector\n",
+          "title": "Kinship Connector\n"
+        },
+        "package": "docassemble.KinshipConnector",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Kinship Connector"
+      },
+      {
+        "filename": "docassemble.LAWVRentersRightsWestVirginia:data/questions/wrongful_occ_answer.yml",
+        "link": "/start/LAWV%20Answer%20to%20Wrongful%20Occupation/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Wrongful Occupation Answer\n",
+          "exit url": "https://legalaidwv.org/renters-rights-west-virginia",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Wrongful Occupation Answer\n",
+          "title": "Renters Rights West Virginia - Wrongful Occupation Answer\n"
+        },
+        "package": "docassemble.LAWVRentersRightsWestVirginia",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Renters Rights West Virginia - Wrongful Occupation Answer"
+      },
+      {
+        "filename": "docassemble.LAWVRentersRightsWestVirginia:data/questions/warranty_of_habitability.yml",
+        "link": "/start/LAWV%20Breach%20of%20Warranty%20of%20Habitability/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Letter to Landlord Requesting Repairs\n",
+          "exit url": "https://legalaidwv.org/renters-rights-west-virginia",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Letter to Landlord Requesting Repairs\n",
+          "title": "Renters Rights West Virginia - Letter to Landlord Requesting Repairs\n"
+        },
+        "package": "docassemble.LAWVRentersRightsWestVirginia",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Renters Rights West Virginia - Letter to Landlord Requesting Repairs"
+      },
+      {
+        "filename": "docassemble.LAWVRentersRightsWestVirginia:data/questions/informal_hearing_request.yml",
+        "link": "/start/LAWV%20Informal%20Hearing%20Request/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Informal Hearing Request\n",
+          "exit url": "https://legalaidwv.org/renters-rights-west-virginia",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Informal Hearing Request \n",
+          "title": "Renters Rights West Virginia - Informal Hearing Request\n"
+        },
+        "package": "docassemble.LAWVRentersRightsWestVirginia",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Renters Rights West Virginia - Informal Hearing Request"
+      },
+      {
+        "filename": "docassemble.LAWVNameChange:data/questions/name_change.yml",
+        "link": "/start/LAWV%20Name%20Change/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "This interview produces a Petitioner's Name Change Packet.\n",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "LAWV Name Change Petiion\n",
+          "title": "LAWV Name Change Petition\n"
+        },
+        "package": "docassemble.LAWVNameChange",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "LAWV Name Change Petition"
+      },
+      {
+        "filename": "docassemble.LAWVRentersRightsWestVirginia:data/questions/petition_for_appeal.yml",
+        "link": "/start/LAWV%20Petition%20for%20Appeal/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Petition for Appeal\n",
+          "exit url": "https://legalaidwv.org/renters-rights-west-virginia",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Petition for Appeal\n",
+          "title": "Renters Rights West Virginia - Petition for Appeal\n"
+        },
+        "package": "docassemble.LAWVRentersRightsWestVirginia",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Renters Rights West Virginia - Petition for Appeal"
+      },
+      {
+        "filename": "docassemble.LAWVRentersRightsWestVirginia:data/questions/return_personal_property.yml",
+        "link": "/start/LAWV%20Return%20of%20Personal%20Property/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Return Personal Property Letter\n",
+          "exit url": "https://legalaidwv.org/renters-rights-west-virginia",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Return Personal Property Letter\n",
+          "title": "Renters Rights West Virginia - Return Personal Property Letter\n"
+        },
+        "package": "docassemble.LAWVRentersRightsWestVirginia",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Renters Rights West Virginia - Return Personal Property Letter"
+      },
+      {
+        "filename": "docassemble.LAWVRentersRightsWestVirginia:data/questions/return_of_security_deposit.yml",
+        "link": "/start/LAWV%20Return%20of%20Security%20Deposit/",
+        "metadata": {
+          "_origin_package": "docassemble.LAWVCommon",
+          "_origin_path": "docassemble.LAWVCommon:common_info.yml",
+          "authors": [
+            {
+              "name": "Dane W. Henry, Esq.",
+              "organization": "Legal Aid of West Virginia, Inc."
+            }
+          ],
+          "description": "Security Deposit Letter\n",
+          "exit url": "https://legalaidwv.org/renters-rights-west-virginia",
+          "revision_date": "Fri, 02 May 2025 00:00:00 GMT",
+          "short title": "Security Deposit Letter\n",
+          "title": "Renters Rights West Virginia - Letter to Request Return of a Security Deposit\n"
+        },
+        "package": "docassemble.LAWVRentersRightsWestVirginia",
+        "status_class": null,
+        "subtitle": null,
+        "subtitle_class": null,
+        "tags": [],
+        "title": "Renters Rights West Virginia - Letter to Request Return of a Security Deposit"
       }
     ]
   }
