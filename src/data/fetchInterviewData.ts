@@ -94,6 +94,79 @@ interface Data {
   interviews?: RawInterview[];
 }
 
+export interface FetchInterviewsResult {
+  interviewsByTopic: { [key: string]: Interview[] };
+  isError: boolean;
+  hasFetchErrors: boolean;
+}
+
+const FETCH_RETRY_ATTEMPTS = 2;
+const FETCH_TIMEOUT_MS = Number(
+  process.env.INTERVIEW_FETCH_TIMEOUT_MS ?? 10000
+);
+
+type ServerConfig =
+  | (typeof formSources.docassembleServers)[number]
+  | (typeof formSources.sideloadedCatalogs)[number];
+
+interface ServerFetchResult {
+  server: ServerConfig;
+  data?: Data;
+  error?: unknown;
+}
+
+const interviewsCache = new Map<string, Promise<FetchInterviewsResult>>();
+
+async function fetchJsonWithRetry(url: string): Promise<Data> {
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= FETCH_RETRY_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+
+      return (await response.json()) as Data;
+    } catch (error) {
+      lastError = error;
+      if (attempt === FETCH_RETRY_ATTEMPTS) {
+        throw error;
+      }
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  throw lastError;
+}
+
+async function fetchServerInterviews(
+  server: ServerConfig
+): Promise<ServerFetchResult> {
+  if ('interviews' in server) {
+    return { server, data: { interviews: server.interviews } };
+  }
+
+  const url = new URL(`${server.url}/list`);
+  url.search = 'json=1';
+
+  try {
+    return {
+      server,
+      data: await fetchJsonWithRetry(url.toString()),
+    };
+  } catch (error) {
+    return {
+      server,
+      error,
+    };
+  }
+}
+
 // Helper function to extract localized strings
 function extractLocalizedString(
   value: string | LocalizedString | undefined,
@@ -274,33 +347,48 @@ export function extractLocalizedFees(
   return [];
 }
 
-export const fetchInterviews = async (
+const fetchInterviewsForPath = async (
   path: string,
   options: { allJurisdictions?: boolean } = {}
-) => {
+): Promise<FetchInterviewsResult> => {
   const config = pathToServerConfig[path];
   const serverNames = config
     ? config.servers
     : [formSources.docassembleServers[0].name];
-  const servers = formSources.docassembleServers.filter((server) =>
-    serverNames.includes(server.name)
-  );
+  const servers: ServerConfig[] = [
+    ...formSources.docassembleServers.filter((server) =>
+      serverNames.includes(server.name)
+    ),
+    ...formSources.sideloadedCatalogs.filter(
+      (server) => options.allJurisdictions || serverNames.includes(server.name)
+    ),
+  ];
 
   const locale = 'en'; // Todo: make this dynamic
 
   let allInterviews: Interview[] = [];
-  let failedServers = 0;
-  for (const server of servers) {
-    const url = new URL(`${server.url}/list`);
-    url.search = 'json=1';
+  let successfulServerCount = 0;
+  let hasFetchErrors = false;
 
-    try {
-      const response = await fetch(url.toString());
-      if (!response.ok)
-        throw new Error(`Catalog returned HTTP ${response.status}`);
-      const data: Data = await response.json();
+  const serverResults = await Promise.all(servers.map(fetchServerInterviews));
 
-      if (data && data.interviews) {
+  for (const result of serverResults) {
+    const { server, data, error } = result;
+
+    if (error) {
+      hasFetchErrors = true;
+      console.error(
+        'Failed to fetch interviews from server:',
+        server.name,
+        error
+      );
+      continue;
+    }
+
+    if (data) {
+      successfulServerCount++;
+
+      if (data.interviews) {
         const taggedInterviews = data.interviews
           .filter((interview: RawInterview) => !interview.metadata?.unlisted)
           .filter((interview: RawInterview) => {
@@ -402,13 +490,6 @@ export const fetchInterviews = async (
           );
         allInterviews = allInterviews.concat(taggedInterviews);
       }
-    } catch (error) {
-      failedServers += 1;
-      console.error(
-        'Failed to fetch interviews from server:',
-        server.name,
-        error
-      );
     }
   }
 
@@ -436,7 +517,6 @@ export const fetchInterviews = async (
   allInterviews.forEach((interview: Interview) => {
     const uniqueTopics = new Set<string>();
     const title = interview.title;
-    // Different states can publish distinct forms with the same title.
     const uniqueKey = options.allJurisdictions
       ? `${interview.serverUrl}|${interview.filename}`
       : title;
@@ -470,7 +550,23 @@ export const fetchInterviews = async (
 
   return {
     interviewsByTopic,
-    isError: failedServers === servers.length,
-    hasFetchErrors: failedServers > 0,
+    isError: successfulServerCount === 0,
+    hasFetchErrors,
   };
+};
+
+export const fetchInterviews = (
+  path: string,
+  options: { allJurisdictions?: boolean } = {}
+): Promise<FetchInterviewsResult> => {
+  const normalizedPath = path.toLowerCase().replace(/\/$/, '');
+  const cacheKey = `${normalizedPath}|${options.allJurisdictions ? 'all' : 'state'}`;
+  const cached = interviewsCache.get(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  const promise = fetchInterviewsForPath(normalizedPath, options);
+  interviewsCache.set(cacheKey, promise);
+  return promise;
 };
