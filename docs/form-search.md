@@ -59,9 +59,13 @@ workers/form-search/wrangler.jsonc`; paste the dedicated Lab key at the prompt.
 5. Verify CORS, real classification, rate limiting, and browser results on the
    deployed origin before retiring the previous Worker.
 
-The versioned Worker is new; the old `spot-plus-keyword-5dc1` Worker source was
-not in this repository and has not been overwritten. Neither this new Worker
-nor the frontend is automatically published by local preview.
+Production Worker: https://courtforms-form-search.suffolk-lit-lab.workers.dev/
+(Suffolk LIT Lab Cloudflare account). The dedicated FETCH token is installed as a
+Worker secret. GitHub's `NEXT_PUBLIC_FORM_SEARCH_URL` repository variable points
+to this URL. Frontend publication uses the existing GitHub Pages workflow.
+
+The versioned Worker is separate from the legacy `spot-plus-keyword-5dc1` Worker.
+Local preview does not publish either the Worker or the frontend.
 
 ## Privacy and failure behavior
 

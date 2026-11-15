@@ -1,6 +1,7 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   "name": "courtforms-form-search",
+  "account_id": "f9a0f4476a026d635d79d25f22c75b96",
   "main": "index.ts",
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
