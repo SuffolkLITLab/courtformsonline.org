@@ -1,3 +1,4 @@
+import { supplementalCatalogMetadata } from '../config/supplementalCatalogMetadata.config';
 import { formSources, pathToServerConfig } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
 import { excludedForms } from '../config/formSources.config';
@@ -105,9 +106,7 @@ const FETCH_TIMEOUT_MS = Number(
   process.env.INTERVIEW_FETCH_TIMEOUT_MS ?? 10000
 );
 
-type ServerConfig =
-  | (typeof formSources.docassembleServers)[number]
-  | (typeof formSources.sideloadedCatalogs)[number];
+type ServerConfig = (typeof formSources.docassembleServers)[number];
 
 interface ServerFetchResult {
   server: ServerConfig;
@@ -147,10 +146,6 @@ async function fetchJsonWithRetry(url: string): Promise<Data> {
 async function fetchServerInterviews(
   server: ServerConfig
 ): Promise<ServerFetchResult> {
-  if ('interviews' in server) {
-    return { server, data: { interviews: server.interviews } };
-  }
-
   const url = new URL(`${server.url}/list`);
   url.search = 'json=1';
 
@@ -355,14 +350,9 @@ const fetchInterviewsForPath = async (
   const serverNames = config
     ? config.servers
     : [formSources.docassembleServers[0].name];
-  const servers: ServerConfig[] = [
-    ...formSources.docassembleServers.filter((server) =>
-      serverNames.includes(server.name)
-    ),
-    ...formSources.sideloadedCatalogs.filter(
-      (server) => options.allJurisdictions || serverNames.includes(server.name)
-    ),
-  ];
+  const servers = formSources.docassembleServers.filter(
+    (server) => options.allJurisdictions || serverNames.includes(server.name)
+  );
 
   const locale = 'en'; // Todo: make this dynamic
 
@@ -391,6 +381,20 @@ const fetchInterviewsForPath = async (
       if (data.interviews) {
         const taggedInterviews = data.interviews
           .filter((interview: RawInterview) => !interview.metadata?.unlisted)
+          .map((interview: RawInterview): RawInterview => {
+            // Provider-scoped, explicit supplements cannot make an unlisted
+            // interview public. Unknown future interviews remain in the catalog.
+            const supplement =
+              supplementalCatalogMetadata[server.key]?.[
+                interview.filename ?? ''
+              ];
+            return supplement
+              ? {
+                  ...interview,
+                  metadata: { ...interview.metadata, ...supplement },
+                }
+              : interview;
+          })
           .filter((interview: RawInterview) => {
             const exclusions = excludedForms[server.key];
             const filename = interview.filename ?? '';

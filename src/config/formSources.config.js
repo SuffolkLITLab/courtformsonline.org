@@ -1,5 +1,3 @@
-import { sideloadedCatalogs } from './sideloadedCatalogs.config';
-
 export const pathToServerConfig = {
   ca: {
     path: 'ca',
@@ -247,7 +245,6 @@ export const deepLinks = {
 };
 
 export const formSources = {
-  sideloadedCatalogs,
   docassembleServers: [
     {
       key: 'suffolkLITLab',
@@ -284,6 +281,12 @@ export const formSources = {
       url: 'https://apps.molawhelp.org',
       name: 'Missouri Legal Help',
       defaultJurisdiction: 'Missouri', // Default for forms without jurisdiction metadata
+    },
+    {
+      key: 'legalAidWV',
+      url: 'https://docs.lawv.net',
+      name: 'Legal Aid of West Virginia',
+      defaultJurisdiction: 'West Virginia',
     },
   ],
 };

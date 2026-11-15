@@ -59,9 +59,8 @@ describe('family emergency catalog membership', () => {
     expect(forms.map((f) => f.jurisdiction)).toEqual([
       'California',
       'New Jersey',
-      'West Virginia',
     ]);
-    expect(forms).toHaveLength(3);
+    expect(forms).toHaveLength(2);
     expect(forms[0].href).toContain(
       encodeURIComponent('docassemble.NewPackage:california.yml')
     );
@@ -79,7 +78,7 @@ describe('family emergency catalog membership', () => {
       ]),
     ]);
     const forms = await fetchFamilyEmergencyForms();
-    expect(forms).toHaveLength(2);
+    expect(forms).toHaveLength(1);
     expect(forms[0].jurisdiction).toBe('United States');
   });
 

@@ -42,10 +42,9 @@ export function normalizeJurisdiction(
  * @returns The default jurisdiction for that server, or global default
  */
 export function getServerDefaultJurisdiction(serverUrl: string): string {
-  const server = [
-    ...formSources.docassembleServers,
-    ...formSources.sideloadedCatalogs,
-  ].find((s) => s.url === serverUrl);
+  const server = formSources.docassembleServers.find(
+    (s) => s.url === serverUrl
+  );
   return server?.defaultJurisdiction || DEFAULT_JURISDICTION;
 }
 
@@ -56,10 +55,9 @@ export function getServerDefaultJurisdiction(serverUrl: string): string {
  * @returns The default jurisdiction for that server, or global default
  */
 export function getServerDefaultJurisdictionByKey(serverKey: string): string {
-  const server = [
-    ...formSources.docassembleServers,
-    ...formSources.sideloadedCatalogs,
-  ].find((s) => s.key === serverKey);
+  const server = formSources.docassembleServers.find(
+    (s) => s.key === serverKey
+  );
   return server?.defaultJurisdiction || DEFAULT_JURISDICTION;
 }
 
