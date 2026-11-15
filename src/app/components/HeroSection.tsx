@@ -5,7 +5,8 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
-import { fetchSpotData } from '../../data/fetchSpotData';
+import { fetchFormSearch } from '../../data/fetchFormSearch';
+import { SearchResults } from '../../data/formSearch';
 import SpotResultsContainer from './SpotResultsContainer';
 import styles from '../css/HeroSection.module.css';
 import { pathToServerConfig } from '../../config/formSources.config';
@@ -70,8 +71,19 @@ const HeroSection = ({ path, interviews, isError }) => {
   const [text, setText] = useState('');
   const [helpMode, setHelpMode] = useState<'describe' | 'checkup'>('describe');
   const [saveData, setSaveData] = useState(true);
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<SearchResults | null>(null);
   const [error, setError] = useState('');
+  const [submittedText, setSubmittedText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [slowSearch, setSlowSearch] = useState(false);
+  useEffect(() => {
+    setSlowSearch(false);
+    if (!loading) return;
+    const timer = setTimeout(() => setSlowSearch(true), 8000);
+    return () => clearTimeout(timer);
+  }, [loading]);
+  const requestRef = useRef<AbortController | null>(null);
+  useEffect(() => () => requestRef.current?.abort(), []);
   const [validationError, setValidationError] = useState('');
   // Stable container ref for popover
   const popoverContainerRef = useRef<HTMLDivElement | null>(null);
@@ -91,25 +103,51 @@ const HeroSection = ({ path, interviews, isError }) => {
   };
 
   const handleFindHelpClick = async () => {
-    if (text.length < 6) {
+    const query = text.trim();
+    if (!query || query.length > 4000) {
       setValidationError(
-        'Please enter at least 6 characters to perform a search.'
+        'Enter a keyword or description, up to 4,000 characters.'
       );
       return;
     }
-
+    requestRef.current?.abort();
+    const controller = new AbortController();
+    requestRef.current = controller;
+    setSubmittedText(query);
+    setResults({ labels: [] });
+    setError('');
+    setValidationError('');
+    if (!saveData) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    const timeout = setTimeout(() => controller.abort(), 30000);
     try {
-      const data = { text: text, save_data: saveData ? 1 : 0 };
-      const fetchedResults = await fetchSpotData(data);
-      setResults(fetchedResults);
-      setError('');
+      const fetchedResults = await fetchFormSearch(
+        query,
+        saveData,
+        controller.signal
+      );
+      if (requestRef.current === controller && !controller.signal.aborted)
+        setResults(fetchedResults);
     } catch (e) {
-      setError(e.message);
-      setResults(null);
+      if (requestRef.current === controller)
+        setError(
+          e instanceof Error && e.name !== 'AbortError'
+            ? e.message
+            : 'Topic search timed out.'
+        );
+    } finally {
+      clearTimeout(timeout);
+      if (requestRef.current === controller) setLoading(false);
     }
   };
 
   const handleCancelSpotSearch = () => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+    setLoading(false);
     setResults(null);
     setText('');
     setError('');
@@ -194,11 +232,11 @@ const HeroSection = ({ path, interviews, isError }) => {
                   id="describe-problem-heading"
                   className={hasCheckup ? 'visually-hidden' : 'mb-0'}
                 >
-                  Describe your legal problem
+                  Search forms or describe your legal problem
                 </SearchHeading>
                 {hasCheckup && (
                   <p className="mb-0">
-                    Tell us what’s happening in your own words.
+                    Search by form name, keywords, or describe your problem.
                   </p>
                 )}
                 <div className={styles.SpotInfo}>
@@ -212,16 +250,22 @@ const HeroSection = ({ path, interviews, isError }) => {
                         <Popover.Header as="h3">How this works</Popover.Header>
                         <Popover.Body>
                           <p className="mb-1">
-                            When you type in your problem description, we use
-                            the nonprofit SPOT legal problem spotter to help
-                            find the best legal resources for you. If you do not
-                            want to share your problem with SPOT, please pick a
-                            topic from the list below.
+                            When you type in your problem description, we search
+                            form titles and descriptions. If you allow sharing,
+                            the LIT Lab’s FETCH service also uses generative AI
+                            providers to suggest topics. Uncheck the box below
+                            to search keywords on your device only.
+                          </p>
+                          <p className="mb-1">
+                            AI uses an enterprise policy that does not permit
+                            training, and all generative AI models are currently
+                            hosted inside Amazon Web Services’ secure cloud
+                            environment.
                           </p>
                           <p className="mb-0">
-                            Read SPOT's{' '}
+                            Read our{' '}
                             <a
-                              href="https://spot.suffolklitlab.org/terms/"
+                              href="/privacy"
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -245,11 +289,16 @@ const HeroSection = ({ path, interviews, isError }) => {
               </div>
               <textarea
                 className="form-control form-control-lg"
+                maxLength={4000}
                 value={text}
                 onChange={handleInputChange}
                 placeholder="Tell us without including your personal information, like name or address"
                 aria-label="Tell us without including your personal information, like name or address"
               />
+              <p className="small mt-2 mb-0">
+                Leave the box unchecked for keyword search only. Do not include
+                personal information.
+              </p>
               <div className="d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
                 <div className="form-check">
                   <input
@@ -263,7 +312,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                     className="form-check-label"
                     htmlFor="flexCheckDefault"
                   >
-                    Use my reply to help others
+                    Share my search with FETCH for topic suggestions
                   </label>
                 </div>
                 <div className="d-flex flex-wrap gap-2">
@@ -277,18 +326,33 @@ const HeroSection = ({ path, interviews, isError }) => {
                     </Button>
                   )}
                   <Button
+                    disabled={loading}
                     onClick={handleFindHelpClick}
                     className="btn btn-primary"
                   >
-                    Find help
+                    {loading ? 'Finding topics…' : 'Find help'}
                   </Button>
                 </div>
               </div>
+              {loading && (
+                <p role="status" className="mt-3">
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    aria-hidden="true"
+                  />
+                  {slowSearch
+                    ? 'Still finding related topics. You can use any keyword matches below or cancel the search.'
+                    : 'Finding related topics… Keyword matches appear below right away.'}
+                </p>
+              )}
               {validationError && (
                 <p className="text-danger">{validationError}</p>
               )}
               {error && (
-                <p className="text-danger">Error. Please try again later.</p>
+                <p role="status">
+                  {error} Keyword matches are still shown below. You can also
+                  cancel to browse categories.
+                </p>
               )}
             </section>
             {hasCheckup && (
@@ -317,8 +381,8 @@ const HeroSection = ({ path, interviews, isError }) => {
           data={results}
           interviews={interviews}
           path={path}
-          searchQuery={text}
-          onCancel={handleCancelSpotSearch}
+          searchQuery={submittedText}
+          loading={loading}
         />
       )}
     </section>

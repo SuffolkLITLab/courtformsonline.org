@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import HeroSection from '../HeroSection';
-import { fetchSpotData } from '../../../data/fetchSpotData';
+import { fetchFormSearch } from '../../../data/fetchFormSearch';
 
-jest.mock('../../../data/fetchSpotData', () => ({
-  fetchSpotData: jest.fn(),
+jest.mock('../../../data/fetchFormSearch', () => ({
+  fetchFormSearch: jest.fn(),
 }));
 jest.mock('../SpotResultsContainer', () => ({
   __esModule: true,
@@ -15,7 +15,7 @@ jest.mock('../SpotResultsContainer', () => ({
 describe('HeroSection SPOT modal', () => {
   test('restores category visibility when switching modes, including an in-flight search', async () => {
     let resolveSearch: (value: object) => void;
-    (fetchSpotData as jest.Mock).mockImplementation(
+    (fetchFormSearch as jest.Mock).mockImplementation(
       () =>
         new Promise((resolve) => {
           resolveSearch = resolve;
@@ -35,8 +35,8 @@ describe('HeroSection SPOT modal', () => {
     });
     fireEvent.click(screen.getByRole('button', { name: 'Find help' }));
     fireEvent.click(screen.getByRole('button', { name: 'Legal checkup' }));
-    resolveSearch!({});
-    await waitFor(() => expect(fetchSpotData).toHaveBeenCalledTimes(1));
+    resolveSearch!({ labels: [] });
+    await waitFor(() => expect(fetchFormSearch).toHaveBeenCalledTimes(1));
     expect(cards[0]).not.toHaveClass('hidden');
     expect(cards[1]).toHaveClass('hidden');
     expect(screen.queryByText('Mock search results')).not.toBeInTheDocument();
@@ -99,10 +99,7 @@ describe('HeroSection SPOT modal', () => {
     // Tooltip should contain a link to SPOT terms/privacy
     const privacyLink = screen.getByRole('link', { name: /privacy policy/i });
     expect(privacyLink).toBeInTheDocument();
-    expect(privacyLink).toHaveAttribute(
-      'href',
-      'https://spot.suffolklitlab.org/terms/'
-    );
+    expect(privacyLink).toHaveAttribute('href', '/privacy');
 
     // Close the modal
     // Hide the popover by clicking the info button again
@@ -119,11 +116,71 @@ describe('HeroSection SPOT modal', () => {
     expect(document.querySelector('.fa-question-circle')).toBeNull();
 
     // The SPOT link should appear before the checkbox in the DOM order
-    const checkbox = screen.getByLabelText('Use my reply to help others');
+    const checkbox = screen.getByLabelText(
+      'Share my search with FETCH for topic suggestions'
+    );
     // Info button should be a preceding node before checkbox
     expect(
       infoButton.compareDocumentPosition(checkbox) &
         Node.DOCUMENT_POSITION_FOLLOWING
     ).toBeTruthy();
   });
+});
+
+test('keeps local results when topic search fails and passes the sharing choice', async () => {
+  (fetchFormSearch as jest.Mock).mockRejectedValueOnce(
+    new Error('Topic search is unavailable.')
+  );
+  render(<HeroSection path="ma" interviews={{}} isError={false} />);
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'fee' } });
+  fireEvent.click(
+    screen.getByRole('button', { name: 'Find help', exact: true })
+  );
+  expect(
+    await screen.findByText(/Keyword matches are still shown/)
+  ).toBeInTheDocument();
+  expect(screen.getByText('Mock search results')).toBeInTheDocument();
+  expect(fetchFormSearch).toHaveBeenCalledWith(
+    'fee',
+    true,
+    expect.any(AbortSignal)
+  );
+});
+
+test('unchecked searches stay local and accept short keywords', async () => {
+  render(<HeroSection path="ma" interviews={{}} isError={false} />);
+  fireEvent.click(screen.getByRole('checkbox'));
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'fee' } });
+  fireEvent.click(
+    screen.getByRole('button', { name: 'Find help', exact: true })
+  );
+  expect(screen.getByText('Mock search results')).toBeInTheDocument();
+  expect(fetchFormSearch).not.toHaveBeenCalled();
+});
+
+test('cancel prevents a late response from restoring results', async () => {
+  let resolveSearch: (value: object) => void;
+  (fetchFormSearch as jest.Mock).mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        resolveSearch = resolve;
+      })
+  );
+  render(<HeroSection path="ma" interviews={{}} isError={false} />);
+  fireEvent.change(screen.getByRole('textbox'), {
+    target: { value: 'eviction' },
+  });
+  fireEvent.click(
+    screen.getByRole('button', { name: 'Find help', exact: true })
+  );
+  fireEvent.click(
+    screen.getByRole('button', {
+      name: 'Cancel search and return to all categories',
+    })
+  );
+  resolveSearch!({ labels: [] });
+  await waitFor(() =>
+    expect(screen.queryByText('Mock search results')).not.toBeInTheDocument()
+  );
+  expect((fetchFormSearch as jest.Mock).mock.calls[0][2].aborted).toBe(true);
 });

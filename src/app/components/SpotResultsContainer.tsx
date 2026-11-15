@@ -1,62 +1,101 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import { legalTopics } from '../../config/topics.config';
+import Link from 'next/link';
 import { formSources } from '../../config/formSources.config';
+import {
+  keywordMatches,
+  matchingTopics,
+  rankFormsByTopics,
+  InterviewsByTopic,
+  SearchResults,
+  SearchForm,
+} from '../../data/formSearch';
+import { toUrlFriendlyString } from '../utils/helpers';
 import TopicCard from './TopicCard';
 
-const SpotResultsContainer = ({
+interface Props {
+  data: SearchResults;
+  interviews: InterviewsByTopic;
+  path: string;
+  searchQuery: string;
+  loading?: boolean;
+}
+
+export default function SpotResultsContainer({
   data,
   interviews,
   path,
   searchQuery,
-  onCancel,
-}) => {
-  if (!data || !data.labels) {
-    return <p>No matching topics found.</p>;
-  }
-
-  // Find the server URL based on the path
+  loading,
+}: Props) {
   const server =
     formSources.docassembleServers.find((server) => server.path === path) ||
     formSources.docassembleServers[0];
-  const serverUrl = server.url;
-
-  // Sort and filter topics based on the SPOT labels
-  const sortedTopics = data.labels
-    .map((label) => ({
-      ...label,
-      topic: legalTopics.find((t) => t.codes.includes(label.id)),
-    }))
-    .filter(
-      ({ topic }) =>
-        topic && interviews[topic.name] && interviews[topic.name].length > 0
-    ) // Ensure the topic exists and has available interviews
-    .sort((a, b) => b.pred - a.pred) // Sort by confidence score
-    .map(({ topic }) => topic); // Extract sorted topics
-
+  const { titles, descriptions } = keywordMatches(interviews, searchQuery);
+  const topics = matchingTopics(data.labels, interviews);
+  const forms = (matches: SearchForm[]) => (
+    <ul className="list-unstyled d-flex flex-column gap-2">
+      {matches.map((form) => {
+        const title = form.metadata?.title || form.title || '';
+        return (
+          <li key={`${form.serverUrl}:${form.filename || title}`}>
+            <Link
+              className="btn btn-outline-primary text-start"
+              href={`/${path}/forms/${toUrlFriendlyString(title)}`}
+            >
+              {title}
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
   return (
-    <section id="topics">
-      <div className="container">
-        <h2 className="mb-4">
-          It looks like you may be looking for help with...
-        </h2>
-        <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
-          {sortedTopics.map((topic, index) => (
-            <TopicCard
-              key={topic.codes[0]}
-              topic={topic}
-              interviews={interviews[topic.name] || []}
-              path={path}
-              serverUrl={serverUrl}
-              index={index}
-              isSpot={true}
-              searchQuery={searchQuery}
-            />
-          ))}
-        </div>
-      </div>
+    <section
+      id="form-search-results"
+      className="container mt-4"
+      aria-label="Search results"
+      aria-busy={loading}
+    >
+      {(titles.length > 0 || descriptions.length > 0) && (
+        <>
+          <h2>Forms matching your keywords</h2>
+          {forms([...titles, ...descriptions])}
+        </>
+      )}
+      {topics.length > 0 && (
+        <>
+          <h2 className="mb-4">Topics that may help</h2>
+          <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
+            {topics.map((topic, index) => (
+              <TopicCard
+                key={topic.name}
+                topic={topic}
+                interviews={rankFormsByTopics(
+                  interviews[topic.name] || [],
+                  data.labels
+                )}
+                path={path}
+                serverUrl={server.url}
+                index={index}
+                isSpot={true}
+                searchQuery={searchQuery}
+              />
+            ))}
+          </div>
+        </>
+      )}
+      {!loading && !titles.length && !topics.length && !descriptions.length && (
+        <p>
+          No matching forms or topics found. Try different words or browse the
+          categories.
+        </p>
+      )}
+      {data.degraded && (
+        <p role="status">
+          Some topic matching services were unavailable. These results may be
+          incomplete.
+        </p>
+      )}
     </section>
   );
-};
-
-export default SpotResultsContainer;
+}

@@ -51,7 +51,8 @@ const TopicCard = ({
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   // Hide when index is at or above the visible count (0-based index)
-  const visibilityClass = index >= MAX_VISIBLE_CATEGORIES ? 'hidden' : '';
+  const visibilityClass =
+    !isSpot && index >= MAX_VISIBLE_CATEGORIES ? 'hidden' : '';
   const displayInterviews = isExpanded
     ? interviews.slice(0, Math.min(MAX_VISIBLE_PER_CARD, interviews.length))
     : interviews.slice(0, 3);

@@ -17,7 +17,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22'
         cache: 'npm'
 
     - name: Install dependencies
@@ -31,4 +31,4 @@ jobs:
       env:
         CI_CATALOG_FIXTURES: '1'
         NODE_OPTIONS: '--require ${{ github.workspace }}/scripts/ci-catalog-fetch.cjs'
-        NEXT_PUBLIC_SPOT_API_BEARER_TOKEN: ${{ secrets.NEXT_PUBLIC_SPOT_API_BEARER_TOKEN }}
+        NEXT_PUBLIC_FORM_SEARCH_URL: ${{ vars.NEXT_PUBLIC_FORM_SEARCH_URL }}

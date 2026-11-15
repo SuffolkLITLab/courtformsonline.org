@@ -18,6 +18,24 @@ export default function NewsPage() {
             agree to the terms of use and privacy policy set forth below.
           </p>
 
+          <h2>Searching for forms</h2>
+          <p>
+            Keyword search compares your words with form titles and descriptions
+            on your device. When you select “Share my search with FETCH for
+            topic suggestions,” your search is sent through our Cloudflare
+            service to the LIT Lab’s FETCH service and its generative AI
+            providers. Do not include names, addresses, or other personal
+            information in your search. Leave the checkbox unchecked to use
+            keyword search without sending your words to FETCH.
+          </p>
+          <p>
+            The website’s FETCH credential disables content capture in FETCH
+            telemetry. AI uses an enterprise policy that does not permit
+            training, and all generative AI models are currently hosted inside
+            Amazon Web Services’ secure cloud environment. Topic suggestions can
+            be incomplete or incorrect; review each form’s instructions before
+            using it.
+          </p>
           <h2>Terms Of Use and Data Privacy Policy</h2>
           <h4>Important disclaimers</h4>
           <ul>
