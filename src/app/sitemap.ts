@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/forms',
     '/privacy',
     '/ma/checkup',
-    '/care-for-a-child',
+    '/family',
   ];
   for (const r of staticRoutes) {
     urls.add(`${siteUrl}${joinWithPrefix(r)}`);
