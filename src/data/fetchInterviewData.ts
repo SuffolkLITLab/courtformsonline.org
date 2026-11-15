@@ -342,7 +342,8 @@ export function extractLocalizedFees(
 }
 
 const fetchInterviewsForPath = async (
-  path: string
+  path: string,
+  options: { allJurisdictions?: boolean } = {}
 ): Promise<FetchInterviewsResult> => {
   const config = pathToServerConfig[path];
   const serverNames = config
@@ -482,14 +483,16 @@ const fetchInterviewsForPath = async (
   }
 
   // Filter interviews by jurisdiction
-  const expectedJurisdiction = getJurisdictionFromPath(path);
-  allInterviews = allInterviews.filter((interview) =>
-    jurisdictionMatches(
-      interview.metadata?.jurisdiction,
-      expectedJurisdiction,
-      interview.serverUrl
-    )
-  );
+  if (!options.allJurisdictions) {
+    const expectedJurisdiction = getJurisdictionFromPath(path);
+    allInterviews = allInterviews.filter((interview) =>
+      jurisdictionMatches(
+        interview.metadata?.jurisdiction,
+        expectedJurisdiction,
+        interview.serverUrl
+      )
+    );
+  }
 
   // Initialize interviewsByTopic and titlesInTopics with all topics
   const interviewsByTopic: { [key: string]: Interview[] } = {};
@@ -503,6 +506,9 @@ const fetchInterviewsForPath = async (
   allInterviews.forEach((interview: Interview) => {
     const uniqueTopics = new Set<string>();
     const title = interview.title;
+    const uniqueKey = options.allJurisdictions
+      ? `${interview.serverUrl}|${interview.filename}`
+      : title;
 
     // Collect all codes from metadata.LIST_topics and tags
     const codes = [...interview.metadata.LIST_topics, ...interview.tags];
@@ -514,9 +520,9 @@ const fetchInterviewsForPath = async (
       topicName = topicName.toLowerCase();
       //if (!uniqueTopics.has(topicName)) {
       uniqueTopics.add(topicName);
-      if (!titlesInTopics[topicName].has(title)) {
+      if (!titlesInTopics[topicName].has(uniqueKey)) {
         interviewsByTopic[topicName].push(interview);
-        titlesInTopics[topicName].add(title);
+        titlesInTopics[topicName].add(uniqueKey);
       }
       //}
     });
@@ -524,9 +530,9 @@ const fetchInterviewsForPath = async (
     // If no topics matched, add to 'other'
     if (uniqueTopics.size === 0) {
       const otherTopic = 'other';
-      if (!titlesInTopics[otherTopic].has(title)) {
+      if (!titlesInTopics[otherTopic].has(uniqueKey)) {
         interviewsByTopic[otherTopic].push(interview);
-        titlesInTopics[otherTopic].add(title);
+        titlesInTopics[otherTopic].add(uniqueKey);
       }
     }
   });
@@ -539,15 +545,17 @@ const fetchInterviewsForPath = async (
 };
 
 export const fetchInterviews = (
-  path: string
+  path: string,
+  options: { allJurisdictions?: boolean } = {}
 ): Promise<FetchInterviewsResult> => {
   const normalizedPath = path.toLowerCase().replace(/\/$/, '');
-  const cached = interviewsCache.get(normalizedPath);
+  const cacheKey = `${normalizedPath}|${options.allJurisdictions ? 'all' : 'state'}`;
+  const cached = interviewsCache.get(cacheKey);
   if (cached) {
     return cached;
   }
 
-  const promise = fetchInterviewsForPath(normalizedPath);
-  interviewsCache.set(normalizedPath, promise);
+  const promise = fetchInterviewsForPath(normalizedPath, options);
+  interviewsCache.set(cacheKey, promise);
   return promise;
 };
