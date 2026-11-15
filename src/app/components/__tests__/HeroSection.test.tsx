@@ -71,6 +71,18 @@ describe('HeroSection SPOT modal', () => {
     expect(container.querySelector('#hero-left h1 svg')).toBeInTheDocument();
   });
 
+  test('uses the selected state name without substituting a Massachusetts outline', () => {
+    const { container } = render(
+      <HeroSection path="wv" interviews={[]} isError={false} />
+    );
+    expect(
+      screen.getByRole('heading', {
+        name: /free diy legal help for west virginia/i,
+      })
+    ).toBeInTheDocument();
+    expect(container.querySelector('#hero-left h1 svg')).toBeNull();
+  });
+
   test('renders the small "what is this?" link and opens popover with explanation and privacy policy link', async () => {
     render(<HeroSection path="test" interviews={[]} isError={false} />);
 

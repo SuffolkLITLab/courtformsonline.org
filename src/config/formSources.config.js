@@ -1,16 +1,43 @@
+import { sideloadedCatalogs } from './sideloadedCatalogs.config';
+
 export const pathToServerConfig = {
-  ma: {
-    path: 'ma',
-    servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
-    name: 'Massachusetts',
-    // Optional link to an authoritative jurisdiction listing of court forms.
-    moreFormsUrl: 'https://www.mass.gov/topics/court-forms',
+  ca: {
+    path: 'ca',
+    servers: ['Suffolk LIT Lab'],
+    name: 'California',
+  },
+  co: {
+    path: 'co',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Colorado',
+  },
+  ct: {
+    path: 'ct',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Connecticut',
+  },
+  ga: {
+    path: 'ga',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Georgia',
   },
   me: {
     path: 'me',
     servers: ['Pine Tree Legal Assistance', 'Suffolk LIT Lab'],
     name: 'Maine',
     moreFormsUrl: 'https://www.courts.maine.gov/forms/index.html',
+  },
+  md: {
+    path: 'md',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Maryland',
+  },
+  ma: {
+    path: 'ma',
+    servers: ['Suffolk LIT Lab', 'Greater Boston Legal Services'],
+    name: 'Massachusetts',
+    // Optional link to an authoritative jurisdiction listing of court forms.
+    moreFormsUrl: 'https://www.mass.gov/topics/court-forms',
   },
   mi: {
     path: 'mi',
@@ -30,12 +57,32 @@ export const pathToServerConfig = {
     name: 'Missouri',
     moreFormsUrl: 'https://www.courts.mo.gov/page.jsp?id=321',
   },
+  nj: {
+    path: 'nj',
+    servers: ['Suffolk LIT Lab'],
+    name: 'New Jersey',
+  },
+  nd: {
+    path: 'nd',
+    servers: ['Suffolk LIT Lab'],
+    name: 'North Dakota',
+  },
+  ri: {
+    path: 'ri',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Rhode Island',
+  },
   vt: {
     path: 'vt',
     servers: ['Vermont Court Forms', 'Suffolk LIT Lab'],
     name: 'Vermont',
     // Link updated to point at Vermont Judiciary's Court Divisions page
     moreFormsUrl: 'https://www.vermontjudiciary.org/court-divisions',
+  },
+  wv: {
+    path: 'wv',
+    servers: ['Suffolk LIT Lab', 'Legal Aid of West Virginia'],
+    name: 'West Virginia',
   },
 };
 
@@ -51,7 +98,15 @@ export const jurisdictionAliases = {
   Michigan: ['MI', 'NAM-US-US+MI', 'Michigan', 'mi'],
   Vermont: ['VT', 'NAM-US-US+VT', 'Vermont', 'vt'],
   Missouri: ['MO', 'NAM-US-US+MO', 'Missouri', 'mo'],
-  // Add more jurisdictions as needed
+  California: ['CA', 'NAM-US-US+CA', 'California', 'ca'],
+  Colorado: ['CO', 'NAM-US-US+CO', 'Colorado', 'co'],
+  Connecticut: ['CT', 'NAM-US-US+CT', 'Connecticut', 'ct'],
+  Georgia: ['GA', 'NAM-US-US+GA', 'Georgia', 'ga'],
+  Maryland: ['MD', 'NAM-US-US+MD', 'Maryland', 'md'],
+  'New Jersey': ['NJ', 'NAM-US-US+NJ', 'New Jersey', 'nj'],
+  'North Dakota': ['ND', 'NAM-US-US+ND', 'North Dakota', 'nd'],
+  'Rhode Island': ['RI', 'NAM-US-US+RI', 'Rhode Island', 'ri'],
+  'West Virginia': ['WV', 'NAM-US-US+WV', 'West Virginia', 'wv'],
 };
 
 /**
@@ -192,6 +247,7 @@ export const deepLinks = {
 };
 
 export const formSources = {
+  sideloadedCatalogs,
   docassembleServers: [
     {
       key: 'suffolkLITLab',
