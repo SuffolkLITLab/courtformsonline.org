@@ -32,7 +32,11 @@ describe('state navigation and catalog discovery', () => {
     jest.resetModules();
     global.fetch = jest.fn(async (url) => {
       if (String(url).includes('docs.lawv.net')) {
-        throw new Error('Sideloaded listings must not need the provider API');
+        return {
+          ok: true,
+          json: async () =>
+            require('../__fixtures__/catalogs.json')['docs.lawv.net'],
+        };
       }
       return {
         ok: true,
@@ -82,7 +86,7 @@ describe('state navigation and catalog discovery', () => {
     }
   );
 
-  it('lists Kinship Connector once on WV and the family index without fetching LAWV', async () => {
+  it('lists Kinship Connector once on WV and the family index from the provider catalog', async () => {
     const { fetchInterviews } = require('../src/data/fetchInterviewData');
     const {
       fetchFamilyEmergencyForms,
@@ -109,8 +113,8 @@ describe('state navigation and catalog discovery', () => {
       )
     ).toBe(false);
     expect(
-      (global.fetch as jest.Mock).mock.calls.every(
-        ([url]) => !String(url).includes('docs.lawv.net')
+      (global.fetch as jest.Mock).mock.calls.some(([url]) =>
+        String(url).includes('docs.lawv.net')
       )
     ).toBe(true);
   });
