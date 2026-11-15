@@ -1,0 +1,812 @@
+{
+  "apps.suffolklitlab.org": {
+    "interviews": [
+      {
+        "filename": "docassemble.MA209AProtectiveOrder:data/questions/209a_package.yml",
+        "title": "209A Domestic Violence Restraining Order",
+        "tags": ["FA-07-00-00-00"],
+        "metadata": {
+          "title": "209A Domestic Violence Restraining Order\n",
+          "short title": "209A Restraining Order\n",
+          "description": "This interview helps you fill out up to 8 forms you need to ask the court for a 209A restraining order. \nA 209A order is a court order that can protect you from someone who has abused you.\nThe order can make the abuser stay away from you, your home, and your children. The order can also make the abuser pay you money.\nThis interview is free to file and takes most people about 1 and 1/2 hours to complete.\n",
+          "can_I_use_this_form": "This interview is the right one to use if someone abused you and the abuser is:\n\n* someone you live with\n* an intimate partner\n* a family member, or\n* someone you have a child with.\n\nIf you do not have one of these relationships with the abuser, you may need to get a [258E harassment prevention order](https://www.masslegalhelp.org/domestic-abuse-crime-victims/harassment-prevention-orders/harassment-prevention-258e-orders) instead.\n\nIf you are under 18, an adult must help you fill out this form.\n",
+          "before_you_start": "This interview will ask you questions about the abuser, your relationship, and what you need to be safe. It will also\nask for information about how to find and identify the abuser, including date of birth, address, and a description.\n\nIf it is safe to do so, it may help to gather some facts before you start. But in most cases you can start without all of the information\nand get it to the court later.\n",
+          "LIST_topics": ["FA-07-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en", "es"],
+          "maturity": "production",
+          "form_titles": [
+            "209A Complaint Page 1",
+            "209A Complaint Page 2",
+            "209A Affidavit",
+            "Affidavit Disclosing Care or Custody Proceedings",
+            "Plaintiff Confidential Information",
+            "Defendant Information",
+            "Child Support Affidavit",
+            "Motion for Impoundment"
+          ],
+          "form_numbers": [
+            "OCAJ-1 TRC IV (07/95)",
+            "FA/HA-8 (5/10)",
+            "FA-11 (1/12)"
+          ],
+          "estimated_completion_minutes": 60,
+          "fees": [
+            {
+              "Filing fee": 0.0
+            }
+          ]
+        }
+      },
+      {
+        "filename": "docassemble.EnlargeTimeToFile:data/questions/motion_to_enlarge.yml",
+        "title": "Enlarge Time to File (Appeals Court)",
+        "tags": ["CO-07-02-00-00", "CO-07-12-00-00"],
+        "metadata": {
+          "title": "Enlarge Time to File (Appeals Court)\n",
+          "short title": "Enlarge Time to File\n",
+          "description": "If you need more time to file your brief in the Appeals Court, you can use this interview to \nask for an **enlargement of time.**\n\nThis interview will help you tell the court:\n\n* the reason you need to ask for more time,\n* the date by which you are able to file your brief by, within the court guidelines, and\n* create a complete certificate of service.\n\nA copy of the motion must be served on all other parties to the appeal.    \n",
+          "can_I_use_this_form": "You can use this form if you are part of a case before the Massachusetts Appeals Court and you need more time to file your brief.\n",
+          "before_you_start": "You will need to know the following information to complete this interview:\n\n* The **Appeals Court** docket number for your case\n* The **trial court** docket number for your case\n* The names of the plaintiff(s) and defendant(s) in your trial court case\n* The current due date for your brief\n* The date by which you are able to file your brief by, within the court guidelines    \n",
+          "LIST_topics": ["CO-07-02-00-00", "CO-07-12-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Motion to Enlarge Time to File"],
+          "estimated_completion_minutes": 15
+        }
+      },
+      {
+        "filename": "docassemble.MotionToStayEviction:data/questions/SP6A.yml",
+        "title": "Appeal or Stay Your Eviction",
+        "tags": ["CO-07-02-00-00", "HO-02-00-00-00"],
+        "metadata": {
+          "title": "Appeal or Stay Your Eviction",
+          "short title": "Eviction Appeal\n",
+          "description": "If a judge has given your landlord the right to evict you, you can use this interview\nto appeal or ask for a **stay** (temporary delay) in your eviction.\n\nIt will help you make a motion for the appeals court and a **notice of appeal** that will\nbe filed with the trial court. It can also make a request for a fee waiver (affidavit of \nindigency).\n\nThe motion is filed with the Appeals Court and can be efiled.\n",
+          "can_I_use_this_form": "You can use this interview if the housing or district court judge's decision is final. You must also\nfile a notice of appeal in the housing or district court.\n\nIf you earn less than 150% of the federal poverty level or have enough \nexpenses, you can electronically file this document for free.\n\nThis interview will make the **affidavit of indigency**, or fee waiver\nform, for you.\n",
+          "before_you_start": "Before you start, you need to get documents from your case in the Housing or District court, including:\n\n* The docket, or history of decisions by the judge (you can get this online)\n* A copy of the landlord's summons and complaint\n* A copy of your answer, if you filed one\n* A copy of the decision by the judge\n* A copy of any documents you filed to ask the trial court to delay your eviction\n",
+          "LIST_topics": ["HO-02-00-00-00", "CO-07-02-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "Motion to Stay Eviction",
+            "Notice of Appeal",
+            "Affidavit of Indigency"
+          ],
+          "form_numbers": ["Affidavit of Indigency (3/23)"],
+          "estimated_completion_minutes": 20,
+          "fees": [
+            {
+              "Filing fee": 315.0
+            }
+          ]
+        }
+      },
+      {
+        "filename": "docassemble.CACaregiverAuthorizationAffidavitForm:data/questions/caregiver_authorization_affidavit_form_finalwithfields.yml",
+        "title": "California Caregiver Authorization Affidavit",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "California Caregiver Authorization Affidavit",
+          "short title": "Caregiver Authorization",
+          "description": "Prepare a caregiver affidavit for school enrollment and school-related medical care. Relative caregivers can also complete the additional section for other medical and dental care.",
+          "can_I_use_this_form": "The caregiver must be at least 18, and the child must be under 18 and live with the caregiver in California. If you are helping, enter the caregiver's information. The caregiver reviews and signs the affidavit.",
+          "before_you_start": "Have the child's name and birth date and the caregiver's home address ready. For medical or dental care beyond school requirements, the caregiver must be a relative and complete the additional section, including identification. Identification is not needed for the school-related version.",
+          "when_you_are_finished": "Have the caregiver review and sign the affidavit. Keep the original and give copies to the school or health care providers who will rely on it. No court filing or notarization is required.",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+CA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["California Caregiver Authorization Affidavit Form"],
+          "form_numbers": [],
+          "estimated_completion_minutes": "8",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.CivilActionCoverSheet:data/questions/Civil_Action_Cover_Sheet.yml",
+        "title": "Civil Action Cover Sheet",
+        "tags": ["CO-07-00-00-00", "TO-00-00-00-00"],
+        "metadata": {
+          "title": "Civil Action Cover Sheet",
+          "short title": "Civil Action Cover Sheet",
+          "description": "If you are filing a civil action in the Superior Court, you must complete a Civil Action Cover Sheet.\n This form is required for all civil actions filed in the Superior Court. \n \n The form asks for basic information about the parties and the kind of case.\n",
+          "can_I_use_this_form": "You can use this form if you are filing a civil action in the Superior Court.\n",
+          "before_you_start": "Before you start, you will need the following information:\n\n- Your name and address\n- The name and address of the person or business you are suing\n- The type of case you are filing\n- The type of action you are filing\n- The kind of claim you ar making\n- The amount of money you are claiming\n- The names of any related actions pending in the Superior Court\n",
+          "LIST_topics": ["TO-00-00-00-00", "CO-07-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Superior Court Civil Action Cover Sheet"],
+          "form_numbers": ["SC0001"],
+          "estimated_completion_minutes": 20,
+          "fees": [
+            {
+              "Filing fee": 0.0
+            }
+          ]
+        }
+      },
+      {
+        "filename": "docassemble.CLACareTypeFinder:data/questions/care_type_finder.yml",
+        "title": "Massachusetts Care Type Finder",
+        "tags": ["ES-03-03-00-00", "FA-04-00-00-00", "FA-14-00-00-00"],
+        "metadata": {
+          "title": {
+            "en": "Massachusetts Care Type Finder",
+            "es": "Herramienta de Selecci\u00f3n de Cuidados de Massachusetts"
+          },
+          "short title": {
+            "en": "Mass. Care Type Finder",
+            "es": "Herramienta de Selecci\u00f3n de Cuidados de Mass."
+          },
+          "description": "If you know a minor in Massachusetts who needs temporary or permanent care, the Care Type Finder\ncan help you decide the right type of support with a few easy to answer questions.\n\nSome kinds of support need a judge to make a decision. Others can be given by the parent without a judge.\n\nThe Care Type Finder will help you decide between:\n\n* Guardianship\n* Temporary agent\n* Caregiver authorization\n\nAnd if you are the parent of the minor, the tool can also help you let the court know that you disagree\nwith someone trying to become the guardian of your child or that you want a new guardian for your child.\n\nAnswer a few questions about your family's situation to get suggestions for the correct type of support.\n",
+          "can_I_use_this_form": "You can use this tool if you are a parent, grandparent, or other person who cares about a minor in Massachusetts.\n\nAt the end of this tool, you will be given a link that can help you make\nthe form that you need to take the action that you decide on.\n",
+          "before_you_start": "This tool will help you think through the right option for the minor\nthat you care about. You do not need to be ready to take an action when\nyou finish using the tool.\n",
+          "LIST_topics": ["ES-03-03-00-00", "FA-04-00-00-00", "FA-14-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en", "es"],
+          "maturity": "production",
+          "estimated_completion_minutes": 5
+        }
+      },
+      {
+        "filename": "docassemble.MADebtCollectionLetter:data/questions/cease_letter.yml",
+        "title": "Cease Debt Collections Letter",
+        "tags": ["MO-00-00-00-00", "MO-04-00-00-00", "MO-12-00-00-00"],
+        "metadata": {
+          "title": "Cease Debt Collections Letter",
+          "short title": "Cease Collections",
+          "description": "This interview helps someone in Massachusetts write a \"cease communications\" letter to a debt collection agency.\nA \"cease communications letter\" is a letter you can send to a debt collection agency to ask that they stop contacting you about a debt.",
+          "can_I_use_this_form": "If you are a person being contacted about a debt you owe, you can use this interview to request the debt collection agency stop contacting you.\nIf you make less than $750 per week, or if your income is from certain protected sources, the debt collection agency may not be able to take certain actions against you, such as garnishing your wages. If that is the case for you, this interview will also help you write a letter to the debt collection agency explaining that.\n",
+          "before_you_start": "Before you get started, please gather:\n\n1. debt collection agency's name and address\n1. Your account number\n1. Creditor's name\n\nWhen you are finished, you will need to:\n\n1. Print this letter\n1. Sign and mail to the debt collection agency\n",
+          "LIST_topics": ["MO-00-00-00-00", "MO-04-00-00-00", "MO-12-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "Stop debt collection communications letter",
+            "Stop debt collection communications letter with proof of protected income"
+          ],
+          "form_numbers": [],
+          "estimated_completion_minutes": 10
+        }
+      },
+      {
+        "filename": "docassemble.ColoradoDelegationOfGuardian1:data/questions/colorado_delegation_of_guardian.yml",
+        "title": "Colorado Delegation of Guardian",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "Colorado Delegation of Guardian",
+          "short title": "Delegation of Guardian",
+          "description": "This form lets a parent or guardian delegate their power to someone else for taking care of their minor child or person who can't take care of themselves. It includes rules for medical and dental care.",
+          "can_I_use_this_form": "Use this form if you are a parent or guardian who needs to temporarily delegate your power. It is important to make sure that the person you are naming is trustworthy and can handle the responsibilities.\n",
+          "before_you_start": "### Before you get started\n- Please note: this form allows a parent or legal guardian to temporarily delegate their authority and appoint an \"Attorney in Fact\" (another trusted person) to care for their minor child or incapacitated person.\n- Please carefully choose your \"Attorney in Fact\", who will be the caregiver.\n- Please locate a notary for the form.\n\n### When you are finished\n- Sign the document.\n- Give the signed, notarized original to the named Attorney in Fact and keep a copy for your records.\n",
+          "when_you_are_finished": "After filling out the form, make sure it is signed and notarized to make it official. Give the signed, notarized original to the named Attorney in Fact and keep a copy for your records.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+CO",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Colorado Delegation of Guardian"],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.CTPetitionAppointmentOfTemporaryGuardianship:data/questions/petition_appointment_of_tg_ct_pc504_with_fields.yml",
+        "title": "Get a temporary guardian for a child in Connecticut ",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "Get a temporary guardian for a child in Connecticut ",
+          "short title": "Petition Appointment of T",
+          "description": "Use this form to request the appointment of a temporary guardian for a minor child. This process is initiated by a parent or court-appointed guardian who is unable to care for the child.",
+          "can_I_use_this_form": "You can use this form if you are a parent or a court-appointed guardian of a minor (Note: Cannot be a temporary guardian). You can file it in the probate district where the child lives right now, is domiciled (has their permanent home), or is located at the time the petition is filed\n",
+          "before_you_start": "## Before you get started\n- Ensure you have the minor's birth certificate and the Affidavit Concerning Children (JD-FM-164).\n- Gather all necessary information about the minor and the proposed guardian.\n\n## When you are finished\n- Submit the completed petition along with the required documents to the appropriate probate court.\n",
+          "when_you_are_finished": "After submitting the petition, the court will review your request. You may need to attend a hearing where you can present your case for the appointment of a temporary guardian.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+CT",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Petition Appointment of TG CT PC-504 with fields"],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.ReasonableAccommodationLetter:data/questions/reasonable_accommodation_letter.yml",
+        "title": "Employee reasonable accommodation letter",
+        "tags": [],
+        "metadata": {
+          "title": "Employee reasonable accommodation letter",
+          "short title": "Employee reasonable accommodation",
+          "description": "This interview helps someone in Massachusetts write a reasonable accommodation letter to their employer. A reasonable accommodation is a change or adjustment that allows a qualified person with a disability to participate in the job application process, perform their job, and receive the same benefits as other employees.",
+          "can_I_use_this_form": "If you are an employee, you can use this interview to help write a request for a reasonable accommodation from your employer.\n",
+          "before_you_start": "\nBefore you get started, please gather:\n\n1. Specific item(s) you are requesting. For example: Work environment, such as with ramps or accessible restrooms, equipment, schedule, job duties, training materials, interpreters.  \n1. Medical records (if employer requests). \n1. Employer address and contact information. \n\nWhen you are finished, you will need to:\n\n1. Review, print, and sign your letter. \n1. Email or deliver your letter to your employer. \n1. Save a copy of all correspondence for your records.\n",
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Reasonable accommodation letter"],
+          "form_numbers": [],
+          "estimated_completion_minutes": 10
+        }
+      },
+      {
+        "filename": "docassemble.GATempGuardianForm:data/questions/gpcsfwithfields_1.yml",
+        "title": "Georgia Temporary Guardianship Form",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "Georgia Temporary Guardianship Form",
+          "short title": "Georgia Temporary Guardianship Form",
+          "description": "This form is used to request Temporary Letters of Guardianship for a minor. Use this form to ask the court to name you as a child's temporary guardian.",
+          "can_I_use_this_form": "You can use this form if you want to care for a child for a short time and meet the court's requirements. You may also need to give the child's parents notice.\n",
+          "before_you_start": "### Before you get started\n- Gather information about the child and both parents.\n- Get any documents you may need, such as the child's birth certificate.\n\n### When you are finished\n- File your completed form with the Probate Court in your county.\n- Make sure everyone who must be told about the case gets notice.\n",
+          "when_you_are_finished": "After you file your form, wait for the court to make a decision. Watch for letters from the court about hearings or anything else you need to do.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+GA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["GPCSF-with-fields (1)"],
+          "form_numbers": "GPCSF 28",
+          "estimated_completion_minutes": "20",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.Interpreternotice:data/questions/interpreter_notice_standalone.yml",
+        "title": "Interpreter Notice",
+        "tags": ["CO-00-00-00-00", "Other", "RI-10-00-00-00", "RI-21-00-00-00"],
+        "metadata": {
+          "title": "Interpreter Notice\n",
+          "short title": "Interpreter Notice\n",
+          "description": "If your first language is not English, you can use this interview to tell the court\nthat you need an interpreter. The court will provide an interpreter for free during\nyour court hearings.\n",
+          "can_I_use_this_form": "You can use this form if you need an interpreter for your court hearings. You may need\nan interpreter even if you speak some English.\n",
+          "before_you_start": "If you have it, get the docket number or case number for your case ready before you start this interview.\n",
+          "LIST_topics": ["RI-10-00-00-00", "RI-21-00-00-00", "CO-00-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Interpreter Notice"],
+          "estimated_completion_minutes": 5,
+          "fees": [
+            {
+              "Filing fee": 0.0
+            }
+          ]
+        }
+      },
+      {
+        "filename": "docassemble.MAObjectionToEvictionPetition:data/questions/main.yml",
+        "title": "Objection to petition to seal an eviction or to deem judgment satisfied",
+        "tags": [
+          "GO-00-00-00-00",
+          "HO-00-00-00-00",
+          "HO-02-00-00-00",
+          "HO-06-00-00-00"
+        ],
+        "metadata": {
+          "title": "Objection to petition to seal an eviction or to deem judgment satisfied",
+          "short title": "Objection to petition to seal an eviction",
+          "description": "This interview helps someone in Massachusetts file an objection to a petition\nto seal an eviction action or to deem a judgment satisfied.",
+          "can_I_use_this_form": "Use this interview if you were part of a Massachusetts summary process \n(eviction) case and want to object to a petition to seal (make private)\nthe eviction record.\n\nYou may object to either:\n  * a Petition to Seal Eviction Record, or\n  * a Petition for Judgment or Agreement to be Deemed Satisfied.\n\nYou must have been the landlord or tenant in the original eviction case\nto use this form.\n",
+          "before_you_start": "Before you get started, please gather:\n\n1. The court department and division for your eviction case\n2. The docket number from your case paperwork\n3. The names of the plaintiff (landlord) and defendant (tenant/occupant)\n4. A copy of the petition you are objecting to so you can identify who filed it\n5. Contact information for yourself and the other party or their lawyer\n6. Any notes about how you plan to send notice (mailing address, email, or plans to hand deliver)\n\nWhen you are finished, you will need to:\n\n1. Sign and file the objection with the court where the case was heard\n2. Serve a copy of the objection on the other party or their attorney by mail, in person, or by email\n",
+          "LIST_topics": [
+            "GO-00-00-00-00",
+            "HO-00-00-00-00",
+            "HO-02-00-00-00",
+            "HO-06-00-00-00"
+          ],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Objection to petition in an eviction action"],
+          "form_numbers": ["(BMC, DC, HC) -SP- TC0112"],
+          "estimated_completion_minutes": 10
+        }
+      },
+      {
+        "filename": "docassemble.MACaregiverAuthorization:data/questions/temporary_agent_esp_2.yml",
+        "title": "MA Temporary Agent Authorization Form",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "MA Temporary Agent Authorization Form",
+          "short title": "MA Temporary Agent",
+          "description": "This form lets a parent or guardian choose a temporary agent to make decisions about the care, custody, or property of their minor child. It is important to write down any limits on the agent's power.",
+          "can_I_use_this_form": "You can use this form if you are a parent or legal guardian and need someone to act for you in your child's care. Make sure the agent knows and agrees to the responsibilities given.\n",
+          "before_you_start": "### Before you start\n- Make sure you have the names and birth dates of the minor children ready.\n- Name the person you wish to choose as the temporary agent.\n\n### When you are done\n- Have the form signed by witnesses and the chosen agent.\n- Keep a copy for yourself and give copies to the chosen agent.\n",
+          "when_you_are_finished": "After filling out the form, make sure you have all the signatures, including those of witnesses and the agent. Give copies to everyone involved and keep a copy for yourself.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Temporary Agent Form"],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.StudentEvaluations:data/questions/massachusetts_educational_evaluations_independent_evaluation.yml",
+        "title": "MAC Request for Independent Special Education Evaluation",
+        "tags": [
+          "IEE",
+          "IEP",
+          "Massachusetts",
+          "independent evaluation",
+          "special education"
+        ],
+        "metadata": {
+          "title": "MAC Request for Independent Special Education Evaluation\n",
+          "short title": "Independent Eval\n",
+          "description": "Use this guided interview to request an Independent Educational Evaluation (IEE) at public expense in Massachusetts. If you disagree with the school district's evaluation of your child, this tool helps you formally request an independent assessment. This interview was authored and approved by Massachusetts Advocates for Children.\n",
+          "can_I_use_this_form": "You can use this interview if you are a parent or guardian of a student in Massachusetts and you disagree with a special education evaluation recently conducted by your school district.\n",
+          "before_you_start": "You will need the date of the school's evaluation that you disagree with, student information, and the school district's details before you begin.\n",
+          "when_you_are_finished": "After completing the interview, you will have a ready-to-sign letter to send to your school district requesting the IEE.\n",
+          "LIST_topics": ["ED-07-00-00-00", "ED-07-03-00-00"]
+        }
+      },
+      {
+        "filename": "docassemble.AppealsMotionToReconsider:data/questions/Motion_to_Reconsider.yml",
+        "title": "Motion to Reconsider",
+        "tags": ["CO-07-02-00-00", "CR-08-01-01-00"],
+        "metadata": {
+          "title": "Motion to Reconsider\n",
+          "short title": "Motion to Reconsider\n",
+          "description": "If you need the Appeals Court to take a look at your case again you can use this interview to create a motion asking for a reconsideration and or modification. \nThis form can also help you serve your motion to the other party and help you request an interpreter if you need one. \n",
+          "can_I_use_this_form": "You can use this form if it has been ** 14 days or less since the date of the Court's decisions **. You only have 14 days after the date of the Court\u2019s decisions to file a Motion for Reconsideration and Modification.\n\nThe following are the reasons you can request these motions: \n  * the court\u2019s reasoning that led to the current order was wrong,\n  * the court failed to consider evidence, or\n  * the judge should know about new information that affects the decision the court already made.\n\nYou **may not** use this form for the following reasons: \n  * to tell the judge about a real-world change of circumstances, or\n  * to tell the judge about a new argument that you are making for the first time.\n",
+          "before_you_start": "Before you start, you need to get documents from your case in the Trial Court and Appeals Court, including:\n  * Your Appeals Court notice \n",
+          "LIST_topics": ["CR-08-01-01-00", "CO-07-02-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "Appeals Motion for Reconsideration or Modification of Decision"
+          ],
+          "form_numbers": [null],
+          "estimated_completion_minutes": 60,
+          "fees": [
+            {
+              "Filing fee": 0.0
+            }
+          ]
+        }
+      },
+      {
+        "filename": "docassemble.MassHealthFairHearingRequestForm:data/questions/mass_health_fair_hearing_request_fo.yml",
+        "title": "MassHealth Fair Hearing Request Form to appeal a MassHealth Decision",
+        "tags": ["HE-00-00-00-00"],
+        "metadata": {
+          "title": "MassHealth Fair Hearing Request Form to appeal a MassHealth Decision",
+          "short title": "MassHealth Appeal",
+          "description": "If you disagree with a decision made by MassHealth about your coverage, benefits, or eligibility, this interview can help you request a Fair Hearing.\n\nYou can use this interview to appeal decisions such as a denial of MassHealth coverage, a determination that you are not eligible, or a reduction or termination of benefits. For example, you may use this form if MassHealth stops covering a medication or service that your provider says you still need.\n\nAfter you submit your hearing request, the Office of Medicaid, Board of Hearings will review your request and schedule a hearing. At the hearing, you will have the opportunity to explain why you disagree with MassHealth\u2019s decision and provide any supporting information.",
+          "can_I_use_this_form": "You can use this interview if you want to appeal a decision made by MassHealth.\n\nYou may request a hearing if:\n  \u2022 You disagree with a decision about your eligibility, benefits, or coverage, or  \n  \u2022 MassHealth did not act on your application or request within a reasonable time.\n\nThis hearing gives you the opportunity to explain why you think MassHealth\u2019s decision is wrong.\n\nYou can file this request for yourself, or you may file on someone else\u2019s behalf if you are authorized to do so (for example, as a legal representative, guardian, or someone with power of attorney).\n\nYou must request a hearing within 60 days of receiving a notice of MassHealth\u2019s decision. In some situations, if you did not receive a notice or MassHealth did not act, you may have up to 120 days to request a hearing.\n",
+          "before_you_start": "This interview will guide you through completing a MassHealth Fair Hearing request form.\n\nBefore you begin, you should have:\n\n 1. Your MassHealth Member ID number (if you or the person you are filing for has one)\n\n 2. The notice from MassHealth about the decision you are appealing\n\n 3. Any documents that support your appeal (if readily available)\n\nYou will have an opportunity to upload documents during this interview. You may also submit documents after you file your hearing request by emailing them to <u>BOH-FairHearingsubmissions@MassMail.State.MA.US</u> before your hearing.\n",
+          "LIST_topics": ["HE-00-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en", "es"],
+          "maturity": "production",
+          "form_titles": ["Mass Health Fair Hearing Request Form"],
+          "form_numbers": [],
+          "estimated_completion_minutes": 10
+        }
+      },
+      {
+        "filename": "docassemble.PetitiontoGuardianshipMD_bestdraft3:data/questions/PetitiontoGuardianshipMD.bestdreaft.yml",
+        "title": "Maryland Petition for Guardianship of Minor",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "Maryland Petition for Guardianship of Minor",
+          "short title": "MD Petiton for Guardianship of Minor",
+          "description": "This form is used to ask for guardianship of a minor in Maryland. It lets you request the right to make decisions for a minor child.",
+          "can_I_use_this_form": "You can use this form if you are seeking guardianship of a minor child. If the minor is not a child, a different form is needed. Make sure to fill out separate petitions for each minor unless they are full siblings in the same situation. Half-siblings need separate petitions.\n",
+          "before_you_start": "### Before you start\n- Gather all needed information about the minor and your connection to them.\n- Have any required documents, like birth certificates, ready to include.\n\n### When you are done\n- Check your petition for accuracy and completeness.\n- Send the petition to the right court along with any required fees.\n",
+          "when_you_are_finished": "Once you have sent your petition, you will need to wait for the court to set a hearing date. Make sure to tell all involved people about the petition and the hearing date.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+MD",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Labeled labeled ccgn001-with-fields-with-fields"],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.MEPowerOfAttorneyAndDelegationByParentOrGuardian:data/questions/me_power_of_attorney_and_delegation_by_parent_or_guardian.yml",
+        "title": "Power of Attorney and Delegation by Parent or guardian",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "Power of Attorney and Delegation by Parent or guardian",
+          "short title": "PoA Delegation",
+          "description": "This form allows you to appoint someone to make decisions for your minor children when you're unable to. It's essential for ensuring their care and welfare during your absence.",
+          "can_I_use_this_form": "If you're a parent or guardian in Maine and need someone else to care for your children temporarily, this form is for you. It grants your chosen agent the authority to make decisions about your children's health, education, and general welfare.\n",
+          "before_you_start": "### Before you get started\n- Gather the necessary information about your children and the person you want to appoint.\n- Ensure you understand the powers you are granting and the limitations.\n\n### When you are finished\n- Sign the document in the presence of witnesses and a notary public.\n- Provide copies to the appointed agent and any relevant institutions (like schools or healthcare providers).\n",
+          "when_you_are_finished": "After completing the form, ensure that the appointed agent understands their responsibilities and has all necessary information about your children. Keep a copy of the signed document for your records.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+ME",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "Power of Attorney and Delegation by Parent or Guardian"
+          ],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.CLAGuardianship:data/questions/parent_participate_in_guardianship_case.yml",
+        "title": "Parent's Consent or Objection to a Minor Guardianship",
+        "tags": ["ES-03-03-00-00", "FA-04-00-00-00"],
+        "metadata": {
+          "title": "Parent's Consent or Objection to a Minor Guardianship",
+          "short title": "Parent's Consent or Objection to a Minor Guardianship",
+          "description": "This interview helps a Massachusetts parent or someone else who cares about the wellbeing of a minor\nattend and have a chance to talk to the judge in a minor guardianship case. \n\nIt can help the parent or other person:\n\n* Tell the judge they disagree (object) to the guardianship, or\n* Tell the judge they agree (consent) to the guardianship.\n\nIf you want to be heard but do not yet know if you agree or disagree, you can use this \ninterview to ask the judge to let you speak at the hearing.\n\nIt can also help the parent ask the judge to give them a lawyer for the case.",
+          "can_I_use_this_form": "You can use this interview if:\n\n* You are a parent of the minor in the guardianship case, or\n* You are someone else who cares about the minor's wellbeing, and\n* Someone has filed a case in court for the guardianship of a child.\n\nThe case to get a guardian for the minor has to already be filed with \nthe court.\n",
+          "before_you_start": "Before you start, you should have the court papers for the guardianship case.\n\nIf you do not have the papers, you need to know:\n\n* The date the case was filed\n* The docket number for the case\n* The name of the court where the case was filed\n\nYou may be able to find this information on [masscourts.org](https://www.masscourts.org/).\n",
+          "LIST_topics": ["ES-03-03-00-00", "FA-04-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "Notice of Appearance and Objection (Probate and Family Court)",
+            "Waiver and Consent to Petition for Appointment of Guardian of a Minor",
+            "Application for appointment of counsel",
+            "Affidavit of indigency"
+          ],
+          "form_numbers": ["MPC 505a", "MPC 440", "MPC 263", "TC0002"],
+          "estimated_completion_minutes": 20
+        }
+      },
+      {
+        "filename": "docassemble.CLAGuardianship:data/questions/petition_for_appointment_of_guardian.yml",
+        "title": "Petition for Guardianship of a Minor",
+        "tags": ["Domicile", "ES-03-03-00-00", "FA-04-00-00-00", "Family"],
+        "metadata": {
+          "title": "Petition for Guardianship of a Minor",
+          "short title": "Minor Guardianship",
+          "description": "If you are or if you know a minor who needs a responsible adult to make decisions\nfor them other than their parent or their current guardian, you can use this interview \nto ask the court to appoint a guardian.\n\nThe guardian can make decisions about the minor's health, education, finances, and\ngeneral welfare in place of the minor's parent.",
+          "can_I_use_this_form": "You can use this interview if you are **either**:\n\n* An adult who cares about a minor's well-being; **or**\n* A minor who is 14 or older.\n\nIf you are under 14, you will need an adult to help you answer the questions in this interview.\n\n**If you are a parent and your child needs a guardian,** you should have the adult\nthat you want to be the guardian use this interview. You cannot use this interview if\nyou are the parent of the minor.\n\nYou may also want to use the [Care Type Finder](https://apps.suffolklitlab.org/start/care_type_finder) to decide if guardianship is the right\nchoice.\n",
+          "before_you_start": "Before you start, you may want to use the [Care Type Finder](https://apps.suffolklitlab.org/start/care_type_finder) to decide if guardianship is the right choice.\n\nYou will need to gather information about:\n\n1. The minor's parents, including name, contact information, and whether they are living.\n2. Anyone else who has taken care of the minor over the last 60 days.\n3. Any bank accounts and other property that the minor owns.\n4. Any current and past court cases that have to do with the minor.\n5. Your own financial information, unless you are the minor.\n6. The names and contact information of the person you want to be the guardian.\n7. Information about whether the parent and the minor will agree to the guardianship.\n",
+          "LIST_topics": ["ES-03-03-00-00", "FA-04-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "form_titles": [
+            "Petition for Appointment of Guardian of a Minor",
+            "Motion to Appoint Temporary Guardian",
+            "Bond (MPC 801)",
+            "Military Affidavit",
+            "Child Care or Custody Disclosure Affidavit",
+            "Affidavit of Indigency"
+          ],
+          "form_numbers": [
+            "MPC 140",
+            "OCAJ-1",
+            "TC0002",
+            "MCP 263",
+            "MPC 340",
+            "MPC 801",
+            "TC0050 (06/24)"
+          ]
+        }
+      },
+      {
+        "filename": "docassemble.CLAGuardianship:data/questions/petition_for_removal_of_guardian.yml",
+        "title": "Petition to Remove a Guardian",
+        "tags": ["ES-03-03-00-00", "FA-04B-00-00-00"],
+        "metadata": {
+          "title": "Petition to Remove a Guardian",
+          "short title": "Petition to Remove a Guardian",
+          "description": "If your child, or the child of someone you care about,\nhas a guardian and you believe the guardian should be removed or replaced, \nyou can use this interview to ask the court to remove the guardian.\n\nIt will help you make a petition to remove a guardian and optionally, let you\nname a new guardian.\n\nIt can also help you make up to 5 other forms that you\nmay need to file with your petition. The other forms include:\n\n* Petition to appoint a temporary guardian\n* Request to get a lawyer (for a parent)\n* Child Care or Custody Disclosure Affidavit\n* Military affidavit\n* Fee waiver application (also called an affidavit of indigency)",
+          "can_I_use_this_form": "You can use this interview if you are either:\n\n* A parent, or\n* Someone **else** who cares about a child and wants to ask the court to remove a guardian.\n",
+          "before_you_start": "Before you start this interview, you should get information about:\n\n* The guardianship case, including the name of the court and the case number (docket number)\n* The child, including their birthdate and address\n* The names, contact information, and other facts about the child's parents\n* The name of the child's current guardian\n* The names, contact information, and other facts about any new guardian that you want to ask the judge to appoint\n",
+          "LIST_topics": ["ES-03-03-00-00", "FA-04-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "Petition for Removal of Guardian of Minor",
+            "Motion to Appoint Temporary Guardian",
+            "Military Affidavit",
+            "Application for Appointment of Counsel",
+            "Child Care or Custody Disclosure Affidavit",
+            "Affidavit of Indigency"
+          ],
+          "form_numbers": ["MPC 240", "OCAJ-1", "TC0002", "MPC 263", "MPC 340"],
+          "estimated_completion_minutes": 20
+        }
+      },
+      {
+        "filename": "docassemble.NDPowerOfAttorneyForCareAndCustodyOfMinor:data/questions/nd_power_of_attorney_minor.yml",
+        "title": "North Dakota: Power of Attorney for Care and Custody of a Minor",
+        "tags": ["ES-03-03-00-00"],
+        "metadata": {
+          "title": "North Dakota: Power of Attorney for Care and Custody of a Minor",
+          "short title": "ND parental rights form",
+          "description": "Use this form to choose someone to make decisions for your minor child or children. This form will say which parental rights and responsibilities you have given to another person.",
+          "can_I_use_this_form": "You can use this form if you are a parent or guardian who wants to choose someone to make decisions for your minor child. You can use this form to grant some or all of your parental rights and responsibilities. This can last for up to six months.\n",
+          "before_you_start": "### Before you get started\n- Have your child(ren)\u2019s names and birth dates.\n- Have the name and address of the person you choose to care for your child(ren).\n- Make sure the person you choose is age 18 or older.\n\n### When you are finished\n- Sign the form in front of a notary public or court clerk to make it official.\n- Provide copies to the person you have chosen and keep one for your records.\n",
+          "when_you_are_finished": "After completing the form, make sure it is signed and notarized. Share copies with the person you chose and keep a copy for yourself. This will make sure that your wishes are followed.\n",
+          "LIST_topics": ["ES-03-03-00-00"],
+          "jurisdiction": "NAM-US-US+ND",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": [
+            "North Dakota Power of Attorney for Care and Custody of Minor"
+          ],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.NJPOAForMinors:data/questions/nj_power_of_attorney_delegation_fillablewithfieldswithfields919.yml",
+        "title": "NJ Power of Attorney and Delegation of Authority",
+        "tags": ["ES-03-03-00-00", "ES-03-03-05-00"],
+        "metadata": {
+          "title": "NJ Power of Attorney and Delegation of Authority",
+          "short title": "NJ Temporary Caregiver Appointment",
+          "description": "This form is for a parent, custodian, or guardian of a minor child or ward in NJ wishing to temporarily give parental powers to someone else.",
+          "can_I_use_this_form": "You can use this form if you are a parent, custodian, or guardian of a minor child or ward in NJ wishing to temporarily give parental powers to someone else.\n",
+          "before_you_start": "### Before you get started\n- Collect names, addresses, and phone numbers for:\n  - The person you share custody with (if applicable)\n  - The caregiver\n  - The alternate caregiver\n- Collect the names and birthdates of your children or wards.\n\n### When you are finished\n- Sign the form in the presence of two witnesses.\n- The other parent must sign if applicable.\n- A notary may also be needed, depending on the powers you give.\n- Keep a copy for yourself and give one to the caregiver and anyone else who needs it, such as your child's school.\n",
+          "when_you_are_finished": "Sign the form in the presence of two witnesses. The other parent must sign if applicable. A notary may also be needed, depending on the powers you give. Keep a copy for yourself and give one to the caregiver and anyone else who needs it, such as your child's school.\n",
+          "LIST_topics": ["ES-03-03-00-00", "ES-03-03-05-00"],
+          "jurisdiction": "NAM-US-US+NJ",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Power of Attorney and Delegation of Authority"],
+          "form_numbers": [],
+          "estimated_completion_minutes": 20,
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.P2026RhodeIslandEducationalGuardianForm:data/questions/test_rhode_island_educational_form_interviewwithfields.yml",
+        "title": "Rhode Island Authorization for Release of Educational Records and Appointment of Guardian",
+        "tags": ["ES-03-03-00-00", "ED-12-00-00-00"],
+        "metadata": {
+          "title": "Rhode Island Authorization for Release of Educational Records and Appointment of Guardian",
+          "short title": "RI Educational Guardian",
+          "description": "This form allows you to designate a caregiver to access your child's educational records and make decisions on their behalf. It's essential for ensuring your child's educational needs are met if you are unable to care for them.",
+          "can_I_use_this_form": "You can use this form if you need to appoint someone to handle educational matters for your child. This is especially useful if you might be unavailable due to detention or other reasons.\n",
+          "before_you_start": "### Before you get started\n- Gather your child's information, including their names and dates of birth.\n- Identify a trusted caregiver who will act on your behalf.\n\n### When you are finished\n- We strongly recommend signing in front of a notary public.\n- Keep a copy of the signed document for your records.\n",
+          "when_you_are_finished": "After completing the form, make sure to keep a signed copy for yourself and provide a copy to the appointed caregiver. This will help ensure they can act on your behalf when needed.\n",
+          "LIST_topics": ["ES-03-03-00-00", "ED-12-00-00-00"],
+          "jurisdiction": "NAM-US-US+RI",
+          "languages": ["en"],
+          "maturity": "beta",
+          "form_titles": [
+            "Rhode Island Authorization for Release of Educational Records and Appointment of Guardian for Educational Purposes"
+          ],
+          "form_numbers": [],
+          "estimated_completion_minutes": 15,
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.RIHealthCarePowerOfAttorneyMinor:data/questions/ridurableminorwithfields.yml",
+        "title": "Rhode Island: Power of Attorney for a Child's Health Care",
+        "tags": ["ES-03-03-00-00", "HE-00-00-00-00"],
+        "metadata": {
+          "title": "Rhode Island: Power of Attorney for a Child's Health Care",
+          "short title": "Power of Attorney (Minor)",
+          "description": "This form allows parents to appoint a caregiver to make healthcare decisions for their child in case they are unable to do so. It ensures that medical treatment can be provided promptly when needed.",
+          "can_I_use_this_form": "You can use this form if you are a parent or legal guardian and want to choose someone to make healthcare decisions for your child. It is important to ensure that the chosen person is trustworthy and understands your wishes regarding medical care.\n",
+          "before_you_start": "### Before you get started\n- Gather the necessary information about your child and the chosen caregiver.\n- Include one or both parents who have legal custody of the child. Make sure all parents with legal custody agree with this choice.\n\n### When you are finished\n- Sign the document in front of a notary public to make it legally binding.\n- Provide a copy to the chosen caregiver and keep one for your records.\n",
+          "when_you_are_finished": "Once you have signed the document in front of a notary, it is legally effective. Ensure that the chosen caregiver has a copy to present in case of a medical emergency. You may also want to inform your child's healthcare provider about this arrangement.\n",
+          "LIST_topics": ["ES-03-03-00-00", "HE-00-00-00-00"],
+          "jurisdiction": "NAM-US-US+RI",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Rhode Island Durable Power of Attorney for Minor"],
+          "form_numbers": [],
+          "estimated_completion_minutes": "",
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      },
+      {
+        "filename": "docassemble.ssareportchangesletter:data/questions/ssa_report_of_dedicated_account.yml",
+        "title": "Report of benefits and Dedicated Account",
+        "tags": ["BE-01-03-00-00"],
+        "metadata": {
+          "title": "Report of benefits and Dedicated Account",
+          "short title": "Dedicated Account Ledger",
+          "description": "This interview helps a parent or representative payee of a child on SSI\nkeep track of money spent from a dedicated account with the child's \nretroactive SSI benefits.\n",
+          "can_I_use_this_form": "You can use this interview to fill out a Report of Benefits and Dedicated Account \nor to keep track of what you spent. It can be used by:\n\n* A parent, or\n* A representative payee of a child or dependent who gets SSI\n",
+          "before_you_start": "Before you start, gather any records that show what you spent over the last year.\n\nInclude:\n\n* The letter from Social Security that tells you the period of the report\n* The amount of money in the dedicated account as of your last report to SSA\n* The amount of money you deposited into the account since your last report to SSA\n* The amount of money you spent from the account since your last report to SSA\n",
+          "LIST_topics": ["BE-01-03-00-00"],
+          "jurisdiction": "NAM-US",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["Report of Benefits and Dedicated Account"],
+          "form_numbers": ["SSA-6233-BK-1"],
+          "estimated_completion_minutes": 30
+        }
+      },
+      {
+        "filename": "docassemble.WVDelegationOfParentalAuthority:data/questions/delegation_of_parental_authority_WV.yml",
+        "title": "West Virginia Delegation of Parental Authority",
+        "tags": ["ES-03-03-00-00", "ES-03-03-05-00"],
+        "metadata": {
+          "title": "West Virginia Delegation of Parental Authority",
+          "short title": "WV-Delegation",
+          "description": "Use this form to let another adult take care of your child for up to 1 year. That adult can make choices about your child\u2019s school and health care. You are still the parent, and you can cancel this at any time. You must be working with a qualified nonprofit organization to use it.\n",
+          "can_I_use_this_form": "You can use this form if you are a parent, guardian, or legal custodian of a child under 18 and a qualified nonprofit organization is helping you set this up. Use it if you need another adult to care for your child for a while, like if you are sick, in the military, working far away, or need to leave the country.\n",
+          "before_you_start": "### Before you get started gather the following information\n- Your child(ren)'s full name and birthday\n- The caregiver's full name, address, and phone number(s)\n- The dates you want this to start and end (up to 1 year)\n",
+          "when_you_are_finished": "Print the form. You and the other adult must sign it in front of a notary. Then give the other adult a copy and keep one for yourself. They may need to show it to your child\u2019s school or doctor.\n",
+          "LIST_topics": ["ES-03-03-00-00", "ES-03-03-05-00"],
+          "jurisdiction": "NAM-US-US+WV",
+          "languages": ["en"],
+          "maturity": "production",
+          "form_titles": ["West Virginia Delegation of Parental Authority"],
+          "form_numbers": [],
+          "estimated_completion_minutes": 15,
+          "efiling_enabled": false,
+          "integrated_efiling": false,
+          "integrated_email_filing": false,
+          "unlisted": false
+        }
+      }
+    ]
+  },
+  "interviews.gbls.org": {
+    "interviews": [
+      {
+        "filename": "docassemble.CatalogBuildFixture:data/questions/housing.yml",
+        "title": "Massachusetts housing form (CI fixture)",
+        "tags": ["HO-02-00-00-00"],
+        "metadata": {
+          "title": "Massachusetts housing form (CI fixture)",
+          "description": "Representative test data for static site builds.",
+          "LIST_topics": ["HO-02-00-00-00"],
+          "jurisdiction": "NAM-US-US+MA",
+          "languages": ["en"],
+          "maturity": "production",
+          "unlisted": false,
+          "efiling_enabled": false,
+          "fees": [
+            {
+              "name": "Filing fee",
+              "amount": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "apps.ptla.org": {
+    "interviews": [
+      {
+        "filename": "docassemble.CatalogBuildFixture:data/questions/housing.yml",
+        "title": "Maine housing form (CI fixture)",
+        "tags": ["HO-02-00-00-00"],
+        "metadata": {
+          "title": "Maine housing form (CI fixture)",
+          "description": "Representative test data for static site builds.",
+          "LIST_topics": ["HO-02-00-00-00"],
+          "jurisdiction": "NAM-US-US+ME",
+          "languages": ["en"],
+          "maturity": "production",
+          "unlisted": false,
+          "efiling_enabled": false,
+          "fees": [
+            {
+              "name": "Filing fee",
+              "amount": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "forms.michiganlegalhelp.org": {
+    "interviews": [
+      {
+        "filename": "docassemble.CatalogBuildFixture:data/questions/housing.yml",
+        "title": "Michigan housing form (CI fixture)",
+        "tags": ["HO-02-00-00-00"],
+        "metadata": {
+          "title": "Michigan housing form (CI fixture)",
+          "description": "Representative test data for static site builds.",
+          "LIST_topics": ["HO-02-00-00-00"],
+          "jurisdiction": "NAM-US-US+MI",
+          "languages": ["en"],
+          "maturity": "production",
+          "unlisted": false,
+          "efiling_enabled": false,
+          "fees": [
+            {
+              "name": "Filing fee",
+              "amount": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "apps.vtcourtforms.org": {
+    "interviews": [
+      {
+        "filename": "docassemble.CatalogBuildFixture:data/questions/housing.yml",
+        "title": "Vermont housing form (CI fixture)",
+        "tags": ["HO-02-00-00-00"],
+        "metadata": {
+          "title": "Vermont housing form (CI fixture)",
+          "description": "Representative test data for static site builds.",
+          "LIST_topics": ["HO-02-00-00-00"],
+          "jurisdiction": "NAM-US-US+VT",
+          "languages": ["en"],
+          "maturity": "production",
+          "unlisted": false,
+          "efiling_enabled": false,
+          "fees": [
+            {
+              "name": "Filing fee",
+              "amount": 0
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "apps.molawhelp.org": {
+    "interviews": [
+      {
+        "filename": "docassemble.CatalogBuildFixture:data/questions/housing.yml",
+        "title": "Missouri housing form (CI fixture)",
+        "tags": ["HO-02-00-00-00"],
+        "metadata": {
+          "title": "Missouri housing form (CI fixture)",
+          "description": "Representative test data for static site builds.",
+          "LIST_topics": ["HO-02-00-00-00"],
+          "jurisdiction": "NAM-US-US+MO",
+          "languages": ["en"],
+          "maturity": "production",
+          "unlisted": false,
+          "efiling_enabled": false,
+          "fees": [
+            {
+              "name": "Filing fee",
+              "amount": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
