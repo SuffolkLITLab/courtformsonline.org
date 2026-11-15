@@ -1,5 +1,6 @@
 .HeroSection {
   background-color: #fbfafe;
+  overflow-x: clip;
 
   & textarea {
     min-height: 6lh;
