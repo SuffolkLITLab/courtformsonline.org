@@ -26,7 +26,9 @@ jobs:
     - name: Run Tests
       run: npm test
         
-    - name: Build the project
+    - name: Build the project with catalog fixtures
       run: npm run build
       env:
+        CI_CATALOG_FIXTURES: '1'
+        NODE_OPTIONS: '--require ${{ github.workspace }}/scripts/ci-catalog-fetch.cjs'
         NEXT_PUBLIC_SPOT_API_BEARER_TOKEN: ${{ secrets.NEXT_PUBLIC_SPOT_API_BEARER_TOKEN }}
