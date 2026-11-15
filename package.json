@@ -12,7 +12,9 @@
     "test:format": "prettier --check 'src/**/*.js'",
     "prepare": "husky install",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "worker:dev": "wrangler dev --config workers/form-search/wrangler.jsonc --port 8787",
+    "worker:deploy": "wrangler deploy --config workers/form-search/wrangler.jsonc"
   },
   "dependencies": {
     "@fontsource/atkinson-hyperlegible": "^5.1.0",
@@ -59,6 +61,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "wrangler": "^4.162.0"
   }
 }

@@ -48,3 +48,7 @@ next-env.d.ts
 # Ignore specific Yarn state files
 .yarn/*.yml
 .yarn/*.gz
+
+# Worker secrets and local state
+.dev.vars*
+.wrangler/
