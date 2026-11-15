@@ -48,3 +48,6 @@ next-env.d.ts
 # Ignore specific Yarn state files
 .yarn/*.yml
 .yarn/*.gz
+
+# Public CA certificates used to validate the LAWV catalog (no private keys).
+!certificates/godaddy-dv-r1-chain.pem
