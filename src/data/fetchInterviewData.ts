@@ -274,7 +274,10 @@ export function extractLocalizedFees(
   return [];
 }
 
-export const fetchInterviews = async (path: string) => {
+export const fetchInterviews = async (
+  path: string,
+  options: { allJurisdictions?: boolean } = {}
+) => {
   const config = pathToServerConfig[path];
   const serverNames = config
     ? config.servers
@@ -286,12 +289,15 @@ export const fetchInterviews = async (path: string) => {
   const locale = 'en'; // Todo: make this dynamic
 
   let allInterviews: Interview[] = [];
+  let failedServers = 0;
   for (const server of servers) {
     const url = new URL(`${server.url}/list`);
     url.search = 'json=1';
 
     try {
       const response = await fetch(url.toString());
+      if (!response.ok)
+        throw new Error(`Catalog returned HTTP ${response.status}`);
       const data: Data = await response.json();
 
       if (data && data.interviews) {
@@ -397,6 +403,7 @@ export const fetchInterviews = async (path: string) => {
         allInterviews = allInterviews.concat(taggedInterviews);
       }
     } catch (error) {
+      failedServers += 1;
       console.error(
         'Failed to fetch interviews from server:',
         server.name,
@@ -406,14 +413,16 @@ export const fetchInterviews = async (path: string) => {
   }
 
   // Filter interviews by jurisdiction
-  const expectedJurisdiction = getJurisdictionFromPath(path);
-  allInterviews = allInterviews.filter((interview) =>
-    jurisdictionMatches(
-      interview.metadata?.jurisdiction,
-      expectedJurisdiction,
-      interview.serverUrl
-    )
-  );
+  if (!options.allJurisdictions) {
+    const expectedJurisdiction = getJurisdictionFromPath(path);
+    allInterviews = allInterviews.filter((interview) =>
+      jurisdictionMatches(
+        interview.metadata?.jurisdiction,
+        expectedJurisdiction,
+        interview.serverUrl
+      )
+    );
+  }
 
   // Initialize interviewsByTopic and titlesInTopics with all topics
   const interviewsByTopic: { [key: string]: Interview[] } = {};
@@ -427,6 +436,10 @@ export const fetchInterviews = async (path: string) => {
   allInterviews.forEach((interview: Interview) => {
     const uniqueTopics = new Set<string>();
     const title = interview.title;
+    // Different states can publish distinct forms with the same title.
+    const uniqueKey = options.allJurisdictions
+      ? `${interview.serverUrl}|${interview.filename}`
+      : title;
 
     // Collect all codes from metadata.LIST_topics and tags
     const codes = [...interview.metadata.LIST_topics, ...interview.tags];
@@ -438,9 +451,9 @@ export const fetchInterviews = async (path: string) => {
       topicName = topicName.toLowerCase();
       //if (!uniqueTopics.has(topicName)) {
       uniqueTopics.add(topicName);
-      if (!titlesInTopics[topicName].has(title)) {
+      if (!titlesInTopics[topicName].has(uniqueKey)) {
         interviewsByTopic[topicName].push(interview);
-        titlesInTopics[topicName].add(title);
+        titlesInTopics[topicName].add(uniqueKey);
       }
       //}
     });
@@ -448,12 +461,16 @@ export const fetchInterviews = async (path: string) => {
     // If no topics matched, add to 'other'
     if (uniqueTopics.size === 0) {
       const otherTopic = 'other';
-      if (!titlesInTopics[otherTopic].has(title)) {
+      if (!titlesInTopics[otherTopic].has(uniqueKey)) {
         interviewsByTopic[otherTopic].push(interview);
-        titlesInTopics[otherTopic].add(title);
+        titlesInTopics[otherTopic].add(uniqueKey);
       }
     }
   });
 
-  return { interviewsByTopic, isError: false };
+  return {
+    interviewsByTopic,
+    isError: failedServers === servers.length,
+    hasFetchErrors: failedServers > 0,
+  };
 };
