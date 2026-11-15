@@ -21,7 +21,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls = new Set<string>();
 
   // Static top-level pages
-  const staticRoutes = ['/', '/about', '/forms', '/privacy', '/ma/checkup'];
+  const staticRoutes = [
+    '/',
+    '/about',
+    '/forms',
+    '/privacy',
+    '/ma/checkup',
+    '/care-for-a-child',
+  ];
   for (const r of staticRoutes) {
     urls.add(`${siteUrl}${joinWithPrefix(r)}`);
   }

@@ -100,6 +100,11 @@ export default function NavigationBar() {
               </Link>
             </li>
             <li className="nav-item">
+              <Link href="/care-for-a-child" className={styles.NavLink}>
+                Care for a child
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link href="/blog" className={styles.NavLink}>
                 News
               </Link>
