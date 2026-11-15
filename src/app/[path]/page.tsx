@@ -63,6 +63,9 @@ export async function generateStaticParams() {
     ...Object.keys(pathToServerConfig).map((path) => ({
       path: path.toLowerCase(),
     })),
-    ...legalTopics.map((topic) => ({ path: topic.name.toLowerCase() })),
+    // /family has its own planning index. Exporting it here would overwrite it.
+    ...legalTopics
+      .filter((topic) => topic.name.toLowerCase() !== 'family')
+      .map((topic) => ({ path: topic.name.toLowerCase() })),
   ];
 }
