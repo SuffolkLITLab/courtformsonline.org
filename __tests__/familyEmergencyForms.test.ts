@@ -61,6 +61,10 @@ describe('family emergency catalog membership', () => {
       'New Jersey',
     ]);
     expect(forms).toHaveLength(2);
+    expect(forms.map((form) => form.detailsHref)).toEqual([
+      '/ca/forms/child-care-authorization',
+      '/nj/forms/child-care-authorization',
+    ]);
     expect(forms[0].href).toContain(
       encodeURIComponent('docassemble.NewPackage:california.yml')
     );
