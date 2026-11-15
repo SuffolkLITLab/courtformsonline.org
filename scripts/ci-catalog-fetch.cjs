@@ -4,15 +4,20 @@ const { join } = require('node:path');
 
 function createCatalogFixtureFetch(actualFetch, catalogs) {
   return async function catalogFixtureFetch(input, init) {
-    const url = new URL(typeof input === 'string' ? input : input.url || input);
+    let url;
+    try {
+      url = new URL(typeof input === 'string' ? input : input.url || input);
+    } catch {
+      return actualFetch(input, init);
+    }
     if (
-      url.pathname.replace(/\/+/g, '/') === '/list' &&
+      url.pathname.replace(/\/+/g, '/').replace(/\/+$/, '') === '/list' &&
       url.searchParams.get('json') === '1'
     ) {
-      const catalog = catalogs[url.hostname];
-      if (!catalog) {
+      if (!Object.hasOwn(catalogs, url.hostname)) {
         throw new Error(`Missing CI catalog fixture for ${url.hostname}`);
       }
+      const catalog = catalogs[url.hostname];
       return new Response(JSON.stringify(catalog), {
         status: 200,
         headers: { 'content-type': 'application/json' },
