@@ -1,11 +1,16 @@
 import { fetchInterviews } from './fetchInterviewData';
-import { normalizeJurisdiction } from '../utils/jurisdiction';
+import { toUrlFriendlyString } from '../app/utils/helpers';
+import {
+  getPathFromJurisdiction,
+  normalizeJurisdiction,
+} from '../utils/jurisdiction';
 
 export interface FamilyEmergencyForm {
   id: string;
   title: string;
   jurisdiction: string;
   href: string;
+  detailsHref: string;
 }
 
 export const CHILD_GUARDIANSHIP_TOPIC = 'ES-03-03-00-00';
@@ -105,6 +110,7 @@ export async function fetchFamilyEmergencyForms(): Promise<
         title: form.title,
         jurisdiction: familyFormJurisdiction(form.metadata.jurisdiction),
         href: `${server}/interview?i=${encodeURIComponent(form.filename)}`,
+        detailsHref: `/${getPathFromJurisdiction(familyFormJurisdiction(form.metadata.jurisdiction))}/forms/${toUrlFriendlyString(form.title)}`,
       };
     })
     .filter((form) => {

@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useState } from 'react';
 import type { FamilyEmergencyForm } from '../../data/familyEmergencyForms';
 import styles from '../css/FamilyEmergency.module.css';
@@ -70,6 +71,13 @@ export default function FamilyPlanningTools({
                 >
                   Start interview
                 </a>
+                <Link
+                  href={form.detailsHref}
+                  className="btn btn-outline-primary mt-2"
+                  aria-label={`View form details: ${form.title} (${form.jurisdiction})`}
+                >
+                  View form details
+                </Link>
               </article>
             </div>
           ))}
