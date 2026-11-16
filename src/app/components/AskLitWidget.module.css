@@ -11,13 +11,17 @@
 
 .panel {
   position: fixed;
-  inset: auto 1.25rem 1.25rem auto;
+  inset: max(
+      calc(var(--viewport-top, 0px) + 1.25rem),
+      calc(var(--viewport-top, 0px) + var(--viewport-height, 100dvh) - 43.25rem)
+    )
+    1.25rem auto auto;
   margin: 0;
   padding: 0;
   width: 28rem;
   max-width: calc(100vw - 2.5rem);
   height: 42rem;
-  max-height: calc(100dvh - 2.5rem);
+  max-height: calc(var(--viewport-height, 100dvh) - 2.5rem);
   border: 1px solid #dee2e6;
   border-radius: 1rem;
   box-shadow: 0 0.5rem 2rem #0004;

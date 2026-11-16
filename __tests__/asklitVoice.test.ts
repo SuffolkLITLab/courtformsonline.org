@@ -199,3 +199,15 @@ test('explicit read ignores automatic-read preference and browser voice needs no
   expect(h.options.getPolicy).not.toHaveBeenCalled();
   h.voice.destroy();
 });
+
+test('destroy during browser playback cancels speech without leaving reply pending', async () => {
+  const h = harness();
+  await h.voice.start({ mode: 'browser', loop: true, readReplies: true });
+  await h.voice.reply('A test answer.');
+  expect(h.utterances).toHaveLength(1);
+  h.voice.destroy();
+  expect(h.env.speechSynthesis.cancel).toHaveBeenCalled();
+  expect(h.voice.isActive()).toBe(false);
+  h.utterances[0].onend();
+  expect(h.recognizers).toHaveLength(1);
+});

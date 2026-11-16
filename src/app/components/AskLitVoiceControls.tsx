@@ -47,7 +47,7 @@ const AskLitVoiceControls = forwardRef<VoiceHandle, Props>(
         transcribe: (audio: Blob) => latest.current.transcribe(audio),
         synthesize: (text: string) => latest.current.synthesize(text),
         onTranscript: (text: string, auto: boolean) =>
-          latest.current.onTranscript(text, auto),
+          mounted ? latest.current.onTranscript(text, auto) : Promise.resolve(),
         onError: (message: string) => {
           if (mounted) latest.current.onError(message);
         },
