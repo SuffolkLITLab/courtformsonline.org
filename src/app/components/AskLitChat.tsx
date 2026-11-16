@@ -40,9 +40,11 @@ type ChatMessage = {
 /** A client-only component compatible with Next.js output: 'export'. */
 export default function AskLitChat({
   botId,
+  active = true,
   apiBase = process.env.NEXT_PUBLIC_ASKLIT_API_URL || '',
 }: {
   botId: string;
+  active?: boolean;
   apiBase?: string;
 }) {
   const [metadata, setMetadata] = useState<Metadata | null>(null);
@@ -53,6 +55,8 @@ export default function AskLitChat({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [question, setQuestion] = useState('');
   const voice = useRef<VoiceHandle | null>(null);
+  const activeRef = useRef(active);
+  activeRef.current = active;
   const lastVoiceAnswer = useRef({ text: '', id: '' });
   const [voiceAnswer, setVoiceAnswer] = useState('');
   const [attachments, setAttachments] = useState<Attachment[]>([]);
@@ -703,7 +707,8 @@ export default function AskLitChat({
                   maxLength={8000}
                   required
                   value={question}
-                  disabled={busy}
+                  readOnly={busy}
+                  aria-busy={busy}
                   onChange={(e) => setQuestion(e.target.value)}
                   onKeyDown={(e) => {
                     if (
@@ -799,30 +804,35 @@ export default function AskLitChat({
               </p>
             )}
           </form>
-          <AskLitVoiceControls
-            key={botId}
-            ref={voice}
-            busy={busy}
-            answer={voiceAnswer}
-            policy={metadata.voice || { browser: true, paid: false }}
-            getPolicy={voicePolicy}
-            transcribe={async (audio) =>
-              ((await speechRequest('transcribe', audio)) as { text: string })
-                .text
-            }
-            synthesize={async () => (await speechRequest('speech')) as Blob}
-            onError={setError}
-            onTranscript={async (text, auto) => {
-              if (submitting.current)
-                throw new Error(
-                  'Wait for the current request before speaking again.'
-                );
-              const message = [question.trim(), text].filter(Boolean).join(' ');
-              setQuestion(message);
-              if (auto)
-                await send({ preventDefault() {} } as FormEvent, message);
-            }}
-          />
+          {active && (
+            <AskLitVoiceControls
+              key={botId}
+              ref={voice}
+              busy={busy}
+              answer={voiceAnswer}
+              policy={metadata.voice || { browser: true, paid: false }}
+              getPolicy={voicePolicy}
+              transcribe={async (audio) =>
+                ((await speechRequest('transcribe', audio)) as { text: string })
+                  .text
+              }
+              synthesize={async () => (await speechRequest('speech')) as Blob}
+              onError={setError}
+              onTranscript={async (text, auto) => {
+                if (!activeRef.current) return;
+                if (submitting.current)
+                  throw new Error(
+                    'Wait for the current request before speaking again.'
+                  );
+                const message = [question.trim(), text]
+                  .filter(Boolean)
+                  .join(' ');
+                setQuestion(message);
+                if (auto)
+                  await send({ preventDefault() {} } as FormEvent, message);
+              }}
+            />
+          )}
           {metadata.uploads?.enabled && (
             <p className="small text-muted mt-2">
               Up to 3 files, 5 MB each. Extracted text is sent to this AskLit’s
