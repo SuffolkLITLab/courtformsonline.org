@@ -521,8 +521,8 @@ export default function AskLitChat({
       <h2>{metadata?.title || 'Ask a question'}</h2>
       <div className="border-start border-3 border-warning ps-3 mb-3 small">
         <p className="mb-1">
-          AI help can make mistakes. Check important details and avoid sharing
-          personal information.
+          AI help can make mistakes. Check important details. Leave out names,
+          addresses, birth dates, and other identifying details.
         </p>
         <details>
           <summary>About this chat and privacy</summary>
