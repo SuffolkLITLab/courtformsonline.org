@@ -520,21 +520,21 @@ export default function AskLitChat({
     >
       <h2>{metadata?.title || 'Ask a question'}</h2>
       <div className="border-start border-3 border-warning ps-3 mb-3 small">
-        {metadata?.organization && (
-          <p className="text-muted mb-1">
-            Organization: {metadata.organization.name}
-          </p>
-        )}
         <p className="mb-1">
-          This AskLit uses AI and can make mistakes. Check important
-          information.
-        </p>
-        <p className="mb-1">
-          Do not enter sensitive identifying information, such as bank account
-          numbers, government ID numbers, or passwords.
+          AI help can make mistakes. Check important details. Leave out names,
+          addresses, birth dates, and other identifying details.
         </p>
         <details>
-          <summary>About this AskLit</summary>
+          <summary>About this chat and privacy</summary>
+          {metadata?.organization && (
+            <p className="mb-1">Published by {metadata.organization.name}.</p>
+          )}
+          {metadata && (
+            <p className="mb-1">
+              Conversations are kept for up to {metadata.retention_days} days.
+              Use “Clear conversation” to delete yours sooner.
+            </p>
+          )}
           <p className="mb-1">AskLit ID: {metadata?.id || botId}</p>
           <p className="mb-1">
             Organization names are supplied by publishers. Hosting an AskLit is
@@ -603,10 +603,6 @@ export default function AskLitChat({
       {metadata && !metadata.locked && (
         <>
           <p>{metadata.welcome}</p>
-          <p className="small text-muted">
-            Conversations are retained for up to {metadata.retention_days} days;
-            use “Clear conversation” to delete yours sooner.
-          </p>
           {metadata.profiles.length > 1 && (
             <label className="form-label d-block">
               Topic
