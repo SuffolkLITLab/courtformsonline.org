@@ -6,8 +6,10 @@ Node 22 and 24 could not validate the catalog connection. The bundled CA chain
 supplies the missing DV issuer and its cross-certificate to Node's existing G2
 trust anchor. The live leaf certificate and private keys are not bundled.
 
-The production build uses `NODE_EXTRA_CA_CERTS` with this file. Certificate and
-hostname validation remain enabled. For a local live build:
+The production build and `npm run dev` use `NODE_EXTRA_CA_CERTS` with this file.
+Certificate and hostname validation remain enabled. Restart the dev server after
+updating this setting; Node reads the extra certificates when it starts.
+For a local live build:
 
 ```sh
 NODE_EXTRA_CA_CERTS="$PWD/certificates/godaddy-dv-r1-chain.pem" npm run build
