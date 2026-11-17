@@ -26,7 +26,7 @@ If port 3000 is already in use, stop that server or run
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Atkinson Hyperlegible, a custom Google Font.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to load bundled Albert Sans fonts. See [branding notes](docs/branding.md) for font sources and logo details.
 
 ## Form Sources Config
 

@@ -35,20 +35,15 @@ export default function NavigationBar() {
       className={styles.NavigationBar + ' navbar navbar-expand-lg navbar-dark'}
     >
       <div className="container">
-        <Link href="/" className="navbar-brand d-flex align-items-center">
+        <Link href="/" className={styles.NavBrand + ' navbar-brand'}>
           <Image
-            src={'/lit-lab-torch-inverted.svg'}
-            alt="LIT Lab logo"
-            className={styles.NavLogo + ' logo-image me-2'}
-            height={47.99}
-            width={21.97}
+            src="/court-forms-online-logo.svg"
+            alt="Court Forms Online"
+            className={styles.NavLogo}
+            height={48}
+            width={252}
+            priority
           />
-          <span
-            id="nav-header-text"
-            className={styles.NavHeaderText + ' logo-text'}
-          >
-            Court Forms Online
-          </span>
         </Link>
         <button
           className="navbar-toggler"

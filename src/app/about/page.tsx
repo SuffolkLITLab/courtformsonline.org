@@ -145,13 +145,10 @@ export default function About() {
       <ThankYou />
       <h2>Accessibility</h2>
       <p>
-        The font family used on Court Forms Online is{' '}
-        <a href="https://www.brailleinstitute.org/freefont/">
-          Atkinson Hyperlegible
-        </a>
-        , developed by the Braille Institute to improve legibility, and
-        readability—especially for low-vision readers—through clear, distinctive
-        letters and numbers.
+        Court Forms Online uses{' '}
+        <a href="https://fonts.google.com/specimen/Albert+Sans">Albert Sans</a>{' '}
+        for body text. You can resize the text using your browser’s zoom
+        controls.
       </p>
     </div>
   );
