@@ -2,12 +2,15 @@
  * Font
  */
 
+:root {
+  --bs-font-sans-serif: var(--font-albert-sans);
+}
+
 h1,
 h2,
 h3,
 h4,
-h5,
-.logo-text {
+h5 {
   font-weight: bold;
 }
 

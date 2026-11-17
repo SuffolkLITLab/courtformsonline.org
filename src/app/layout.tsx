@@ -1,5 +1,5 @@
 import React from 'react';
-import { Atkinson_Hyperlegible } from 'next/font/google';
+import localFont from 'next/font/local';
 import Script from 'next/script';
 
 import NavigationBar from './components/NavigationBar';
@@ -9,9 +9,21 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './globals.css';
 
-const AtkinsonHyperLegible = Atkinson_Hyperlegible({
-  subsets: ['latin'],
-  weight: ['400', '700'],
+const albertSans = localFont({
+  src: [
+    {
+      path: './fonts/AlbertSans.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+    {
+      path: './fonts/AlbertSans-Italic.woff2',
+      weight: '100 900',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-albert-sans',
+  display: 'swap',
   adjustFontFallback: false,
   fallback: [
     'system-ui',
@@ -38,8 +50,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={AtkinsonHyperLegible.className}>
+    <html lang="en" className={albertSans.variable}>
+      <body className={albertSans.className}>
         <NavigationBar />
         <div className="body-container py-5">{children}</div>
         <Footer />

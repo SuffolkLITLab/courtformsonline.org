@@ -2,15 +2,16 @@
   background: #002e60;
 }
 
-.NavLogo {
-  height: auto;
-  max-height: 48px;
-  width: auto;
+.NavBrand {
+  flex-shrink: 0;
 }
 
-.NavHeaderText {
-  color: White;
-  font-size: 1.5rem;
+.NavLogo {
+  display: block;
+  height: auto;
+  width: 15.75rem;
+  /* Leave room for the menu button on narrow screens and when zoomed. */
+  max-width: calc(100vw - 6.5rem);
 }
 
 .NavLink {
