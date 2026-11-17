@@ -97,3 +97,32 @@
   padding: 1rem;
   border-radius: 0.25rem;
 }
+
+.faqItem {
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.faqItem summary {
+  cursor: pointer;
+  padding: 1.5rem;
+}
+
+.faqItem summary h3 {
+  display: inline;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.faqItem summary::marker {
+  color: #0d6efd;
+}
+
+.faqItem summary:focus-visible {
+  outline: 3px solid #0d6efd;
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}

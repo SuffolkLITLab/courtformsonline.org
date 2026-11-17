@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "NODE_EXTRA_CA_CERTS=./certificates/godaddy-dv-r1-chain.pem next",
     "prebuild": "node ./scripts/copyBlogImages.js",
     "build": "next build",
     "start": "serve out",

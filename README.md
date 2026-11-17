@@ -14,6 +14,10 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+The development command loads the bundled public CA chain needed to validate
+the Legal Aid of West Virginia catalog connection, as the production deployment
+does. See [the certificate documentation](certificates/README.md) for details.
+
 Use `npm run dev` to preview current source changes, including the Massachusetts
 checkup at `/ma/checkup`. `npm start` serves the last static export from `out/`;
 new routes and edits will not appear there until `npm run build` succeeds.
