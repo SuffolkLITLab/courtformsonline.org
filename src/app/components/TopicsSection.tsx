@@ -4,10 +4,17 @@ import ShowAllToggle from './ShowAllToggle';
 import { MAX_VISIBLE_CATEGORIES } from '../../config/constants';
 import TopicCard from './TopicCard';
 import styles from '../css/TopicsSection.module.css';
+import { message, type Locale } from '../../i18n/messages';
 
-const TopicsSection = async ({ path, interviews, isError, hasFetchErrors }) => {
+const TopicsSection = async ({
+  path,
+  interviews,
+  isError,
+  hasFetchErrors,
+  locale = 'en' as Locale,
+}) => {
   if (isError) {
-    return <div>Error fetching data.</div>;
+    return <div>{message(locale, 'home.dataError')}</div>;
   }
 
   const server =
@@ -15,21 +22,23 @@ const TopicsSection = async ({ path, interviews, isError, hasFetchErrors }) => {
     formSources.docassembleServers[0];
   const serverUrl = server.url;
 
-  const filteredTopics = legalTopics
+  const filteredTopics = [...legalTopics]
     .sort((a, b) => b.priority - a.priority)
     .filter(
       (topic) =>
         topic.always_visible ||
         hasFetchErrors ||
-        interviews[topic.name.toLowerCase()].length > 0
+        interviews[topic.name.toLowerCase()]?.length > 0
     );
 
   return (
     <section id="topics" className={styles.TopicsSection + ' py-5'}>
       <div className="container">
-        <h2 className="mb-3">Browse court forms by category</h2>
+        <h2 className="mb-3">{message(locale, 'home.browseCategories')}</h2>
         {/* Only show the toggle if there are more topics than the configured visible max */}
-        {filteredTopics.length > MAX_VISIBLE_CATEGORIES && <ShowAllToggle />}
+        {filteredTopics.length > MAX_VISIBLE_CATEGORIES && (
+          <ShowAllToggle locale={locale} />
+        )}
         <div className="row row-cols-1 row-cols-md-3 g-4 card-container">
           {filteredTopics.map((topic, index) => (
             <TopicCard
@@ -39,6 +48,7 @@ const TopicsSection = async ({ path, interviews, isError, hasFetchErrors }) => {
               path={path}
               serverUrl={serverUrl}
               index={index}
+              locale={locale}
             />
           ))}
         </div>

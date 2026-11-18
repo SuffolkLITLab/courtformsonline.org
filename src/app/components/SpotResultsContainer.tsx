@@ -8,9 +8,11 @@ import {
   InterviewsByTopic,
   SearchResults,
   SearchForm,
+  formDisplayTitle,
 } from '../../data/formSearch';
-import { toUrlFriendlyString } from '../utils/helpers';
 import TopicCard from './TopicCard';
+import { message, type Locale } from '../../i18n/messages';
+import { formDetailsPath } from '../../i18n/routes';
 
 interface Props {
   data: SearchResults;
@@ -18,6 +20,7 @@ interface Props {
   path: string;
   searchQuery: string;
   loading?: boolean;
+  locale?: Locale;
 }
 
 export default function SpotResultsContainer({
@@ -26,21 +29,28 @@ export default function SpotResultsContainer({
   path,
   searchQuery,
   loading,
+  locale = 'en',
 }: Props) {
   const server =
     formSources.docassembleServers.find((server) => server.path === path) ||
     formSources.docassembleServers[0];
-  const { titles, descriptions } = keywordMatches(interviews, searchQuery);
+  const { titles, descriptions } = keywordMatches(
+    interviews,
+    searchQuery,
+    locale
+  );
   const topics = matchingTopics(data.labels, interviews);
   const forms = (matches: SearchForm[]) => (
     <ul className="list-unstyled d-flex flex-column gap-2">
       {matches.map((form) => {
-        const title = form.metadata?.title || form.title || '';
+        const title = formDisplayTitle(form, locale);
         return (
           <li key={`${form.serverUrl}:${form.filename || title}`}>
             <Link
               className="btn btn-outline-primary text-start"
-              href={`/${path}/forms/${toUrlFriendlyString(title)}`}
+              href={formDetailsPath(locale, path, form.canonicalTitle || title)}
+              lang={locale === 'es' ? (form.titleLanguage ?? 'en') : undefined}
+              hrefLang="en"
             >
               {title}
             </Link>
@@ -53,18 +63,18 @@ export default function SpotResultsContainer({
     <section
       id="form-search-results"
       className="container mt-4"
-      aria-label="Search results"
+      aria-label={message(locale, 'home.searchResults')}
       aria-busy={loading}
     >
       {(titles.length > 0 || descriptions.length > 0) && (
         <>
-          <h2>Forms matching your keywords</h2>
+          <h2>{message(locale, 'home.keywordMatches')}</h2>
           {forms([...titles, ...descriptions])}
         </>
       )}
       {topics.length > 0 && (
         <>
-          <h2 className="mb-4">Topics that may help</h2>
+          <h2 className="mb-4">{message(locale, 'home.helpfulTopics')}</h2>
           <div className="row row-cols-1 row-cols-md-3 g-5 card-container">
             {topics.map((topic, index) => (
               <TopicCard
@@ -79,22 +89,17 @@ export default function SpotResultsContainer({
                 index={index}
                 isSpot={true}
                 searchQuery={searchQuery}
+                locale={locale}
               />
             ))}
           </div>
         </>
       )}
       {!loading && !titles.length && !topics.length && !descriptions.length && (
-        <p>
-          No matching forms or topics found. Try different words or browse the
-          categories.
-        </p>
+        <p>{message(locale, 'home.searchNoMatches')}</p>
       )}
       {data.degraded && (
-        <p role="status">
-          Some topic matching services were unavailable. These results may be
-          incomplete.
-        </p>
+        <p role="status">{message(locale, 'home.topicSearchDegraded')}</p>
       )}
     </section>
   );

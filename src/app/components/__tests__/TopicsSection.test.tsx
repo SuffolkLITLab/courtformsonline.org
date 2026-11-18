@@ -27,6 +27,7 @@ describe('TopicsSection toggle behavior', () => {
     }));
 
     jest.doMock('../../../config/formSources.config', () => ({
+      ...jest.requireActual('../../../config/formSources.config'),
       formSources: {
         docassembleServers: [{ path: 'ma', url: 'http://localhost' }],
       },
@@ -79,6 +80,7 @@ describe('TopicsSection toggle behavior', () => {
     }));
 
     jest.doMock('../../../config/formSources.config', () => ({
+      ...jest.requireActual('../../../config/formSources.config'),
       formSources: {
         docassembleServers: [{ path: 'ma', url: 'http://localhost' }],
       },

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { prefix } from '../../../prefix';
 import styles from '../css/Footer.module.css';
+import { message, type Locale } from '../../i18n/messages';
 
-export default function Footer() {
+export default function Footer({ locale = 'en' }: { locale?: Locale }) {
   return (
     <footer
       id="footer"
@@ -16,7 +16,7 @@ export default function Footer() {
             <a href="https://suffolklitlab.org" className={styles.SuffolkLogo}>
               <Image
                 src={'/lit-lab-logo-large.svg'}
-                alt="Suffolk University Law School Legal Information & Technology Lab logo"
+                alt={message(locale, 'footer.logoAlt')}
                 className="img-fluid mb-3"
                 width={792}
                 height={321.38}
@@ -26,9 +26,13 @@ export default function Footer() {
         </div>
         <div className="row">
           <div className="col d-flex gap-2 justify-content-center flex-wrap">
-            <a href="mailto:massaccess@suffolk.edu">Contact</a>
-            <Link href="/privacy">Terms of use and privacy policy</Link>
-            <Link href="/sitemap.xml">Sitemap</Link>
+            <a href="mailto:massaccess@suffolk.edu">
+              {message(locale, 'footer.contact')}
+            </a>
+            <Link href="/privacy" hrefLang="en">
+              {message(locale, 'footer.privacy')}
+            </Link>
+            <Link href="/sitemap.xml">{message(locale, 'footer.sitemap')}</Link>
           </div>
         </div>
         <div className="row mt-3">

@@ -8,9 +8,9 @@ it('points every supported state to an existing filing and courthouse guide', ()
   for (const state of Object.keys(pathToServerConfig)) {
     for (const guide of ['how-to-file', 'find-your-court'] as const) {
       const href = getGuideHref(guide, state);
-      expect(existsSync(join(process.cwd(), 'src/app', href, 'page.tsx'))).toBe(
-        true
-      );
+      expect(
+        existsSync(join(process.cwd(), 'src/app/(en)', href, 'page.tsx'))
+      ).toBe(true);
     }
   }
 });

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from '../css/Breadcrumbs.module.css';
+import { message, type Locale } from '../../i18n/messages';
 
 export interface BreadcrumbItem {
   label: string;
@@ -9,12 +10,17 @@ export interface BreadcrumbItem {
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   large?: boolean;
+  locale?: Locale;
 }
 
-const Breadcrumbs = ({ items, large = false }: BreadcrumbsProps) => {
+const Breadcrumbs = ({
+  items,
+  large = false,
+  locale = 'en',
+}: BreadcrumbsProps) => {
   return (
     <nav
-      aria-label="Breadcrumb"
+      aria-label={message(locale, 'topicPage.breadcrumb')}
       className={
         styles.Breadcrumbs + (large ? ' ' + styles.BreadcrumbsLarge : '')
       }

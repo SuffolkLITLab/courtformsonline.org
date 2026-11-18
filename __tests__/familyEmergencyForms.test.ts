@@ -86,6 +86,63 @@ describe('family emergency catalog membership', () => {
     expect(forms[0].jurisdiction).toBe('United States');
   });
 
+  it('uses Spanish metadata and launches with lang=es without changing the English slug', async () => {
+    catalog([
+      {
+        ...interview(
+          'docassemble.Future:form.yml',
+          'NAM-US-US+MA',
+          ['ES-03-03-00-00'],
+          {
+            title: {
+              en: 'Child care authorization',
+              es: 'Autorización de cuidado',
+            },
+            description: 'English description',
+            es: {
+              description: 'Descripción en español',
+              before_you_start: 'Antes de empezar',
+            },
+            languages: ['en', 'es'],
+          }
+        ),
+        link: '/start/family/?source=directory&lang=en#entry',
+      },
+      interview('docassemble.Future:other.yml', 'NAM-US', ['ES-03-03-00-00'], {
+        description: 'English only',
+        languages: ['en'],
+      }),
+    ]);
+
+    const [english, spanish, localized] = await Promise.all([
+      fetchFamilyEmergencyForms(),
+      fetchFamilyEmergencyForms('es'),
+      fetchInterviews('ma', { allJurisdictions: true, locale: 'es' }),
+    ]);
+    expect(english[0].title).toBe('Child care authorization');
+    expect(new URL(english[0].href).searchParams.has('lang')).toBe(false);
+    expect(spanish[0]).toMatchObject({
+      title: 'Autorización de cuidado',
+      titleLanguage: 'es',
+      description: 'Descripción en español',
+      descriptionLanguage: 'es',
+      detailsHref: '/ma/forms/child-care-authorization?lang=es',
+      href: 'https://apps.suffolklitlab.org/start/family/?source=directory&lang=es#entry',
+    });
+    expect(spanish[1]).toMatchObject({
+      titleLanguage: 'en',
+      description: 'English only',
+      descriptionLanguage: 'en',
+    });
+    expect(new URL(spanish[1].href).searchParams.get('lang')).toBe('es');
+    expect(new URL(spanish[1].href).searchParams.get('i')).toBe(
+      'docassemble.Future:other.yml'
+    );
+    expect(
+      localized.interviewsByTopic.family[0].metadata.before_you_start
+    ).toBe('Antes de empezar');
+  });
+
   it('fails a build instead of publishing an incomplete index after a catalog failure', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
     global.fetch = jest.fn(async () => ({

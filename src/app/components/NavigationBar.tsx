@@ -1,41 +1,48 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faArrowUpRightFromSquare,
-  faLanguage,
-  faChevronDown,
-} from '@fortawesome/free-solid-svg-icons';
+import { faLanguage } from '@fortawesome/free-solid-svg-icons';
 
-import { prefix } from '../../../prefix';
 import styles from '../css/NavigationBar.module.css';
 import { pathToServerConfig } from '../../config/formSources.config';
+import { message, type Locale } from '../../i18n/messages';
+import {
+  alternateLanguagePath,
+  blogPath,
+  formsPath,
+  spanishLandingPath,
+} from '../../i18n/routes';
+import { getAvailableJurisdictions } from '../../utils/jurisdiction';
 
-export default function NavigationBar() {
+export default function NavigationBar({
+  locale = 'en',
+  translatedBlogSlugs = [],
+}: {
+  locale?: Locale;
+  translatedBlogSlugs?: string[];
+}) {
   const params = useParams();
+  const pathname = usePathname();
+  const isSpanish = locale === 'es';
+  const otherLocale = isSpanish ? 'en' : 'es';
   const path = params && Object.hasOwn(params, 'path') ? params.path : 'ma';
-  let pathSegment = '';
-  if (path && path.length > 0) pathSegment = '/' + path;
-
   // Get current jurisdiction name and available jurisdictions
   const currentJurisdiction =
     pathToServerConfig[path as string]?.name || 'Massachusetts';
-  const availableJurisdictions = Object.entries(pathToServerConfig).map(
-    ([p, config]) => ({
-      path: p,
-      name: (config as any).name,
-    })
-  );
+  const availableJurisdictions = getAvailableJurisdictions();
   return (
     <nav
       role="navigation"
       className={styles.NavigationBar + ' navbar navbar-expand-lg navbar-dark'}
     >
       <div className="container">
-        <Link href="/" className={styles.NavBrand + ' navbar-brand'}>
+        <Link
+          href={isSpanish ? '/es' : '/'}
+          className={styles.NavBrand + ' navbar-brand'}
+        >
           <Image
             src="/court-forms-online-logo.svg"
             alt="Court Forms Online"
@@ -52,7 +59,7 @@ export default function NavigationBar() {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation"
+          aria-label={message(locale, 'nav.toggle')}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -77,7 +84,9 @@ export default function NavigationBar() {
                 {availableJurisdictions.map((j) => (
                   <li key={j.path}>
                     <Link
-                      href={`/${j.path}`}
+                      href={
+                        isSpanish ? spanishLandingPath(j.path) : `/${j.path}`
+                      }
                       className={
                         'dropdown-item' +
                         (j.path === path ? ' active fw-bold' : '')
@@ -90,29 +99,57 @@ export default function NavigationBar() {
               </ul>
             </li>
             <li className="nav-item">
-              <Link href={pathSegment + '/forms'} className={styles.NavLink}>
-                All forms
+              <Link
+                href={formsPath(
+                  locale,
+                  typeof path === 'string' ? path : undefined
+                )}
+                className={styles.NavLink}
+              >
+                {message(locale, 'nav.forms')}
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/family" className={styles.NavLink}>
-                Family emergency planning
+              <Link
+                href={isSpanish ? '/es/family' : '/family'}
+                className={styles.NavLink}
+              >
+                {message(locale, 'nav.family')}
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/blog" className={styles.NavLink}>
-                News
+              <Link href={blogPath(locale)} className={styles.NavLink}>
+                {message(locale, 'nav.news')}
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/guides" className={styles.NavLink}>
-                How to use court forms
+              <Link href="/guides" hrefLang="en" className={styles.NavLink}>
+                {message(locale, 'nav.guides')}
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/about" className={styles.NavLink}>
-                About
+              <Link href="/about" hrefLang="en" className={styles.NavLink}>
+                {message(locale, 'nav.about')}
               </Link>
+            </li>
+            <li className="nav-item">
+              <a
+                href={alternateLanguagePath(
+                  pathname || '/',
+                  locale,
+                  translatedBlogSlugs
+                )}
+                className={styles.NavLink}
+                hrefLang={otherLocale}
+                lang={otherLocale}
+              >
+                <FontAwesomeIcon
+                  icon={faLanguage}
+                  className="me-1"
+                  aria-hidden="true"
+                />
+                {isSpanish ? 'English' : 'Español'}
+              </a>
             </li>
           </ul>
         </div>

@@ -65,3 +65,32 @@ NEXT_PUBLIC_404_LOG_ENDPOINT=https://your-endpoint.example/log-404
 ```
 
 When configured, every 404 page view sends a small JSON payload (`pathname`, `referrer`, `timestamp`) to that endpoint. You can store those events (for example in a simple database or spreadsheet pipeline) and review them periodically to add redirects or new landing pages.
+
+## Spanish translations
+
+Next.js builds the state landing pages, form indexes, family emergency page,
+and blog under `/es` using the same React components as the English routes.
+Shared interface messages and family emergency page copy are keyed by ID in
+`src/i18n/en.json` and `src/i18n/es.json`.
+
+To translate a blog post, add an MDX file under `content/blog-es` with the same
+relative path as the English post under `content/blog`. The translation inherits
+the English post's date and image unless its frontmatter supplies replacements.
+For a Spanish image override, place the image alongside the Spanish MDX file and
+set `image` to its relative path. Supply Spanish `imageAlt` when the image needs
+an additional description.
+
+```bash
+python3 scripts/translation-xliff.py export /tmp/messages.es.xlf
+python3 scripts/translation-xliff.py import /tmp/messages.es.xlf
+```
+
+The export flags changed English strings and includes their old Spanish text as
+a reference. Importing a reviewed file checks the English source and placeholders
+and records the source in `src/i18n/es.sources.json`. If you edit both catalogs
+directly, update the source snapshot for a message once its translation matches
+the revised English.
+
+The Spanish directories use Spanish titles and descriptions supplied by form
+providers when available. Interview links from those directories pass `lang=es`.
+The interview must support the language and use that argument to select it.
