@@ -1,5 +1,8 @@
+import { spanishInterviewUrl } from './interviewUrl';
 import { fetchInterviews } from './fetchInterviewData';
-import { toUrlFriendlyString } from '../app/utils/helpers';
+import { formDetailsPath } from '../i18n/routes';
+import { formSources, pathToServerConfig } from '../config/formSources.config';
+import type { Locale } from '../i18n/messages';
 import {
   getPathFromJurisdiction,
   normalizeJurisdiction,
@@ -11,6 +14,10 @@ export interface FamilyEmergencyForm {
   jurisdiction: string;
   href: string;
   detailsHref: string;
+  titleLanguage?: string;
+  description?: string;
+  descriptionLanguage?: string;
+  languages?: string[];
 }
 
 export const CHILD_GUARDIANSHIP_TOPIC = 'ES-03-03-00-00';
@@ -84,33 +91,54 @@ export function familyFormJurisdiction(value?: string | null): string {
   return normalizeJurisdiction(code) || 'State not specified';
 }
 
-export async function fetchFamilyEmergencyForms(): Promise<
-  FamilyEmergencyForm[]
-> {
+export async function fetchFamilyEmergencyForms(locale: Locale = 'en') {
   // Reuse the existing providers without limiting the collection to Massachusetts.
   // Membership comes from topics, not an interview or state allowlist.
-  const result = await fetchInterviews('ma', { allJurisdictions: true });
+  const result = await fetchInterviews('ma', {
+    allJurisdictions: true,
+    locale,
+  });
   if (result.isError || result.hasFetchErrors) {
     throw new Error(
       'Could not load the complete family emergency form catalog'
     );
   }
   const seen = new Set<string>();
-  return (result.interviewsByTopic.family || [])
-    .filter((form) =>
-      [...(form.metadata.LIST_topics ?? []), ...(form.tags ?? [])].some(
-        (code) => code.trim().toUpperCase().startsWith('ES-03-03-')
-      )
+  const interviews = (result.interviewsByTopic.family || []).filter((form) =>
+    [...(form.metadata.LIST_topics ?? []), ...(form.tags ?? [])].some((code) =>
+      code.trim().toUpperCase().startsWith('ES-03-03-')
     )
+  );
+  return interviews
     .filter((form) => Boolean(form.filename))
     .map((form) => {
       const server = form.serverUrl.replace(/\/$/, '');
+      const jurisdiction = familyFormJurisdiction(form.metadata.jurisdiction);
+      const path = getPathFromJurisdiction(jurisdiction);
+      const pathConfig = pathToServerConfig[path];
+      const provider = formSources.docassembleServers.find(
+        (source) => source.url === form.serverUrl
+      );
+      const hasDetails =
+        locale === 'en' ||
+        (pathConfig?.servers.includes(provider?.name) &&
+          (pathConfig.name === jurisdiction ||
+            jurisdiction === 'United States'));
       return {
         id: `${server}|${form.filename.replace(':data/questions/', ':')}`,
         title: form.title,
-        jurisdiction: familyFormJurisdiction(form.metadata.jurisdiction),
-        href: `${server}/interview?i=${encodeURIComponent(form.filename)}`,
-        detailsHref: `/${getPathFromJurisdiction(familyFormJurisdiction(form.metadata.jurisdiction))}/forms/${toUrlFriendlyString(form.title)}`,
+        jurisdiction,
+        href:
+          locale === 'es'
+            ? spanishInterviewUrl(server, form.filename, form.link)
+            : `${server}/interview?i=${encodeURIComponent(form.filename)}`,
+        detailsHref: hasDetails
+          ? formDetailsPath(locale, path, form.canonicalTitle)
+          : '',
+        titleLanguage: form.titleLanguage,
+        description: form.metadata.description,
+        descriptionLanguage: form.descriptionLanguage,
+        languages: form.metadata.languages,
       };
     })
     .filter((form) => {
@@ -120,7 +148,7 @@ export async function fetchFamilyEmergencyForms(): Promise<
     })
     .sort(
       (a, b) =>
-        a.jurisdiction.localeCompare(b.jurisdiction) ||
-        a.title.localeCompare(b.title)
+        a.jurisdiction.localeCompare(b.jurisdiction, locale) ||
+        a.title.localeCompare(b.title, locale)
     );
 }

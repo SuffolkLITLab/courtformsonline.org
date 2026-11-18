@@ -1,4 +1,5 @@
 import { legalTopics } from '../config/topics.config';
+import type { Locale } from '../i18n/messages';
 
 export interface SearchLabel {
   id: string;
@@ -10,6 +11,8 @@ export interface SearchResults {
 }
 export interface SearchForm {
   title?: string;
+  canonicalTitle?: string;
+  titleLanguage?: string;
   filename?: string;
   serverUrl?: string;
   tags?: string[];
@@ -17,31 +20,59 @@ export interface SearchForm {
 }
 export type InterviewsByTopic = Record<string, SearchForm[]>;
 
-const words = (text: string) =>
-  text.toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu) || [];
+const words = (text: string, locale: Locale) => {
+  const normalized = text.toLocaleLowerCase(locale);
+  const searchable =
+    locale === 'es'
+      ? normalized.normalize('NFD').replace(/\p{M}/gu, '')
+      : normalized;
+  return searchable.match(/[\p{L}\p{N}]+/gu) || [];
+};
 const stopWords = new Set(
   'a an and are as at be for from have i in is it me my of on or the to was with you your'.split(
     ' '
   )
 );
+const spanishStopWords = new Set(
+  'a al con de del el en es esta la las lo los me mi mis o para por se su sus un una y yo'.split(
+    ' '
+  )
+);
 
-export function keywordMatches(interviews: InterviewsByTopic, query: string) {
+export function formDisplayTitle(form: SearchForm, locale: Locale) {
+  return (
+    (locale === 'es' && form.titleLanguage === 'es'
+      ? form.title
+      : form.metadata?.title) ||
+    form.title ||
+    ''
+  );
+}
+
+export function keywordMatches(
+  interviews: InterviewsByTopic,
+  query: string,
+  locale: Locale = 'en'
+) {
+  const ignored = locale === 'es' ? spanishStopWords : stopWords;
   const tokens = [
-    ...new Set(words(query).filter((word) => !stopWords.has(word))),
+    ...new Set(words(query, locale).filter((word) => !ignored.has(word))),
   ];
   if (!tokens.length) return { titles: [], descriptions: [] };
   const unique = new Map<string, SearchForm>();
   Object.values(interviews)
     .flat()
     .forEach((form) => {
-      const title = form.metadata?.title || form.title;
+      const title = formDisplayTitle(form, locale);
       if (title)
         unique.set(`${form.serverUrl || ''}:${form.filename || title}`, form);
     });
   const ranked = [...unique.values()].map((form) => {
-    const title = words(form.metadata?.title || form.title || '');
+    const title = words(formDisplayTitle(form, locale), locale);
     const titleWords = new Set(title);
-    const description = new Set(words(form.metadata?.description || ''));
+    const description = new Set(
+      words(form.metadata?.description || '', locale)
+    );
     const exact = tokens.every((word) => titleWords.has(word));
     const phrase = title.join(' ').includes(tokens.join(' '));
     return {

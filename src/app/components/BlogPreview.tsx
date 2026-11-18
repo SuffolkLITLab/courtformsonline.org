@@ -1,3 +1,5 @@
+import { message, type Locale } from '../../i18n/messages';
+import { blogPath } from '../../i18n/routes';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getLatestBlogPosts } from '../../data/getBlogPosts';
@@ -7,6 +9,7 @@ import styles from '../css/Blog.module.css';
 
 interface BlogPreviewProps {
   count?: number;
+  locale?: Locale;
 }
 
 interface SyndicatedFeedData {
@@ -16,8 +19,11 @@ interface SyndicatedFeedData {
   posts: WordPressPost[];
 }
 
-export default async function BlogPreview({ count = 3 }: BlogPreviewProps) {
-  const posts = getLatestBlogPosts(count);
+export default async function BlogPreview({
+  count = 3,
+  locale = 'en',
+}: BlogPreviewProps) {
+  const posts = getLatestBlogPosts(count, locale);
 
   // Fetch syndicated feeds
   const syndicatedFeeds: SyndicatedFeedData[] = await Promise.all(
@@ -39,7 +45,9 @@ export default async function BlogPreview({ count = 3 }: BlogPreviewProps) {
   return (
     <section className="py-5 bg-light">
       <div className="container">
-        <h2 className="text-center mb-4">Latest News</h2>
+        <h2 className="text-center mb-4">
+          {message(locale, 'home.latestNews')}
+        </h2>
         <div className="row">
           {posts.map((post) => (
             <div key={post.slug} className="col-md-4 mb-4">
@@ -56,21 +64,29 @@ export default async function BlogPreview({ count = 3 }: BlogPreviewProps) {
                 )}
                 <div className="card-body">
                   <p className={styles.blogDate}>
-                    {new Date(post.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
+                    {new Date(post.date).toLocaleDateString(
+                      locale === 'es' ? 'es-US' : 'en-US',
+                      {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      }
+                    )}
                   </p>
                   <h3 className="h6 card-title">
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href={blogPath(post.locale, post.slug)}
+                      lang={post.locale}
+                      hrefLang={post.locale}
                       className="text-decoration-none"
                     >
                       {post.title}
                     </Link>
                   </h3>
-                  <p className={styles.blogSummary + ' card-text small'}>
+                  <p
+                    lang={post.locale}
+                    className={styles.blogSummary + ' card-text small'}
+                  >
                     {post.summary}
                   </p>
                 </div>
@@ -84,23 +100,30 @@ export default async function BlogPreview({ count = 3 }: BlogPreviewProps) {
                 <div key={feed.name} className="col-md-4 mb-4">
                   <div className={styles.blogCard + ' card h-100'}>
                     <div className="card-header bg-white border-bottom-0 pt-4 pb-2">
-                      <h3 className="h5 mb-0">More from {feed.name}</h3>
+                      <h3 className="h5 mb-0">
+                        {message(locale, 'home.moreNewsFrom', {
+                          name: feed.name,
+                        })}
+                      </h3>
                     </div>
                     <div className="list-group list-group-flush">
                       {feed.posts.slice(0, 5).map((post, index) => (
                         <Link
                           key={index}
                           href={post.link}
+                          hrefLang="en"
                           className="list-group-item list-group-item-action border-0 px-3 py-2"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           <div className="d-flex flex-column">
-                            <span className="text-primary">{post.title}</span>
+                            <span className="text-primary" lang="en">
+                              {post.title}
+                            </span>
                             {post.date && (
                               <small className="text-muted">
                                 {new Date(post.date).toLocaleDateString(
-                                  'en-US',
+                                  locale === 'es' ? 'es-US' : 'en-US',
                                   {
                                     year: 'numeric',
                                     month: 'short',
@@ -116,10 +139,11 @@ export default async function BlogPreview({ count = 3 }: BlogPreviewProps) {
                     <div className="card-footer bg-transparent border-0 text-center pb-3">
                       <Link
                         href={feed.blogUrl || feed.url}
+                        hrefLang="en"
                         target="_blank"
                         className="btn btn-sm btn-outline-secondary"
                       >
-                        View all
+                        {message(locale, 'home.viewAll')}
                       </Link>
                     </div>
                   </div>
@@ -129,8 +153,8 @@ export default async function BlogPreview({ count = 3 }: BlogPreviewProps) {
         </div>
 
         <div className="text-center mt-4">
-          <Link href="/blog" className="btn btn-outline-primary">
-            View all posts
+          <Link href={blogPath(locale)} className="btn btn-outline-primary">
+            {message(locale, 'blog.all')}
           </Link>
         </div>
       </div>

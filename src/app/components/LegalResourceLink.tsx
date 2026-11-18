@@ -2,9 +2,11 @@
 
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
+import { message, type Locale } from '../../i18n/messages';
 import styles from '../css/LegalResourceLink.module.css';
 
 interface LegalResourceLinkProps {
+  locale?: Locale;
   topic: string;
   jurisdiction: string;
   deepLink: string | null;
@@ -12,6 +14,7 @@ interface LegalResourceLinkProps {
 }
 
 const LegalResourceLink = ({
+  locale = 'en',
   topic,
   jurisdiction,
   deepLink,
@@ -26,16 +29,17 @@ const LegalResourceLink = ({
     <div className={styles.LegalResourceLink}>
       <div className={styles.Card}>
         <h3 className={styles.Heading}>
-          Find a lawyer or other free legal help
+          {message(locale, 'forms.helpHeading')}
         </h3>
         <p className={styles.Description}>
-          Get connected to legal aid organizations and other resources in{' '}
-          {jurisdiction}
+          {message(locale, 'forms.helpDescription', { state: jurisdiction })}
         </p>
         <Link href={deepLink} target="_blank" rel="noopener noreferrer">
-          <button className={styles.Button}>Get legal help for {topic}</button>
+          <button className={styles.Button}>
+            {message(locale, 'forms.getHelp', { topic })}
+          </button>
         </Link>
-        {disclaimerInfo && <>{disclaimerInfo}</>}
+        {disclaimerInfo && <div lang="en">{disclaimerInfo}</div>}
       </div>
     </div>
   );

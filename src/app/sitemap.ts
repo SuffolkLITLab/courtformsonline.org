@@ -4,6 +4,8 @@ import { legalTopics } from '../config/topics.config';
 import { fetchInterviews } from '../data/fetchInterviewData';
 import { toUrlFriendlyString } from './utils/helpers';
 import { prefix } from '../../prefix';
+import { blogPath, spanishSitemapPaths, topicPath } from '../i18n/routes';
+import { getAllBlogSlugs } from '../data/getBlogPosts';
 
 const defaultSiteUrl = 'https://courtformsonline.org';
 
@@ -28,6 +30,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/privacy',
     '/ma/checkup',
     '/family',
+    '/blog',
+    ...getAllBlogSlugs('en').map((slug) => blogPath('en', slug)),
+    ...getAllBlogSlugs('es').map((slug) => blogPath('es', slug)),
+    ...spanishSitemapPaths,
   ];
   for (const r of staticRoutes) {
     urls.add(`${siteUrl}${joinWithPrefix(r)}`);
@@ -52,11 +58,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
         // Topics
         for (const topic of legalTopics) {
-          urls.add(
-            `${siteUrl}${joinWithPrefix(
-              `${pathBase}/${topic.name.toLowerCase()}`
-            )}`
-          );
+          for (const locale of ['en', 'es'] as const) {
+            urls.add(
+              `${siteUrl}${joinWithPrefix(topicPath(locale, p, topic.name))}`
+            );
+          }
         }
 
         // Forms - iterate interviewsByTopic

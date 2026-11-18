@@ -41,7 +41,9 @@ describe('generateMetadata for form page', () => {
       relatedForms: [],
     });
 
-    const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
+    const {
+      generateMetadata,
+    } = require('../src/app/(en)/[path]/forms/[form]/page');
 
     const metadata = await generateMetadata({
       params: { path: 'ma', form: slug },
@@ -67,7 +69,9 @@ describe('generateMetadata for form page', () => {
       formTopic: 'other',
     });
 
-    const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
+    const {
+      generateMetadata,
+    } = require('../src/app/(en)/[path]/forms/[form]/page');
 
     const metadata = await generateMetadata({
       params: { path: 'ma', form: slug },
@@ -96,7 +100,9 @@ describe('generateMetadata for form page', () => {
       formTopic: 'other',
     });
 
-    const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
+    const {
+      generateMetadata,
+    } = require('../src/app/(en)/[path]/forms/[form]/page');
 
     const metadata = await generateMetadata({
       params: { path: 'ma', form: slug },
@@ -121,7 +127,9 @@ describe('generateMetadata for form page', () => {
       formTopic: 'other',
     });
 
-    const { generateMetadata } = require('../src/app/[path]/forms/[form]/page');
+    const {
+      generateMetadata,
+    } = require('../src/app/(en)/[path]/forms/[form]/page');
 
     const metadata = await generateMetadata({
       params: { path: 'ma', form: slug },
@@ -147,7 +155,9 @@ describe('generateMetadata for form page', () => {
       relatedForms: [],
     });
 
-    const { default: Page } = require('../src/app/[path]/forms/[form]/page');
+    const {
+      default: Page,
+    } = require('../src/app/(en)/[path]/forms/[form]/page');
     const element = await Page({ params: { path: 'ma', form: slug } });
     render(element as any);
     expect(screenLib.getByRole('heading', { level: 1 })).toHaveTextContent(
@@ -182,7 +192,9 @@ describe('generateMetadata for form page', () => {
       formTopic: 'other',
     });
 
-    const { default: Page } = require('../src/app/[path]/forms/[form]/page');
+    const {
+      default: Page,
+    } = require('../src/app/(en)/[path]/forms/[form]/page');
     const element = await Page({ params: { path: 'ma', form: slug } });
     const { container } = render(element as any);
 

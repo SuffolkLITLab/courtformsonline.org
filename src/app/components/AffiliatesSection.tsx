@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Interface } from 'readline';
+import { message, type Locale } from '../../i18n/messages';
 import styles from '../css/AffiliatesSection.module.css';
 
 interface Affiliate {
@@ -21,7 +21,9 @@ const affiliates: Array<Affiliate> = [
   },
 ];
 
-export default function AffiliatesSection() {
+export default function AffiliatesSection({
+  locale = 'en',
+}: { locale?: Locale } = {}) {
   return (
     <section
       id="affiliates-section"
@@ -29,10 +31,11 @@ export default function AffiliatesSection() {
     >
       <div className={styles.AffiliatesContainer}>
         <p className="text-center">
-          Court Forms Online is a nonprofit service provided by Suffolk Law
-          School&apos;s Legal Innovation and Technology Lab and supported by our
-          trusted <a href="https://suffolklitlab.org/#affiliates">affiliates</a>
-          , including:
+          {message(locale, 'home.affiliateIntro')}{' '}
+          <a href="https://suffolklitlab.org/#affiliates" hrefLang="en">
+            {message(locale, 'home.affiliates')}
+          </a>
+          {message(locale, 'home.affiliatesEnding')}
         </p>
         {affiliates.map((affiliate) => {
           return (

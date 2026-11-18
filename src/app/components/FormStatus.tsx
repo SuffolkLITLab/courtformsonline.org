@@ -1,7 +1,9 @@
 import React from 'react';
+import { message, type Locale } from '../../i18n/messages';
 import styles from '../css/FormStatus.module.css';
 
 interface FormStatusProps {
+  locale?: Locale;
   maturity?: string | null;
   efilingEnabled?: boolean | 'email' | null;
   integratedEfiling?: boolean | null;
@@ -38,6 +40,7 @@ function resolveEfilingStatus({
 }
 
 const FormStatus = ({
+  locale = 'en',
   maturity,
   efilingEnabled,
   integratedEfiling,
@@ -53,12 +56,18 @@ const FormStatus = ({
   const badgeInfo = (() => {
     switch (mat) {
       case 'preview':
-        return { label: 'Preview', className: 'text-bg-info text-dark' };
+        return {
+          label: message(locale, 'forms.preview'),
+          className: 'text-bg-info text-dark',
+        };
       case 'testing':
-        return { label: 'Testing', className: 'text-bg-info text-dark' };
+        return {
+          label: message(locale, 'forms.testing'),
+          className: 'text-bg-info text-dark',
+        };
       case 'development':
         return {
-          label: 'Development',
+          label: message(locale, 'forms.development'),
           className: 'text-bg-warning text-white',
         };
       default:
@@ -69,12 +78,12 @@ const FormStatus = ({
   const efilingBadgeInfo = (() => {
     if (effectiveEfilingStatus === 'email') {
       return {
-        label: 'Email filing available',
+        label: message(locale, 'forms.emailFiling'),
         className: 'text-bg-success text-white',
       };
     } else if (effectiveEfilingStatus === true) {
       return {
-        label: 'E-filing available',
+        label: message(locale, 'forms.efiling'),
         className: 'text-bg-success text-white',
       };
     }

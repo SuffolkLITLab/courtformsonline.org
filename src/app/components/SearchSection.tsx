@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from 'react';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import styles from '../css/SearchSection.module.css';
+import { message, type Locale } from '../../i18n/messages';
+import { formsPath } from '../../i18n/routes';
 import { pathToServerConfig } from '../../config/formSources.config';
 
 // This is a front-end search form. It only searches the information shown
@@ -11,11 +13,13 @@ import { pathToServerConfig } from '../../config/formSources.config';
 interface SearchSectionProps {
   serverName?: string;
   currentPath?: string;
+  locale?: Locale;
 }
 
 export default function SearchSection({
   serverName,
   currentPath,
+  locale = 'en',
 }: SearchSectionProps) {
   const [searchText, setSearchText] = useState('');
 
@@ -121,8 +125,8 @@ export default function SearchSection({
         <div className="flex-grow-1">
           <label htmlFor="search-field" className="form-label">
             {serverName && serverName.length > 0
-              ? 'Search ' + serverName + ' forms'
-              : 'Search forms'}
+              ? message(locale, 'forms.searchState', { state: serverName })
+              : message(locale, 'forms.search')}
           </label>
           <input
             id="search-field"
@@ -133,14 +137,14 @@ export default function SearchSection({
         {availableJurisdictions.length > 1 && currentPath && (
           <div>
             <label htmlFor="jurisdiction-filter" className="form-label">
-              Jurisdiction
+              {message(locale, 'forms.jurisdiction')}
             </label>
             <select
               id="jurisdiction-filter"
               className="form-select"
               value={currentPath}
               onChange={(e) => {
-                window.location.href = `/${e.target.value}/forms`;
+                window.location.href = formsPath(locale, e.target.value);
               }}
             >
               {availableJurisdictions.map((j) => (
@@ -158,10 +162,10 @@ export default function SearchSection({
         role="button"
         onClick={clearSearchInput}
       >
-        Clear search
+        {message(locale, 'forms.clear')}
       </a>
       <p id="no-search-results" className="no-search-results mt-5 hidden">
-        No forms found.
+        {message(locale, 'forms.notFound')}
       </p>
     </section>
   );

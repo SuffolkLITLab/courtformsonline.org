@@ -2,15 +2,15 @@ import { supplementalCatalogMetadata } from '../config/supplementalCatalogMetada
 import { formSources, pathToServerConfig } from '../config/formSources.config';
 import { legalTopics } from '../config/topics.config';
 import { excludedForms } from '../config/formSources.config';
+import type { Locale } from '../i18n/messages';
 import { getTopicNames } from './helpers';
 import {
   getJurisdictionFromPath,
   jurisdictionMatches,
 } from '../utils/jurisdiction';
 
-interface LocalizedString {
-  [key: string]: string;
-}
+type Localized<T> = Record<string, T>;
+type LocalizedString = Localized<string>;
 
 interface Fee {
   name: string;
@@ -22,38 +22,43 @@ interface RawFee {
 }
 
 interface RawInterview {
-  metadata?: {
-    unlisted?: boolean;
-    LIST_topics?: string[];
-    description?: string | LocalizedString;
-    can_I_use_this_form?: string | LocalizedString;
-    help_page_url?: string | LocalizedString;
-    help_page_title?: string | LocalizedString;
-    original_form?: string | LocalizedString;
-    original_form_published_on?: string | LocalizedString;
-    review_date?: string | LocalizedString;
-    before_you_start?: string | LocalizedString;
-    form_titles?: string[] | LocalizedString;
-    form_numbers?: string[] | LocalizedString;
-    jurisdiction?: string | LocalizedString;
-    maturity?: string | LocalizedString;
-    footer?: string | LocalizedString;
-    'short title'?: string | LocalizedString;
-    title?: string | LocalizedString;
-    estimated_completion_minutes?: number;
-    estimated_completion_delta?: number;
-    languages?: string[];
-    fees?: RawFee[] | string[] | LocalizedString;
-    update_notes?: string | LocalizedString;
-    efiling_enabled?: boolean | 'email';
-    integrated_efiling?: boolean;
-    integrated_email_filing?: boolean;
-    [key: string]: any;
-  };
+  metadata?: RawMetadata;
   tags?: string[];
   filename?: string;
   title?: string | LocalizedString;
   link?: string;
+  [key: string]: any;
+}
+
+interface RawMetadata {
+  unlisted?: boolean;
+  LIST_topics?: string[];
+  description?: string | LocalizedString;
+  can_I_use_this_form?: string | LocalizedString;
+  help_page_url?: string | LocalizedString;
+  help_page_title?: string | LocalizedString;
+  original_form?: string | LocalizedString;
+  original_form_published_on?: string | LocalizedString;
+  review_date?: string | LocalizedString;
+  before_you_start?: string | LocalizedString;
+  form_titles?: string[] | Localized<string | string[]>;
+  form_numbers?: string[] | Localized<string | string[]>;
+  jurisdiction?: string | LocalizedString;
+  maturity?: string | LocalizedString;
+  footer?: string | LocalizedString;
+  'short title'?: string | LocalizedString;
+  title?: string | LocalizedString;
+  estimated_completion_minutes?: number;
+  estimated_completion_delta?: number;
+  languages?: string[];
+  fees?: RawFee[] | string[] | LocalizedString;
+  update_notes?: string | LocalizedString;
+  when_you_are_finished?: string | LocalizedString;
+  efiling_enabled?: boolean | 'email';
+  integrated_efiling?: boolean;
+  integrated_email_filing?: boolean;
+  en?: RawMetadata;
+  es?: RawMetadata;
   [key: string]: any;
 }
 
@@ -87,6 +92,9 @@ interface Interview {
   tags: string[];
   filename: string;
   title: string;
+  canonicalTitle: string;
+  titleLanguage: string;
+  descriptionLanguage: string;
   serverUrl: string;
   link?: string;
 }
@@ -112,6 +120,11 @@ interface ServerFetchResult {
   server: ServerConfig;
   data?: Data;
   error?: unknown;
+}
+
+interface FetchInterviewsOptions {
+  allJurisdictions?: boolean;
+  locale?: Locale;
 }
 
 const interviewsCache = new Map<string, Promise<FetchInterviewsResult>>();
@@ -178,7 +191,7 @@ function extractLocalizedString(
 
 // Helper function to extract localized arrays
 function extractLocalizedArray(
-  value: string[] | LocalizedString | undefined,
+  value: string[] | Localized<string | string[]> | undefined,
   locale: string
 ): string[] {
   if (Array.isArray(value)) {
@@ -194,6 +207,62 @@ function extractLocalizedArray(
   } else {
     return [];
   }
+}
+
+function getCatalogCopy(interview: RawInterview, locale: Locale) {
+  const metadata = interview.metadata ?? {};
+  const base = { ...metadata, ...metadata.en };
+  const declaredLanguage =
+    typeof metadata['default language'] === 'string'
+      ? metadata['default language']
+      : 'en';
+  const canonicalTitle = extractLocalizedString(interview.title, 'en');
+  const englishTitle =
+    canonicalTitle || extractLocalizedString(base.title, 'en');
+  const englishDescription = extractLocalizedString(base.description, 'en');
+
+  if (locale === 'en') {
+    return {
+      metadata: base,
+      title: englishTitle,
+      canonicalTitle: englishTitle,
+      titleLanguage: 'en',
+      description: englishDescription,
+      descriptionLanguage: 'en',
+    };
+  }
+
+  const spanish = metadata.es;
+  const spanishField = (
+    value?: string | LocalizedString,
+    language = declaredLanguage
+  ) =>
+    typeof value === 'string'
+      ? language.toLowerCase().split(/[-_]/)[0] === 'es'
+        ? value.trim() || undefined
+        : undefined
+      : value?.es?.trim() || undefined;
+  const spanishTitle =
+    spanishField(spanish?.title, 'es') ||
+    spanishField(metadata.title) ||
+    spanishField(interview.title);
+  const spanishDescription =
+    spanishField(spanish?.description, 'es') ||
+    spanishField(metadata.description);
+
+  return {
+    metadata: {
+      ...base,
+      ...spanish,
+      jurisdiction: base.jurisdiction ?? spanish?.jurisdiction,
+      LIST_topics: base.LIST_topics ?? spanish?.LIST_topics,
+    },
+    title: spanishTitle ?? englishTitle,
+    canonicalTitle: englishTitle,
+    titleLanguage: spanishTitle ? 'es' : 'en',
+    description: spanishDescription ?? englishDescription,
+    descriptionLanguage: spanishDescription ? 'es' : 'en',
+  };
 }
 
 export function normalizeEfilingEnabled(
@@ -344,7 +413,7 @@ export function extractLocalizedFees(
 
 const fetchInterviewsForPath = async (
   path: string,
-  options: { allJurisdictions?: boolean } = {}
+  options: FetchInterviewsOptions
 ): Promise<FetchInterviewsResult> => {
   const config = pathToServerConfig[path];
   const serverNames = config
@@ -354,7 +423,7 @@ const fetchInterviewsForPath = async (
     (server) => options.allJurisdictions || serverNames.includes(server.name)
   );
 
-  const locale = 'en'; // Todo: make this dynamic
+  const locale = options.locale ?? 'en';
 
   let allInterviews: Interview[] = [];
   let successfulServerCount = 0;
@@ -380,7 +449,12 @@ const fetchInterviewsForPath = async (
 
       if (data.interviews) {
         const taggedInterviews = data.interviews
-          .filter((interview: RawInterview) => !interview.metadata?.unlisted)
+          .filter(
+            (interview: RawInterview) =>
+              !interview.metadata?.unlisted &&
+              !interview.metadata?.en?.unlisted &&
+              !(locale === 'es' && interview.metadata?.es?.unlisted)
+          )
           .map((interview: RawInterview): RawInterview => {
             // Provider-scoped, explicit supplements cannot make an unlisted
             // interview public. Unknown future interviews remain in the catalog.
@@ -404,18 +478,24 @@ const fetchInterviewsForPath = async (
               return true;
             }
           })
-          .map(
-            (interview: RawInterview): Interview => ({
+          .map((source: RawInterview): Interview => {
+            const {
+              metadata,
+              title,
+              canonicalTitle,
+              titleLanguage,
+              description,
+              descriptionLanguage,
+            } = getCatalogCopy(source, locale);
+            const interview = { ...source, metadata };
+            return {
               ...interview,
               serverUrl: server.url,
               metadata: {
                 ...(interview.metadata as any),
                 unlisted: interview.metadata?.unlisted ?? false,
                 LIST_topics: interview.metadata?.LIST_topics ?? [],
-                description: extractLocalizedString(
-                  interview.metadata?.description,
-                  locale
-                ),
+                description,
                 can_I_use_this_form: extractLocalizedString(
                   interview.metadata?.can_I_use_this_form,
                   locale
@@ -446,7 +526,7 @@ const fetchInterviewsForPath = async (
                 ),
                 jurisdiction: extractLocalizedString(
                   interview.metadata?.jurisdiction,
-                  locale
+                  'en'
                 ),
                 maturity: extractLocalizedString(
                   interview.metadata?.maturity,
@@ -485,13 +565,20 @@ const fetchInterviewsForPath = async (
                   interview.metadata?.update_notes,
                   locale
                 ),
+                when_you_are_finished: extractLocalizedString(
+                  interview.metadata?.when_you_are_finished,
+                  locale
+                ),
                 efiling_enabled: normalizeEfilingEnabled(interview.metadata),
               },
               tags: interview.tags ?? [],
               filename: interview.filename ?? '',
-              title: extractLocalizedString(interview.title, locale),
-            })
-          );
+              title,
+              canonicalTitle,
+              titleLanguage,
+              descriptionLanguage,
+            };
+          });
         allInterviews = allInterviews.concat(taggedInterviews);
       }
     }
@@ -523,7 +610,7 @@ const fetchInterviewsForPath = async (
     const title = interview.title;
     const uniqueKey = options.allJurisdictions
       ? `${interview.serverUrl}|${interview.filename}`
-      : title;
+      : interview.canonicalTitle || title;
 
     // Collect all codes from metadata.LIST_topics and tags
     const codes = [...interview.metadata.LIST_topics, ...interview.tags];
@@ -561,10 +648,10 @@ const fetchInterviewsForPath = async (
 
 export const fetchInterviews = (
   path: string,
-  options: { allJurisdictions?: boolean } = {}
+  options: FetchInterviewsOptions = {}
 ): Promise<FetchInterviewsResult> => {
   const normalizedPath = path.toLowerCase().replace(/\/$/, '');
-  const cacheKey = `${normalizedPath}|${options.allJurisdictions ? 'all' : 'state'}`;
+  const cacheKey = `${normalizedPath}|${options.allJurisdictions ? 'all' : 'state'}|${options.locale ?? 'en'}`;
   const cached = interviewsCache.get(cacheKey);
   if (cached) {
     return cached;

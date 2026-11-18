@@ -6,6 +6,9 @@ import { toUrlFriendlyString } from '../utils/helpers';
 import { deepLinks } from '../../config/formSources.config';
 import LegalResourceLink from './LegalResourceLink';
 import styles from '../css/TopicCard.module.css';
+import { message, topicTitle, type Locale } from '../../i18n/messages';
+import { formDisplayTitle } from '../../data/formSearch';
+import { formDetailsPath, topicPath } from '../../i18n/routes';
 import {
   MAX_VISIBLE_PER_CARD,
   MAX_VISIBLE_CATEGORIES,
@@ -24,6 +27,7 @@ interface TopicCardProps {
   path: string;
   isSpot?: boolean;
   searchQuery?: string;
+  locale?: Locale;
 }
 
 interface IconProps {
@@ -48,6 +52,7 @@ const TopicCard = ({
   path,
   isSpot = false,
   searchQuery = '',
+  locale = 'en',
 }: TopicCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   // Hide when index is at or above the visible count (0-based index)
@@ -62,7 +67,16 @@ const TopicCard = ({
       ? totalInterviews - MAX_VISIBLE_PER_CARD
       : 0;
   const displayedCount = Math.min(MAX_VISIBLE_PER_CARD, totalInterviews);
-  const viewAllLabel = `showing ${displayedCount} of ${totalInterviews} ${totalInterviews === 1 ? 'form' : 'forms'}`;
+  const viewAllLabel = message(
+    locale,
+    totalInterviews === 1 ? 'home.showingOneForm' : 'home.showingForms',
+    {
+      count: displayedCount,
+      total: totalInterviews,
+    }
+  );
+  const displayTopic = topicTitle(locale, topic);
+  const categoryUrl = topicPath(locale, path, topic.name.toLowerCase());
   const cardClassName = isSpot ? 'spot-topic-card-parent' : 'topic-card-parent';
   // Calculate which row this card is in (3 cards per row)
   const rowIndex = Math.floor(index / 3);
@@ -103,8 +117,9 @@ const TopicCard = ({
     >
       <div className={styles.TopicCard + ' card topic-card h-100'}>
         <Link
-          href={`/${path}/${topic.name.toLowerCase()}`}
-          title={`View all ${topic.long_name} forms`}
+          href={categoryUrl}
+          title={message(locale, 'home.categoryForms', { topic: displayTopic })}
+          hrefLang={locale}
           className={
             styles.CardTitleLink +
             ' card-header d-flex align-items-center bg-transparent border-0 pt-3'
@@ -119,7 +134,7 @@ const TopicCard = ({
           >
             <FontAwesomeIcon iconName={topic.icon} className="fa-icon" />
           </div>
-          <h5 className="card-title fs-5 m-0 ms-2">{topic.long_name}</h5>
+          <h5 className="card-title fs-5 m-0 ms-2">{displayTopic}</h5>
         </Link>
         <div className="card-body d-flex flex-column justify-content-space-between">
           <div
@@ -130,7 +145,8 @@ const TopicCard = ({
             style={{ maxHeight: isExpanded ? '800px' : '200px' }}
           >
             {displayInterviews.map((interview, index) => {
-              if (interview.metadata && interview.metadata.title) {
+              const title = formDisplayTitle(interview, locale);
+              if (title) {
                 return (
                   <Link
                     key={`${toUrlFriendlyString(interview.filename)}-${topic.name}-${index}`}
@@ -138,14 +154,19 @@ const TopicCard = ({
                       styles.FormTag +
                       ' form-tag btn btn-outline-secondary border-2 align-self-start text-start'
                     }
-                    href={
-                      '/' +
-                      path +
-                      '/forms/' +
-                      toUrlFriendlyString(interview.metadata.title)
+                    href={formDetailsPath(
+                      locale,
+                      path,
+                      interview.canonicalTitle || title
+                    )}
+                    lang={
+                      locale === 'es'
+                        ? (interview.titleLanguage ?? 'en')
+                        : undefined
                     }
+                    hrefLang="en"
                   >
-                    {interview.metadata.title}
+                    {title}
                   </Link>
                 );
               }
@@ -173,7 +194,7 @@ const TopicCard = ({
                         rel="noopener noreferrer"
                         className="btn btn-sm btn-outline-primary align-self-start"
                       >
-                        Find free help about this topic
+                        {message(locale, 'home.freeHelpForTopic')}
                         <i
                           className="fas fa-external-link-alt ms-2"
                           style={{ fontSize: '0.75rem' }}
@@ -190,7 +211,7 @@ const TopicCard = ({
                     rel="noopener noreferrer"
                     className="btn btn-sm btn-outline-primary align-self-start"
                   >
-                    Search MassLegalResourceFinder
+                    {message(locale, 'home.searchMassLRF')}
                     <i
                       className="fas fa-external-link-alt ms-2"
                       style={{ fontSize: '0.75rem' }}
@@ -213,20 +234,24 @@ const TopicCard = ({
                 }
                 onClick={toggleExpand}
               >
-                {isExpanded ? 'Show less' : 'Show more'}
+                {message(
+                  locale,
+                  isExpanded ? 'home.showFewerForms' : 'home.showMoreForms'
+                )}
                 <i
                   className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} ms-1`}
                 ></i>
               </div>
               {isExpanded && interviews.length > MAX_VISIBLE_PER_CARD && (
                 <Link
-                  href={`/${path}/${topic.name.toLowerCase()}`}
+                  href={categoryUrl}
+                  hrefLang={locale}
                   className={
                     styles.ViewAll +
                     ' view-all d-flex align-items-center text-decoration-none'
                   }
                 >
-                  View all
+                  {message(locale, 'home.viewAll')}
                   <span className={styles.ViewAllCount}>{viewAllLabel}</span>
                   <i className="fas fa-arrow-right ms-1"></i>
                 </Link>

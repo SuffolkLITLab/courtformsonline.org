@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
+import { message, type Locale } from '../../i18n/messages';
 import { fetchFormSearch } from '../../data/fetchFormSearch';
 import { SearchResults } from '../../data/formSearch';
 import SpotResultsContainer from './SpotResultsContainer';
@@ -67,7 +68,17 @@ function StateOutline({ pathKey, className }) {
   );
 }
 
-const HeroSection = ({ path, interviews, isError }) => {
+const HeroSection = ({
+  path,
+  interviews,
+  isError,
+  locale = 'en',
+}: {
+  path: string;
+  interviews: import('../../data/formSearch').InterviewsByTopic | [];
+  isError: boolean;
+  locale?: Locale;
+}) => {
   const [text, setText] = useState('');
   const [helpMode, setHelpMode] = useState<'describe' | 'checkup'>('describe');
   const [saveData, setSaveData] = useState(true);
@@ -105,9 +116,7 @@ const HeroSection = ({ path, interviews, isError }) => {
   const handleFindHelpClick = async () => {
     const query = text.trim();
     if (!query || query.length > 4000) {
-      setValidationError(
-        'Enter a keyword or description, up to 4,000 characters.'
-      );
+      setValidationError(message(locale, 'hero.validation'));
       return;
     }
     requestRef.current?.abort();
@@ -135,8 +144,15 @@ const HeroSection = ({ path, interviews, isError }) => {
       if (requestRef.current === controller)
         setError(
           e instanceof Error && e.name !== 'AbortError'
-            ? e.message
-            : 'Topic search timed out.'
+            ? locale === 'en'
+              ? e.message
+              : message(
+                  locale,
+                  e.message.startsWith('Please wait')
+                    ? 'hero.searchRateLimit'
+                    : 'hero.searchError'
+                )
+            : message(locale, 'hero.timeout')
         );
     } finally {
       clearTimeout(timeout);
@@ -185,23 +201,21 @@ const HeroSection = ({ path, interviews, isError }) => {
                 />
               </span>
               <span className={styles.HeroHeadlineText}>
-                Free DIY legal help for {jurisdictionName}
+                {message(locale, 'hero.headline', { state: jurisdictionName })}
               </span>
             </h1>
-            <p>
-              Use our free step-by-step interactive forms to get help with your
-              legal problem. Use your own words to find the right form or browse
-              forms by category.
-            </p>
+            <p>{message(locale, 'hero.intro')}</p>
           </div>
           <div className="col-lg-6" id="hero-right" ref={popoverContainerRef}>
             {hasCheckup && (
               <>
-                <h2 className="mb-3">Find legal help</h2>
+                <h2 className="mb-3">
+                  {message(locale, 'hero.findLegalHelp')}
+                </h2>
                 <div
                   className={styles.HelpSwitch}
                   role="group"
-                  aria-label="Choose how to find help"
+                  aria-label={message(locale, 'hero.choose')}
                 >
                   <button
                     type="button"
@@ -209,7 +223,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                     aria-controls="describe-option"
                     onClick={() => setHelpMode('describe')}
                   >
-                    Describe your problem
+                    {message(locale, 'hero.describe')}
                   </button>
                   <button
                     type="button"
@@ -217,7 +231,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                     aria-controls="checkup-option"
                     onClick={() => setHelpMode('checkup')}
                   >
-                    Legal checkup
+                    {message(locale, 'hero.checkup')}
                   </button>
                 </div>
               </>
@@ -232,12 +246,10 @@ const HeroSection = ({ path, interviews, isError }) => {
                   id="describe-problem-heading"
                   className={hasCheckup ? 'visually-hidden' : 'mb-0'}
                 >
-                  Search forms or describe your legal problem
+                  {message(locale, 'hero.searchHeading')}
                 </SearchHeading>
                 {hasCheckup && (
-                  <p className="mb-0">
-                    Search by form name, keywords, or describe your problem.
-                  </p>
+                  <p className="mb-0">{message(locale, 'hero.searchIntro')}</p>
                 )}
                 <div className={styles.SpotInfo}>
                   <OverlayTrigger
@@ -247,29 +259,25 @@ const HeroSection = ({ path, interviews, isError }) => {
                     container={() => popoverContainerRef.current}
                     overlay={
                       <Popover id="spot-popover">
-                        <Popover.Header as="h3">How this works</Popover.Header>
+                        <Popover.Header as="h3">
+                          {message(locale, 'hero.infoTitle')}
+                        </Popover.Header>
                         <Popover.Body>
                           <p className="mb-1">
-                            When you type in your problem description, we search
-                            form titles and descriptions. If you allow sharing,
-                            the LIT Lab’s FETCH service also uses generative AI
-                            providers to suggest topics. Uncheck the box below
-                            to search keywords on your device only.
+                            {message(locale, 'hero.infoSearch')}
                           </p>
                           <p className="mb-1">
-                            AI uses an enterprise policy that does not permit
-                            training, and all generative AI models are currently
-                            hosted inside Amazon Web Services’ secure cloud
-                            environment.
+                            {message(locale, 'hero.infoAI')}
                           </p>
                           <p className="mb-0">
-                            Read our{' '}
+                            {message(locale, 'hero.privacyIntro')}{' '}
                             <a
                               href="/privacy"
+                              hrefLang="en"
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              privacy policy
+                              {message(locale, 'hero.privacy')}
                             </a>
                             .
                           </p>
@@ -280,9 +288,9 @@ const HeroSection = ({ path, interviews, isError }) => {
                     <button
                       type="button"
                       className="btn btn-link p-0 small text-muted"
-                      aria-label="What is this?"
+                      aria-label={message(locale, 'hero.info')}
                     >
-                      What is this?
+                      {message(locale, 'hero.info')}
                     </button>
                   </OverlayTrigger>
                 </div>
@@ -292,12 +300,11 @@ const HeroSection = ({ path, interviews, isError }) => {
                 maxLength={4000}
                 value={text}
                 onChange={handleInputChange}
-                placeholder="Tell us without including your personal information, like name or address"
-                aria-label="Tell us without including your personal information, like name or address"
+                placeholder={message(locale, 'hero.placeholder')}
+                aria-label={message(locale, 'hero.placeholder')}
               />
               <p className="small mt-2 mb-0">
-                Leave the box unchecked for keyword search only. Do not include
-                personal information.
+                {message(locale, 'hero.keywordOnly')}
               </p>
               <div className="d-flex flex-wrap gap-3 align-items-center justify-content-between mt-3">
                 <div className="form-check">
@@ -312,7 +319,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                     className="form-check-label"
                     htmlFor="flexCheckDefault"
                   >
-                    Share my search with FETCH for topic suggestions
+                    {message(locale, 'hero.share')}
                   </label>
                 </div>
                 <div className="d-flex flex-wrap gap-2">
@@ -320,9 +327,9 @@ const HeroSection = ({ path, interviews, isError }) => {
                     <Button
                       variant="outline-secondary"
                       onClick={handleCancelSpotSearch}
-                      aria-label="Cancel search and return to all categories"
+                      aria-label={message(locale, 'hero.cancelLabel')}
                     >
-                      Cancel
+                      {message(locale, 'hero.cancel')}
                     </Button>
                   )}
                   <Button
@@ -330,7 +337,10 @@ const HeroSection = ({ path, interviews, isError }) => {
                     onClick={handleFindHelpClick}
                     className="btn btn-primary"
                   >
-                    {loading ? 'Finding topics…' : 'Find help'}
+                    {message(
+                      locale,
+                      loading ? 'hero.finding' : 'hero.findHelp'
+                    )}
                   </Button>
                 </div>
               </div>
@@ -340,9 +350,7 @@ const HeroSection = ({ path, interviews, isError }) => {
                     className="spinner-border spinner-border-sm me-2"
                     aria-hidden="true"
                   />
-                  {slowSearch
-                    ? 'Still finding related topics. You can use any keyword matches below or cancel the search.'
-                    : 'Finding related topics… Keyword matches appear below right away.'}
+                  {message(locale, slowSearch ? 'hero.slow' : 'hero.loading')}
                 </p>
               )}
               {validationError && (
@@ -350,8 +358,7 @@ const HeroSection = ({ path, interviews, isError }) => {
               )}
               {error && (
                 <p role="status">
-                  {error} Keyword matches are still shown below. You can also
-                  cancel to browse categories.
+                  {error} {message(locale, 'hero.keywordFallback')}
                 </p>
               )}
             </section>
@@ -362,14 +369,15 @@ const HeroSection = ({ path, interviews, isError }) => {
                 aria-labelledby="checkup-option-heading"
               >
                 <h3 id="checkup-option-heading" className="visually-hidden">
-                  Take a legal checkup
+                  {message(locale, 'hero.checkupHeading')}
                 </h3>
-                <p>
-                  Choose topics and situations to explore tools that may help.
-                  No typing needed. Takes about 5 minutes.
-                </p>
-                <Link href="/ma/checkup" className="btn btn-primary">
-                  Start legal checkup
+                <p>{message(locale, 'hero.checkupIntro')}</p>
+                <Link
+                  href="/ma/checkup"
+                  hrefLang="en"
+                  className="btn btn-primary"
+                >
+                  {message(locale, 'hero.startCheckup')}
                 </Link>
               </section>
             )}
@@ -379,10 +387,11 @@ const HeroSection = ({ path, interviews, isError }) => {
       {results && showDescribe && (
         <SpotResultsContainer
           data={results}
-          interviews={interviews}
+          interviews={Array.isArray(interviews) ? {} : interviews}
           path={path}
           searchQuery={submittedText}
           loading={loading}
+          locale={locale}
         />
       )}
     </section>

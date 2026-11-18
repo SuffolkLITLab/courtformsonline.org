@@ -1,46 +1,33 @@
+import { message, type Locale } from '../../i18n/messages';
 import Link from 'next/link';
 import styles from '../css/HowToUseFormsSection.module.css';
 
-export default function HowToUseFormsSection() {
+export default function HowToUseFormsSection({
+  locale = 'en',
+}: { locale?: Locale } = {}) {
   return (
     <section
       id="how-to-use-forms-section"
       className={styles.HowToUseFormsSection + ' py-4'}
     >
       <div className="container">
-        <h2 className="mb-4">How to use court forms</h2>
+        <h2 className="mb-4">{message(locale, 'home.guidesHeading')}</h2>
         <div className="row">
           <div className="col-md-6 mb-4">
             <div className="card h-100">
               <div className="card-body">
-                <h3 className="h5 card-title">How interactive forms work</h3>
+                <h3 className="h5 card-title">
+                  {message(locale, 'home.guideInterviews')}
+                </h3>
                 <p className="card-text text-muted">
-                  Learn how our guided interviews help you complete court forms
-                  step-by-step with confidence.
+                  {message(locale, 'home.guideInterviewsDescription')}
                 </p>
                 <Link
+                  hrefLang="en"
                   href="/guides/how-interviews-work"
                   className="btn btn-outline-primary"
                 >
-                  Learn more
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-6 mb-4">
-            <div className="card h-100">
-              <div className="card-body">
-                <h3 className="h5 card-title">Finding your courthouse</h3>
-                <p className="card-text text-muted">
-                  Find the right courthouse in your jurisdiction where you need
-                  to file your completed forms.
-                </p>
-                <Link
-                  href="/guides/find-your-court"
-                  className="btn btn-outline-primary"
-                >
-                  Find your court
+                  {message(locale, 'home.learnMore')}
                 </Link>
               </div>
             </div>
@@ -50,17 +37,17 @@ export default function HowToUseFormsSection() {
             <div className="card h-100">
               <div className="card-body">
                 <h3 className="h5 card-title">
-                  How to select the right court form
+                  {message(locale, 'home.guideCourt')}
                 </h3>
                 <p className="card-text text-muted">
-                  Follow these steps to confirm you're using the correct court
-                  form for your situation and avoid delays or rejected filings.
+                  {message(locale, 'home.guideCourtDescription')}
                 </p>
                 <Link
-                  href="/guides/choosing-right-form"
+                  hrefLang="en"
+                  href="/guides/find-your-court"
                   className="btn btn-outline-primary"
                 >
-                  Learn more
+                  {message(locale, 'home.guideCourtLink')}
                 </Link>
               </div>
             </div>
@@ -69,16 +56,38 @@ export default function HowToUseFormsSection() {
           <div className="col-md-6 mb-4">
             <div className="card h-100">
               <div className="card-body">
-                <h3 className="h5 card-title">Find a lawyer</h3>
+                <h3 className="h5 card-title">
+                  {message(locale, 'home.guideChoose')}
+                </h3>
                 <p className="card-text text-muted">
-                  Connect with legal aid organizations and lawyer referral
-                  services in your jurisdiction when you need professional help.
+                  {message(locale, 'home.guideChooseDescription')}
                 </p>
                 <Link
+                  hrefLang="en"
+                  href="/guides/choosing-right-form"
+                  className="btn btn-outline-primary"
+                >
+                  {message(locale, 'home.learnMore')}
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-6 mb-4">
+            <div className="card h-100">
+              <div className="card-body">
+                <h3 className="h5 card-title">
+                  {message(locale, 'home.guideLawyer')}
+                </h3>
+                <p className="card-text text-muted">
+                  {message(locale, 'home.guideLawyerDescription')}
+                </p>
+                <Link
+                  hrefLang="en"
                   href="/guides/find-a-lawyer"
                   className="btn btn-outline-primary"
                 >
-                  Find a lawyer
+                  {message(locale, 'home.guideLawyerLink')}
                 </Link>
               </div>
             </div>
@@ -86,8 +95,8 @@ export default function HowToUseFormsSection() {
         </div>
 
         <div className="text-center mt-3">
-          <Link href="/guides" className="btn btn-link">
-            More information about how court forms work
+          <Link hrefLang="en" href="/guides" className="btn btn-link">
+            {message(locale, 'home.moreGuides')}
           </Link>
         </div>
       </div>

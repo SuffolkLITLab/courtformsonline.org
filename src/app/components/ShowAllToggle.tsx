@@ -5,8 +5,9 @@ import { BsChevronRight } from 'react-icons/bs';
 import Button from 'react-bootstrap/Button';
 import styles from '../css/ShowAllToggle.module.css';
 import { MAX_VISIBLE_CATEGORIES } from '../../config/constants';
+import { message, type Locale } from '../../i18n/messages';
 
-const ShowAllToggle = () => {
+const ShowAllToggle = ({ locale = 'en' }: { locale?: Locale } = {}) => {
   const [showAll, setShowAll] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
 
@@ -47,7 +48,7 @@ const ShowAllToggle = () => {
       className={styles.ShowAllToggle + ' show-all-toggle'}
       onClick={handleToggle}
     >
-      {showAll ? 'Hide extra categories' : 'Show all categories'}
+      {message(locale, showAll ? 'home.hideCategories' : 'home.showCategories')}
     </Button>
   );
 };
