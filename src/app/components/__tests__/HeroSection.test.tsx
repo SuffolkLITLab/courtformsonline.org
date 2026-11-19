@@ -3,6 +3,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import HeroSection from '../HeroSection';
 import { fetchFormSearch } from '../../../data/fetchFormSearch';
+import { stateOutlines } from '../../../data/stateOutlines';
+import { getAvailableJurisdictions } from '../../../utils/jurisdiction';
 
 jest.mock('../../../data/fetchFormSearch', () => ({
   fetchFormSearch: jest.fn(),
@@ -60,27 +62,28 @@ describe('HeroSection SPOT modal', () => {
     expect(cards[0]).not.toHaveClass('hidden');
   });
 
-  test('renders a state outline next to the jurisdiction headline', () => {
-    const { container } = render(
-      <HeroSection path="me" interviews={[]} isError={false} />
-    );
+  test.each(getAvailableJurisdictions())(
+    'renders the $name outline next to its headline',
+    ({ path, name }) => {
+      render(<HeroSection path={path} interviews={[]} isError={false} />);
 
-    expect(
-      screen.getByRole('heading', { name: /free diy legal help for maine/i })
-    ).toBeInTheDocument();
-    expect(container.querySelector('#hero-left h1 svg')).toBeInTheDocument();
-  });
+      const heading = screen.getByRole('heading', {
+        name: `Free DIY legal help for ${name}`,
+      });
+      expect(heading.querySelector('svg path')).toHaveAttribute(
+        'd',
+        stateOutlines[path].path
+      );
+    }
+  );
 
-  test('uses the selected state name without substituting a Massachusetts outline', () => {
-    const { container } = render(
-      <HeroSection path="wv" interviews={[]} isError={false} />
-    );
-    expect(
-      screen.getByRole('heading', {
-        name: /free diy legal help for west virginia/i,
-      })
-    ).toBeInTheDocument();
-    expect(container.querySelector('#hero-left h1 svg')).toBeNull();
+  test('omits the outline for an unsupported path', () => {
+    render(<HeroSection path="test" interviews={[]} isError={false} />);
+
+    const heading = screen.getByRole('heading', {
+      name: 'Free DIY legal help for Massachusetts',
+    });
+    expect(heading.querySelector('svg')).toBeNull();
   });
 
   test('renders the small "what is this?" link and opens popover with explanation and privacy policy link', async () => {
