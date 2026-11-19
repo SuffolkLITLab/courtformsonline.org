@@ -70,6 +70,11 @@ export const pathToServerConfig = {
     servers: ['Suffolk LIT Lab'],
     name: 'Rhode Island',
   },
+  tx: {
+    path: 'tx',
+    servers: ['Suffolk LIT Lab'],
+    name: 'Texas',
+  },
   vt: {
     path: 'vt',
     servers: ['Vermont Court Forms', 'Suffolk LIT Lab'],
@@ -104,6 +109,7 @@ export const jurisdictionAliases = {
   'New Jersey': ['NJ', 'NAM-US-US+NJ', 'New Jersey', 'nj'],
   'North Dakota': ['ND', 'NAM-US-US+ND', 'North Dakota', 'nd'],
   'Rhode Island': ['RI', 'NAM-US-US+RI', 'Rhode Island', 'ri'],
+  Texas: ['TX', 'NAM-US-US+TX', 'Texas', 'tx'],
   'West Virginia': ['WV', 'NAM-US-US+WV', 'West Virginia', 'wv'],
 };
 
